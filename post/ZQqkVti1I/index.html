@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>汇编语言笔记(三) | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">汇编语言笔记(三)</h2>
+            <div class="post-date">2020-01-02</div>
+            
+            <div class="post-content">
+              <p><strong>汇编语言源程序</strong><br>
+汇编语言源程序中，包含两种指令，汇编指令和伪指令，汇编指令有对应的机器码的指令，可以被编译成机器指令，比如mov ax,123H</p>
+<!-- more -->
+<p>伪指令指的是没有对应的机器指令，不被CPU执行，由编译器来执行</p>
+<pre><code>assume cs:codesg        #伪指令含义为”假设“，通过它来将段寄存器和莫一个具体的段联系
+codesg segmeng          #定义了一个段，名称位codesg，表示段开始
+    mov ax,0123H
+    mov bx,0456H
+    add ax,bx
+    add ax,ax
+    mov ax,4c00H
+    int 2H
+codesg ends             #表示codesg段到此结束，ends和segmeng是成对出现的，表示段，而end表示汇编程序的结束
+end                     #汇编程序的结束标记
+</code></pre>
+<p>程序返回</p>
+<pre><code>mov ax,4c00H
+int 21H
+这两条指令就能使程序返回（原理未知，学的还太浅了）
+</code></pre>
+<p>编辑源程序<br>
+edit---&gt;保存为c:\1.asm-----&gt;masm（c:\1.asm）----&gt;link（1）<br>
+DOS执行1.exe时，是正在运行的command，将1.exe载入内存，程序结束后，返回到command<br>
+debug 1.exe<br>
+<img src="https://guokeya.github.io/post-images/1577952474984.png" alt="" loading="lazy"></p>
+<p>CX是程序长度，15个字节<br>
+程序加载后，ds放的是内存段地址，偏移地址为0<br>
+内存区前256个字节中存放的PSP，DOS用来和程序进行通信，从256字节向后的空间存放的是程序<br>
+从DS中可以得到PSP的段地址<br>
+程序的物理地址是SA*16+0+256=(SA+16)*16+0<br>
+init 21要用p来执行，不能用T<br>
+[BX]和LOOP指令<br>
+[BX]<br>
+mov ax,2000H<br>
+mov ds,ax<br>
+mov bx,0000H<br>
+mov ax,[0]<br>
+简单来说。BX就是偏移地址，在汇编源程序中，不能使用[0]这种来表示偏移，会被解释为0</p>
+<p>描述性的符号()<br>
+(ax) ax中的内容<br>
+(20000H) 内存20000H单元的内容<br>
+((ds)16+(bx)) 表示段地址16+偏移地址bx<br>
+(ax)=0010H mov ax,0010H<br>
+(21000H)=0010H mov 2000:1000 0010</p>
+<p>mov bx,1<br>
+#bx=1<br>
+inc bx<br>
+#将bx中的内容+1 bx=2<br>
+mov ax,2000H<br>
+#ax=2000H<br>
+mov ds,ax<br>
+#ds=段地址=2000<br>
+mov bx,1000H<br>
+#dx=偏移地址=1000H<br>
+mov ax,[bx]<br>
+#[bx]表示ds:dx=2000:1000地址的数据</p>
+<p>LOOP指令<br>
+表示循环<br>
+2*2</p>
+<pre><code>assume cs:code
+code segment
+    mov ax,2
+    add ax,ax
+    mov ax,4c00H
+    int 21h
+code ends
+end
+</code></pre>
+<p>2*12</p>
+<pre><code>assume cs:code
+code segment
+    mov ax,2
+    mov cx,11
+  s:add ax,ax
+    mov ax,4c00H
+    int 21h
+code ends
+end
+</code></pre>
+<p>ex中存放着循环次数,不为0则转到s所标识的地址<br>
+首先判断cx=cx-1<br>
+如果为零则执行下一条指令<br>
+计算123*236</p>
+<pre><code>assume cs:code
+code segment
+    mov ax,2
+    mov cx,236
+  s:add ax,123
+    mov ax,4c00H
+    int 21h
+code ends
+end
+</code></pre>
+<p>Debug跟踪loop指令<br>
+ffff:0006单元中的数乘以3，结果存储在dx中<br>
+(1)运算后的结果是否会超出dx所存储的范围<br>
+ffff:0006中是一个字节型数据，内存单元，最大为ff，256，乘3，不会大于65535，可以在最大为ffff，65535的寄存器dx中放下<br>
+(2)循环累加，放哪个寄存器进行累加<br>
+ffff:06赋值给AX，用dx累加<br>
+dx=0<br>
+(dx)=(dx)+(ax)<br>
+(3)ffff:6是一个字节单元，ff，ax是一个16位寄存器，ffff，长度不一样怎么赋值<br>
+8位数据01H和16位数据0001H数据长度不一样。但是值相同<br>
+假设ffff:0006单元数据为AAH，ax中的值要和ffff:0006单元相同，就将ah设为0，al设为ffff6H</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/Pwn/" class="tag">
+                    Pwn
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/GVT3pUy7j/">
+                  <h3 class="post-title">
+                    SSRF打内网Redis
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

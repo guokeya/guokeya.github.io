@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>[CISCN2019 华北赛区 Day1 Web5]CyberPunk | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">[CISCN2019 华北赛区 Day1 Web5]CyberPunk</h2>
+            <div class="post-date">2020-02-10</div>
+            
+            <div class="post-content">
+              <p>一题关于二次注入的题</p>
+<!-- more -->
+<p><img src="https://guokeya.github.io/post-images/1581316660891.png" alt="" loading="lazy"><br>
+目录结构如下:</p>
+<pre><code>confirm.php         提交订单
+change.php          修改订单
+search.php           查询订单
+delete.php            删除订单
+</code></pre>
+<p>在index.php下发现注释<code>&lt;!--?file=?--&gt;</code><br>
+文件包含得到以上文件源码<br>
+<img src="https://guokeya.github.io/post-images/1581316786353.png" alt="" loading="lazy"><br>
+可以看到。confim.php是进行了插入数据库的操作。但是name和phone进行了过滤。并且插入使用了预处理。不存在sql注入<br>
+在change.php。user_name和phone都进行了过滤。唯独address进行了addslashes转义<br>
+然后就是根据user_name和phone查询。将查询结果中的address当做值进入下一次查询</p>
+<pre><code>update `user` set `address`='&quot;.$address.&quot;', `old_address`='&quot;.$row['address'].&quot;' where `user_id`=&quot;.$row['user_id'];
+这里就是接收转义address的值。然后存入数据库。并且old_address是上一次查询name和phone得到的
+</code></pre>
+<p>这就有个问题。存入的时候是经过addslashes转义。而翻看所有文件。读取的时候并没有进行转义。那么久存在一个二次注入<br>
+接下来就只要找利用点。还是change.php。只有这个文件。调用了address<br>
+<img src="https://guokeya.github.io/post-images/1581317572862.png" alt="" loading="lazy"><br>
+首先注册name。phone。address都为1<br>
+然后change.php第一次修改。<br>
+<img src="https://guokeya.github.io/post-images/1581317655666.png" alt="" loading="lazy"><br>
+change.php第二次修改。<br>
+updatexml报错注入。但是好像限制了长度<br>
+<img src="https://guokeya.github.io/post-images/1581317680939.png" alt="" loading="lazy"><br>
+修改payload<br>
+<code>1' and updatexml(1,concat(0x7e,(select substr(load_file('/flag.txt'),1,30))),1)#</code>即可<br>
+PS:这里flag.txt是猜的。一开始猜/flag结果没回显。</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/CTF/" class="tag">
+                    CTF
+                  </a>
+                
+                  <a href="https://guokeya.github.io/tag/Web/" class="tag">
+                    Web安全
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/wu-xu-bao-po-huan-yuan-mt_randchong-zi/">
+                  <h3 class="post-title">
+                    无需暴破还原mt_rand()种子
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

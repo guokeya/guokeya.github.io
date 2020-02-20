@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>无需暴破还原mt_rand()种子 | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">无需暴破还原mt_rand()种子</h2>
+            <div class="post-date">2020-02-09</div>
+            
+            <div class="post-content">
+              <p>详情看文章：https://www.anquanke.com/post/id/196831#h2-6<br>
+对于这个原理。还是懵懵的。</p>
+<!-- more -->
+<p>大概就是已知第N个随机数和第N+226个随机数。那么就能求出种子</p>
+<pre><code>&lt;?php
+mt_srand(6758);
+for($i=0;$i&lt;228;$i++){
+	echo mt_rand().&quot; &quot;;
+}
+?&gt;
+</code></pre>
+<p>生成228个随机数<br>
+<img src="https://guokeya.github.io/post-images/1581221139511.png" alt="" loading="lazy"><br>
+1898764065是第0个<br>
+655275142是第227个<br>
+中间间隔226个<br>
+利用脚本：https://github.com/ambionics/mt_rand-reverse<br>
+第一个参数：第N个随机数<br>
+第二个参数：第N+226个随机数<br>
+第三个参数：第N个随机数。N的值<br>
+第四个参数：0代表PHP5。1代表PHP7+<br>
+<img src="https://guokeya.github.io/post-images/1581221240565.png" alt="" loading="lazy"></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/CTF/" class="tag">
+                    CTF
+                  </a>
+                
+                  <a href="https://guokeya.github.io/tag/Web/" class="tag">
+                    Web安全
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/vulnhubdc-456-ba-ji/">
+                  <h3 class="post-title">
+                     [vulnhub]DC-4/5/6靶机
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

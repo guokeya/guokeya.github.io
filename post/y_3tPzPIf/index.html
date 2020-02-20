@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Xctf Final | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Xctf Final</h2>
+            <div class="post-date">2020-01-02</div>
+            
+            <div class="post-content">
+              <p>一题关于回调函数和session+lfi的题目</p>
+<!-- more -->
+<p>有三个文件。分别是<br>
+function.php(用来过滤危险函数)</p>
+<pre><code>&lt;?php
+function filters($data){
+	foreach($data as $key=&gt;$value){
+		if(preg_match('/eval|assert|exec|passthru|glob|system|popen/i',$value)){
+			die('Do not hack me!');
+		}
+	}
+}
+?
+</code></pre>
+<p>index.php(此文件限制了用户的操作目录。回调函数参数可控)</p>
+<pre><code>&lt;?php
+highlight_file(__FILE__);
+error_reporting(0);
+ini_set('open_basedir','/var/www/html:/tmp');
+$file='function.php';
+$func=$_GET['function'];
+call_user_func($func,$_GET);
+include($file);
+session_start();
+$_SESSION['name']=$_POST['name'];
+if($_SESSION['name']=='admin'){
+	header(&quot;location:admin.php&quot;);
+}
+?&gt;
+</code></pre>
+<p>admin.php</p>
+<pre><code>hello admin
+&lt;?php
+if(empty($_SESSION['name'])){
+	session_start();
+	#echo 'hello ' + $_SESSION['name'];
+}else{
+	die('you must login with admin');
+}
+?&gt;
+</code></pre>
+<p>总览代码。应该就是利用call_user_func回调函数。来造成代码执行。但是过滤危险函数。<br>
+call_user_func可以使用extract进行变量覆盖。第二个参数$_GET;就会将GET传参的所有参数和值注册为全局变量。<br>
+当我们传入<br>
+<code>function=extract&amp;file=php://filter/read=convert.base64-encode/resouce=function.php</code></p>
+<pre><code>代码就成了call_user_func(extract,$_GET)，也就是extract($_GET);
+而我们传入的file就会将原先的$file给覆盖掉。变成了php://filter......,后面include即可读取php文件
+读取了文件之后呢。我们目的是getshell。因为不知道flag在哪。
+</code></pre>
+<p>查看PHP手册。发现PHP7.0后。session_start()函数有了变化<br>
+Session_start()函数支持options选项了。而options选项。可以传入一个关联数组。配置session的保存位置。名字。httponly等属性。<br>
+<img src="https://guokeya.github.io/post-images/1577954167969.png" alt="" loading="lazy"></p>
+<p>也就是说。我们可以通过call_user_func函数。去调用session_start，然后GET传参save_path=/tmp<br>
+代码就成了session_start(array('save_path'=&gt;'/tmp'))<br>
+将session保存到tmp目录，因为前面配置了open_basedir的缘故。我们只能访问web目录和tmp目录<br>
+我们试着改下session文件的内容<br>
+<img src="https://guokeya.github.io/post-images/1577954176037.png" alt="" loading="lazy"></p>
+<p>更改了文件名。但是。并不能更改其内容。这里就有其他的办法了。比如session.upload_progress，但是比较麻烦。<br>
+<code>在index.php中。session['name']==_POST['name'],试下修改session文件内容</code><br>
+<code>控制了文件内容。那还不好办吗。老套路，覆盖 POST['name ′],试下修改session文件内容</code><br>
+控制了文件内容。那还不好办吗。老套路，覆盖file，包含session文件。就能getshell<br>
+<img src="https://guokeya.github.io/post-images/1577954262889.png" alt="" loading="lazy"></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/CTF/" class="tag">
+                    CTF
+                  </a>
+                
+                  <a href="https://guokeya.github.io/tag/Web/" class="tag">
+                    Web安全
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/4rUY3PIVG/">
+                  <h3 class="post-title">
+                    PHP Bypass open_basedir
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

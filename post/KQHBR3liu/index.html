@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Mysql with rollup注入(ISCC-2018 线下赛 Web 私地一) | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Mysql with rollup注入(ISCC-2018 线下赛 Web 私地一)</h2>
+            <div class="post-date">2020-01-03</div>
+            
+            <div class="post-content">
+              <p>打开题目。index.php登陆界面。尝试register.php。提示：注册已经关闭</p>
+<!-- more -->
+<pre><code>&lt;form action=&quot;register.php&quot; method=&quot;GET&quot;&gt;
+	用户名：iscc_&lt;input type=&quot;text&quot;  name=&quot;uname&quot; placeholder=&quot;请输入四位数字&quot; /&gt;
+	&lt;br/&gt;&lt;br/&gt;
+	密码：&lt;input type=&quot;password&quot; name=&quot;pwd&quot;/&gt;
+	&lt;br/&gt;&lt;br/&gt;
+	&lt;input type=&quot;submit&quot; value=&quot;注册&quot;&gt;
+&lt;/form&gt;
+</code></pre>
+<p>从这看出来了。用户名是四位数字<br>
+简单测试下。登陆界面存在注入。过滤很多关键字。<br>
+响应头发现hint</p>
+<pre><code>$sql=&quot;SELECT pwd FROM user WHERE uname = '{$_POST['uname']}'&quot;;
+$query = mysqli_query($con,$sql); 
+if (mysqli_num_rows($query) == 1) { 
+    $key = mysqli_fetch_array($query);
+    if($key['pwd'] == $_POST['pwd']) {
+        echo &quot;xxxxxxxxx&quot;;
+    }else{
+        echo &quot;你这密码不太对啊&quot;;
+    }
+}else if(mysqli_num_rows($query) == 0){
+	echo &quot;你这密码不太对啊&quot;;
+}
+else{
+	echo &quot;数据太多了&quot;;
+}
+</code></pre>
+<p>部分源码：<br>
+查询纪录要=1<br>
+用户提交的密码=查询结果的密码<br>
+这里使用==。弱类型比较<br>
+由于关键字较多都被过滤。这里就要学习下新的注入姿势<br>
+<strong>group by … with rollup</strong><br>
+group by … with rollup主要是用于统计数据的<br>
+普通的group by语句。用来排序。<br>
+<img src="https://guokeya.github.io/post-images/1578055246925.png" alt="" loading="lazy"><br>
+group by 字段 with rollup<br>
+用来计算字段的平均值<br>
+<img src="https://guokeya.github.io/post-images/1578055388273.png" alt="" loading="lazy"><br>
+那么这与这题目有什么关系呢。<br>
+查看题目源码。我们无法得知用户密码。但是要构造密码==POST密码<br>
+想到了NULL。通过查询使得用户密码为NULL而不是空<br>
+满足了查询字段为1，并且NULL与空。弱类型比较相同<br>
+OK。我们来构造下<br>
+方法一:<br>
+利用异或。1^1=0=字符串 弱类型<br>
+limit 1 offset 1=limit 1,1<br>
+<img src="https://guokeya.github.io/post-images/1578056467590.png" alt="" loading="lazy"><br>
+方法二：<br>
+前面说了。用户名是四位数字。当我们输入正确用户名时。返回结果就是null<br>
+<img src="https://guokeya.github.io/post-images/1578056597367.png" alt="" loading="lazy"><br>
+注入成功会输出一个字符串</p>
+<pre><code>+ADg-d+ADIAMA-d+ADUANw-e+ADI-f+ADIAYgA5AGI-e+ADUALw-f+AGIAMwAw-e+ADcAMA-f+ADcAOAAxADMANAA4ADk-dd+AGE-e+ADcAOQBi-e+ADAANwA5ADIANQBhADMANABhAC4AcABoAHA-
+</code></pre>
+<p>纪录下这是utf-7编码。<br>
+http://toolswebtop.com/text/process/decode/UTF-7<br>
+<img src="https://guokeya.github.io/post-images/1578056764285.png" alt="" loading="lazy"></p>
+<pre><code>&lt;?php
+show_source(__FILE__);
+$a = @$_REQUEST['a'];
+@eval(&quot;var_dump($$a);&quot;);
+?&gt;
+</code></pre>
+<p>得到webshell<br>
+）闭合vardump();<br>
+eval(&quot;var_dump($a);system('ls');&quot;);<br>
+<img src="https://guokeya.github.io/post-images/1578056863607.png" alt="" loading="lazy"></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/CTF/" class="tag">
+                    CTF
+                  </a>
+                
+                  <a href="https://guokeya.github.io/tag/Web/" class="tag">
+                    Web安全
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/6-c_k0RG4/">
+                  <h3 class="post-title">
+                    Pwn(绕过canary保护机制)
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

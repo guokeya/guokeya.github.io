@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>BUUCTF XOR | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">BUUCTF XOR</h2>
+            <div class="post-date">2020-01-23</div>
+            
+            <div class="post-content">
+              <p><img src="https://guokeya.github.io/post-images/1579777614249.png" alt="" loading="lazy"><br>
+很简单的一题。用户输入是V6</p>
+<!-- more -->
+<p>global是加密的flag。看下值。刚开始搞逆向。看到的都是整整齐齐的0x多少多少。没见过字符串挤在一起的。<br>
+<img src="https://guokeya.github.io/post-images/1579777781813.png" alt="" loading="lazy"><br>
+在18行。用strncmp比较。<br>
+对于用户输入<br>
+for循环33次。但是i的初始值为1<br>
+假设第一次循环。i=1<br>
+密文的第二个值和第一个进行异或<br>
+密文的第三个值和第二个进行异或<br>
+依次进行<br>
+下面写脚本：</p>
+<pre><code>a=['f',10,'k',12,'w','&amp;','O','.','@',17,'x',13,'Z',';','U',17,'p',25,'F',31,'v','&quot;','M','#','D',14,'g',6,'h',15,'G','2','O']
+for i in range(34):
+    try:
+        a[i]=ord(a[i])
+    except:
+        pass
+data=''
+for i in range(1,33):
+    data+=chr(a[i]^a[i-1])
+print('f'+data)
+</code></pre>
+<p>首先。将字符串都提取出来。定义在一个数组里。由于要进行异或。a[i]可能是数字。也可能是字符。如果将数字用ord转换为数字。会报错。所以加了一个异常处理。如果报错。就跳过<br>
+没报错。就将字符转换为ascii码。<br>
+得到一个都是数字的列表<br>
+然后将其依次异或。得到flag<br>
+由于f没有被异或。在最后flag开头还缺少一个f。加上即可<br>
+<img src="https://guokeya.github.io/post-images/1579777977597.png" alt="" loading="lazy"></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/CTF/" class="tag">
+                    CTF
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/an-heng-yuan-dan-yue-sai-ni-xiang-sao-lei/">
+                  <h3 class="post-title">
+                    安恒元旦月赛逆向--扫雷
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

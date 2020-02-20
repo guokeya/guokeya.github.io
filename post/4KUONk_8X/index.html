@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>域渗透(基础) | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">域渗透(基础)</h2>
+            <div class="post-date">2020-01-02</div>
+            
+            <div class="post-content">
+              <p><strong>漏洞环境</strong><br>
+http://vulnstack.qiyuanxuetang.net/vuln/detail/2/</p>
+<!-- more -->
+<p><strong>环境介绍</strong><br>
+VM1 Win7 Web服务器<br>
+VM2 Server08 域控制器<br>
+VM2 Server03 域成员<br>
+攻击机 Kali</p>
+<pre><code>    外网     内网  
+kali---&gt;win7---&gt;Server08 
+            ---&gt;Server03
+</code></pre>
+<p>域介绍<br>
+域的特性：</p>
+<pre><code>域成员计算机在登陆的时候可以选择登陆要域中或者此计算机，登陆到域的时候，身份验证是采用Kerberos协议在域控上进行的，登陆到此计算机则是通过SAM来进行NTLM验证
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1577951233694.png" alt="" loading="lazy"><br>
+IPC$概念:</p>
+<pre><code>IPC$是共享&quot;命名管道&quot;资源，通过用户名和密码，或者匿名远程管理计算机和查看计算机共享资源
+ipc$作用:
+</code></pre>
+<pre><code>利用IPC$，可以和目标主机建立一个连接，这个连接，可以得到目标主机的目录结构，用户列表等信息
+</code></pre>
+<p>ICP$利用条件:</p>
+<pre><code>139,445开启
+管理员开启默认共享
+利用工具:
+
+psexec
+https://download.sysinternals.com/files/PSTools.zip
+psexec针对远程建立连接的认证方式有两种，一种先建立ipc，然后直接用psexec \\192.168.52.138 cmd开启一个半交互式的shell，另一种是再psexec参数中指定账号密码
+-s 用system权限执行
+-accepteula 绕过第一次运行的弹窗
+-c 路径\文件名  拷贝文件到远程机器执行(运行完自动删除)
+-d 不等待程序执行完就返回
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1577951281252.png" alt="" loading="lazy"></figure>
+<pre><code>wmiexec
+半交互模式：
+cscript.exe //nologo wmiexec.vbs /shell 192.168.1.1 username password
+单个命令执行的模式：
+cscript.exe wmiexec.vbs /cmd 192.168.1.1 username password &quot;whoami&quot;
+如果有时候我们抓取到的是hash，破解不了时可以利用WCE的hash注入，然后再执行WMIEXEC（不提供账号密码）就可以了。
+cscript.exe //nologo wmiexec.vbs /shell 192.168.1.1  
+wce -s [hash] 
+cscript.exe //nologo wmiexec.vbs /shell 192.168.1.1
+</code></pre>
+<p>判断是否在域内</p>
+<p><strong>渗透思路</strong><br>
+获取域内信息<br>
+分析域内信息，确定目标<br>
+域内渗透<br>
+hash破解<br>
+读密码，溢出，服务漏洞，web漏洞，弱口令等</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/EfzSPkBWE/" class="tag">
+                    渗透测试
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/CMV0J6RNE/">
+                  <h3 class="post-title">
+                    域渗透(IPC入侵)
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

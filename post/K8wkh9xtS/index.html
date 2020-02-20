@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>markdown XSS学习 | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">markdown XSS学习</h2>
+            <div class="post-date">2020-01-02</div>
+            
+            <div class="post-content">
+              <p><strong>介绍</strong><br>
+markdown是一个用于编写和格式化内容的简单语言。github上的readme就是这个编写的。</p>
+<!-- more -->
+<p>使用<br>
+<img src="https://guokeya.github.io/post-images/1577951630558.png" alt="" loading="lazy"><br>
+视觉效果很棒。<br>
+markdown编写</p>
+<pre><code>![the goodest boy](https://xzfile.aliyuncs.com/media/upload/picture/20190302105527-a276e4a8-3c96-1.png)
+</code></pre>
+<p>非常简单。由于markdown是一个格式化内容的简单语言。读取markdown中的行。生成HTML，那么，如果写入恶意javascript代码。就能造成xss<br>
+例如<br>
+<a href="http://www.baidu.com">click me</a></p>
+<pre><code>[click me](http://www.baidu.com)
+</code></pre>
+<p>这里就直接跳转到了baidu<br>
+如果写入以下代码呢</p>
+<pre><code>[click me](javascript:alert(1))
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1577951669107.png" alt="" loading="lazy"><br>
+我们看到，xss经典弹窗。为什么会造成xss呢<br>
+当我们输入</p>
+<pre><code>[click me](http://www.baidu.com)
+</code></pre>
+<p>他会格式化成</p>
+<pre><code>&lt;a href=&quot;http://www.baidu.com&quot;&gt;click me&lt;/a&gt;
+</code></pre>
+<p>我们输入</p>
+<pre><code>[click me](javascript:alert(1))
+</code></pre>
+<p>就格式化成了</p>
+<pre><code>&lt;a href=&quot;javascript:alert(1)&quot;&gt;Click me&lt;/a&gt;
+</code></pre>
+<p>从而造成了XSS<br>
+这需要用户单击才会造成xss<br>
+接下来看markdown中的图像语法</p>
+<pre><code>![test](https://xzfile.aliyuncs.com/media/upload/picture/20190302105527-a276e4a8-3c96-1.png)
+格式化后：
+&lt;img src=&quot;https://xzfile.aliyuncs.com/media/upload/picture/20190302105527-a276e4a8-3c96-1.png&quot; alt=&quot;test&quot;&gt;
+</code></pre>
+<p>我们能不能通过双引号闭合造成xss</p>
+<pre><code>![test](&quot;onerror=&quot;alert('xss'))
+格式化后：
+&lt;img src=&quot;&quot; onerror=&quot;alert('xss')&quot; alt=&quot;test&quot;&gt;
+</code></pre>
+<p>由于src为空，导致代码执行onerr的js语句<br>
+还能通过onload属性，在页面加载后执行</p>
+<pre><code>![test](https://xzfile.aliyuncs.com/media/upload/picture/20190302105527-a276e4a8-3c96-1.png&quot;onload=&quot;alert('xss'))
+格式化后：
+&lt;img src=&quot;https://xzfile.aliyuncs.com/media/upload/picture/20190302105527-a276e4a8-3c96-1.png&quot; onload=&quot;alert('xss')&quot; alt=&quot;test&quot;&gt;
+</code></pre>
+<p>不同markdown版本，会有不同的执行效果</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/CTF/" class="tag">
+                    CTF
+                  </a>
+                
+                  <a href="https://guokeya.github.io/tag/Web/" class="tag">
+                    Web安全
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/5giOkQgyl/">
+                  <h3 class="post-title">
+                    Mysql floor()报错注入
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

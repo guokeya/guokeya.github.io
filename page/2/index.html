@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/vulnhubme-and-my-girlfriend-1-ba-ji/">
+                  <h2 class="post-title">[vulnhub]Me and My Girlfriend 1靶机</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-04
+                </div>
+                <div class="post-abstract">
+                  <p><strong>1。确定目标</strong><br>
+目标为192.168.0.179<br>
+<strong>2。端口扫描</strong><br>
+只开放了22和80<br>
+<img src="https://guokeya.github.io/post-images/1580809667151.png" alt="" loading="lazy"></p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/bjdctf-web-ti-jie/">
+                  <h2 class="post-title">BJDCTF  Web题解</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-03
+                </div>
+                <div class="post-abstract">
+                  <p><strong>[BJDCTF2020]Mark loves</strong></p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/2020-xin-chun-hong-bao-ti-fan-xu-lie-hua-pop-lian/">
+                  <h2 class="post-title">[2020 新春红包题]反序列化pop链</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-02
+                </div>
+                <div class="post-abstract">
+                  <p>这题也是根据2019全国大学生安全运维赛 EZPOP改编的<br>
+具体代码如下</p>
+<pre><code>&lt;?php
+error_reporting(0);
+
+class A {
+
+    protected $store;
+
+    protected $key;
+
+    protected $expire;
+
+    public function __construct($store, $key = 'flysystem', $expire = null) {
+        $this-&gt;key = $key;
+        $this-&gt;store = $store;
+        $this-&gt;expire = $expire;
+    }
+
+    public function cleanContents(array $contents) {
+        $cachedProperties = array_flip([
+            'path', 'dirname', 'basename', 'extension', 'filename',
+            'size', 'mimetype', 'visibility', 'timestamp', 'type',
+        ]);
+
+        foreach ($contents as $path =&gt; $object) {
+            if (is_array($object)) {
+                $contents[$path] = array_intersect_key($object, $cachedProperties);
+            }
+        }
+
+        return $contents;
+    }
+
+    public function getForStorage() {
+        $cleaned = $this-&gt;cleanContents($this-&gt;cache);
+
+        return json_encode([$cleaned, $this-&gt;complete]);
+    }
+
+    public function save() {
+        $contents = $this-&gt;getForStorage();
+
+        $this-&gt;store-&gt;set($this-&gt;key, $contents, $this-&gt;expire);
+    }
+
+    public function __destruct() {
+        if (!$this-&gt;autosave) {
+            $this-&gt;save();
+        }
+    }
+}
+
+class B {
+
+    protected function getExpireTime($expire): int {
+        return (int) $expire;
+    }
+
+    public function getCacheKey(string $name): string {
+        // 使缓存文件名随机
+        $cache_filename = $this-&gt;options['prefix'] . uniqid() . $name;
+        if(substr($cache_filename, -strlen('.php')) === '.php') {
+          die('?');
+        }
+        return $cache_filename;
+    }
+
+    protected function serialize($data): string {
+        if (is_numeric($data)) {
+            return (string) $data;
+        }
+
+        $serialize = $this-&gt;options['serialize'];
+
+        return $serialize($data);
+    }
+
+    public function set($name, $value, $expire = null): bool{
+        $this-&gt;writeTimes++;
+
+        if (is_null($expire)) {
+            $expire = $this-&gt;options['expire'];
+        }
+
+        $expire = $this-&gt;getExpireTime($expire);
+        $filename = $this-&gt;getCacheKey($name);
+
+        $dir = dirname($filename);
+
+        if (!is_dir($dir)) {
+            try {
+                mkdir($dir, 0755, true);
+            } catch (\Exception $e) {
+                // 创建失败
+            }
+        }
+
+        $data = $this-&gt;serialize($value);
+
+        if ($this-&gt;options['data_compress'] &amp;&amp; function_exists('gzcompress')) {
+            //数据压缩
+            $data = gzcompress($data, 3);
+        }
+
+        $data = &quot;&lt;?php\n//&quot; . sprintf('%012d', $expire) . &quot;\n exit();?&gt;\n&quot; . $data;
+        $result = file_put_contents($filename, $data);
+
+        if ($result) {
+            return $filename;
+        }
+
+        return null;
+    }
+
+}
+
+if (isset($_GET['src']))
+{
+    highlight_file(__FILE__);
+}
+
+$dir = &quot;uploads/&quot;;
+
+if (!is_dir($dir))
+{
+    mkdir($dir);
+}
+unserialize($_GET[&quot;data&quot;]);
+</code></pre>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/xnuca2019qualifiereasyphphtaccess-li-yong/">
+                  <h2 class="post-title">[XNUCA2019Qualifier]EasyPHP(.htaccess利用)</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-01
+                </div>
+                <div class="post-abstract">
+                  <pre><code>&lt;?php
+    $files = scandir('./'); 
+    foreach($files as $file) {
+        if(is_file($file)){
+            if ($file !== &quot;index.php&quot;) {
+                unlink($file);
+            }
+        }
+    }
+    include_once(&quot;fl3g.php&quot;);
+    if(!isset($_GET['content']) || !isset($_GET['filename'])) {
+        highlight_file(__FILE__);
+        die();
+    }
+    $content = $_GET['content'];
+    if(stristr($content,'on') || stristr($content,'html') || stristr($content,'type') || stristr($content,'flag') || stristr($content,'upload') || stristr($content,'file')) {
+        echo &quot;Hacker&quot;;
+        die();
+    }
+    $filename = $_GET['filename'];
+    if(preg_match(&quot;/[^a-z\.]/&quot;, $filename) == 1) {
+        echo &quot;Hacker&quot;;
+        die();
+    }
+    $files = scandir('./'); 
+    foreach($files as $file) {
+        if(is_file($file)){
+            if ($file !== &quot;index.php&quot;) {
+                unlink($file);
+            }
+        }
+    }
+    file_put_contents($filename, $content . &quot;\nJust one chance&quot;);
+?&gt;
+</code></pre>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/jactfsawed/">
+                  <h2 class="post-title">[jactf]sawed</h2>
+                </a>
+                <div class="post-date">
+                  2020-01-31
+                </div>
+                <div class="post-abstract">
+                  <p>上上下下左左右右BABA<br>
+全是awsde组成的字符串</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/jactfsimple_transfernsf-shu-ju-fen-xi/">
+                  <h2 class="post-title">[jactf]simple_transfer(nsf数据分析)</h2>
+                </a>
+                <div class="post-date">
+                  2020-01-31
+                </div>
+                <div class="post-abstract">
+                  <p>开始是端口扫描的TCP数据<br>
+<img src="https://guokeya.github.io/post-images/1580445373865.png" alt="" loading="lazy"></p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/jactfusb/">
+                  <h2 class="post-title">[jactf]USB</h2>
+                </a>
+                <div class="post-date">
+                  2020-01-31
+                </div>
+                <div class="post-abstract">
+                  <pre><code>difficult_programming_language.pcap
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1580444471648.png" alt="" loading="lazy"><br>
+不多BB。直接脚本提取出内容<br>
+<code>tshark -r difficult_programming_language.pcap -T fields -e usb.capdata &gt; usbdata.txt</code></p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/jactfsoeasyvmdk-qu-zheng/">
+                  <h2 class="post-title">[jactf]soeasy(vmdk取证)</h2>
+                </a>
+                <div class="post-date">
+                  2020-01-31
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/jactfwirelesswifi-shu-ju-bao-po-jie/">
+                  <h2 class="post-title">[jactf]WireLess(WIFI数据包破解)</h2>
+                </a>
+                <div class="post-date">
+                  2020-01-30
+                </div>
+                <div class="post-abstract">
+                  <p>一个WIFI数据包。看不到协议。只能看到802.11<br>
+<img src="https://guokeya.github.io/post-images/1580393452950.png" alt="" loading="lazy"><br>
+首先。我们要去爆破WIFI密码。解密数据包。</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/jactfer-wei-ma-cang-dao-na-li-liao-python-pil-ku-shi-yong/">
+                  <h2 class="post-title">[jactf]二维码藏到哪里了(python PIL库使用)</h2>
+                </a>
+                <div class="post-date">
+                  2020-01-30
+                </div>
+                <div class="post-abstract">
+                  <p>就给了一串。看起来好像是RGB色。<br>
+255.255.255=白色<br>
+0.0.0=黑色</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/jactfguo-lu-yu-fa/">
+                  <h2 class="post-title">[jactf]过滤语法</h2>
+                </a>
+                <div class="post-date">
+                  2020-01-30
+                </div>
+                <div class="post-abstract">
+                  <p>wireshark数据包。只有TCP数据。一大堆看不懂的东西。<br>
+<img src="https://guokeya.github.io/post-images/1580390599732.png" alt="" loading="lazy"></p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/gxybaby-ncpan-duan-shu-da-xiao/">
+                  <h2 class="post-title">[GXY]Baby nc(判断数大小)</h2>
+                </a>
+                <div class="post-date">
+                  2020-01-27
+                </div>
+                <div class="post-abstract">
+                  <pre><code>from pwn import *
+context.log_level='debug'
+r=remote(&quot;183.129.189.60&quot;,10014)
+flag='34028236692093846346337460'
+for a in range(10):
+    for i in range(10):
+    	guess=str(flag)+str(i)+(27-1-len(flag))*'0'
+        r.sendline(guess)
+        result=r.recv(10)
+        if 'big' in result:
+            flag+=str(i-1)
+            break
+        if i==9 and 'small' in result:
+            flag+='9'
+            break
+    print(flag)
+</code></pre>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/lctf-bestphps-revengesoap-fan-xu-lie-hua/">
+                  <h2 class="post-title">LCTF bestphp’s revenge（SOAP反序列化）</h2>
+                </a>
+                <div class="post-date">
+                  2020-01-26
+                </div>
+                <div class="post-abstract">
+                  <h1 id="indexphp">index.php</h1>
+<pre><code> &lt;?php
+highlight_file(__FILE__);
+$b = 'implode';
+call_user_func($_GET['f'], $_POST);
+session_start();
+if (isset($_GET['name'])) {
+    $_SESSION['name'] = $_GET['name'];
+}
+var_dump($_SESSION);
+$a = array(reset($_SESSION), 'welcome_to_the_lctf2018');
+call_user_func($b, $a);
+?&gt;
+</code></pre>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/nctf2019sqliregexp-zhu/">
+                  <h2 class="post-title">[NCTF2019]SQLi(regexp注入)</h2>
+                </a>
+                <div class="post-date">
+                  2020-01-26
+                </div>
+                <div class="post-abstract">
+                  <p>主页就一个登录框 。把sql语句显示出来了。</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/fbctf2019eventssti3/">
+                  <h2 class="post-title">[FBCTF2019]Event(SSTI3)</h2>
+                </a>
+                <div class="post-date">
+                  2020-01-26
+                </div>
+                <div class="post-abstract">
+                  <p>功能很简单。就一个登陆。一个查看flag。但是flag没有权限</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+
+          <div class="pagination-container">
+  
+    <a href="https://guokeya.github.io/" class="prev"><i class="icon-arrow-ios-back-outline"></i> 上一页</a>
+  
+  
+    <a href="https://guokeya.github.io/page/3/" class="next">下一页 <i class="icon-arrow-ios-forward-outline"></i></a>
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

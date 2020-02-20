@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>[CISCN2019 华北赛区 Day1 Web2]ikun(python反序列化) | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">[CISCN2019 华北赛区 Day1 Web2]ikun(python反序列化)</h2>
+            <div class="post-date">2020-02-12</div>
+            
+            <div class="post-content">
+              <p>进入主页。就说要买V6</p>
+<!-- more -->
+<p><img src="https://guokeya.github.io/post-images/1581478416744.png" alt="" loading="lazy"><br>
+根据特征。V6图片地址为/static/img/lv/lv6.png<br>
+那么我们用脚本遍历page。然后判断返回内容中是否有V6的图片地址</p>
+<pre><code>import requests
+for i in range(200):
+    url='http://70a35b89-8044-4dd2-8a10-f6c98daa9a70.node3.buuoj.cn/shop?page='+str(i)
+    result=requests.get(url).text
+    if '/static/img/lv/lv6.png' in result:
+        print (url)
+</code></pre>
+<p>得到结果。181页。购买<br>
+<img src="https://guokeya.github.io/post-images/1581478545299.png" alt="" loading="lazy"><br>
+可以看到。这里有两个变量可控。一个是钱。一个是折扣。我们只有1000。<br>
+修改尝试修改钱/折扣来买V6<br>
+修改钱时。会提示操作失败<br>
+<img src="https://guokeya.github.io/post-images/1581478635541.png" alt="" loading="lazy"><br>
+修改折扣为0.00000000001。302跳转b1g_m4mber<br>
+<img src="https://guokeya.github.io/post-images/1581478729405.png" alt="" loading="lazy"><br>
+只允许admin访问。看下cookie。有jwt头<br>
+<img src="https://guokeya.github.io/post-images/1581478839818.png" alt="" loading="lazy"><br>
+遇到jwt。一般就是ssti拿密钥。或者爆破<br>
+这里试下爆破。得到密钥1Kun<br>
+<img src="https://guokeya.github.io/post-images/1581478891702.png" alt="" loading="lazy">'<br>
+修改JWT为admin<br>
+<img src="https://guokeya.github.io/post-images/1581479192599.png" alt="" loading="lazy"><br>
+得到web源码<br>
+<img src="https://guokeya.github.io/post-images/1581479241854.png" alt="" loading="lazy"><br>
+在sshop/views/admin.py发现一个反序列化漏洞<br>
+<img src="https://guokeya.github.io/post-images/1581479326219.png" alt="" loading="lazy"><br>
+python反序列化漏洞和PHP反序列化不一样。<br>
+php反序列化必须是存在一个类。序列化可以修改类中的值造成一定危害。如果类中没有什么危险函数。那么修改了类中的值危害也有限。<br>
+python反序列化通过<code>__reduce__</code>可以重构对象。比如</p>
+<pre><code>class Person(object):
+    def __init__(self,username,password):
+        self.username = username 
+        self.password = password 
+    def __reduce__(self):
+        return (os.system, ('whoami',))
+</code></pre>
+<p>这个<code>__reduce__</code>魔术方法会在反序列化的时候改变对象。也就是php中unserialize()触发<br>
+python序列化和两个函数有关。<br>
+cPickle.dumps()<br>
+#序列化<br>
+cPickle.loads()<br>
+#反序列化<br>
+<img src="https://guokeya.github.io/post-images/1581480064252.png" alt="" loading="lazy"><br>
+参考文章：<code>https://www.jianshu.com/p/061d2c594d97</code><br>
+将上图中的URL编码的exp。通过POST become参数发送。拿到flag<br>
+<img src="https://guokeya.github.io/post-images/1581480150683.png" alt="" loading="lazy"></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/CTF/" class="tag">
+                    CTF
+                  </a>
+                
+                  <a href="https://guokeya.github.io/tag/Web/" class="tag">
+                    Web安全
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/wang-ding-bei-2018commentgit-hui-fu/">
+                  <h3 class="post-title">
+                    [网鼎杯 2018]Comment（Git恢复+二次注入）
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

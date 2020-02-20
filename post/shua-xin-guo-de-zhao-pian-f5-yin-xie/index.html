@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>刷新过的照片（F5隐写） | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">刷新过的照片（F5隐写）</h2>
+            <div class="post-date">2020-01-21</div>
+            
+            <div class="post-content">
+              <p>不说了。魔性。满分<br>
+<img src="https://guokeya.github.io/post-images/1579588648712.png" alt="" loading="lazy"></p>
+<!-- more -->
+<p>题目就叫刷新过的照片。一般都用F5刷新。刚好又有一种隐写方式叫F5隐写。<br>
+github上脚本利用<br>
+<code>git clone https://github.com/matthewgao/F5-steganography</code><br>
+java Extract Misc.jpg<br>
+查看output.txt(默认输出在output.txt)<br>
+发现是PK开头的<br>
+<img src="https://guokeya.github.io/post-images/1579588774848.png" alt="" loading="lazy"><br>
+解压得到FLAG<br>
+第二题：360ctf的<code>google语法真不错</code><br>
+首先就给了一个img。内存。<br>
+当然就是用volatility。没这个文件。直接白嫖一下图<br>
+<code>volatility -f xp.raw –profile=WinXPSP2x86 filescan | grep 桌面 //查看桌面</code><br>
+<img src="https://guokeya.github.io/post-images/1579588867193.jpg" alt="" loading="lazy"><br>
+<code>volatility -f xp.raw –profile=WinXPSP2x86 dumpfiles -D ./ -Q 0x000000000215f340 //保存文件</code><br>
+<code>volatility -f xp.raw –profile=WinXPSP2x86 iehistory //ie历史记录</code><br>
+<img src="https://guokeya.github.io/post-images/1579588890798.jpg" alt="" loading="lazy"><br>
+可以看到访问了github的Syst2m<br>
+在commits中得到提示：F5<br>
+<img src="https://guokeya.github.io/post-images/1579588963240.png" alt="" loading="lazy"><br>
+再次用工具解压。不行。估计是密码错误。默认的密码是123abc<br>
+查看Release得到密码<br>
+<img src="https://guokeya.github.io/post-images/1579589024820.png" alt="" loading="lazy"><br>
+<code>java Extract 360.jpg -p 360CTFisSOeasy</code><br>
+得到flag</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/z6LGuzLFL/" class="tag">
+                    杂项
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/an-heng-bei-qi-yue-sai-ruo-kou-ling-lsb-yin-xie-mo-er-si-mi-ma/">
+                  <h3 class="post-title">
+                    [安恒杯七月赛]弱口令(LSB隐写+摩尔斯密码)
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

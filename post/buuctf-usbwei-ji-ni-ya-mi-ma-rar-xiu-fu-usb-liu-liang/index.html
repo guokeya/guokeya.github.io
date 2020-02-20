@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>【BUUCTF】USB(维吉尼亚密码+rar修复+USB流量) | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">【BUUCTF】USB(维吉尼亚密码+rar修复+USB流量)</h2>
+            <div class="post-date">2020-01-20</div>
+            
+            <div class="post-content">
+              <p>解压得到两个文件<code>233.rar</code>和ket.ftm<br>
+先从rar开始。直接解压。就一个flag.txt<br>
+但是查看16进制。欸还有个233.png</p>
+<!-- more -->
+<p><img src="https://guokeya.github.io/post-images/1579525079540.png" alt="" loading="lazy"><br>
+将7A修改为74<br>
+<img src="https://guokeya.github.io/post-images/1579525399825.png" alt="" loading="lazy"><br>
+RAR文件格式看大佬博客。有详细讲解<br>
+<code>https://yoloyolo.top/archives/85.html</code><br>
+接着。解压出了233.png<br>
+用Stegsolve.jar打开<br>
+一直点。看到一张二维码<br>
+<img src="https://guokeya.github.io/post-images/1579525469847.png" alt="" loading="lazy"><br>
+得到<code>ci{v3erf_0tygidv2_fc0}</code><br>
+乍一看栏杆密码。但是。不对啊。没a。构成不了flag{xxxx}<br>
+。再回去看key.ftm<br>
+binwalk分析以下。发现</p>
+<pre><code>root@kali:~# binwalk key.ftm 
+
+DECIMAL       HEXADECIMAL     DESCRIPTION
+--------------------------------------------------------------------------------
+34741         0x87B5          Zip archive data, at least v2.0 to extract, compressed size: 4478, uncompressed size: 37254, name: key.pcap
+39347         0x99B3          End of Zip archive, footer length: 22
+40037         0x9C65          Zip archive data, at least v2.0 to extract, compressed size: 4478, uncompressed size: 37254, name: key.pcap
+44643         0xAE63          End of Zip archive, footer length: 22
+</code></pre>
+<p>直接解压出了一个key.pcap<br>
+查看。就是USB流量。利用上次的脚本跑<br>
+<code>tshark -r key.pcap -T fields -e usb.capdata &gt; usbdata.txt</code></p>
+<pre><code>mappings = { 0x04:&quot;A&quot;,  0x05:&quot;B&quot;,  0x06:&quot;C&quot;, 0x07:&quot;D&quot;, 0x08:&quot;E&quot;, 0x09:&quot;F&quot;, 0x0A:&quot;G&quot;,  0x0B:&quot;H&quot;, 0x0C:&quot;I&quot;,  0x0D:&quot;J&quot;, 0x0E:&quot;K&quot;, 0x0F:&quot;L&quot;, 0x10:&quot;M&quot;, 0x11:&quot;N&quot;,0x12:&quot;O&quot;,  0x13:&quot;P&quot;, 0x14:&quot;Q&quot;, 0x15:&quot;R&quot;, 0x16:&quot;S&quot;, 0x17:&quot;T&quot;, 0x18:&quot;U&quot;,0x19:&quot;V&quot;, 0x1A:&quot;W&quot;, 0x1B:&quot;X&quot;, 0x1C:&quot;Y&quot;, 0x1D:&quot;Z&quot;, 0x1E:&quot;1&quot;, 0x1F:&quot;2&quot;, 0x20:&quot;3&quot;, 0x21:&quot;4&quot;, 0x22:&quot;5&quot;,  0x23:&quot;6&quot;, 0x24:&quot;7&quot;, 0x25:&quot;8&quot;, 0x26:&quot;9&quot;, 0x27:&quot;0&quot;, 0x28:&quot;n&quot;, 0x2a:&quot;[DEL]&quot;,  0X2B:&quot;    &quot;, 0x2C:&quot; &quot;,  0x2D:&quot;-&quot;, 0x2E:&quot;=&quot;, 0x2F:&quot;[&quot;,  0x30:&quot;]&quot;,  0x31:&quot;\&quot;&quot;, 0x32:&quot;~&quot;, 0x33:&quot;;&quot;,  0x34:&quot;'&quot;, 0x36:&quot;,&quot;,  0x37:&quot;.&quot; }
+nums = []
+keys = open('usbdata.txt')
+for line in keys:
+    if line[0]!='0' or line[1]!='0' or line[3]!='0' or line[4]!='0' or line[9]!='0' or line[10]!='0' or line[12]!='0' or line[13]!='0' or line[15]!='0' or line[16]!='0' or line[18]!='0' or line[19]!='0' or line[21]!='0' or line[22]!='0':
+         continue
+    nums.append(int(line[6:8],16))
+keys.close()
+output = &quot;&quot;
+for n in nums:
+    if n == 0 :
+        continue
+    if n in mappings:
+        output += mappings[n]
+    else:
+        output += '[unknown]'
+print output
+</code></pre>
+<p>得到<code>KEYXINAN</code><br>
+现在就一个KEY。一个字符串。不知道怎么利用。<br>
+其实这是维吉尼亚密码(有密钥的凯撒密码)<br>
+在线解密下<br>
+<img src="https://guokeya.github.io/post-images/1579525760507.png" alt="" loading="lazy"><br>
+再通过栅栏密码<br>
+<img src="https://guokeya.github.io/post-images/1579525801636.png" alt="" loading="lazy"></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/z6LGuzLFL/" class="tag">
+                    杂项
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/ddctf2018degdeg-kai-sa-mi-ma-128/">
+                  <h3 class="post-title">
+                    [DDCTF2018](╯°□°）╯︵ ┻━┻(凯撒密码+%128)
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

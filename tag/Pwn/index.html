@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Pwn | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <h2 class="current-tag">标签: Pwn</h2>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/bOdJWyLg5/">
+                  <h2 class="post-title">Pwn(绕过ASLR)</h2>
+                </a>
+                <div class="post-date">
+                  2020-01-09
+                </div>
+                <div class="post-abstract">
+                  <p><strong>关于ASLR</strong><br>
+ASLR（地址随机化）是一种针对缓冲区溢出的安全保护技术，通过对堆、栈、共享库映射等线性区布局的随机化，通过增加攻击者预测目的地址的难度，防止攻击者直接定位攻击代码位置，达到阻止溢出攻击的目的。<br>
+但是，地址随机化不是对所有模块和内存区都进行随机化！</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/wJqAq8fzp/">
+                  <h2 class="post-title">Pwn(格式化字符串漏洞)</h2>
+                </a>
+                <div class="post-date">
+                  2020-01-04
+                </div>
+                <div class="post-abstract">
+                  <p>格式化字符串漏洞往往是由程序员错误使用格式化输出函数造成的。例如<br>
+print(s)</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/6-c_k0RG4/">
+                  <h2 class="post-title">Pwn(绕过canary保护机制)</h2>
+                </a>
+                <div class="post-date">
+                  2020-01-03
+                </div>
+                <div class="post-abstract">
+                  <p><strong>canary</strong><br>
+canary保护机制是随机生成一个4字节整数。放在EBP前面。和一个地址里。。</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/R_m3Wc3Ol/">
+                  <h2 class="post-title">Pwn(整数溢出漏洞)</h2>
+                </a>
+                <div class="post-date">
+                  2020-01-03
+                </div>
+                <div class="post-abstract">
+                  <p><strong>漏洞介绍</strong><br>
+整数就是没有小数的数字<br>
+在计算机中。有符号数用二进制表示。表示负数的时候。将二进制最高为来表示数字的符号，最高为是1就是负数。最高位是0就表是正数</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/VmMTWCNZj/">
+                  <h2 class="post-title">pwnable.kr(collision)</h2>
+                </a>
+                <div class="post-date">
+                  2020-01-02
+                </div>
+                <div class="post-abstract">
+                  <p>ssh连接服务器，查看下目录</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/3bsz18r4Q/">
+                  <h2 class="post-title">pwnable.kr(fd)</h2>
+                </a>
+                <div class="post-date">
+                  2020-01-02
+                </div>
+                <div class="post-abstract">
+                  <p>首先ssh连接服务器</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/ApjkvCfFw/">
+                  <h2 class="post-title">看雪学院(汇编学习)</h2>
+                </a>
+                <div class="post-date">
+                  2020-01-02
+                </div>
+                <div class="post-abstract">
+                  <pre><code></code></pre>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/ZQqkVti1I/">
+                  <h2 class="post-title">汇编语言笔记(三)</h2>
+                </a>
+                <div class="post-date">
+                  2020-01-02
+                </div>
+                <div class="post-abstract">
+                  <p><strong>汇编语言源程序</strong><br>
+汇编语言源程序中，包含两种指令，汇编指令和伪指令，汇编指令有对应的机器码的指令，可以被编译成机器指令，比如mov ax,123H</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/LUVP0gLD7/">
+                  <h2 class="post-title">汇编语言笔记(二)</h2>
+                </a>
+                <div class="post-date">
+                  2020-01-02
+                </div>
+                <div class="post-abstract">
+                  <p><strong>数据段</strong></p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/BAH9Q1oUV/">
+                  <h2 class="post-title">汇编语言笔记(一)</h2>
+                </a>
+                <div class="post-date">
+                  2020-01-02
+                </div>
+                <div class="post-abstract">
+                  <p>通用寄存器</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/SiBgcW812/">
+                  <h2 class="post-title">汇编语言(王爽)练习题</h2>
+                </a>
+                <div class="post-date">
+                  2020-01-02
+                </div>
+                <div class="post-abstract">
+                  <p><strong>内存中的字存储</strong><br>
+CPU中，用16位寄存器存储一个字，高8位存放高位字节，低8位存放地位字节，<br>
+内存单元是字节单元,一个单元存放一个字节，一个字要用两个连续地址的内存单元存放<br>
+如下：</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/SkTbcIoeh/">
+                  <h2 class="post-title">C语言整数类型</h2>
+                </a>
+                <div class="post-date">
+                  2020-01-02
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+
+          <div class="pagination-container">
+  
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

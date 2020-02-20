@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>ctf.show红包题第五弹 | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">ctf.show红包题第五弹</h2>
+            <div class="post-date">2020-02-16</div>
+            
+            <div class="post-content">
+              <p>下载地址：<code>https://www.lanzous.com/i9e23fi</code><br>
+binwalk。foremost得到了一个MP3以及两张图片<br>
+<img src="https://guokeya.github.io/post-images/1581858172393.png" alt="" loading="lazy"></p>
+<!-- more -->
+<p>JPG。首先就右键看下有没有敏感信息。或提示。隐写<br>
+MP3。基本就看波形。看详细信息。MP3隐写<br>
+群主后来放出了Hint。和MP3无关。那么方向基本就是JPG隐写了<br>
+经过一番尝试。一个个试。。终于试出来了<br>
+<img src="https://guokeya.github.io/post-images/1581858458824.png" alt="" loading="lazy"><br>
+base64解码后。是一个URL。下载得到red5.zip<br>
+得到一串类似16进制字符串的数据<br>
+<img src="https://guokeya.github.io/post-images/1581858538407.png" alt="" loading="lazy"><br>
+写脚本解码下</p>
+<pre><code>f=open('flag.txt','r')
+data=f.read()
+f.close()
+result=''
+for i in range(0,len(data),2):
+    result+=chr(int('0x'+data[i:i+2],16))
+print result
+</code></pre>
+<p>得到如下的东西<br>
+<img src="https://guokeya.github.io/post-images/1581858739374.png" alt="" loading="lazy"><br>
+刷过PIL题的我。一眼就看出来。这是RGB的值。前面的是坐标。接下来就写个脚本。将坐标和值。用PIL库画图</p>
+<pre><code>from PIL import Image
+import re
+pic=Image.new(&quot;RGB&quot;,(200,200))
+file=open('3.txt','r')
+#3.txt中数据格式如下
+#[71:72](255, 255, 255)
+#[71:73](255, 255, 255)
+add=[]
+m=file.read().split(&quot;\n&quot;)
+for i in range(len(m)-1):
+    data=re.match('\[(.*)\]',m[i]).group(1).split(':')
+    add.append(data)
+#将坐标取出来。用：分割作为一个数组放入add数组。成为二维数组
+f=open('yes.txt','r')
+#yes.txt是只有RGB值的数据
+data=f.readlines()
+rgb=[]
+for i in range(len(data)):
+    rgb.append(data[i].replace(&quot;\n&quot;,&quot;&quot;).split(','))
+#取出来。用逗号分割
+for i in range(5328):
+    pic.putpixel([int(add[i][0]),int(add[i][1])],(int(rgb[i][0].replace('(','')),int(rgb[i][1]),int(rgb[i][2].replace(')',''))))
+#这一步比较复杂。pic.putpixel([x,y],(255,255,255))
+#x,y是坐标，(255,255,255)就是RGB值。这里我用二维数组。将每个值。单独取出来。
+pic.show()
+</code></pre>
+<p>得到了一个二维码。但貌似。上下颠倒了<br>
+<img src="https://guokeya.github.io/post-images/1581859123980.png" alt="" loading="lazy"><br>
+用画图工具。截取上面的放下面。下面的放上面。<br>
+扫描二维码。得到flag<br>
+<img src="https://guokeya.github.io/post-images/1581859180856.png" alt="" loading="lazy"></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/z6LGuzLFL/" class="tag">
+                    杂项
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/suctf-2018getshellwu-shu-zi-zi-mu-webshell/">
+                  <h3 class="post-title">
+                    [SUCTF 2018]GetShell(无数字字母webshell)
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

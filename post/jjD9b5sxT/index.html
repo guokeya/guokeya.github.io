@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>PHP mt_rand 随机数安全 | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">PHP mt_rand 随机数安全</h2>
+            <div class="post-date">2020-01-02</div>
+            
+            <div class="post-content">
+              <p><strong>函数介绍</strong></p>
+<!-- more -->
+<pre><code>mt_rand()，用于产生一个随机数，用Mersenne Twister算法的特性，有两个可选参数(min,max)
+mt_rand(5,15)随机产生5-15之间的随机数
+mt_rand()随机产生0-mt_getrandmax()之间的伪随机数
+</code></pre>
+<p>伪随机数:</p>
+<pre><code>伪随机数，并不是真正的随机，如果种子不变，那么这个伪随机数存在一定风险
+</code></pre>
+<p>mt_rand()安全问题:</p>
+<pre><code>mt_rand就是一个伪随机数生成函数，通过一个种子产生伪随机数，如果知道了种子，或者已经产生的随机数，都可能获得其他随机数的信息
+</code></pre>
+<pre><code>假设mt_rand()生成算法为，rand=seed+(i*10),seed是种子，这是我们不知道的，i是第几次调用，如果我们知道rand(结果)和i(第几次调用)那么就能反推出来seed(种子)的值，拿到种子，就能利用种子，自己调用mt_rand()生成结果
+</code></pre>
+<p>[GWCTF 2019]枯燥的抽奖<br>
+进入题目,随手翻翻有什么东西。robots.txt。源代码。源码泄露。都看看<br>
+<img src="https://guokeya.github.io/post-images/1577953151461.png" alt="" loading="lazy"><br>
+找到一个php文件。访问看看<br>
+<img src="https://guokeya.github.io/post-images/1577953157565.png" alt="" loading="lazy"><br>
+OK。程序源码<br>
+<img src="https://guokeya.github.io/post-images/1577953163613.png" alt="" loading="lazy"><br>
+这段代码就是根据rand函数随机生成一个seed(种子),然后去mt_rand生成随机数。然后把字符串前十个输出给我们<br>
+很明显。这题就是伪随机数。由于我们已经知道了前面10个字符。那么就可以通过php_mt_rand工具来破解<br>
+https://www.openwall.com/php_mt_seed/<br>
+我们先来通过那10个字符串转换为php_mt_seed可识别的格式</p>
+<pre><code>str1='abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+#源代码中的字符串
+str2='xaLyvX6QTh'
+#给你的10个字符串
+str3 = str1[::-1]
+length = len(str2)
+res=''
+for i in range(len(str2)):
+    for j in range(len(str1)):
+        if str2[i] == str1[j]:
+            res+=str(j)+' '+str(j)+' '+'0'+' '+str(len(str1)-1)+' '
+            break
+print (res)
+</code></pre>
+<p>得到结果</p>
+<pre><code>23 23 0 61 0 0 0 61 47 47 0 61 24 24 0 61 21 21 0 61 59 59 0 61 32 32 0 61 52 52 0 61 55 55 0 61 7 7 0 61
+</code></pre>
+<p>使用php_mt_seed来获取seed的值，这里我的seed值为751184378<br>
+<img src="https://guokeya.github.io/post-images/1577953184647.png" alt="" loading="lazy"><br>
+用seed的值重新播种。注意。这里用PHP7.1.0+版本。才能获取正确结果</p>
+<pre><code>&lt;?php
+mt_srand(751184378);
+$str1='abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+$len=20;
+$str2='';
+for($i=0;$i&lt;$len;$i++){
+	$str2.=substr($str1,mt_rand(0,strlen($str1)-1),1);
+}
+echo $str2;
+?&gt;
+</code></pre>
+<p>就是照着源代码打一遍。只不过mt_srand换成我们已知的<br>
+拿到flag<br>
+<img src="https://guokeya.github.io/post-images/1577953210943.png" alt="" loading="lazy"></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/CTF/" class="tag">
+                    CTF
+                  </a>
+                
+                  <a href="https://guokeya.github.io/tag/Web/" class="tag">
+                    Web安全
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/VmMTWCNZj/">
+                  <h3 class="post-title">
+                    pwnable.kr(collision)
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

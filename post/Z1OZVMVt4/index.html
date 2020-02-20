@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Centos 6.5安装完LNMP后的加固 | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Centos 6.5安装完LNMP后的加固</h2>
+            <div class="post-date">2020-01-02</div>
+            
+            <div class="post-content">
+              <p><strong>1.创建普通用户并进行sudo授权管理</strong></p>
+<!-- more -->
+<pre><code>useradd zhb
+password zhb
+vi /etc/sudoers
+zhb    ALL=(ALL)   ALL
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1577949860574.png" alt="" loading="lazy"><br>
+<strong>2.配置SSH服务配置</strong></p>
+<pre><code>vim /etc/ssh/sshd_config
+#ssh的配置文件目录
+Protocol 2
+#只允许使用2版本协议
+Port 1433
+#修改ssh端口为1433
+PermitRootLogin no
+#禁止root登陆
+PermitEmptyPasswords no
+#禁止空密码登陆
+MaxAuthTries 3
+#最大密码尝试失败次数3次，防止暴力破解
+ClientAliveInterval 90
+#90秒检测一次
+ClientAliveCountMax 2
+#检测到2次不活动就断开连接
+</code></pre>
+<p><strong>3.删除不必要的系统用户和组</strong></p>
+<pre><code>vim /etc/passwd,在用户前面加个#，注释掉
+#删除不必要的用户
+userdel adm
+userdel lp
+userdel sync
+userdel shutdown
+userdel halt
+userdel news
+userdel uucp
+userdel operator
+userdel games
+userdel gopher
+userdel ftp
+
+vim /etc/group,在组前面加个#，注释掉
+#删除不必要的群组
+groupdel adm
+groupdel lp
+groupdel news
+groupdel uucp
+groupdel games
+groupdel dip
+groupdel pppusers
+</code></pre>
+<p><strong>4.关闭不必要的系统服务</strong></p>
+<pre><code>service acpid stop;chkconfig acpid off
+#电源服务
+service cpuspeed stop;chkconfig cpusped off
+#省电的
+service cups stop;chkconfig cups off
+#打印机服务
+service ip6tables stop;chkconfig ip6tables off
+#关闭IPv6
+</code></pre>
+<p><strong>5.关闭重启ctl-alt-delete组合键</strong></p>
+<pre><code>vim /etc/init/control-alt-delete.conf
+#注释最后一行exec的
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1577949955036.png" alt="" loading="lazy"><br>
+6.内核参数优化</p>
+<pre><code>sysctl -w net.ipv4.icmp_echo_ignore_broadcasts=1
+#忽略icmp广播
+sysctl -w net.ipv4.icmp_echo_ignore_all=1
+#忽略echo请求，禁ping
+sysctl -w net.ipv4.ip_default_ttl=128
+#修改TTL值
+sysctl -w net.ipv4.tcp_syncookies=1
+#开启SYN Cookies，当出现SYN等待队列溢出时，启用Cookies来处，理，可防范少量SYN攻击
+sysctl -w kernel.randomize_va_space = 2
+#堆栈地址随机初始化，防御溢出的
+</code></pre>
+<p>7.启用密码策略</p>
+<pre><code>vim /etc/login.defs
+#设置账号密码复杂度，密码过期策略
+PASS_MAX_DAYS   60          #最大有效时间
+PASS_MIN_DAYS   0           #最小有效时间
+PASS_MIN_LEN    8           #密码最小长度
+PASS_WARN_AGE   7           #到期7天前警告
+
+vim /etc/pam.d/system-auth
+#本地认证的文件
+在password和pam_unix.so字段后面。加上remeber=5
+#禁止使用最近用过的5个密码
+在password和pam_cracklib.so字段后面，加上retry=3 difok=3 minlen=10
+#difok=3，允许新、密码个数为3
+#retry=3，密码强度不够可重试3次
+#minlen=10，密码最小长度为10
+还可以加以下参数
+ucredit=-1  #密码至少包含一个大写字母
+lcredit=-2  #两个小写字母
+dcredit=-1  #一个数字
+ocredit=-1  #一个符号
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1577949975064.png" alt="" loading="lazy"><br>
+8.Mysql服务配置</p>
+<pre><code>drop user '用户名'@'登陆地址';
+#删除mysql默认用户，空密码用户，任意IP登陆用户，匿名用户
+set password from `root`@'localhost'=password('xxxxx');
+#设置强密码
+grant select,insert,update,delete on test.* to 'web'@'localhost' identified by '用户的密码' with grant option;
+#设置数据库用户权限，查，增，更，删 on test数据库下的所有表
+vim /etc/my.cnf
+#修改myql的配置文件
+在[mysqld]下添加
+set-variable=local-infile=0
+#禁止本地文件读取
+skip-show-database
+#禁止浏览其他用户数据库
+log=/var/log/mysql/access.log
+#配置日志路径，重启服务后生效
+mkdir /var/log/mysql
+#创建目录
+chown mysql:mysql /var/log/mysql
+#修改所属用户和组
+chmod 755 /var/log/mysql
+#修改权限，给写权限
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1577949996685.png" alt="" loading="lazy"><br>
+9.禁止root登陆，切换到root</p>
+<pre><code>vim /etc/pam.d/su   添加一行
+auth    required    pam_wheel.so group=wheel
+#只允许wheel组的成员su到root
+usermod -G wheel zhb
+#添加zhb用户到wheel组
+</code></pre>
+<p>10.php加固</p>
+<pre><code>vim /etc/php-fpm.d/www.conf
+user=www-data
+group=www-data
+#php-fpm降权
+vim /etc/php.ini
+safe_mode=On
+#开启安全模式
+open_basedir = /usr/local/nginx/html/
+#php脚本能访问的目录
+disable_function=chmod,exec,system,passthru,shell_exec,escapeshellarg,escapeshellcmd,proc_close,proc_open,ini_alter,dl,popen,pcntl_exec,socket_accept,socket_bind,socket_clear_error,socket_close,socket_connect,socket_create_listen,socket_create_pair,socket_create,socket_get_option,socket_getpeername,socket_getsockname,socket_last_error,socket_listen,socket_read,socket_recv,socket_recvfrom,socket_select,socket_send,socket_sendto,socket_set_block,socket_set_nonblock,socket_set_option,socket_shutdown,socket_strerror,socket_write,stream_socket_client,stream_socket_server,pfsockopen,disk_total_space,disk_free_space,chown,diskfreespace,getrusage,get_current_user,getmyuid,getmypid,dl,leak,listen,chgrp,link,symlink,dlopen,proc_nice,proc_get_stats,proc_terminate,shell_exec,sh2_exec,posix_getpwuid,posix_getgrgid,posix_kill,ini_restore,mkfifo,dbmopen,dbase_open,filepro,filepro_rowcount,posix_mkfifo,putenv,sleep
+#禁用一些危险函数
+display_errors = Off
+#关闭错误信息
+register_globals = Off
+#关闭注册全局变量，POST或者GET提交的变量，都将自动注册为全局变量
+magic_quotes_gpc = On
+#转义特殊字符串
+expose_php = Off
+#关闭HTTP返回的PHP版本信息
+</code></pre>
+<p>11.Suid，777目录等权限</p>
+<pre><code>find / -perm +4000 -type f 2&gt;/dev/null
+#查找根目录下存在suid的命令
+find / -perm +0222 -type d 2&gt;/dev/null
+#查找可写权限的目录
+</code></pre>
+<p>12.重要文件不可改变属性</p>
+<pre><code>chattr +i /etc/shadow
+chattr +i /etc/passwd
+chattr +i /etc/gshadow
+chattr +i /etc/group
+#注意，这边如果不可改变属性，那就不能更改密码等。因为涉及到shadow文件
+</code></pre>
+<p>13.打补丁，注意服务、系统漏洞</p>
+<pre><code>uname -a
+searchsploit
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1577950031605.png" alt="" loading="lazy"></figure>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/系统安全/" class="tag">
+                    系统安全
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/fsDq7cBM4/">
+                  <h3 class="post-title">
+                    纪录下搭建LNMP的过程
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

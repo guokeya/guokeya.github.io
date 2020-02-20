@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>ctfshow红包题第八弹 | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">ctfshow红包题第八弹</h2>
+            <div class="post-date">2020-02-19</div>
+            
+            <div class="post-content">
+              <p>给了个压缩包<br>
+<img src="https://guokeya.github.io/post-images/1582096281200.png" alt="" loading="lazy"><br>
+mima.png不需要密码。<br>
+NBA.mp4需要密码<br>
+思路应该就是mima.png-&gt;NBA.mp4-&gt;flag</p>
+<!-- more -->
+<p>mima.png。第一反应是盲文。但盲文是两行。不太对。继续搜索<br>
+<img src="https://guokeya.github.io/post-images/1582096341871.png" alt="" loading="lazy"><br>
+在图片最后发现kobe code<br>
+<img src="https://guokeya.github.io/post-images/1582096428883.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1582096490099.png" alt="" loading="lazy"><br>
+解密得到密码<code>OAEBEYTKNRBANB</code><br>
+用这个密码解压。得到NBA.MP4<br>
+但是打不开。这时候有两种可能<br>
+1。这不是个MP4文件。改后缀打开<br>
+2。MP4文件损坏。需要修复<br>
+搜下MP4的文件头。<code>https://www.jianshu.com/p/fa3486e65955</code><br>
+对照一下。发现。NBA.mp4十六进制貌似是反的<br>
+<img src="https://guokeya.github.io/post-images/1582097097059.png" alt="" loading="lazy"><br>
+写个脚本转换一下</p>
+<pre><code>f=open('NBA.mp4','r')
+data=f.read()
+for i in data:
+    print hex(ord(i))
+</code></pre>
+<p><code>python exp.py &gt; 1.txt</code><br>
+得到文件的16进制</p>
+<pre><code>f=open('1.txt','r')
+data=f.readlines()
+d=''
+for i in data:
+    result=i.replace(&quot;\n&quot;,&quot;&quot;).replace(&quot;0x&quot;,&quot;&quot;)
+    if len(result)!=2:
+        d+=chr(int('0x'+result+'0',16))
+    else:
+        d+=chr(int('0x'+result[::-1],16))
+print d
+</code></pre>
+<p><code>python exp.py &gt;2.mp4</code><br>
+得到一个视频<br>
+在2分48秒。得到一张二维码<br>
+<img src="https://guokeya.github.io/post-images/1582097726770.png" alt="" loading="lazy"><br>
+扫描就有flag了</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/z6LGuzLFL/" class="tag">
+                    杂项
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/ctfshow-hong-bao-ti-di-wu-dan/">
+                  <h3 class="post-title">
+                    ctf.show红包题第五弹
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

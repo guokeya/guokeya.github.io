@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>[RoarCTF 2019]Easy Calc(PHP字符串特性+HTTP走私) | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">[RoarCTF 2019]Easy Calc(PHP字符串特性+HTTP走私)</h2>
+            <div class="post-date">2020-01-16</div>
+            
+            <div class="post-content">
+              <p>通过查看JS。发现数据处理的PHP文件<br>
+<img src="https://guokeya.github.io/post-images/1579176734838.png" alt="" loading="lazy"></p>
+<!-- more -->
+<p>题目说。上了WAF。而源码中。又只过滤了一些危险字符。<br>
+我们试试p字符串。<br>
+<img src="https://guokeya.github.io/post-images/1579176786070.png" alt="" loading="lazy"><br>
+返回403？一般都是PHP过滤的。这里403.应该就是题目说的WAF了<br>
+那么整个处理流程应该是。前端服务器WAF过滤。-&gt;后端PHP黑名单过滤<br>
+上一篇HTTP走私文章讲了。如果存在两个Content-Length头。那么服务器会报400错误。<br>
+如果给两个CL头。使其400错误。然后再转发给后端的服务器。那么就执行成功了<br>
+<img src="https://guokeya.github.io/post-images/1579176979131.png" alt="" loading="lazy"><br>
+首先。我们设置了两个CL头。前端服务器爆400错误。<br>
+然后又转发给了后端服务器。后端服务器再去判断。是否有危险字符。<br>
+这里我们又遇到个坑。就是。后端服务器还过滤了./这些<br>
+如图。a-z0-9都是可以输出的。当我测试./时。就不行了<br>
+<img src="https://guokeya.github.io/post-images/1579177386141.png" alt="" loading="lazy"><br>
+那就通过chr来构造字符。<br>
+后面我想。直接用chr构造个/，flagg直接明文拼接<br>
+然而又不行。不知道为什么。<br>
+<img src="https://guokeya.github.io/post-images/1579177518794.png" alt="" loading="lazy"><br>
+第二种解法：<br>
+利用PHP的字符串解析特性Bypass<br>
+PHP在处理请求时。会将所有参数转换为有效的变量名。在解析字符串时。会先删除空白符。再将某些特殊字符转换为下划线(包括空格)</p>
+<pre><code>INPUT                           Decode                       variable name    
+%20foo_bar%00                    foo_bar                      foo_bar         
+foo%20bar%00                     foo bar                      foo_bar
+foo[bar                          foo[bar                      foo_bar
+</code></pre>
+<pre><code>{chr}foo_bar -&gt; 20 ( )
+{chr}foo_bar -&gt; 26 (&amp;)
+{chr}foo_bar -&gt; 2b (+)
+
+foo{chr}bar -&gt; 20 ( )
+foo{chr}bar -&gt; 2b (+)
+foo{chr}bar -&gt; 2e (.)
+foo{chr}bar -&gt; 5b ([)
+foo{chr}bar -&gt; 5f (_)
+
+foo_bar{chr} -&gt; 00 ()
+foo_bar{chr} -&gt; 26 (&amp;)
+foo_bar{chr} -&gt; 3d (=)
+</code></pre>
+<p>空格&amp;+.|<em>[都会被转义为</em><br>
+那么我们在num参数前面加个空格。WAF匹配num参数。而我们传参的却是空格num<br>
+也就绕过了WAF。<br>
+<img src="https://guokeya.github.io/post-images/1579178573980.png" alt="" loading="lazy"></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/CTF/" class="tag">
+                    CTF
+                  </a>
+                
+                  <a href="https://guokeya.github.io/tag/Web/" class="tag">
+                    Web安全
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/AQdKm74xy/">
+                  <h3 class="post-title">
+                    HTTP请求走私
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/ctfshow-hong-bao-ti-di-ba-dan/">
+                  <h2 class="post-title">ctfshow红包题第八弹</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-19
+                </div>
+                <div class="post-abstract">
+                  <p>给了个压缩包<br>
+<img src="https://guokeya.github.io/post-images/1582096281200.png" alt="" loading="lazy"><br>
+mima.png不需要密码。<br>
+NBA.mp4需要密码<br>
+思路应该就是mima.png-&gt;NBA.mp4-&gt;flag</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/ctfshow-hong-bao-ti-di-wu-dan/">
+                  <h2 class="post-title">ctf.show红包题第五弹</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-16
+                </div>
+                <div class="post-abstract">
+                  <p>下载地址：<code>https://www.lanzous.com/i9e23fi</code><br>
+binwalk。foremost得到了一个MP3以及两张图片<br>
+<img src="https://guokeya.github.io/post-images/1581858172393.png" alt="" loading="lazy"></p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/suctf-2018getshellwu-shu-zi-zi-mu-webshell/">
+                  <h2 class="post-title">[SUCTF 2018]GetShell(无数字字母webshell)</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-15
+                </div>
+                <div class="post-abstract">
+                  <p>是一个文件上传功能<br>
+取文件内容第6位匹配黑名单(<code>$b</code>)。但是我们并不知道<code>$b</code>内容是啥。只能通过fuzz<br>
+<img src="https://guokeya.github.io/post-images/1581763998906.png" alt="" loading="lazy"></p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/ctfshow-de-liang-ti-hong-bao-ti/">
+                  <h2 class="post-title">ctf.show的两题红包题</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-12
+                </div>
+                <div class="post-abstract">
+                  <p>第一题：MISC<br>
+下载地址：<code>https://www.lanzous.com/i98rs2j</code><br>
+解压出了86张图片。发现是一个GIF分帧出来的<br>
+尝试合成GIF。发现没东西<br>
+每张图片后面都存在一串Base64</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/ciscn2019-hua-bei-sai-qu-day1-web2ikunpython-fan-xu-lie-hua/">
+                  <h2 class="post-title">[CISCN2019 华北赛区 Day1 Web2]ikun(python反序列化)</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-12
+                </div>
+                <div class="post-abstract">
+                  <p>进入主页。就说要买V6</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/wang-ding-bei-2018commentgit-hui-fu/">
+                  <h2 class="post-title">[网鼎杯 2018]Comment（Git恢复+二次注入）</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-11
+                </div>
+                <div class="post-abstract">
+                  <p>扫目录扫到Git。githack恢复下<br>
+我用GitHack只恢复了一个write_do.php但是。里面代码是少了一部分的<br>
+这里需要用到<code>https://github.com/wangyihang/githacker</code>这个工具<br>
+我用的其他工具恢复出来只有文件。没有.git目录</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/swpuctf-2016web7urllib-tou-zhu-ru-ssrf/">
+                  <h2 class="post-title">[SWPUCTF 2016]Web7(urllib头注入+SSRF)</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-10
+                </div>
+                <div class="post-abstract">
+                  <p>首先。题目就一个input和login<br>
+login需要admin密码<br>
+先从input开始<br>
+随手输了个123报错了。</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/harekazectf2019encode_and_encode/">
+                  <h2 class="post-title">[HarekazeCTF2019]encode_and_encode</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-10
+                </div>
+                <div class="post-abstract">
+                  <p>进去就三个链接。<br>
+<img src="https://guokeya.github.io/post-images/1581319850698.png" alt="" loading="lazy"></p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/ciscn2019-hua-bei-sai-qu-day1-web5cyberpunk/">
+                  <h2 class="post-title">[CISCN2019 华北赛区 Day1 Web5]CyberPunk</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-10
+                </div>
+                <div class="post-abstract">
+                  <p>一题关于二次注入的题</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/wu-xu-bao-po-huan-yuan-mt_randchong-zi/">
+                  <h2 class="post-title">无需暴破还原mt_rand()种子</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-09
+                </div>
+                <div class="post-abstract">
+                  <p>详情看文章：https://www.anquanke.com/post/id/196831#h2-6<br>
+对于这个原理。还是懵懵的。</p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/vulnhubdc-456-ba-ji/">
+                  <h2 class="post-title"> [vulnhub]DC-4/5/6靶机</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-07
+                </div>
+                <div class="post-abstract">
+                  <p><strong>DC-4</strong><br>
+开放22,80端口<br>
+<img src="https://guokeya.github.io/post-images/1581059968785.png" alt="" loading="lazy"></p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/vulnhubdc-1dc-2-ba-ji/">
+                  <h2 class="post-title"> [vulnhub]DC-1/DC-2靶机</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-06
+                </div>
+                <div class="post-abstract">
+                  <p><strong>DC-1</strong><br>
+开放端口</p>
+<pre><code>PORT      STATE SERVICE VERSION
+22/tcp    open  ssh     OpenSSH 6.0p1 Debian 4+deb7u7 (protocol 2.0)
+80/tcp    open  http    Apache httpd 2.2.22 ((Debian))
+111/tcp   open  rpcbind 2-4 (RPC #100000)
+38538/tcp open  status  1 (RPC #100024)
+</code></pre>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/vulnhubsunrise-ba-ji/">
+                  <h2 class="post-title"> [vulnhub]sunrise靶机</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-05
+                </div>
+                <div class="post-abstract">
+                  <p>开放端口22/80/3306/8080<br>
+<img src="https://guokeya.github.io/post-images/1580896853991.png" alt="" loading="lazy"></p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/vulnhubfive86-2-ba-ji/">
+                  <h2 class="post-title">[vulnhub]Five86-2靶机</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-05
+                </div>
+                <div class="post-abstract">
+                  <p>开放了20,21,80端口<br>
+<img src="https://guokeya.github.io/post-images/1580876964974.png" alt="" loading="lazy"></p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://guokeya.github.io/post/vulnhubfive86-1-ba-ji/">
+                  <h2 class="post-title">[vulnhub]Five86-1靶机</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-05
+                </div>
+                <div class="post-abstract">
+                  <p><strong>开放端口</strong><br>
+<img src="https://guokeya.github.io/post-images/1580871210652.png" alt="" loading="lazy"></p>
+
+                </div>
+              </div>
+              
+            </article>
+          
+
+          <div class="pagination-container">
+  
+  
+    <a href="https://guokeya.github.io/page/2" class="next">下一页 <i class="icon-arrow-ios-forward-outline"></i></a>
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

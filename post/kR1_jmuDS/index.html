@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>首届360杯网络安全职业技能大赛 Web(立誓要成为admin) writeup | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">首届360杯网络安全职业技能大赛 Web(立誓要成为admin) writeup</h2>
+            <div class="post-date">2020-01-02</div>
+            
+            <div class="post-content">
+              <p><strong>环境说明:</strong><br>
+由于比赛结束。官方也没给源代码和靶机。就没有漏洞环境了</p>
+<!-- more -->
+<p><strong>writeup</strong><br>
+大概，就是有一个登陆界面，注册界面，可以注册用户<br>
+注册admin空格，无果,注册test查看cookie也没有东西。只存在一个session<br>
+但是，注册界面存在sql盲注，sql注入跑一下，发现能注入，拿到管理员密码<br>
+图片搬运工上线~~~~~~~图片来源360网络安全大学<br>
+<img src="https://guokeya.github.io/post-images/1577950744577.jpg" alt="" loading="lazy"><br>
+md5解不开。就很难受<br>
+sql注入，在权限够大的时候，能够读取文件和导出文件，这里我们试着读取下passwd<br>
+<img src="https://guokeya.github.io/post-images/1577950756554.jpg" alt="" loading="lazy"><br>
+欸，很舒服，读取下index.php源码<br>
+<img src="https://guokeya.github.io/post-images/1577950761757.jpg" alt="" loading="lazy"><br>
+没有权限，试试导出一句话<br>
+<img src="https://guokeya.github.io/post-images/1577950771878.jpg" alt="" loading="lazy"><br>
+也不行<br>
+扫描目录。发现test.php<br>
+<img src="https://guokeya.github.io/post-images/1577950778650.jpg" alt="" loading="lazy"><br>
+预测后端代码var_dump($_SESSION);<br>
+回想到它是通过session来判断是否用户。而session常保存在/tmp/sess_随机字符串<br>
+而这个随机字符串是可以从浏览器看到的<br>
+那么我们是否可以sqlmap导出一个sess_随机字符串，内容是我们构造的admin</p>
+<p>比如，我这的PHPSESSID是ot6dubihmns0evn1tsoej2hbe6,那么它的session文件就为/tmp/sess_ot6dubihmns0evn1tsoej2hbe6,只要这个文件存在，你带着sessionid去访问页面，它就判定你是ID对应的用户<br>
+<img src="https://guokeya.github.io/post-images/1577950788252.png" alt="" loading="lazy"><br>
+开始构造:<br>
+user|s:4:&quot;test&quot;;<br>
+#test用户<br>
+user|s:5:&quot;admin&quot;;<br>
+#构造的admin用户<br>
+1' union select 'username|s:5:&quot;admin&quot;;' into outfile '/tmp/sess_ot6dubihmns0evn1tsoej2hbe5'<br>
+#创建admin用户的session文件<br>
+修改浏览器的sessionID，然后访问index.php,拿到flag<br>
+<img src="https://guokeya.github.io/post-images/1577950803785.jpg" alt="" loading="lazy"></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/CTF/" class="tag">
+                    CTF
+                  </a>
+                
+                  <a href="https://guokeya.github.io/tag/Web/" class="tag">
+                    Web安全
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/31yLuqlo-/">
+                  <h3 class="post-title">
+                    Mysql数据库学习
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

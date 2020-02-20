@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>[jactf]sawed | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">[jactf]sawed</h2>
+            <div class="post-date">2020-01-31</div>
+            
+            <div class="post-content">
+              <p>上上下下左左右右BABA<br>
+全是awsde组成的字符串</p>
+<!-- more -->
+<p><img src="https://guokeya.github.io/post-images/1580476003058.png" alt="" loading="lazy"><br>
+一开始想。替换ab。培根密码。替换出来。字符串没啥意义。放弃<br>
+看writeup<br>
+a代表左移。<br>
+w代表上移<br>
+s代表下移<br>
+d代表右移<br>
+e代表分割<br>
+。用matplotlib.pyplot库来进行绘图</p>
+<pre><code>import matplotlib.pyplot as plt
+with open(&quot;sawed.txt&quot;,&quot;r+&quot;) as file:
+	content = file.read()
+
+contentListX = []
+contentListY = []
+x = 0
+y = 0
+for c in content:
+	if c==&quot;a&quot;:
+		x = x-1
+	elif c==&quot;d&quot;:
+		x = x+1
+	elif c==&quot;w&quot;:
+		y = y+1
+	elif c==&quot;s&quot;:
+		y = y-1
+	else:
+		continue
+	contentListX.append(x)
+	contentListY.append(y)
+plt.plot(contentListX,contentListY)
+plt.show()
+</code></pre>
+<p>以X,Y轴，根据aswd的来进行yx轴的变化。存入数组中。<br>
+然后根据xy数组。一一对应。打印出(x,y)(x,y)点组成的图像<br>
+<img src="https://guokeya.github.io/post-images/1580476176981.png" alt="" loading="lazy"><br>
+恕我眼拙。根本看不出来这是啥子字符串好吧<br>
+flag{WASDING&gt;FUN}</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/z6LGuzLFL/" class="tag">
+                    杂项
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/jactfsimple_transfernsf-shu-ju-fen-xi/">
+                  <h3 class="post-title">
+                    [jactf]simple_transfer(nsf数据分析)
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

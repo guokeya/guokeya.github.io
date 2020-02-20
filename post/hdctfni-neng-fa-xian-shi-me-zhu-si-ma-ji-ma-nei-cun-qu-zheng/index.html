@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>[HDCTF]你能发现什么蛛丝马迹吗(内存取证) | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">[HDCTF]你能发现什么蛛丝马迹吗(内存取证)</h2>
+            <div class="post-date">2020-01-20</div>
+            
+            <div class="post-content">
+              <p>题目给了一个<code>memory.img</code></p>
+<!-- more -->
+<pre><code>root@kali:/# file memory.img 
+memory.img: data
+</code></pre>
+<p>结合文件名。内存取证<br>
+用<code>volatility</code>神器<br>
+首先看文件的profile<br>
+<code>volatility -f memory.img imageinfo</code><br>
+可以看到目标可能是2003SP0/1/2x86操作系统<br>
+<img src="https://guokeya.github.io/post-images/1579518407217.png" alt="" loading="lazy"><br>
+查看下进程<br>
+<code>volatility -f memory.img --profile=Win2003SP1x86 pslist</code><br>
+用profile指定目标版本。当版本错误时。就没东西<br>
+<img src="https://guokeya.github.io/post-images/1579518524244.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579518554023.png" alt="" loading="lazy"><br>
+Dumptit.exe是个啥。。<br>
+根据PID将它从内存中取出来<br>
+volatility -f memory.img --profile=Win2003SP1x86 memdump -p1992 --dump-dir=./<br>
+得到1992.dmp<br>
+不能正常打开。用foremost提取文件<br>
+<code>foremost 1992.dmp</code><br>
+<img src="https://guokeya.github.io/post-images/1579518765315.png" alt="" loading="lazy"><br>
+audit.txt是报告。提取了哪些文件什么。的我们主要看gif和png和zip<br>
+扫出两个二维码。和两张图。都是一样的。<br>
+<img src="https://guokeya.github.io/post-images/1579518850609.png" alt="" loading="lazy"><br>
+扫描二维码得到了</p>
+<pre><code>jfXvUoypb8p3zvmPks8kJ5Kt0vmEw0xUZyRGOicraY4=
+</code></pre>
+<p>另一张图提示：<br>
+key:Th1s_1s_K3y00000<br>
+iv：1234567890123456<br>
+很快就想到了AES。当初做360的流量分析题。这个key和iv印象很深<br>
+拿到flag<br>
+<img src="https://guokeya.github.io/post-images/1579518945034.png" alt="" loading="lazy"></p>
+<p>更多volatility的选项：<br>
+iehistory  //IE历史纪录<br>
+filescan    //查找文件<br>
+cmdscan //cmd历史命令<br>
+pslist      //查看进程</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/取证分析/" class="tag">
+                    取证分析
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/hctf2018liang-dao-ti-liao-jie-flask-de-session-ji-zhi/">
+                  <h3 class="post-title">
+                    [HCTF2018]两道题了解flask的session机制
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>C语言整数类型 | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">C语言整数类型</h2>
+            <div class="post-date">2020-01-02</div>
+            
+            <div class="post-content">
+              <!-- more -->
+<pre><code>short int
+#占用空间比int小，用于较小数值的场合，节省空间，有符号类型
+long int
+#占用空间比int大，用于较大数值的场合，存储空间比int多，有符号类型
+long long int
+#占用储存空间比long多，适用于更大数值的场合，至少64位，有符号类型
+unsigned int
+#无符号类型，只能用于非负数的场合，比如16位的unsigned int取值范围为0~65535，而有符号类型的数值，取值范围为-32768~32767
+#个人理解如下(有错勿喷)：
+#0111111111111111开头的0是符号位，表示正负，转换为十进制为32767
+#1111111111111111无符号类型，把本来的0符号位，当成数据直接运算，转换结果为65535,多一位数据位，自然就能存放更多的数据
+signed
+#强调使用有符号类型的意图
+</code></pre>
+<p>这些数据大小类型如下：<br>
+<code>short int&lt; int&lt; long int&lt;long long int</code></p>
+<pre><code>最常见的设置是long long 占64位，long占32位，short占16位，int 占16位32位
+</code></pre>
+<p>如果一个数超出了int类型的取值范围，且在long类型取值范围内，使用long类型，然而会减慢运行速度<br>
+如果在long和int占用空间相同的机器上编写代码，当需要32位整数时，应使用long int而不是int，方便把程序移植到16位机器后，仍然能正常运行</p>
+<p>整数溢出：</p>
+<pre><code>#include &lt;stdio.h&gt;
+int main(void){
+	int i=2147483647;
+	unsigned int j=4294967295;
+	printf(&quot;%d %d %d\n&quot;,i,i+1,i+2);
+	printf(&quot;%u %u %u\n&quot;,j,j+1,j+2);
+	getchar();
+	return 0;
+
+}
+返回结果：
+2147483647 -2147483648 -2147483647
+4294967295 0 1
+</code></pre>
+<p>当数值超过定义类型的最大值时，就会溢出，重新从起点开始<br>
+int类型的变量，为溢出时2147483647，溢出时为-2147483648，溢出第二个时，为-2147483647，数值越来越大<br>
+unsigned long类型的变量，未溢出时为4294967295，溢出时为0，再加1为1，因为unsigned是没有负数的，所以溢出时，会直接从0开始</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/Pwn/" class="tag">
+                    Pwn
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/qaKknfeRe/">
+                  <h3 class="post-title">
+                    Node.js代码执行漏洞
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

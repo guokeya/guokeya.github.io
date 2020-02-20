@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>pwnable.kr(fd) | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">pwnable.kr(fd)</h2>
+            <div class="post-date">2020-01-02</div>
+            
+            <div class="post-content">
+              <p>首先ssh连接服务器</p>
+<!-- more -->
+<p>看下有什么文件<br>
+<img src="https://guokeya.github.io/post-images/1577952957536.png" alt="" loading="lazy"><br>
+有三个文件。我们能执行fd文件，查看fd.c。但是看不了flag。<br>
+fd是fd.c编译的程序。通过fd去查看flag</p>
+<pre><code>fd.c源码如下
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+char buf[32];
+int main(int argc, char* argv[], char* envp[]){
+	if(argc&lt;2){
+		printf(&quot;pass argv[1] a number\n&quot;);
+		return 0;
+	}
+	int fd = atoi( argv[1] ) - 0x1234;
+	int len = 0;
+	len = read(fd, buf, 32);
+	if(!strcmp(&quot;LETMEWIN\n&quot;, buf)){
+		printf(&quot;good job :)\n&quot;);
+		system(&quot;/bin/cat flag&quot;);
+		exit(0);
+	}
+	printf(&quot;learn about Linux file IO\n&quot;);
+	return 0;
+
+}
+</code></pre>
+<p>分析下程序：</p>
+<pre><code>定义了32字节大小的buf
+main函数：
+    1.argv是否&lt;2
+
+    2.fd=atoi(argv[1])-0x1234
+    这句是什么意思呢。atoi函数用来转换整数，如果失败，则返回零
+    1admin-&gt;1
+    admin-&gt;0
+
+    3.len=read(fd,buf,32)
+    read(fd,buf,32)
+    参数分别是:文件描述符，变量，读取长度
+    文件描述符是个啥呢
+    文件描述符	通道名	
+    0	stdin	标准输入
+    1	stdout	标准输出
+    2	stderr	标准错误
+    
+    4.strcmp(&quot;LETMEWIN\n&quot;,buf)
+    比较buf。也就是上面我们read的值。是否等于LETMEWIN\n，一样就输出flag
+</code></pre>
+<p>现在理一下思路<br>
+argv传参。转换整数-0x1234，再放入read函数，输入-LETMEWIN\n<br>
+构造一下PAYLOAD，将argv传入4660，然后-0x1234=0<br>
+read(0,buf,32)，再输入LETMEWIN\n，就能拿到flag了<br>
+<img src="https://guokeya.github.io/post-images/1577952994822.png" alt="" loading="lazy"></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/Pwn/" class="tag">
+                    Pwn
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/ApjkvCfFw/">
+                  <h3 class="post-title">
+                    看雪学院(汇编学习)
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

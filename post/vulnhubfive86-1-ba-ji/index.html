@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>[vulnhub]Five86-1靶机 | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">[vulnhub]Five86-1靶机</h2>
+            <div class="post-date">2020-02-05</div>
+            
+            <div class="post-content">
+              <p><strong>开放端口</strong><br>
+<img src="https://guokeya.github.io/post-images/1580871210652.png" alt="" loading="lazy"></p>
+<!-- more -->
+<p><img src="https://guokeya.github.io/post-images/1580871280765.png" alt="" loading="lazy"><br>
+10000端口对应的是<code>Webmin httpd 1.920版本</code><br>
+搜一下有没有exp<br>
+<img src="https://guokeya.github.io/post-images/1580871356429.png" alt="" loading="lazy"><br>
+有远程代码执行。但是搜一下。发现这个漏洞需要用户名密码登陆。暂且先放着<br>
+看下80端口<br>
+<img src="https://guokeya.github.io/post-images/1580871438984.png" alt="" loading="lazy"><br>
+reports需要登陆<br>
+robots.txt有个目录/ona<br>
+<img src="https://guokeya.github.io/post-images/1580871539996.png" alt="" loading="lazy"><br>
+继续搜exp。有msf模块。直接利用<br>
+<img src="https://guokeya.github.io/post-images/1580871579435.png" alt="" loading="lazy"><br>
+<code>cp /usr/share/exploitdb/exploits/php/webapps/47772.rb /usr/share/metasploit-framework/modules/exploits</code><br>
+<img src="https://guokeya.github.io/post-images/1580871855641.png" alt="" loading="lazy"><br>
+信息收集。数据库。用户名等<br>
+在www-data家目录发现提示<br>
+<img src="https://guokeya.github.io/post-images/1580871983195.png" alt="" loading="lazy"><br>
+douglas密码是10位由aefhrt组成的<br>
+<code>crunch 10 10 aefhrt &gt; passwd.txt</code><br>
+生成密码<br>
+<code>echo 'douglas:$apr1$9fgG/hiM$BtsL9qpNHUlylaLxk81qY1' &gt; bp</code><br>
+将加密密码放入bp<br>
+<code>john --wordlist=passwd.txt bp</code><br>
+john爆破<br>
+<img src="https://guokeya.github.io/post-images/1580872901019.png" alt="" loading="lazy"><br>
+得到密码：fatherrrrr<br>
+ssh登陆<br>
+<img src="https://guokeya.github.io/post-images/1580872949091.png" alt="" loading="lazy"><br>
+能以jen身份执行cp命令。那么就能写入jen的ssh公钥</p>
+<pre><code>ssh-keygen –t rsa –C “jen@five86-1”
+mv id_rsa.pub authorized_keys
+chmod 777 authorized_keys
+sudo -u jen /bin/cp authorized_keys /home/jen/.ssh/
+</code></pre>
+<p>ssh jen@127.0.0.1<br>
+在/var/mail/发现jen的邮件<br>
+得到moss的密码Fire!Fire!<br>
+ssh继续登陆<br>
+家目录有个.game文件夹。里面由很多可执行文件<br>
+有一个suid执行的root所属文件<br>
+<img src="https://guokeya.github.io/post-images/1580873200596.png" alt="" loading="lazy"><br>
+执行。拿到root权限<br>
+<img src="https://guokeya.github.io/post-images/1580873229030.png" alt="" loading="lazy"></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/EfzSPkBWE/" class="tag">
+                    渗透测试
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/vulnhubme-and-my-girlfriend-1-ba-ji/">
+                  <h3 class="post-title">
+                    [vulnhub]Me and My Girlfriend 1靶机
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

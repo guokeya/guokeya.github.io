@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>PowerShell Empire工具使用 | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">PowerShell Empire工具使用</h2>
+            <div class="post-date">2020-01-02</div>
+            
+            <div class="post-content">
+              <p><strong>介绍</strong><br>
+PowerShsell Empire中文简称 “帝国”，是一款针对windows系统平台打造的内网渗透神器，无需Powershell即可运行powershell，mimikatz，可桃皮网络检测，适应性强，类似于meterpreter</p>
+<!-- more -->
+<p>安装</p>
+<pre><code>git clone https://github.com/EmpireProject/Empire.git
+/opt/Empire/setup/install.sh
+</code></pre>
+<p>安装到这就结束了。末尾会让你输入随机生成的密码。直接回车就好了<br>
+/opt/Empire/empire<br>
+启动,如果报错no module xxxx，就用pip install xxx，装需要的模块就行了。这里是python2.7<br>
+<img src="https://guokeya.github.io/post-images/1577950890028.png" alt="" loading="lazy"><br>
+基本使用<br>
+help查看Empire使用帮助信息<br>
+<img src="https://guokeya.github.io/post-images/1577950898882.png" alt="" loading="lazy"><br>
+listeners 设置监听，这里报错没建立监听<br>
+uselistener tab 可以看到这里有9种模式<br>
+<img src="https://guokeya.github.io/post-images/1577950905043.png" alt="" loading="lazy"><br>
+我们设置一个http，试试<br>
+uselistener http<br>
+info查看具体参数设置<br>
+这里我设置了host和Name参数，host绑定IP，Name，这个实例的名字<br>
+<img src="https://guokeya.github.io/post-images/1577950910104.png" alt="" loading="lazy"><br>
+execute执行<br>
+<img src="https://guokeya.github.io/post-images/1577950914143.png" alt="" loading="lazy"><br>
+再次执行listeners，查看激活的listener，由于第一次我们没配置，所以没显示<br>
+<img src="https://guokeya.github.io/post-images/1577950921062.png" alt="" loading="lazy"><br>
+Tips:当你开启多个监听的时候，必须使用不同的名称(Name)，不然怎么区分，并且使用不同的端口，如果端口被占用了。会有以下提示<br>
+<img src="https://guokeya.github.io/post-images/1577950925945.png" alt="" loading="lazy"><br>
+back<br>
+返回上一层<br>
+#以上就是监听端口，下面生成木马<br>
+usestaget [tab]<br>
+可以看到这里有很多模块，multi为通用模块，osx mac，Linux，windows，生成的文件类型有bat,lnk,sct,vbs,xml等<br>
+<img src="https://guokeya.github.io/post-images/1577950932437.png" alt="" loading="lazy"><br>
+launcher 语言类型 Name<br>
+launcher powershell abc<br>
+#语言类型可以tab键查看<br>
+<img src="https://guokeya.github.io/post-images/1577950939269.png" alt="" loading="lazy"><br>
+复制到受害者机器上执行(cmd中复制粘贴)<br>
+<img src="https://guokeya.github.io/post-images/1577950944944.png" alt="" loading="lazy"><br>
+agents<br>
+列出当前反弹的shell,结尾红色是失效的<br>
+list stale<br>
+列出当前已丢失的反弹shell<br>
+<img src="https://guokeya.github.io/post-images/1577950949911.png" alt="" loading="lazy"><br>
+interact U1RGLT7Z<br>
+进入shell，这个U1RGLT7Z是agents开头显示的那个<br>
+直接敲命令就可以了<br>
+<img src="https://guokeya.github.io/post-images/1577950954152.png" alt="" loading="lazy"><br>
+sc<br>
+目标截图<br>
+shell net user<br>
+由于直接输入net user 会被当做内部命令。需要在前面加个shell<br>
+mimikatz<br>
+加载mimikatz，需要权限才能获取系统账号密码<br>
+creds<br>
+查看hash和明文<br>
+creds export/root/test.csv<br>
+导出hash凭证<br>
+<img src="https://guokeya.github.io/post-images/1577950959747.png" alt="" loading="lazy"><br>
+删除主机<br>
+kill name<br>
+#删除名为xxx<br>
+模块<br>
+usemodule [tab]<br>
+查看模块</p>
+<pre><code>code_execution #代码执行
+collection #信息收集模块、屏幕截图、键盘记录 、剪贴板记录等
+credentials #密码凭据的获取和转储
+exfiltration #指定ip进行端口扫描
+lateral_movement #横向渗透模块
+management #用来执行些系统设置，和邮件信息的收集
+persistence #权限维持工具
+privesc #权限提升
+recon #侦察
+situational_awareness #评估主机运行环境，网络运行环境
+trollsploit #恶作剧
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1577950975026.png" alt="" loading="lazy"><br>
+参考文章：https://www.freebuf.com/sectool/158393.html</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/EfzSPkBWE/" class="tag">
+                    渗透测试
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/kR1_jmuDS/">
+                  <h3 class="post-title">
+                    首届360杯网络安全职业技能大赛 Web(立誓要成为admin) writeup
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

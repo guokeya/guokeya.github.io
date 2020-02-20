@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Mysql无列名注入/PDO/变量注入 | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Mysql无列名注入/PDO/变量注入</h2>
+            <div class="post-date">2020-01-10</div>
+            
+            <div class="post-content">
+              <p><strong>简介</strong><br>
+在mysql=&gt;5版本中有information_schema数据库可以获取库名表名列名，在sql注入中十分常见。当过滤or时。这个库就会被过滤。<br>
+在Mysql5.5.x之后。默认使用innodb作为存储引擎</p>
+<!-- more -->
+<p><strong>1。</strong><br>
+5.6.x之后。innodb加了两个表。分别为</p>
+<pre><code>innodb_index_stats
+innodb_table_stats
+</code></pre>
+<p>这两个表都会存储数据库和对应的表。但是没有列<br>
+<img src="https://guokeya.github.io/post-images/1578658585224.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1578658624176.png" alt="" loading="lazy"><br>
+select group_concat(table_name) from mysql.innodb_table_stats<br>
+即可获取所有表名<br>
+<strong>2。</strong><br>
+mysql&gt;5.7。新增了sys数据库。基础数据来自于performance_chema和information_schema两个库，但是本身数据库不存储数据，这个表只有<code>ROOT</code>用户才有权限查看<br>
+<img src="https://guokeya.github.io/post-images/1578659020994.png" alt="" loading="lazy"><br>
+<strong>无列名注入</strong><br>
+当我们使用第一种方式查询到表名的时候。那么是没有列名的。所以就要配合无列名注入<br>
+所谓无列名注入。就是不需要列名。直接查询数据</p>
+<pre><code>当我们select 1,2,3的时候。这个就像是一个虚拟的表。列名为1，2，3
+我们将列名为1，2，3然后查询数据
+第一行是我们查询的1，2，3后面跟着表中的数据
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1578659252323.png" alt="" loading="lazy"><br>
+这就相当于改了表的列名。之后。我们将某一列取出来即可</p>
+<pre><code>select `2` from (select 1,2,3 union select * from user)a;
+将select 1,2,3的结果拼接select * from user 的结果，然后将第二列取出来
+select 1，2，3要根据表的字段而定。语句最后一个字母是别名。
+这就获取到了列名
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1578659356118.png" alt="" loading="lazy"></figure>
+<pre><code>当程序过滤了反引号时。语句就不能正常执行了。我们还可以通过别名替代反引号
+as 取别名。将select 1,2,3 union select * from user的结果取别名为b。
+个人感觉就像是赋值给变量差不多
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://guokeya.github.io/post-images/1578659962615.png" alt="" loading="lazy"></figure>
+<pre><code>这里都是分列的。可以通过group_concat来拼接字符串一起输出
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1578660136811.png" alt="" loading="lazy"><br>
+<strong>变量注入</strong><br>
+这个注入方式。需要同一个页面存在两个注入</p>
+<pre><code>注入点1：SELECT * FROM USERS WHERE USERNAME='$name';
+注入点2：SELECT * FROM A WHERE B='$str';
+</code></pre>
+<p>原理就是将查询结果分别插入@a,@b,@c<br>
+然后再另一个页面中查询@c的结果。<br>
+<img src="https://guokeya.github.io/post-images/1578660395682.png" alt="" loading="lazy"><br>
+<strong>PDO注入</strong><br>
+这种方法需要利用PDO来对数据库进行操作，于是就能够执行多条语句从而进行注入，主要可以利用prepare和execute来执行数据库语句，从而绕过很多过滤进行注入。</p>
+<pre><code>select 1;set @test=unhex('73656c6563742f2a2a2f76657273696f6e2829');prepare abc from @test;execute abc;
+</code></pre>
+<p>首先将我们要执行的sql语句转换为16进制<br>
+<img src="https://guokeya.github.io/post-images/1578660808179.png" alt="" loading="lazy"><br>
+将解码后的sql语句赋值给test，prepare定义名为abc的sql语句为@test，此时abc=select version();<br>
+最后execute执行<br>
+<img src="https://guokeya.github.io/post-images/1578660924248.png" alt="" loading="lazy"></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/Web/" class="tag">
+                    Web安全
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/bOdJWyLg5/">
+                  <h3 class="post-title">
+                    Pwn(绕过ASLR)
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

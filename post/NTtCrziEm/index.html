@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>CTF PHP代码审计中的一题任意URL跳转 | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">CTF PHP代码审计中的一题任意URL跳转</h2>
+            <div class="post-date">2020-01-02</div>
+            
+            <div class="post-content">
+              <p><strong>源代码</strong></p>
+<!-- more -->
+<pre><code>&lt;?php
+class Redirect {
+    private $websiteHost = 'www.example.com';
+    private function setHeaders($url) {
+        $url = urldecode($url);
+        header(&quot;Location: $url&quot;);
+    }
+
+    public function startRedirect($params) {
+        $parts = explode('/', $_SERVER['PHP_SELF']);
+        $baseFile = end($parts);
+        $url = sprintf(
+            &quot;%s?%s&quot;,
+            $baseFile,
+            http_build_query($params)
+        );
+        $this-&gt;setHeaders($url);
+    }
+}
+
+if ($_GET['redirect']) {
+    (new Redirect())-&gt;startRedirect($_GET['params']);
+}
+?&gt;
+</code></pre>
+<p><strong>漏洞关键</strong></p>
+<pre><code>用explode('/',$_SERVER['PHP_SELF'])来截取URL中的文件名
+这里有个小技巧。在php文件后面跟上/，会正常执行
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1577949244120.png" alt="" loading="lazy"><br>
+返回一个数组array(0=&gt;'',1=&gt;'2.php')<br>
+再用end函数，取数组中的最后一位。也就是2.php<br>
+这里有一个函数http_build_query，作用如下:</p>
+<pre><code>$a=array('abc'=&gt;'test','admin'=&gt;'123'); 
+echo (http_build_query($a));#传入值必须为数组
+返回abc=test&amp;admin=123
+</code></pre>
+<p>这边我不传入值，为空，与2.php拼接</p>
+<pre><code>urldecode($url)
+最后header(&quot;Location:$url&quot;)
+</code></pre>
+<p>如果是用/判断文件名，并且，php文件后面跟上/会正常执行，那么我们输入</p>
+<pre><code>2.php/index.php/http:%252f%252f/1.php
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1577949303004.png" alt="" loading="lazy"><br>
+传入值，explode分割后:<br>
+Array ( [0] =&gt; [1] =&gt; 2.php [2] =&gt; index.php [3] =&gt; http:%2f%2f127.0.0.1%2f1.php )<br>
+end处理过后：<br>
+http:%2f%2f127.0.0.1%2f1.php<br>
+sprintf拼接过后：<br>
+http:%2f%2f127.0.0.1%2f1.php?<br>
+urldecode后：<br>
+http://127.0.0.1/1.php?<br>
+最后location:$url,跳转到了http://127.0.0.1/1.php</p>
+<p>一开始为什么要输入%252f呢。因为程序会urldecode解码一次，而浏览器又会自动解码一次，如果输入%2f(/),浏览器第一次解码。就会将/传入后端，导致explode，分割，不能成功为http://，传入的是%252f,第一次解码过后，%25被解码成%,剩下%和2f重新组合，成为%2f,最后urldecode,为/</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/CTF/" class="tag">
+                    CTF
+                  </a>
+                
+                  <a href="https://guokeya.github.io/tag/Web/" class="tag">
+                    Web安全
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/hpyo8CYfD/">
+                  <h3 class="post-title">
+                    PHP class_exists函数漏洞
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

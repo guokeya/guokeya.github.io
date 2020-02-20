@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>汇编语言笔记(二) | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">汇编语言笔记(二)</h2>
+            <div class="post-date">2020-01-02</div>
+            
+            <div class="post-content">
+              <p><strong>数据段</strong></p>
+<!-- more -->
+<pre><code>将一组内存单元定位为一个段，长度为N(&lt;=64KB),起始地址为16的倍数的内存单元。专门用来存储数据的内存空间。
+与这个空间相关的寄存器有
+DS：段地址
+[0]：偏移为0 
+mov ax，123H
+#将123H送入AX
+mov ds,ax
+#将AX送入DS，由于这个寄存器不能直接传入，需要通过其他寄存器中转
+mov ax,0
+#将ax清0
+add ax,[0]
+#将123：0偏移的数据加入AX   0内存单元and1内存单元
+add ax,[2]  
+#将123：2偏移的数据加入ax   2内存单元and3内存单元
+add ax,[4]
+#将123：4偏移的数据加入ax   4内存单元and5内存单元
+</code></pre>
+<p><strong>栈</strong><br>
+栈就像一个储物箱。只能一本一本放进去<br>
+<img src="https://guokeya.github.io/post-images/1577952340371.png" alt="" loading="lazy"></p>
+<p>拿出来也一样，只能一本一本拿出来，这个叫做先进后出<br>
+<strong>CPU提供的栈机制</strong><br>
+与栈相关的寄存器有SS:SP<br>
+SS:表示了栈的地址<br>
+SP:表示栈的偏移<br>
+<img src="https://guokeya.github.io/post-images/1577952354228.png" alt="" loading="lazy"></p>
+<p>SP为=0010，这里先不讲为什么<br>
+将0123传入栈。01为高地址，对应栈内F高地址，23低地址对应栈内E低地址<br>
+这时候SP为0010-2=000E，代表栈顶为000E，下一次数据存放在000C和000D两个内存单元<br>
+这时候再传入2266，存入1000C和1000D两个内存单元<br>
+SP再-2=000C<br>
+入栈，是SP-2再入栈<br>
+出栈，是先出栈，SP+2<br>
+为什么栈内为空时，SP=10呢，任意时候，SS:SP指向栈顶，当只有一个元素(数据)的时候，SP=000E，如果没数据，那就SP+2=000E+2=0010<br>
+先-2，再入栈<br>
+栈顶在0010-2=000E，入栈占用的内存单元为000E,000F<br>
+栈顶在000E-2=000D，入栈占用的内存单元为000C,000D<br>
+出栈则相反<br>
+push、pop指令<br>
+SS=1000<br>
+SP=0010<br>
+push AX<br>
+#将AX的数据放入1000：10(000E,000F) sp=000E<br>
+pop BX<br>
+#将栈中的数据取出给BX（000E,000F） SP=0010</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/Pwn/" class="tag">
+                    Pwn
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/BAH9Q1oUV/">
+                  <h3 class="post-title">
+                    汇编语言笔记(一)
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

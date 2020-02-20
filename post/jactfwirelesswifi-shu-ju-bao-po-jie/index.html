@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>[jactf]WireLess(WIFI数据包破解) | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">[jactf]WireLess(WIFI数据包破解)</h2>
+            <div class="post-date">2020-01-30</div>
+            
+            <div class="post-content">
+              <p>一个WIFI数据包。看不到协议。只能看到802.11<br>
+<img src="https://guokeya.github.io/post-images/1580393452950.png" alt="" loading="lazy"><br>
+首先。我们要去爆破WIFI密码。解密数据包。</p>
+<!-- more -->
+<p>Readme.txt</p>
+<pre><code>已知密码格式是6666xxxx
+</code></pre>
+<p>这里我们写个python生成下字典。<br>
+本来是生成所有可见字符的。但跑了半天进度也才0.几<br>
+后来直接生成数字。爆破</p>
+<pre><code>data='0123456789'
+w=open('password.txt','w')
+for a in data:
+    for b in data:
+        for c in data:
+            for d in data:
+                Str=&quot;6666&quot;+a+b+c+d+&quot;\n&quot;
+                w.write(Str)
+w.close()
+</code></pre>
+<p>aircrack-ng WiFi.pcap</p>
+<pre><code>看下具体信息，发现有600多个握手包。这里一个包就代表一个WIFI。还好这里有flag提示。比较亮眼
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1580393654739.png" alt="" loading="lazy"><br>
+根据我们之前生成的字典。开始爆破<br>
+aircrack-ng WiFi.pcap -w password.txt<br>
+输入我们要爆破的WIFI序号<br>
+<img src="https://guokeya.github.io/post-images/1580393710368.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1580393763306.png" alt="" loading="lazy"><br>
+之前的flag提示。</p>
+<pre><code>flag{05password-f059-448f}
+将password替换为密码即可
+Fla{0566668912-f059-448f}
+</code></pre>
+<p>题目到此为止。接下来看下wifi数据包解密<br>
+现在我们已经有了密码。通过密码解密数据包<br>
+<code>airdecap-ng WiFi.pcap -e flag{05password-f059-448f} -p 66668912</code><br>
+解密完。出来一个WIFI-dec.pcap就是解密后的数据包<br>
+和普通数据包一样了<br>
+<img src="https://guokeya.github.io/post-images/1580393907736.png" alt="" loading="lazy"></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/取证分析/" class="tag">
+                    取证分析
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/jactfer-wei-ma-cang-dao-na-li-liao-python-pil-ku-shi-yong/">
+                  <h3 class="post-title">
+                    [jactf]二维码藏到哪里了(python PIL库使用)
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

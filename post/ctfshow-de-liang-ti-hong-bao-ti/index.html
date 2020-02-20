@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>ctf.show的两题红包题 | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">ctf.show的两题红包题</h2>
+            <div class="post-date">2020-02-12</div>
+            
+            <div class="post-content">
+              <p>第一题：MISC<br>
+下载地址：<code>https://www.lanzous.com/i98rs2j</code><br>
+解压出了86张图片。发现是一个GIF分帧出来的<br>
+尝试合成GIF。发现没东西<br>
+每张图片后面都存在一串Base64</p>
+<!-- more -->
+<p>根据经验。将Base64拼接解码都会得到一个新的文件</p>
+<pre><code>import base64
+data2=''
+for i in range(1,87):
+    f=open(str(i)+'.jpg').read()
+    data=f.split(';')[-1]
+    data2+=data.strip()
+    print data2
+</code></pre>
+<p>将data2解码。发现是个PNG。写入png得到二维码。<br>
+<img src="https://guokeya.github.io/post-images/1581500371368.png" alt="" loading="lazy"><br>
+扫一下就拿到了flag</p>
+<p>第二题：Web<br>
+主页空空如也。源代码发现hint<br>
+<img src="https://guokeya.github.io/post-images/1581500428727.png" alt="" loading="lazy"><br>
+代码量比较少。一题Bypass正则RCE<br>
+<img src="https://guokeya.github.io/post-images/1581500465487.png" alt="" loading="lazy"><br>
+首先分析下第一个正则</p>
+<pre><code>A-Za-oq-z0-9
+这里有个小问题。一般都是A-Za-z0-9
+这里a-0q-z没有过滤p。
+看到这。就想到了无数字字母Webshell
+第二个正则。过滤了^~。那么就无法构造无数字字母webshell
+</code></pre>
+<p>经过尝试<code>&lt;&gt;?/`.；</code>没有过滤<br>
+尝试用这几个进行RCE<br>
+P神在这块已经讲的非常清楚了：<code>https://www.leavesongs.com/PENETRATION/webshell-without-alphanum-advanced.html</code><br>
+首先。发送一个POST包上传文件会在/tmp目录下生成一个临时文件<br>
+. 文件名可以用来执行文件。不需要文件有X权限<br>
+这题没有过滤?。那么可以通过通配符去匹配文件名。PHP缓存名为php+6个随机字符<br>
+由于之前正则没过滤p。那么</p>
+<pre><code>/tmp/phpf85jb8可以表达为/???/p?p??????
+</code></pre>
+<p>. /???/p?p??????即可执行我们上传的缓存文件<br>
+<img src="https://guokeya.github.io/post-images/1581501046913.png" alt="" loading="lazy"><br>
+还有一种思路。就是执行/bin/cp /flag.txt .<br>
+前提是得知道flag路径。假设。人家给你来个var目录。岂不是人傻了</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/CTF/" class="tag">
+                    CTF
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/ciscn2019-hua-bei-sai-qu-day1-web2ikunpython-fan-xu-lie-hua/">
+                  <h3 class="post-title">
+                    [CISCN2019 华北赛区 Day1 Web2]ikun(python反序列化)
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

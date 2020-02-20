@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://guokeya.github.io</id>
+    <title>过客</title>
+    <updated>2020-02-20T07:59:00.757Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://guokeya.github.io"/>
+    <link rel="self" href="https://guokeya.github.io/atom.xml"/>
+    <subtitle>this is a test Web</subtitle>
+    <logo>https://guokeya.github.io/images/avatar.png</logo>
+    <icon>https://guokeya.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[ctfshow红包题第八弹]]></title>
+        <id>https://guokeya.github.io/post/ctfshow-hong-bao-ti-di-ba-dan/</id>
+        <link href="https://guokeya.github.io/post/ctfshow-hong-bao-ti-di-ba-dan/">
+        </link>
+        <updated>2020-02-19T07:10:41.000Z</updated>
+        <summary type="html"><![CDATA[<p>给了个压缩包<br>
+<img src="https://guokeya.github.io/post-images/1582096281200.png" alt="" loading="lazy"><br>
+mima.png不需要密码。<br>
+NBA.mp4需要密码<br>
+思路应该就是mima.png-&gt;NBA.mp4-&gt;flag</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>给了个压缩包<br>
+<img src="https://guokeya.github.io/post-images/1582096281200.png" alt="" loading="lazy"><br>
+mima.png不需要密码。<br>
+NBA.mp4需要密码<br>
+思路应该就是mima.png-&gt;NBA.mp4-&gt;flag</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[ctf.show红包题第五弹]]></title>
+        <id>https://guokeya.github.io/post/ctfshow-hong-bao-ti-di-wu-dan/</id>
+        <link href="https://guokeya.github.io/post/ctfshow-hong-bao-ti-di-wu-dan/">
+        </link>
+        <updated>2020-02-16T13:00:39.000Z</updated>
+        <summary type="html"><![CDATA[<p>下载地址：<code>https://www.lanzous.com/i9e23fi</code><br>
+binwalk。foremost得到了一个MP3以及两张图片<br>
+<img src="https://guokeya.github.io/post-images/1581858172393.png" alt="" loading="lazy"></p>
+]]></summary>
+        <content type="html"><![CDATA[<p>下载地址：<code>https://www.lanzous.com/i9e23fi</code><br>
+binwalk。foremost得到了一个MP3以及两张图片<br>
+<img src="https://guokeya.github.io/post-images/1581858172393.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[SUCTF 2018]GetShell(无数字字母webshell)]]></title>
+        <id>https://guokeya.github.io/post/suctf-2018getshellwu-shu-zi-zi-mu-webshell/</id>
+        <link href="https://guokeya.github.io/post/suctf-2018getshellwu-shu-zi-zi-mu-webshell/">
+        </link>
+        <updated>2020-02-15T10:52:43.000Z</updated>
+        <summary type="html"><![CDATA[<p>是一个文件上传功能<br>
+取文件内容第6位匹配黑名单(<code>$b</code>)。但是我们并不知道<code>$b</code>内容是啥。只能通过fuzz<br>
+<img src="https://guokeya.github.io/post-images/1581763998906.png" alt="" loading="lazy"></p>
+]]></summary>
+        <content type="html"><![CDATA[<p>是一个文件上传功能<br>
+取文件内容第6位匹配黑名单(<code>$b</code>)。但是我们并不知道<code>$b</code>内容是啥。只能通过fuzz<br>
+<img src="https://guokeya.github.io/post-images/1581763998906.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[ctf.show的两题红包题]]></title>
+        <id>https://guokeya.github.io/post/ctfshow-de-liang-ti-hong-bao-ti/</id>
+        <link href="https://guokeya.github.io/post/ctfshow-de-liang-ti-hong-bao-ti/">
+        </link>
+        <updated>2020-02-12T09:34:17.000Z</updated>
+        <summary type="html"><![CDATA[<p>第一题：MISC<br>
+下载地址：<code>https://www.lanzous.com/i98rs2j</code><br>
+解压出了86张图片。发现是一个GIF分帧出来的<br>
+尝试合成GIF。发现没东西<br>
+每张图片后面都存在一串Base64</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>第一题：MISC<br>
+下载地址：<code>https://www.lanzous.com/i98rs2j</code><br>
+解压出了86张图片。发现是一个GIF分帧出来的<br>
+尝试合成GIF。发现没东西<br>
+每张图片后面都存在一串Base64</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[CISCN2019 华北赛区 Day1 Web2]ikun(python反序列化)]]></title>
+        <id>https://guokeya.github.io/post/ciscn2019-hua-bei-sai-qu-day1-web2ikunpython-fan-xu-lie-hua/</id>
+        <link href="https://guokeya.github.io/post/ciscn2019-hua-bei-sai-qu-day1-web2ikunpython-fan-xu-lie-hua/">
+        </link>
+        <updated>2020-02-12T03:32:31.000Z</updated>
+        <summary type="html"><![CDATA[<p>进入主页。就说要买V6</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>进入主页。就说要买V6</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[网鼎杯 2018]Comment（Git恢复+二次注入）]]></title>
+        <id>https://guokeya.github.io/post/wang-ding-bei-2018commentgit-hui-fu/</id>
+        <link href="https://guokeya.github.io/post/wang-ding-bei-2018commentgit-hui-fu/">
+        </link>
+        <updated>2020-02-11T10:33:44.000Z</updated>
+        <summary type="html"><![CDATA[<p>扫目录扫到Git。githack恢复下<br>
+我用GitHack只恢复了一个write_do.php但是。里面代码是少了一部分的<br>
+这里需要用到<code>https://github.com/wangyihang/githacker</code>这个工具<br>
+我用的其他工具恢复出来只有文件。没有.git目录</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>扫目录扫到Git。githack恢复下<br>
+我用GitHack只恢复了一个write_do.php但是。里面代码是少了一部分的<br>
+这里需要用到<code>https://github.com/wangyihang/githacker</code>这个工具<br>
+我用的其他工具恢复出来只有文件。没有.git目录</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[SWPUCTF 2016]Web7(urllib头注入+SSRF)]]></title>
+        <id>https://guokeya.github.io/post/swpuctf-2016web7urllib-tou-zhu-ru-ssrf/</id>
+        <link href="https://guokeya.github.io/post/swpuctf-2016web7urllib-tou-zhu-ru-ssrf/">
+        </link>
+        <updated>2020-02-10T12:52:52.000Z</updated>
+        <summary type="html"><![CDATA[<p>首先。题目就一个input和login<br>
+login需要admin密码<br>
+先从input开始<br>
+随手输了个123报错了。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>首先。题目就一个input和login<br>
+login需要admin密码<br>
+先从input开始<br>
+随手输了个123报错了。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[HarekazeCTF2019]encode_and_encode]]></title>
+        <id>https://guokeya.github.io/post/harekazectf2019encode_and_encode/</id>
+        <link href="https://guokeya.github.io/post/harekazectf2019encode_and_encode/">
+        </link>
+        <updated>2020-02-10T07:29:59.000Z</updated>
+        <summary type="html"><![CDATA[<p>进去就三个链接。<br>
+<img src="https://guokeya.github.io/post-images/1581319850698.png" alt="" loading="lazy"></p>
+]]></summary>
+        <content type="html"><![CDATA[<p>进去就三个链接。<br>
+<img src="https://guokeya.github.io/post-images/1581319850698.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[CISCN2019 华北赛区 Day1 Web5]CyberPunk]]></title>
+        <id>https://guokeya.github.io/post/ciscn2019-hua-bei-sai-qu-day1-web5cyberpunk/</id>
+        <link href="https://guokeya.github.io/post/ciscn2019-hua-bei-sai-qu-day1-web5cyberpunk/">
+        </link>
+        <updated>2020-02-10T06:36:52.000Z</updated>
+        <summary type="html"><![CDATA[<p>一题关于二次注入的题</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>一题关于二次注入的题</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[无需暴破还原mt_rand()种子]]></title>
+        <id>https://guokeya.github.io/post/wu-xu-bao-po-huan-yuan-mt_randchong-zi/</id>
+        <link href="https://guokeya.github.io/post/wu-xu-bao-po-huan-yuan-mt_randchong-zi/">
+        </link>
+        <updated>2020-02-09T04:02:26.000Z</updated>
+        <summary type="html"><![CDATA[<p>详情看文章：https://www.anquanke.com/post/id/196831#h2-6<br>
+对于这个原理。还是懵懵的。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>详情看文章：https://www.anquanke.com/post/id/196831#h2-6<br>
+对于这个原理。还是懵懵的。</p>
+]]></content>
+    </entry>
+</feed>

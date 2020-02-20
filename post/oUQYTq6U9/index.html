@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>CTF PHP代码审计中file_put_contents函数利用 | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">CTF PHP代码审计中file_put_contents函数利用</h2>
+            <div class="post-date">2020-01-02</div>
+            
+            <div class="post-content">
+              <p>源码分析</p>
+<!-- more -->
+<pre><code>&lt;?php
+function is_valid($title, $data)
+{
+    $data = $title . $data;
+    return preg_match('|\A[ _a-zA-Z0-9]+\z|is', $data);
+}
+
+function write_cache($title, $content)
+{
+    $dir = changedir(CACHE_DIR . get_username() . '/');
+    if(!is_dir($dir)) {
+        mkdir($dir);
+    }
+    ini_set('open_basedir', $dir);
+
+    if (!is_valid($title, $content)) {
+        exit(&quot;title or content error&quot;);
+    }
+
+    $filename = &quot;{$dir}{$title}.php&quot;;
+
+    file_put_contents($filename, $content);
+    ini_set('open_basedir', __DIR__ . '/');
+}
+</code></pre>
+<pre><code>自定义函数is_valid，传入两个变量，将其组合为$data,preg_match正则匹配，不能有除_a-zA-Z0-9之外的字符
+将路径与用户输入title拼接+.php为文件名
+通过file_put_contents写入文件
+难点在于。要写一个webshell。但字符只能a-zA-Z0-9_，而webshell至少需要&lt;?
+</code></pre>
+<p><strong>writeup</strong><br>
+看file_put_contens的文档即可发现，函数第二个允许传入数组，将被连接为字符串再写入<br>
+例如</p>
+<pre><code>content[]=&lt;?php&amp;content[]=%0aphpinfo();
+file_put_contens($filename,$content)
+</code></pre>
+<p>此时，$content为&lt;?php phpinfo(); 传入的数组刚好绕过了正则检测<br>
+<img src="https://guokeya.github.io/post-images/1577948618570.png" alt="" loading="lazy"></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/CTF/" class="tag">
+                    CTF
+                  </a>
+                
+                  <a href="https://guokeya.github.io/tag/Web/" class="tag">
+                    Web安全
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/wKq5kPp1Y/">
+                  <h3 class="post-title">
+                    致远OA远程代码执行
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

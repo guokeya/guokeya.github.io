@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>首届360杯网络安全职业技能大赛 流量分析题（一）writeup | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">首届360杯网络安全职业技能大赛 流量分析题（一）writeup</h2>
+            <div class="post-date">2020-01-02</div>
+            
+            <div class="post-content">
+              <p><strong>题目环境</strong></p>
+<!-- more -->
+<p>首先，题目给出了一个提示。sql注入没那么难<br>
+附件有个压缩包<br>
+下载压缩包后，打开<br>
+数据包，工具：<br>
+https://github.com/guokeya/tools/blob/master/1.pcap<br>
+https://github.com/guokeya/tools/blob/master/flag.zip<br>
+https://github.com/guokeya/tools/blob/master/archpr.zip</p>
+<p><strong>writeup</strong><br>
+打开数据包，先看下，无非就是些DNS,TCP,HTTP<br>
+<img src="https://guokeya.github.io/post-images/1577950137993.png" alt="" loading="lazy"><br>
+特别关注下HTTP<br>
+<img src="https://guokeya.github.io/post-images/1577950144012.png" alt="" loading="lazy"><br>
+有两点发现，<br>
+1.一句话木马。有一个readme.7z，文件-&gt;导出对象-&gt;HTTP-&gt;Readme.7z<br>
+解压查看，没什么东西，先放着<br>
+<img src="https://guokeya.github.io/post-images/1577950154038.png" alt="" loading="lazy"><br>
+2.基于时间的sql盲注<br>
+这里，说下是怎么一步步判断获取的值<br>
+首先，要看得懂sql语句<br>
+' and ((select count(schema_name) from information_schema.schemata) &gt; 7)<br>
+获取数据库数量，如果&gt;7,就会返回1<br>
+' and True,返回正确，页面就会正常显示，这里我们可以看他返回的数据包具体判断<br>
+<img src="https://guokeya.github.io/post-images/1577950161054.png" alt="" loading="lazy"><br>
+分析得出，数据库为360ctf，表名为flag，字段为url和passwd<br>
+最后我们来分析下url和passwd的值<br>
+<img src="https://guokeya.github.io/post-images/1577950171837.png" alt="" loading="lazy"><br>
+同理。分析值<br>
+<img src="https://guokeya.github.io/post-images/1577950177620.png" alt="" loading="lazy"></p>
+<pre><code>ascii(substr((select url from 360ctf.flag limit 0,1),1,1))&gt;79 True
+ascii(substr((select url from 360ctf.flag limit 0,1),1,1))&gt;103 True
+ascii(substr((select url from 360ctf.flag limit 0,1),1,1))&gt;105 True
+ascii(substr((select url from 360ctf.flag limit 0,1),1,1))&gt;115 True
+ascii(substr((select url from 360ctf.flag limit 0,1),1,1))&gt;121 False
+ascii(substr((select url from 360ctf.flag limit 0,1),1,1))&gt;118 False
+ascii(substr((select url from 360ctf.flag limit 0,1),1,1))&gt;117 False
+ascii(substr((select url from 360ctf.flag limit 0,1),1,1))&gt;116 False
+</code></pre>
+<p>这是上图中的语句和返回结果，整理好比较下<br>
+首先查找ctf表中url字段的第一条数据，ascii转换(substr截取的第一个字符) 再和一个数字比较<br>
+上图中，&gt;115返回正常，&gt;116就不正常了。那么url值的第一位就是116<br>
+同理。分析下面的数据包，最后得出</p>
+<pre><code>length(url)=13
+length(passwd)=4
+asscii(substr(select url from ctf.flag limit 0,1),1,1)=116
+asscii(substr(select url from ctf.flag limit 0,1),2,1)=46
+asscii(substr(select url from ctf.flag limit 0,1),3,1)=99
+asscii(substr(select url from ctf.flag limit 0,1),4,1)=110
+asscii(substr(select url from ctf.flag limit 0,1),5,1)=47
+asscii(substr(select url from ctf.flag limit 0,1),6,1)=65
+asscii(substr(select url from ctf.flag limit 0,1),7,1)=105
+asscii(substr(select url from ctf.flag limit 0,1),8,1)=56
+asscii(substr(select url from ctf.flag limit 0,1),9,1)=80
+asscii(substr(select url from ctf.flag limit 0,1),10,1)=104
+asscii(substr(select url from ctf.flag limit 0,1),11,1)=113
+asscii(substr(select url from ctf.flag limit 0,1),12,1)=83
+asscii(substr(select url from ctf.flag limit 0,1),12,1)=98
+
+asscii(substr(select passwd from ctf.flag limit 0,1),1,1)=98
+asscii(substr(select passwd from ctf.flag limit 0,1),2,1)=107
+asscii(substr(select passwd from ctf.flag limit 0,1),3,1)=105
+asscii(substr(select passwd from ctf.flag limit 0,1),4,1)=115
+</code></pre>
+<p>写个python脚本，将这些值转化为字符串<br>
+<img src="https://guokeya.github.io/post-images/1577950200733.png" alt="" loading="lazy"><br>
+得到一个短网址和一个密码<br>
+短网址是一个云盘分享，输入密码，拿到了flag.zip<br>
+尝试打开,发现需要密码<br>
+<img src="https://guokeya.github.io/post-images/1577950207977.png" alt="" loading="lazy"><br>
+欸，里面也有个Readme.txt，和我们刚刚导出的是一个文件，这里就涉及到一个知识点<br>
+ZIP明文攻击：<br>
+所谓明文攻击就是已经通过其他手段知道zip加密文件中的某些内容，来破解密码<br>
+这里需要用到AZPR-4.0<br>
+首先，将我们获得的readme.txt压缩为readme.zip,然后将其和flag.zip一起进行破解<br>
+<img src="https://guokeya.github.io/post-images/1577950221661.png" alt="" loading="lazy"><br>
+破解成功，拿到flag值<br>
+<img src="https://guokeya.github.io/post-images/1577950227778.png" alt="" loading="lazy"></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/CTF/" class="tag">
+                    CTF
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/TH30EDM3R/">
+                  <h3 class="post-title">
+                    CVE-2017-11882漏洞复现和利用
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

