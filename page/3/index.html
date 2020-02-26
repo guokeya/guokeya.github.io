@@ -1,487 +1,737 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-      <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta content="yes" name="apple-mobile-web-app-capable" />
-  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
-  <meta name="referrer" content="never">
-  <meta name="keywords" content="">
-  <meta name="description" content="">
-  <meta name="author" content="kveln">
-  <title>过客</title>
-  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
-  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
-  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="过客 » Feed" href="https://guokeya.github.io/atom.xml">
-  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
-  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
+<meta HTTP-EQUIV="expires" CONTENT="0"> 
+<title>过客</title>	
+
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+<script type="text/javascript">
+function getCSS()
+{
+        datetoday = new Date();
+        timenow=datetoday.getTime();
+        datetoday.setTime(timenow);
+        thehour = datetoday.getHours();
+
+        if (thehour<6)
+
+            display = "https://guokeya.github.io/media/css/night.css";
+
+       else if (thehour>19)
+
+            display = "https://guokeya.github.io/media/css/night.css";   
+
+        else if (thehour>6)
+           
+            display = "https://guokeya.github.io/media/css/day.css";
+
+        else if (thehour<19)
+
+            display = "https://guokeya.github.io/media/css/day.css";
+      
+
+var css = '<';
+        css+='link rel="stylesheet" href='+display+' \/';
+        css+='>';
+        document.write(css);
+}
+</script>
+<link href="https://fonts.googleapis.com/css?family=Dancing+Script|Liu+Jian+Mao+Cao&display=swap" rel="stylesheet">
+<link href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css" rel="stylesheet" />
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<script type='text/javascript' src='https://guokeya.github.io/media/scripts/script.js'></script>
+<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet" />
+  <script src="https://cdn.bootcss.com/wow/1.1.2/wow.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
-  
+  <script>wow=new WOW({boxClass:'wow',animateClass:'animated',offset:0,mobile:true,live:true});wow.init();</script>
 
-  </head>
-  <body>
-     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-    <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io">过客</a>
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        Menu
-        <i class="fas fa-bars"></i>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          
-          <li class="nav-item">
-              
-              <a class="nav-link" href="/">首页</a>
-              
-          </li>
-          
-          <li class="nav-item">
-              
-              <a class="nav-link" href="/archives">归档</a>
-              
-          </li>
-          
-          <li class="nav-item">
-              
-              <a class="nav-link" href="/post/about">关于</a>
-              
-          </li>
-          
-          <li class="nav-item">
-              
-              <a class="nav-link" href="/tags">分类</a>
-              
-          </li>
-          
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="site-heading">
-            <h1>过客</h1>
-            <span class="subheading">this is a test Web</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
-      <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-       
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/fbctf2019eventssti3/">
-            <h2 class="post-title">
-              [FBCTF2019]Event(SSTI3)
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>功能很简单。就一个登陆。一个查看flag。但是flag没有权限</p>
+<script type="text/javascript">
+window.onload=getCSS();
+</script>
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-26</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
+
+</head>
+<body class="home blog">
+    <div id="wrapper">
         
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/php-de-session-fan-xu-lie-hua/">
-            <h2 class="post-title">
-              PHP的Session反序列化
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>对于反序列化。我们已知的有phar/unserialize。Session也是可以触发反序列化的<br>
-首先。我们看下php对于Session的各项配置</p>
+		<header id="header" class="site-header" >
+			<div class="site-branding">
+									<h1 class="site-title"><a href="https://guokeya.github.io" rel="home">过客</a></h1>
+										
+					<h2 class="site-description">this is a test Web</h2>
+										
+							</div>
+			<nav id="nav-wrapper">
+				<div class="container">
+					<div class="nav-toggle">
+						<div class="bars">
+							<div class="bar"></div>
+							<div class="bar"></div>
+							<div class="bar"></div>
+						</div>
+					</div>
+					<div class="clear"></div>
+					<ul class="dove">
+		 
+     			
+<li>
+	 
+	<a  href="/"> 首页</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/archives"> 归档</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/post/about"> 关于</a></li>
+	
+    
+     			
+<li>
+	 
+	<a  href="/tags"> 分类</a></li>
+	
+    
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-25</span>
-             <span>,</span>
-             <span class="post-stats">7 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/buuctfxiao-yi-de-u-pan/">
-            <h2 class="post-title">
-              [BUUCTF]小易的U盘
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>题目描述：</p>
-<pre><code>小易的U盘中了一个奇怪的病毒，电脑中莫名其妙会多出来东西。小易重装了系统，把U盘送到了攻防实验室，希望借各位的知识分析出里面有啥。请大家加油噢，不过他特别关照，千万别乱点他U盘中的资料，那是机密。 注意：得到的 flag 请包上 flag{} 提交
-</code></pre>
+</ul>
+</li>		
+		
+</ul>				</div>
+			</nav>
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-24</span>
-             <span>,</span>
-             <span class="post-stats">1 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/ciscn2019-zong-jue-sai-day2-web1easyweb/">
-            <h2 class="post-title">
-              [CISCN2019 总决赛 Day2 Web1]Easyweb
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>看见界面。一个登陆框。<br>
-<img src="https://guokeya.github.io/post-images/1579835519439.png" alt="" loading="lazy"><br>
-尝试register.php。。并没有。看下robots.txt</p>
+<div class="jingge">
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-24</span>
-             <span>,</span>
-             <span class="post-stats">4 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/ji-lu-yi-ti-fei-chang-nao-dong-de-misc/">
-            <h2 class="post-title">
-              纪录一题非常。。脑洞的MISC
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <pre><code>0086 1562 2535 5174
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        </header>
+
+		<div id="content" class="container">
+			<div class="row">
+	<div class="col-md-8 site-main">
+		
+ 						
+<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
+	
+	 
+	   
+	<div class="entry-content">
+		<h1 class="entry-title"><a href="https://guokeya.github.io/post/fbctf2019eventssti3/" rel="bookmark">[FBCTF2019]Event(SSTI3)</a></h1>
+		<div class="entry-meta">
+		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-26 16:04:17" itemprop="datePublished" pubdate="">2020-01-26</time></i>
+	 
+			
+		</div>
+
+		<div class="entry-summary jia">
+			<p>功能很简单。就一个登陆。一个查看flag。但是flag没有权限
+
+
+随便注册个用户看看。存在留言功能
+
+发送留言处event_important参数存在SSTI。
+
+别问我为什么用__class__
+一开始。用的是{{2*2}}
+发现留言并...</p>
+			<p class="readmore">
+				<a href="https://guokeya.github.io/post/fbctf2019eventssti3/" class="link-more">Read more</a>
+			</p>
+		</div>
+		
+	</div>
+	
+</article>
+		
+ 						
+<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
+	
+	 
+	   
+	<div class="entry-content">
+		<h1 class="entry-title"><a href="https://guokeya.github.io/post/php-de-session-fan-xu-lie-hua/" rel="bookmark">PHP的Session反序列化</a></h1>
+		<div class="entry-meta">
+		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-25 19:13:49" itemprop="datePublished" pubdate="">2020-01-25</time></i>
+	 
+			
+		</div>
+
+		<div class="entry-summary jia">
+			<p>对于反序列化。我们已知的有phar/unserialize。Session也是可以触发反序列化的
+首先。我们看下php对于Session的各项配置
+
+session.save_path = &quot;/tmp&quot;
+#session...</p>
+			<p class="readmore">
+				<a href="https://guokeya.github.io/post/php-de-session-fan-xu-lie-hua/" class="link-more">Read more</a>
+			</p>
+		</div>
+		
+	</div>
+	
+</article>
+		
+ 						
+<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
+	
+	 
+	   
+	<div class="entry-content">
+		<h1 class="entry-title"><a href="https://guokeya.github.io/post/buuctfxiao-yi-de-u-pan/" rel="bookmark">[BUUCTF]小易的U盘</a></h1>
+		<div class="entry-meta">
+		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-24 15:04:21" itemprop="datePublished" pubdate="">2020-01-24</time></i>
+	 
+			
+		</div>
+
+		<div class="entry-summary jia">
+			<p>题目描述：
+小易的U盘中了一个奇怪的病毒，电脑中莫名其妙会多出来东西。小易重装了系统，把U盘送到了攻防实验室，希望借各位的知识分析出里面有啥。请大家加油噢，不过他特别关照，千万别乱点他U盘中的资料，那是机密。 注意：得到的 flag 请包上...</p>
+			<p class="readmore">
+				<a href="https://guokeya.github.io/post/buuctfxiao-yi-de-u-pan/" class="link-more">Read more</a>
+			</p>
+		</div>
+		
+	</div>
+	
+</article>
+		
+ 						
+<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
+	
+	 
+	   
+	<div class="entry-content">
+		<h1 class="entry-title"><a href="https://guokeya.github.io/post/ciscn2019-zong-jue-sai-day2-web1easyweb/" rel="bookmark">[CISCN2019 总决赛 Day2 Web1]Easyweb</a></h1>
+		<div class="entry-meta">
+		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-24 11:01:43" itemprop="datePublished" pubdate="">2020-01-24</time></i>
+	 
+			
+		</div>
+
+		<div class="entry-summary jia">
+			<p>看见界面。一个登陆框。
+
+尝试register.php。。并没有。看下robots.txt
+
+
+然而。index.php并没有bak备份
+看源代码。发现个image.php还带id？十有八九sql注入
+
+访问下image.php.bak。成...</p>
+			<p class="readmore">
+				<a href="https://guokeya.github.io/post/ciscn2019-zong-jue-sai-day2-web1easyweb/" class="link-more">Read more</a>
+			</p>
+		</div>
+		
+	</div>
+	
+</article>
+		
+ 						
+<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
+	
+	 
+	   
+	<div class="entry-content">
+		<h1 class="entry-title"><a href="https://guokeya.github.io/post/ji-lu-yi-ti-fei-chang-nao-dong-de-misc/" rel="bookmark">纪录一题非常。。脑洞的MISC</a></h1>
+		<div class="entry-meta">
+		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-23 20:08:50" itemprop="datePublished" pubdate="">2020-01-23</time></i>
+	 
+			
+		</div>
+
+		<div class="entry-summary jia">
+			<p>0086 1562 2535 5174
 bnhn s wwy vffg vffg rrhy fhnv
 
 请将你得到的这句话转为md5提交，md5统一为32位小写。
 提交格式：flag{md5}
-</code></pre>
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-23</span>
-             <span>,</span>
-             <span class="post-stats">1 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/buuctf-xor/">
-            <h2 class="post-title">
-              BUUCTF XOR
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><img src="https://guokeya.github.io/post-images/1579777614249.png" alt="" loading="lazy"><br>
-很简单的一题。用户输入是V6</p>
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-23</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/an-heng-yuan-dan-yue-sai-ni-xiang-sao-lei/">
-            <h2 class="post-title">
-              安恒元旦月赛逆向--扫雷
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>就是一个扫雷。IDA64位打开即可<br>
-下载地址：<code>https://github.com/guokeya/tools/raw/master/%E6%89%AB%E9%9B%B7.exe</code></p>
+题目描述.txt
+题目描述：伟人的一句话，...</p>
+			<p class="readmore">
+				<a href="https://guokeya.github.io/post/ji-lu-yi-ti-fei-chang-nao-dong-de-misc/" class="link-more">Read more</a>
+			</p>
+		</div>
+		
+	</div>
+	
+</article>
+		
+ 						
+<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
+	
+	 
+	   
+	<div class="entry-content">
+		<h1 class="entry-title"><a href="https://guokeya.github.io/post/buuctf-xor/" rel="bookmark">BUUCTF XOR</a></h1>
+		<div class="entry-meta">
+		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-23 19:03:58" itemprop="datePublished" pubdate="">2020-01-23</time></i>
+	 
+			
+		</div>
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-23</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/misc-zhong-ge-chong-jia-mi-te-zheng/">
-            <h2 class="post-title">
-              Misc中各种加密特征
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-23</span>
-             <span>,</span>
-             <span class="post-stats">4 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/cors-kua-yu-lou-dong-de-xue-xi/">
-            <h2 class="post-title">
-              CORS跨域漏洞的学习
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>讲跨域漏洞前。首先得讲一下浏览器的同源策略<br>
-<strong>SOP，同源策略 (Same Origin Policy)</strong><br>
-同源策略是浏览器的一个安全功能。不同源的客户端脚本(JS)在没有被授权的情况下。不能读取对方资源。<br>
-同源的定义是。协议/端口/主机</p>
+		<div class="entry-summary jia">
+			<p>
+很简单的一题。用户输入是V6
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-22</span>
-             <span>,</span>
-             <span class="post-stats">7 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/swpuctf2019easy-pythonflask-session-wei-zao-ruan-lian-jie-ming-ling-zhi-xing-bypass/">
-            <h2 class="post-title">
-              [SWPUCTF2019]Easy Python(flask session伪造+软链接+命令执行bypass)
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>浏览器标签中提示了。CTF-Flask-demo<br>
-说明这是个Flask框架。随便输入登陆。用户名会显示在主页上</p>
+global是加密的flag。看下值。刚开始搞逆向。看到的都是整整齐齐的0x多少多少。没见过字符串挤在一起的。
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-22</span>
-             <span>,</span>
-             <span class="post-stats">5 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/swpuctf-2018simplephppop-lian-phar-fan-xu-lie-hua/">
-            <h2 class="post-title">
-              [SWPUCTF 2018]SimplePHP（POP链phar反序列化）
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>首页。啥也没有。就一个IP。还有个查看文件和上传文件。<br>
-查看文件处。有个file参数。可能存在任意文件读取。</p>
+在18行。用strncmp比较。
+对于用户输入
+for循环33次。但是i的初始值为1
+假设第...</p>
+			<p class="readmore">
+				<a href="https://guokeya.github.io/post/buuctf-xor/" class="link-more">Read more</a>
+			</p>
+		</div>
+		
+	</div>
+	
+</article>
+		
+ 						
+<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
+	
+	 
+	   
+	<div class="entry-content">
+		<h1 class="entry-title"><a href="https://guokeya.github.io/post/an-heng-yuan-dan-yue-sai-ni-xiang-sao-lei/" rel="bookmark">安恒元旦月赛逆向--扫雷</a></h1>
+		<div class="entry-meta">
+		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-23 15:11:23" itemprop="datePublished" pubdate="">2020-01-23</time></i>
+	 
+			
+		</div>
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-21</span>
-             <span>,</span>
-             <span class="post-stats">10 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/shua-xin-guo-de-zhao-pian-f5-yin-xie/">
-            <h2 class="post-title">
-              刷新过的照片（F5隐写）
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>不说了。魔性。满分<br>
-<img src="https://guokeya.github.io/post-images/1579588648712.png" alt="" loading="lazy"></p>
+		<div class="entry-summary jia">
+			<p>就是一个扫雷。IDA64位打开即可
+下载地址：https://github.com/guokeya/tools/raw/master/%E6%89%AB%E9%9B%B7.exe
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-21</span>
-             <span>,</span>
-             <span class="post-stats">1 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/an-heng-bei-qi-yue-sai-ruo-kou-ling-lsb-yin-xie-mo-er-si-mi-ma/">
-            <h2 class="post-title">
-              [安恒杯七月赛]弱口令(LSB隐写+摩尔斯密码)
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>题目提示是弱口令。。然而爆破了好久都没出来<br>
-winrar打开。发现有备注。空白的。但是又好像有内容</p>
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-21</span>
-             <span>,</span>
-             <span class="post-stats">1 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/buuctf-usbwei-ji-ni-ya-mi-ma-rar-xiu-fu-usb-liu-liang/">
-            <h2 class="post-title">
-              【BUUCTF】USB(维吉尼亚密码+rar修复+USB流量)
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>解压得到两个文件<code>233.rar</code>和ket.ftm<br>
-先从rar开始。直接解压。就一个flag.txt<br>
-但是查看16进制。欸还有个233.png</p>
+代码非常多。主要看最后几行。有if判断
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-20</span>
-             <span>,</span>
-             <span class="post-stats">4 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/ddctf2018degdeg-kai-sa-mi-ma-128/">
-            <h2 class="post-title">
-              [DDCTF2018](╯°□°）╯︵ ┻━┻(凯撒密码+%128)
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <pre><code>d4e8e1f4a0f7e1f3a0e6e1f3f4a1a0d4e8e5a0e6ece1e7a0e9f3baa0c4c4c3d4c6fbb9e1b2e2e5e2b5b4e4b8b7e6e1e1b6b9e4b5e3b8b1b1e3e5b5b6b4b1b0e4e6b2fd
-</code></pre>
+第一个判断ga...</p>
+			<p class="readmore">
+				<a href="https://guokeya.github.io/post/an-heng-yuan-dan-yue-sai-ni-xiang-sao-lei/" class="link-more">Read more</a>
+			</p>
+		</div>
+		
+	</div>
+	
+</article>
+		
+ 						
+<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
+	
+	 
+	   
+	<div class="entry-content">
+		<h1 class="entry-title"><a href="https://guokeya.github.io/post/misc-zhong-ge-chong-jia-mi-te-zheng/" rel="bookmark">Misc中各种加密特征</a></h1>
+		<div class="entry-meta">
+		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-23 11:27:33" itemprop="datePublished" pubdate="">2020-01-23</time></i>
+	 
+			
+		</div>
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-20</span>
-             <span>,</span>
-             <span class="post-stats">1 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        
-        <a class="btn btn-primary float-left" href="https://guokeya.github.io/page/2/">&larr; 上一页</a>
-        
-        
-        <a class="btn btn-primary float-right" href="https://guokeya.github.io/page/4/">下一页 &rarr;</a>
-        
-      </div>
-    </div>
-  </div>
+		<div class="entry-summary jia">
+			<p>Base64
+由A-Za-z0-9+/==组成的64个字符。通常末尾有==的就是Base64
+Base64:SSBsb3ZlIHlvde+8gQ==
 
-  
-    <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <ul class="list-inline text-center">
+Base32
+由A-Z和2-7组成的32个字符。通常末尾有===为Base32
+Base...</p>
+			<p class="readmore">
+				<a href="https://guokeya.github.io/post/misc-zhong-ge-chong-jia-mi-te-zheng/" class="link-more">Read more</a>
+			</p>
+		</div>
+		
+	</div>
+	
+</article>
+		
+ 						
+<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
+	
+	 
+	   
+	<div class="entry-content">
+		<h1 class="entry-title"><a href="https://guokeya.github.io/post/cors-kua-yu-lou-dong-de-xue-xi/" rel="bookmark">CORS跨域漏洞的学习</a></h1>
+		<div class="entry-meta">
+		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-22 19:16:50" itemprop="datePublished" pubdate="">2020-01-22</time></i>
+	 
+			
+		</div>
+
+		<div class="entry-summary jia">
+			<p>讲跨域漏洞前。首先得讲一下浏览器的同源策略
+SOP，同源策略 (Same Origin Policy)
+同源策略是浏览器的一个安全功能。不同源的客户端脚本(JS)在没有被授权的情况下。不能读取对方资源。
+同源的定义是。协议/端口/主机
+
+
+...</p>
+			<p class="readmore">
+				<a href="https://guokeya.github.io/post/cors-kua-yu-lou-dong-de-xue-xi/" class="link-more">Read more</a>
+			</p>
+		</div>
+		
+	</div>
+	
+</article>
+		
+ 						
+<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
+	
+	 
+	   
+	<div class="entry-content">
+		<h1 class="entry-title"><a href="https://guokeya.github.io/post/swpuctf2019easy-pythonflask-session-wei-zao-ruan-lian-jie-ming-ling-zhi-xing-bypass/" rel="bookmark">[SWPUCTF2019]Easy Python(flask session伪造+软链接+命令执行bypass)</a></h1>
+		<div class="entry-meta">
+		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-22 12:29:41" itemprop="datePublished" pubdate="">2020-01-22</time></i>
+	 
+			
+		</div>
+
+		<div class="entry-summary jia">
+			<p>浏览器标签中提示了。CTF-Flask-demo
+说明这是个Flask框架。随便输入登陆。用户名会显示在主页上
+
+
+进入upload页面。提示没权限。
+
+明显的session伪造。
+那么。我们就需要去找密钥。
+在404返回中。我们找到了密钥...</p>
+			<p class="readmore">
+				<a href="https://guokeya.github.io/post/swpuctf2019easy-pythonflask-session-wei-zao-ruan-lian-jie-ming-ling-zhi-xing-bypass/" class="link-more">Read more</a>
+			</p>
+		</div>
+		
+	</div>
+	
+</article>
+		
+ 						
+<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
+	
+	 
+	   
+	<div class="entry-content">
+		<h1 class="entry-title"><a href="https://guokeya.github.io/post/swpuctf-2018simplephppop-lian-phar-fan-xu-lie-hua/" rel="bookmark">[SWPUCTF 2018]SimplePHP（POP链phar反序列化）</a></h1>
+		<div class="entry-meta">
+		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-21 20:37:34" itemprop="datePublished" pubdate="">2020-01-21</time></i>
+	 
+			
+		</div>
+
+		<div class="entry-summary jia">
+			<p>首页。啥也没有。就一个IP。还有个查看文件和上传文件。
+查看文件处。有个file参数。可能存在任意文件读取。
+
+
+文件上传处。只允许图片类型。并且不返回路径
+
+右键源代码有提示
+&lt;!--flag is in f1ag.php--&gt...</p>
+			<p class="readmore">
+				<a href="https://guokeya.github.io/post/swpuctf-2018simplephppop-lian-phar-fan-xu-lie-hua/" class="link-more">Read more</a>
+			</p>
+		</div>
+		
+	</div>
+	
+</article>
+		
+ 						
+<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
+	
+	 
+	   
+	<div class="entry-content">
+		<h1 class="entry-title"><a href="https://guokeya.github.io/post/shua-xin-guo-de-zhao-pian-f5-yin-xie/" rel="bookmark">刷新过的照片（F5隐写）</a></h1>
+		<div class="entry-meta">
+		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-21 14:36:02" itemprop="datePublished" pubdate="">2020-01-21</time></i>
+	 
+			
+		</div>
+
+		<div class="entry-summary jia">
+			<p>不说了。魔性。满分
+
+
+题目就叫刷新过的照片。一般都用F5刷新。刚好又有一种隐写方式叫F5隐写。
+github上脚本利用
+git clone https://github.com/matthewgao/F5-steganography
+ja...</p>
+			<p class="readmore">
+				<a href="https://guokeya.github.io/post/shua-xin-guo-de-zhao-pian-f5-yin-xie/" class="link-more">Read more</a>
+			</p>
+		</div>
+		
+	</div>
+	
+</article>
+		
+ 						
+<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
+	
+	 
+	   
+	<div class="entry-content">
+		<h1 class="entry-title"><a href="https://guokeya.github.io/post/an-heng-bei-qi-yue-sai-ruo-kou-ling-lsb-yin-xie-mo-er-si-mi-ma/" rel="bookmark">[安恒杯七月赛]弱口令(LSB隐写+摩尔斯密码)</a></h1>
+		<div class="entry-meta">
+		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-21 14:04:17" itemprop="datePublished" pubdate="">2020-01-21</time></i>
+	 
+			
+		</div>
+
+		<div class="entry-summary jia">
+			<p>题目提示是弱口令。。然而爆破了好久都没出来
+winrar打开。发现有备注。空白的。但是又好像有内容
+
+不知道为啥。只有sublime才能看到字符
+摩尔斯密码解密一下得到
+HELL0FORUM
+用这个成功解压压缩包。得到女神.PNG
+对于图片...</p>
+			<p class="readmore">
+				<a href="https://guokeya.github.io/post/an-heng-bei-qi-yue-sai-ruo-kou-ling-lsb-yin-xie-mo-er-si-mi-ma/" class="link-more">Read more</a>
+			</p>
+		</div>
+		
+	</div>
+	
+</article>
+		
+ 						
+<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
+	
+	 
+	   
+	<div class="entry-content">
+		<h1 class="entry-title"><a href="https://guokeya.github.io/post/buuctf-usbwei-ji-ni-ya-mi-ma-rar-xiu-fu-usb-liu-liang/" rel="bookmark">【BUUCTF】USB(维吉尼亚密码+rar修复+USB流量)</a></h1>
+		<div class="entry-meta">
+		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-20 20:56:04" itemprop="datePublished" pubdate="">2020-01-20</time></i>
+	 
+			
+		</div>
+
+		<div class="entry-summary jia">
+			<p>解压得到两个文件233.rar和ket.ftm
+先从rar开始。直接解压。就一个flag.txt
+但是查看16进制。欸还有个233.png
+
+
+将7A修改为74
+
+RAR文件格式看大佬博客。有详细讲解
+https://yoloyolo.to...</p>
+			<p class="readmore">
+				<a href="https://guokeya.github.io/post/buuctf-usbwei-ji-ni-ya-mi-ma-rar-xiu-fu-usb-liu-liang/" class="link-more">Read more</a>
+			</p>
+		</div>
+		
+	</div>
+	
+</article>
+		
+ 						
+<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
+	
+	 
+	   
+	<div class="entry-content">
+		<h1 class="entry-title"><a href="https://guokeya.github.io/post/ddctf2018degdeg-kai-sa-mi-ma-128/" rel="bookmark">[DDCTF2018](╯°□°）╯︵ ┻━┻(凯撒密码+%128)</a></h1>
+		<div class="entry-meta">
+		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-20 19:47:36" itemprop="datePublished" pubdate="">2020-01-20</time></i>
+	 
+			
+		</div>
+
+		<div class="entry-summary jia">
+			<p>d4e8e1f4a0f7e1f3a0e6e1f3f4a1a0d4e8e5a0e6ece1e7a0e9f3baa0c4c4c3d4c6fbb9e1b2e2e5e2b5b4e4b8b7e6e1e1b6b9e4b5e3b8b1b1e3e5b5b6...</p>
+			<p class="readmore">
+				<a href="https://guokeya.github.io/post/ddctf2018degdeg-kai-sa-mi-ma-128/" class="link-more">Read more</a>
+			</p>
+		</div>
+		
+	</div>
+	
+</article>
+		
+ 
+
+											   
+	</div>
             
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-              <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
-                <span class="fa-stack fa-lg">
-                  <i class="fas fa-circle fa-stack-2x"></i>
-                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
-                </span>
-              </a>
-              </li>
-          </ul>
-          <p class="copyright text-muted">Copyright &copy;<span>过客</span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
-        </div>
-      </div>
-    </div>
-   </footer>
-  <!-- Bootstrap core JavaScript -->
-  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
-  <!-- Bootstrap core JavaScript -->
-  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
-  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
-  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
-<a id="back_to_top" href="#" class="back_to_top">
-  <span>▲</span></a>
-<script>$(document).ready((function(_this) {
-    return function() {
-      var bt;
-      bt = $('#back_to_top');
-      if ($(document).width() > 480) {
-        $(window).scroll(function() {
-          var st;
-          st = $(window).scrollTop();
-          if (st > 30) {
-            return bt.css('display', 'block')
-          } else {
-            return bt.css('display', 'none')
-          }
-        });
-        return bt.click(function() {
-          $('body,html').animate({
-            scrollTop: 0
-          },
-          800);
-          return false
-        })
-      }
+		
+
+			</div>
+														   
+			<nav class="navigation pagination" role="navigation">
+	
+														   
+		<div class="nav-links">
+			
+<a class="next page-numbers" href="https://guokeya.github.io/page/4/">点击查看更多</a></div>
+		
+	</nav>	
+    	<script type="text/javascript">
+//点击加载更多
+jQuery(document).ready(function($) {
+    //点击下一页的链接(即那个a标签)
+    $(' .next').click(function() {
+        $this = $(this);
+        $this.addClass('loading').text('正在努力加载'); //给a标签加载一个loading的class属性，用来添加加载效果
+        var href = $this.attr('href'); //获取下一页的链接地址
+        if (href != undefined) { //如果地址存在
+            $.ajax({ //发起ajax请求
+                url: href,
+                //请求的地址就是下一页的链接
+                type: 'get',
+                //请求类型是get
+                error: function(request) {
+                    //如果发生错误怎么处理
+                },
+                success: function(data) { //请求成功
+                    $this.removeClass('loading').text('点击查看更多'); //移除loading属性
+                    var $res = $(data).find('.post-318 '); //从数据中挑出文章数据，请根据实际情况更改
+                    $('.col-md-8').append($res.fadeIn(500)); //将数据加载加进posts-loop的标签中。
+                    var newhref = $(data).find(' .next').attr('href'); //找出新的下一页链接
+                    if (newhref != undefined) {
+                        $('.next').attr('href', newhref);
+                    } else {
+                        $('.next').remove(); //如果没有下一页了，隐藏
+                    }
+                }
+            });
+        }
+        return false;
+    });
+});
+</script>
+									 
+		</div>
+
+		
+	 	<footer id="colophon" class="site-footer">
+
+			<div class="container">
+	
+				<div class="copyright"><br>Theme:   <a href="https://github.com/shanbufun/gridea-theme-pan" target="_blank" title="Pan"><span>Pan</span></a>.  by <a href="https://shanbu.fun/" target="_blank"  title="山卜方" >Shanbufun</a></div>		
+			</div>
+		
+		</footer>
+
+</div>
+
+<script src="https://cdn.bootcss.com/fitvids/1.2.0/jquery.fitvids.min.js"></script>
+<script type='text/javascript' src='https://guokeya.github.io/media/scripts/marlin-scripts.js'></script>
+ <script src="//tokinx.github.io/lately/lately.min.js"></script>
+  <script>jQuery(document).ready(function(){$.lately({'target':'.lately-a,.lately-b,.lately-c'})});</script>
+  <style type="text/css">a.back_to_top {
+    text-decoration: none;
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    background: #f0f0f0;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    line-height: 36px;
+    font-size: 18px;
+    text-align: center;
+    transition-duration: .5s;
+    transition-propety: background-color;
+    display: none;
+}
+
+a.back_to_top span {
+    color: #888;
+}
+
+a.back_to_top:hover {
+    cursor: pointer;
+    background: #dfdfdf;
+}
+
+a.back_to_top:hover span {
+    color: #555;
+}
+
+@media print, screen and (max-width: 580px) {
+    .back_to_top {
+        display: none !important;
     }
-  })(this));</script>
-  </body>
+}
+
+
+
+</style><a id="back_to_top" href="#" class="back_to_top"><span><i class="iconfont icon-xiangshang"></i></span>
+</a>
+
+
+<script>$(document).ready((function(_this) {
+  return function() {
+    var bt;
+    bt = $('#back_to_top');
+    if ($(document).width() > 480) {
+      $(window).scroll(function() {
+        var st;
+        st = $(window).scrollTop();
+        if (st > 30) {
+          return bt.css('display', 'block');
+        } else {
+          return bt.css('display', 'none');
+        }
+      });
+      return bt.click(function() {
+        $('body,html').animate({
+          scrollTop: 0
+        }, 800);
+        return false;
+      });
+    }
+  };
+})(this));
+</script>
+
+	
+	
+														   
+</body>
 </html>
