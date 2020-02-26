@@ -1,741 +1,477 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
- <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
-<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
-<meta HTTP-EQUIV="expires" CONTENT="0"> 
-<title>CTF | 过客</title>	
-
-<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
-<script type="text/javascript">
-function getCSS()
-{
-        datetoday = new Date();
-        timenow=datetoday.getTime();
-        datetoday.setTime(timenow);
-        thehour = datetoday.getHours();
-
-        if (thehour<6)
-
-            display = "https://guokeya.github.io/media/css/night.css";
-
-       else if (thehour>19)
-
-            display = "https://guokeya.github.io/media/css/night.css";   
-
-        else if (thehour>6)
-           
-            display = "https://guokeya.github.io/media/css/day.css";
-
-        else if (thehour<19)
-
-            display = "https://guokeya.github.io/media/css/day.css";
-      
-
-var css = '<';
-        css+='link rel="stylesheet" href='+display+' \/';
-        css+='>';
-        document.write(css);
-}
-</script>
-<link href="https://fonts.googleapis.com/css?family=Dancing+Script|Liu+Jian+Mao+Cao&display=swap" rel="stylesheet">
-<link href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css" rel="stylesheet" />
-<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-<script type='text/javascript' src='https://guokeya.github.io/media/scripts/script.js'></script>
-<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet" />
-  <script src="https://cdn.bootcss.com/wow/1.1.2/wow.min.js"></script>
-  <script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
+<html>
+  <head>
+       <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>CTF | 过客</title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="CTF | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
-  <script>wow=new WOW({boxClass:'wow',animateClass:'animated',offset:0,mobile:true,live:true});wow.init();</script>
+  
 
-<script type="text/javascript">
-window.onload=getCSS();
-</script>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io">过客</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+<!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1 class="tag-tl">#CTF</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+    <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+       
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/OMGVT8wZK/">
+            <h2 class="post-title">
+              PHP phar反序列化
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>phar介绍</strong></p>
+<p>phar反序列化是利用phar://伪协议配合其他条件。进行反序列化<br>
+phar归档文件主要是用来将多个文件归档到一个文件。和压缩文件差不多。然后通过phar协议去解析文件</p>
 
-
-</head>
-<body class="home blog">
-    <div id="wrapper">
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">6 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
         
-		<header id="header" class="site-header" >
-			<div class="site-branding">
-									<h1 class="site-title"><a href="https://guokeya.github.io" rel="home">过客</a></h1>
-										
-					<h2 class="site-description">this is a test Web</h2>
-										
-							</div>
-			<nav id="nav-wrapper">
-				<div class="container">
-					<div class="nav-toggle">
-						<div class="bars">
-							<div class="bar"></div>
-							<div class="bar"></div>
-							<div class="bar"></div>
-						</div>
-					</div>
-					<div class="clear"></div>
-					<ul class="dove">
-		 
-     			
-<li>
-	 
-	<a  href="/"> 首页</a></li>
-	
-    
-     			
-<li>
-	 
-	<a  href="/archives"> 归档</a></li>
-	
-    
-     			
-<li>
-	 
-	<a  href="/post/about"> 关于</a></li>
-	
-    
-     			
-<li>
-	 
-	<a  href="/tags"> 分类</a></li>
-	
-    
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/y_3tPzPIf/">
+            <h2 class="post-title">
+              Xctf Final
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p>一题关于回调函数和session+lfi的题目</p>
 
-</ul>
-</li>		
-		
-</ul>				</div>
-			</nav>
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">3 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/4rUY3PIVG/">
+            <h2 class="post-title">
+              PHP Bypass open_basedir
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>简介</strong><br>
+open_basedir用来限制用户可访问的目录。访问当前/var/www/html下</p>
 
-<div class="jingge">
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">1 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/tckzWc_Xo/">
+            <h2 class="post-title">
+              PHP无参数RCE
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p>什么是无参数RCE，也就是不加参数只调用函数。远程执行代码</p>
 
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">6 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/EeULI1N2K/">
+            <h2 class="post-title">
+              Python Flask SSTI模板注入
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p>SSTI</p>
 
-    
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">7 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/jjD9b5sxT/">
+            <h2 class="post-title">
+              PHP mt_rand 随机数安全
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>函数介绍</strong></p>
 
-    
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">3 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/GVT3pUy7j/">
+            <h2 class="post-title">
+              SSRF打内网Redis
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>实验环境</strong><br>
+存在SSRF漏洞的页面<br>
+Redis主机</p>
 
-    
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">3 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/qaKknfeRe/">
+            <h2 class="post-title">
+              Node.js代码执行漏洞
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>漏洞成因</strong><br>
+程序员没有对用户输入进行控制，直接带入eval执行，从而造成代码执行</p>
 
-    
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">2 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/K8wkh9xtS/">
+            <h2 class="post-title">
+              markdown XSS学习
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>介绍</strong><br>
+markdown是一个用于编写和格式化内容的简单语言。github上的readme就是这个编写的。</p>
 
-    
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">2 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/pyl5sMkxm/">
+            <h2 class="post-title">
+              PHP setrawcookie与setcookie的区别
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p>这两个函数都作用都是赋值cookie</p>
 
-    
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">1 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/kR1_jmuDS/">
+            <h2 class="post-title">
+              首届360杯网络安全职业技能大赛 Web(立誓要成为admin) writeup
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>环境说明:</strong><br>
+由于比赛结束。官方也没给源代码和靶机。就没有漏洞环境了</p>
 
-    
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">2 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/_zGR5BbA_/">
+            <h2 class="post-title">
+              首届360杯网络安全职业技能大赛 流量分析题（一）writeup
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>题目环境</strong></p>
 
-    
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">5 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/NTtCrziEm/">
+            <h2 class="post-title">
+              CTF PHP代码审计中的一题任意URL跳转
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>源代码</strong></p>
 
-    
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">2 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/hpyo8CYfD/">
+            <h2 class="post-title">
+              PHP class_exists函数漏洞
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>漏洞介绍</strong><br>
+class_exists()函数，会判断用户传过来的控制器是否存在，默认情况下，如果程序中存在__autoload函数，那么在使用class_exists()函数时，就会自动调用__autoload函数，</p>
 
-    
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">1 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/aMcQL_YEj/">
+            <h2 class="post-title">
+              Mysql 过滤逗号注入
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>实验环境</strong><br>
+i春秋，web SQLI</p>
 
-    
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">2 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        
+        <a class="btn btn-primary float-left" href="https://guokeya.github.io/tag/CTF/page/3/">&larr; 上一页</a>
+        
+        
+        <a class="btn btn-primary float-right" href="https://guokeya.github.io/tag/CTF/page/5/">下一页 &rarr;</a>
+        
+      </div>
+    </div>
+  </div>
 
-    
-        </header>
-
-		<div id="content" class="container">
-			<div class="row">
-	<div class="col-md-8 site-main">
-		
-		<div class="wow slideInLeft archive-box">
-			  <header class="page-header">
-				  
-				<h1 class="page-title">CTF</h1> 
-
-</header>
-			</div>	
- 		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/OMGVT8wZK/" rel="bookmark">PHP phar反序列化</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 18:02:06" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>phar介绍
-phar反序列化是利用phar://伪协议配合其他条件。进行反序列化
-phar归档文件主要是用来将多个文件归档到一个文件。和压缩文件差不多。然后通过phar协议去解析文件
-
-phar文件格式
-stub:phar文件标识
-格式为...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/OMGVT8wZK/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/y_3tPzPIf/" rel="bookmark">Xctf Final</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 16:35:04" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>一题关于回调函数和session+lfi的题目
-
-有三个文件。分别是
-function.php(用来过滤危险函数)
-&lt;?php
-function filters($data){
-	foreach($data as $key=&gt;$...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/y_3tPzPIf/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/4rUY3PIVG/" rel="bookmark">PHP Bypass open_basedir</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 16:34:04" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>简介
-open_basedir用来限制用户可访问的目录。访问当前/var/www/html下
-
-
-访问/var/www下
-
-这就限制了我们能否访问其他路径。在CTF中。也就限制了读取其他目录下的Flag文件
-Bypass
-方法一:
-ini_...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/4rUY3PIVG/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/tckzWc_Xo/" rel="bookmark">PHP无参数RCE</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 16:30:10" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>什么是无参数RCE，也就是不加参数只调用函数。远程执行代码
-
-if(';' === preg_replace('/[^\W]+\((?R)?\)/', '', $_GET['code'])) {    
-    eval($_GET['co...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/tckzWc_Xo/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/EeULI1N2K/" rel="bookmark">Python Flask SSTI模板注入</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 16:21:35" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>SSTI
-
-ssti服务端模板注入，主要为python的一些框架，jinja2，mmako，tornado，django，等
-漏洞原理嘛。都是因为代码不严谨，信任用户输入，导致模板注入
-
-模板：
-模板就类似于PPT模板，现成的，只需要将内容...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/EeULI1N2K/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/jjD9b5sxT/" rel="bookmark">PHP mt_rand 随机数安全</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 16:18:30" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>函数介绍
-
-mt_rand()，用于产生一个随机数，用Mersenne Twister算法的特性，有两个可选参数(min,max)
-mt_rand(5,15)随机产生5-15之间的随机数
-mt_rand()随机产生0-mt_getrandm...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/jjD9b5sxT/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/GVT3pUy7j/" rel="bookmark">SSRF打内网Redis</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 16:06:13" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>实验环境
-存在SSRF漏洞的页面
-Redis主机
-
-&lt;?PHP
-$ch = curl_init(); 
-curl_setopt($ch, CURLOPT_URL, $_GET['url']); 
-curl_setopt($ch, CU...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/GVT3pUy7j/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/qaKknfeRe/" rel="bookmark">Node.js代码执行漏洞</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 15:59:32" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>漏洞成因
-程序员没有对用户输入进行控制，直接带入eval执行，从而造成代码执行
-
-漏洞复现
-1.安装Node.js
-cd /usr/local/node/
-wget https://npm.taobao.org/mirrors/node/l...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/qaKknfeRe/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/K8wkh9xtS/" rel="bookmark">markdown XSS学习</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 15:53:33" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>介绍
-markdown是一个用于编写和格式化内容的简单语言。github上的readme就是这个编写的。
-
-使用
-
-视觉效果很棒。
-markdown编写
-![the goodest boy](https://xzfile.aliyuncs....</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/K8wkh9xtS/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/pyl5sMkxm/" rel="bookmark">PHP setrawcookie与setcookie的区别</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 15:51:34" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>这两个函数都作用都是赋值cookie
-
-语法如下：
-setcookie(name,value,expire,path,domain,secure)
-name    cookie的名称
-value   cookie的值
-expire  coo...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/pyl5sMkxm/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/kR1_jmuDS/" rel="bookmark">首届360杯网络安全职业技能大赛 Web(立誓要成为admin) writeup</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 15:38:41" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>环境说明:
-由于比赛结束。官方也没给源代码和靶机。就没有漏洞环境了
-
-writeup
-大概，就是有一个登陆界面，注册界面，可以注册用户
-注册admin空格，无果,注册test查看cookie也没有东西。只存在一个session
-但是，注册界...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/kR1_jmuDS/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/_zGR5BbA_/" rel="bookmark">首届360杯网络安全职业技能大赛 流量分析题（一）writeup</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 15:28:35" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>题目环境
-
-首先，题目给出了一个提示。sql注入没那么难
-附件有个压缩包
-下载压缩包后，打开
-数据包，工具：
-https://github.com/guokeya/tools/blob/master/1.pcap
-https://githu...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/_zGR5BbA_/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/NTtCrziEm/" rel="bookmark">CTF PHP代码审计中的一题任意URL跳转</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 15:13:34" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>源代码
-
-&lt;?php
-class Redirect {
-    private $websiteHost = 'www.example.com';
-    private function setHeaders($url) {
-   ...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/NTtCrziEm/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/hpyo8CYfD/" rel="bookmark">PHP class_exists函数漏洞</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 15:12:18" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>漏洞介绍
-class_exists()函数，会判断用户传过来的控制器是否存在，默认情况下，如果程序中存在__autoload函数，那么在使用class_exists()函数时，就会自动调用__autoload函数，
-
-代码如下
-?php
-f...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/hpyo8CYfD/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/aMcQL_YEj/" rel="bookmark">Mysql 过滤逗号注入</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 15:07:00" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>实验环境
-i春秋，web SQLI
-
-正常的sql语句
-select * from test where id=1 and 1=2 union select * from ((select 1)a join (select 2)b join...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/aMcQL_YEj/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 
-
-
-
-
-							
-	</div>
+  
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
             
-
-
-			</div> 
-			<nav class="navigation pagination" role="navigation">
-	
-														   
-		<div class="nav-links">
-			
-<a class="next page-numbers" href="https://guokeya.github.io/tag/CTF/page/5/">点击查看更多</a></div>
-		
-	</nav>	
-    	<script type="text/javascript">
-//点击加载更多
-jQuery(document).ready(function($) {
-    //点击下一页的链接(即那个a标签)
-    $(' .next').click(function() {
-        $this = $(this);
-        $this.addClass('loading').text('正在努力加载'); //给a标签加载一个loading的class属性，用来添加加载效果
-        var href = $this.attr('href'); //获取下一页的链接地址
-        if (href != undefined) { //如果地址存在
-            $.ajax({ //发起ajax请求
-                url: href,
-                //请求的地址就是下一页的链接
-                type: 'get',
-                //请求类型是get
-                error: function(request) {
-                    //如果发生错误怎么处理
-                },
-                success: function(data) { //请求成功
-                    $this.removeClass('loading').text('点击查看更多'); //移除loading属性
-                    var $res = $(data).find('.post-318 '); //从数据中挑出文章数据，请根据实际情况更改
-                    $('.col-md-8').append($res.fadeIn(500)); //将数据加载加进posts-loop的标签中。
-                    var newhref = $(data).find(' .next').attr('href'); //找出新的下一页链接
-                    if (newhref != undefined) {
-                        $('.next').attr('href', newhref);
-                    } else {
-                        $('.next').remove(); //如果没有下一页了，隐藏
-                    }
-                }
-            });
-        }
-        return false;
-    });
-});
-</script>
-													   
-		</div>
-
-		
-	 	<footer id="colophon" class="site-footer">
-
-			<div class="container">
-	
-				<div class="copyright"><br>Theme:   <a href="https://github.com/shanbufun/gridea-theme-pan" target="_blank" title="Pan"><span>Pan</span></a>.  by <a href="https://shanbu.fun/" target="_blank"  title="山卜方" >Shanbufun</a></div>		
-			</div>
-		
-		</footer>
-
-</div>
-
-<script src="https://cdn.bootcss.com/fitvids/1.2.0/jquery.fitvids.min.js"></script>
-<script type='text/javascript' src='https://guokeya.github.io/media/scripts/marlin-scripts.js'></script>
- <script src="//tokinx.github.io/lately/lately.min.js"></script>
-  <script>jQuery(document).ready(function(){$.lately({'target':'.lately-a,.lately-b,.lately-c'})});</script>
-  <style type="text/css">a.back_to_top {
-    text-decoration: none;
-    position: fixed;
-    bottom: 40px;
-    right: 30px;
-    background: #f0f0f0;
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-    line-height: 36px;
-    font-size: 18px;
-    text-align: center;
-    transition-duration: .5s;
-    transition-propety: background-color;
-    display: none;
-}
-
-a.back_to_top span {
-    color: #888;
-}
-
-a.back_to_top:hover {
-    cursor: pointer;
-    background: #dfdfdf;
-}
-
-a.back_to_top:hover span {
-    color: #555;
-}
-
-@media print, screen and (max-width: 580px) {
-    .back_to_top {
-        display: none !important;
-    }
-}
-
-
-
-</style><a id="back_to_top" href="#" class="back_to_top"><span><i class="iconfont icon-xiangshang"></i></span>
-</a>
-
-
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span>过客</span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
 <script>$(document).ready((function(_this) {
-  return function() {
-    var bt;
-    bt = $('#back_to_top');
-    if ($(document).width() > 480) {
-      $(window).scroll(function() {
-        var st;
-        st = $(window).scrollTop();
-        if (st > 30) {
-          return bt.css('display', 'block');
-        } else {
-          return bt.css('display', 'none');
-        }
-      });
-      return bt.click(function() {
-        $('body,html').animate({
-          scrollTop: 0
-        }, 800);
-        return false;
-      });
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
     }
-  };
-})(this));
-</script>
-
-		
-</body>
+  })(this));</script>
+  </body>
 </html>
