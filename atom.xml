@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-02-26T04:26:59.869Z</updated>
+    <updated>2020-02-27T08:01:25.436Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,19 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[安恒月赛SSTI的新姿势]]></title>
+        <id>https://guokeya.github.io/post/m9L1ZJk4j/</id>
+        <link href="https://guokeya.github.io/post/m9L1ZJk4j/">
+        </link>
+        <updated>2020-02-27T07:06:51.000Z</updated>
+        <summary type="html"><![CDATA[<p>这题SSTI。过滤了点和下划线<br>
+writeup在此<code>https://www.gem-love.com/ctf/1799.html</code></p>
+]]></summary>
+        <content type="html"><![CDATA[<p>这题SSTI。过滤了点和下划线<br>
+writeup在此<code>https://www.gem-love.com/ctf/1799.html</code></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[I春秋公益赛部分Writeup]]></title>
         <id>https://guokeya.github.io/post/i-chun-qiu-gong-yi-sai-day2-de-liang-ti-web/</id>
@@ -147,17 +160,6 @@ login需要admin密码<br>
 ]]></summary>
         <content type="html"><![CDATA[<p>进去就三个链接。<br>
 <img src="https://guokeya.github.io/post-images/1581319850698.png" alt="" loading="lazy"></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[CISCN2019 华北赛区 Day1 Web5]CyberPunk]]></title>
-        <id>https://guokeya.github.io/post/ciscn2019-hua-bei-sai-qu-day1-web5cyberpunk/</id>
-        <link href="https://guokeya.github.io/post/ciscn2019-hua-bei-sai-qu-day1-web5cyberpunk/">
-        </link>
-        <updated>2020-02-10T06:36:52.000Z</updated>
-        <summary type="html"><![CDATA[<p>一题关于二次注入的题</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>一题关于二次注入的题</p>
 ]]></content>
     </entry>
 </feed>
