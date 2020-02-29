@@ -6,7 +6,7 @@
 <meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
 <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
 <meta HTTP-EQUIV="expires" CONTENT="0"> 
-<title>[V&amp;N2020 公开赛]HappyCTFd | 过客</title>	
+<title>[V&amp;N2020 公开赛]HappyCTFd/CHECKIN | 过客</title>	
 
 <link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
 <script type="text/javascript">
@@ -150,7 +150,7 @@ window.onload=getCSS();
 	
 	                      
 		<div class="entry-content">
-			<h1 class="wow swing entry-title">[V&amp;N2020 公开赛]HappyCTFd</h1>
+			<h1 class="wow swing entry-title">[V&amp;N2020 公开赛]HappyCTFd/CHECKIN</h1>
 <div class="entry-meta">
 <div class="wow bounce">
 	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-02-29 17:18:42" itemprop="datePublished" pubdate="">2020-02-29</time></i>
@@ -161,7 +161,8 @@ window.onload=getCSS();
 		</div>
                   
 			<div class="wow slideInLeft entry-summary song">
-				<p>登陆进去是个CTFD（一个开源的CTF平台）界面。<br>
+				<p><strong>HappyCTFd</strong><br>
+登陆进去是个CTFD（一个开源的CTF平台）界面。<br>
 <img src="https://guokeya.github.io/post-images/1582968206604.png" alt="" loading="lazy"></p>
 <!-- more -->
 <p>看了下没啥东西。<br>
@@ -181,6 +182,67 @@ window.onload=getCSS();
 重置完。用admin+你重置的密码登陆即可<br>
 有个flagflag你在哪的channge。下载附件就有flag了<br>
 <img src="https://guokeya.github.io/post-images/1582968764347.png" alt="" loading="lazy"></p>
+<p><strong>CHECKIN</strong><br>
+进去就给了源码</p>
+<pre><code>
+from flask import Flask, request
+import os
+app = Flask(__name__)
+
+flag_file = open(&quot;flag.txt&quot;, &quot;r&quot;)
+# flag = flag_file.read()
+# flag_file.close()
+#
+# @app.route('/flag')
+# def flag():
+#     return flag
+## want flag? naive!
+
+# You will never find the thing you want:) I think
+@app.route('/shell')
+def shell():
+    os.system(&quot;rm -f flag.txt&quot;)
+    exec_cmd = request.args.get('c')
+    os.system(exec_cmd)
+    return &quot;1&quot;
+
+@app.route('/')
+def source():
+    return open(&quot;app.py&quot;,&quot;r&quot;).read()
+
+if __name__ == &quot;__main__&quot;:
+    app.run(host='0.0.0.0')
+</code></pre>
+<p>分析一下：</p>
+<pre><code>打开flag.txt
+删除flag.txt
+执行命令
+</code></pre>
+<p>既然能执行任意命令。就反弹shell。去文件描述符拿flag就好了<br>
+去buuoj开个linux labs。nc监听端口<br>
+尝试bash反弹。失败。python反弹失败。<br>
+最后python3 成功反弹shell<br>
+<img src="https://guokeya.github.io/post-images/1582976992650.png" alt="" loading="lazy"><br>
+这里讲下proc各项的内容</p>
+<pre><code>在/proc文件系统中，每一个进程都有一个相应的文件 。
+比如我python启动了一个http服务。那么就会在/proc下创建一个对应的文件
+
+/proc/pid/cmdline 包含了用于开始进程的命令 ；
+/proc/pid/cwd包含了当前进程工作目录的一个链接 ；
+/proc/pid/environ 包含了可用进程环境变量的列表 ；
+/proc/pid/exe 包含了正在进程中运行的程序链接；
+/proc/pid/fd/ 这个目录包含了进程打开的每一个文件的链接；
+/proc/pid/mem 包含了进程在内存中的内容；
+/proc/pid/stat包含了进程的状态信息；
+/proc/pid/statm 包含了进程的内存使用信息。
+</code></pre>
+<p>/proc/pid/fd/这个会包含程序打开的每个文件的链接.。即使文件被删了。链接还是会存在<br>
+这道题。python打开了flag.txt。然而又删掉了<br>
+这时python对应进程下的fd下会有flag.txt的链接<br>
+<img src="https://guokeya.github.io/post-images/1582977396138.png" alt="" loading="lazy"><br>
+这里python的进程ID是11。fd下的3链接的是flag.txt<br>
+直接cat就行了<br>
+<img src="https://guokeya.github.io/post-images/1582977453886.png" alt="" loading="lazy"></p>
 
 							</div>
 	<div class="wow bounceInDown vt-post-tags">
