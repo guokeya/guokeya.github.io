@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-02-29T08:52:25.804Z</updated>
+    <updated>2020-02-29T09:33:22.842Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,19 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[[V&N2020 公开赛]HappyCTFd]]></title>
+        <id>https://guokeya.github.io/post/wRiUmBytM/</id>
+        <link href="https://guokeya.github.io/post/wRiUmBytM/">
+        </link>
+        <updated>2020-02-29T09:18:42.000Z</updated>
+        <summary type="html"><![CDATA[<p>登陆进去是个CTFD（一个开源的CTF平台）界面。<br>
+<img src="https://guokeya.github.io/post-images/1582968206604.png" alt="" loading="lazy"></p>
+]]></summary>
+        <content type="html"><![CDATA[<p>登陆进去是个CTFD（一个开源的CTF平台）界面。<br>
+<img src="https://guokeya.github.io/post-images/1582968206604.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[[SUCTF 2018]annonymous(php lambda)]]></title>
         <id>https://guokeya.github.io/post/mcUK57hAJ/</id>
@@ -169,23 +182,6 @@ binwalk。foremost得到了一个MP3以及两张图片<br>
 我用GitHack只恢复了一个write_do.php但是。里面代码是少了一部分的<br>
 这里需要用到<code>https://github.com/wangyihang/githacker</code>这个工具<br>
 我用的其他工具恢复出来只有文件。没有.git目录</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[SWPUCTF 2016]Web7(urllib头注入+SSRF)]]></title>
-        <id>https://guokeya.github.io/post/swpuctf-2016web7urllib-tou-zhu-ru-ssrf/</id>
-        <link href="https://guokeya.github.io/post/swpuctf-2016web7urllib-tou-zhu-ru-ssrf/">
-        </link>
-        <updated>2020-02-10T12:52:52.000Z</updated>
-        <summary type="html"><![CDATA[<p>首先。题目就一个input和login<br>
-login需要admin密码<br>
-先从input开始<br>
-随手输了个123报错了。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>首先。题目就一个input和login<br>
-login需要admin密码<br>
-先从input开始<br>
-随手输了个123报错了。</p>
 ]]></content>
     </entry>
 </feed>
