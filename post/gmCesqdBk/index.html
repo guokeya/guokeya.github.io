@@ -6,7 +6,7 @@
 <meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
 <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
 <meta HTTP-EQUIV="expires" CONTENT="0"> 
-<title>[V&amp;N2020 公开赛]HappyCTFd/CHECKIN/TimeTravel | 过客</title>	
+<title>ThinkPHP6 任意文件操作漏洞分析 | 过客</title>	
 
 <link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
 <script type="text/javascript">
@@ -150,10 +150,10 @@ window.onload=getCSS();
 	
 	                      
 		<div class="entry-content">
-			<h1 class="wow swing entry-title">[V&amp;N2020 公开赛]HappyCTFd/CHECKIN/TimeTravel</h1>
+			<h1 class="wow swing entry-title">ThinkPHP6 任意文件操作漏洞分析</h1>
 <div class="entry-meta">
 <div class="wow bounce">
-	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-02-29 17:18:42" itemprop="datePublished" pubdate="">2020-02-29</time></i>
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-01 21:50:46" itemprop="datePublished" pubdate="">2020-03-01</time></i>
 	          </div>
 			
 </span>
@@ -161,126 +161,111 @@ window.onload=getCSS();
 		</div>
                   
 			<div class="wow slideInLeft entry-summary song">
-				<p><strong>HappyCTFd</strong><br>
-登陆进去是个CTFD（一个开源的CTF平台）界面。<br>
-<img src="https://guokeya.github.io/post-images/1582968206604.png" alt="" loading="lazy"></p>
+				<p>当时i春秋的CTF有一题thinkphp6 任意文件写入getshell。现在来分析一下</p>
 <!-- more -->
-<p>看了下没啥东西。<br>
-接着搜到了CTFD的CVE。貌似还挺新的<br>
-<img src="https://guokeya.github.io/post-images/1582968254588.png" alt="" loading="lazy"><br>
-<code>https://www.colabug.com/2020/0204/6940556/</code><br>
-具体就是注册一个空格admin用户。<br>
-首会经过判断。用户名是否存在。此时空格admin!=admin<br>
-然后入数据库时会去掉空格。就成了admin<br>
-此时。我们去重置密码。就会重置admin的密码</p>
-<p><strong>开始复现</strong><br>
-首先注册一个空格admin用户。邮箱是buuoj的内网邮箱。等会重置要用到<br>
-<img src="https://guokeya.github.io/post-images/1582968627428.png" alt="" loading="lazy"><br>
-然后重置密码<br>
-<img src="https://guokeya.github.io/post-images/1582968671489.png" alt="" loading="lazy"><br>
-<img src="https://guokeya.github.io/post-images/1582968690363.png" alt="" loading="lazy"><br>
-重置完。用admin+你重置的密码登陆即可<br>
-有个flagflag你在哪的channge。下载附件就有flag了<br>
-<img src="https://guokeya.github.io/post-images/1582968764347.png" alt="" loading="lazy"></p>
-<p><strong>CHECKIN</strong><br>
-进去就给了源码</p>
-<pre><code>
-from flask import Flask, request
-import os
-app = Flask(__name__)
+<p><strong>漏洞概述</strong><br>
+在 ThinkPHP 6.0.0 以及 6.0.1 两个版本中，如果服务端在全局中间件定义文件中开启了 Session 初始化，并且攻击者可控任意一个 session 的值，就可利用写入 session 文件的功能做到写入任意文件 getshell 。</p>
+<p>安装Thinkphp6:<br>
+<code>composer create-project topthink/think tp</code><br>
+修改配置：<br>
+修改<code>app/middleware.php</code>为如下配置<br>
+<img src="https://guokeya.github.io/post-images/1583131502880.png" alt="" loading="lazy"><br>
+并删除<code>vendor/topthink/framework/src/think/session/Store.php</code>中setid的补丁<br>
+<img src="https://guokeya.github.io/post-images/1583131643464.png" alt="" loading="lazy"><br>
+既然官方在这里打了补丁。那么就从这为入口点分析<br>
+补丁即对sessionid只能为数字字母。那么漏洞应该就是在sessionid上<br>
+先看setId被谁调用了<br>
+<img src="https://guokeya.github.io/post-images/1583133311241.png" alt="" loading="lazy"></p>
+<pre><code>if ($sessionId) {
+    $this-&gt;session-&gt;setId($sessionId);
+}
+#只有满足$sessionId才能进入setid函数
 
-flag_file = open(&quot;flag.txt&quot;, &quot;r&quot;)
-# flag = flag_file.read()
-# flag_file.close()
-#
-# @app.route('/flag')
-# def flag():
-#     return flag
-## want flag? naive!
-
-# You will never find the thing you want:) I think
-@app.route('/shell')
-def shell():
-    os.system(&quot;rm -f flag.txt&quot;)
-    exec_cmd = request.args.get('c')
-    os.system(exec_cmd)
-    return &quot;1&quot;
-
-@app.route('/')
-def source():
-    return open(&quot;app.py&quot;,&quot;r&quot;).read()
-
-if __name__ == &quot;__main__&quot;:
-    app.run(host='0.0.0.0')
+if ($varSessionId &amp;&amp; $request-&gt;request($varSessionId)) {
+    $sessionId = $request-&gt;request($varSessionId);
+} else {
+    $sessionId = $request-&gt;cookie($cookieName);
+}
+#这里sessionId可以由cookieName来。继续看
+ $cookieName   = $this-&gt;session-&gt;getName();
 </code></pre>
-<p>分析一下：</p>
-<pre><code>打开flag.txt
-删除flag.txt
-执行命令
+<p><img src="https://guokeya.github.io/post-images/1583134362956.png" alt="" loading="lazy"><br>
+可以看到<code>$sessionId=$request-&gt;cookie('PHPSESSID')</code><br>
+sessionId其实就是等于PHPSESSID的值。现在<code>$this-&gt;id</code>已经知道是PHPSESSID的值。<br>
+在setId函数下方有个getId函数<br>
+<img src="https://guokeya.github.io/post-images/1583131808685.png" alt="" loading="lazy"><br>
+看看哪里调用了<br>
+在<code>vendor/topthink/framework/src/think/session/Store.php</code>中发现save()函数<br>
+<img src="https://guokeya.github.io/post-images/1583132178100.png" alt="" loading="lazy"><br>
+根据函数的注释。这个函数用来保存session数据</p>
+<pre><code>$sessionId为id名。然后session数据为$data
+如果$data不为空。就序列化为字符串。调用write函数
 </code></pre>
-<p>既然能执行任意命令。就反弹shell。去文件描述符拿flag就好了<br>
-去buuoj开个linux labs。nc监听端口<br>
-尝试bash反弹。失败。python反弹失败。<br>
-最后python3 成功反弹shell<br>
-<img src="https://guokeya.github.io/post-images/1582976992650.png" alt="" loading="lazy"><br>
-这里讲下proc各项的内容</p>
-<pre><code>在/proc文件系统中，每一个进程都有一个相应的文件 。
-比如我python启动了一个http服务。那么就会在/proc下创建一个对应的文件
-
-/proc/pid/cmdline 包含了用于开始进程的命令 ；
-/proc/pid/cwd包含了当前进程工作目录的一个链接 ；
-/proc/pid/environ 包含了可用进程环境变量的列表 ；
-/proc/pid/exe 包含了正在进程中运行的程序链接；
-/proc/pid/fd/ 这个目录包含了进程打开的每一个文件的链接；
-/proc/pid/mem 包含了进程在内存中的内容；
-/proc/pid/stat包含了进程的状态信息；
-/proc/pid/statm 包含了进程的内存使用信息。
+<p>我们继续看write函数。<br>
+在<code>vendor/topthink/framework/src/think/session/driver/File.php</code>中发现write函数<br>
+<img src="https://guokeya.github.io/post-images/1583132312518.png" alt="" loading="lazy"></p>
+<pre><code>$filename为sessionid名
+$data为sessionid的值
+最后会通过writeFile函数写入。
 </code></pre>
-<p>/proc/pid/fd/这个会包含程序打开的每个文件的链接.。即使文件被删了。链接还是会存在<br>
-这道题。python打开了flag.txt。然而又删掉了<br>
-这时python对应进程下的fd下会有flag.txt的链接<br>
-<img src="https://guokeya.github.io/post-images/1582977396138.png" alt="" loading="lazy"><br>
-这里python的进程ID是11。fd下的3链接的是flag.txt<br>
-直接cat就行了<br>
-<img src="https://guokeya.github.io/post-images/1582977453886.png" alt="" loading="lazy"></p>
-<p><strong>TimeTravel</strong><br>
-给出了源码<br>
-<img src="https://guokeya.github.io/post-images/1583028732148.png" alt="" loading="lazy"></p>
-<pre><code>首先。包含了vendor/autoload.php
-导入GuzzleHttp\Client
-new 一个Client()。访问127.0.0.1:5000/api/eligible
-返回数据用json解码。如果success中的值为True。就输出flag
+<p>继续搜writeFile函数<br>
+在同文件的170行发现此函数。就是个file_put_contents<br>
+<img src="https://guokeya.github.io/post-images/1583132540349.png" alt="" loading="lazy"></p>
+<p>简单概括下。这个漏洞。就是讲sessionid作为文件名。session内容作为文件内容写入。<br>
+如果我们能控制sessionid和文件内容。即可任意文件写入</p>
+<pre><code>   public function setId($id = null): void
+    {
+        $this-&gt;id = is_string($id) &amp;&amp; strlen($id) === 32) ? $id : md5(microtime(true) . session_create_id());
+    }
 </code></pre>
-<p>一开始看到vendor。。方向就跑偏了。以为是个和larval有关的题。<br>
-没想到重点在GuzzleHTTP<br>
-漏洞分析<code>https://www.laruence.com/2016/07/19/3101.html</code><br>
-意思大致是可以在请求中夹杂一个HTTP_PROXY：IP。<br>
-然后数据就会被转发到IP那。造成请求伪造。监听等<br>
-这里就要说一下HTTP的代理。</p>
-<pre><code>客户端-&gt;代理-&gt;服务器        请求
-服务器-&gt;代理-&gt;客户端        响应
-
-现在代理可控为我们的VPS。无论是请求还是响应。都得经过我们的代理。
-我们可以修改请求。也可以修改响应
-</code></pre>
-<p>首先。开启个VPS。<br>
-<img src="https://guokeya.github.io/post-images/1583029133652.png" alt="" loading="lazy"><br>
-拿到flag</p>
+<p>在setid时有个判断。sessionid必须是长度为32的字符串。那么我们构造<br>
+PHPSESSID=1234567890123456789012345678.php<br>
+就可以写入一个名为sess_1234567890123456789012345678.php的文件。只需要一个文件内容可控即可</p>
+<p>接下来具体分析下i春秋那题<br>
+首先下载源码。<br>
+<img src="https://guokeya.github.io/post-images/1583136608503.png" alt="" loading="lazy"><br>
+正常来说。index.php应该是在public目录下作为程序入口。web目录也是public<br>
+可这个直接在根目录下。那么app。config。runtime这些目录只要有权限都可访问<br>
+结合thinkphp6任意文件。那么我们只要写入文件。可以直接访问runtime/session。就可拿到我们的webshell</p>
+<p>OK。从程序入口文件入手<br>
+<img src="https://guokeya.github.io/post-images/1583137024822.png" alt="" loading="lazy"><br>
+HTTP请求结束后，会调用end方法<br>
+接着会继续执行下去。又是一个end方法<br>
+<img src="https://guokeya.github.io/post-images/1583137089992.png" alt="" loading="lazy"><br>
+进去看。末尾***还是end方法。<br>
+<img src="https://guokeya.github.io/post-images/1583137126084.png" alt="" loading="lazy"><br>
+到这里调用了save方法<br>
+<img src="https://guokeya.github.io/post-images/1583137171634.png" alt="" loading="lazy"><br>
+而save方法。就是我们上述分析的漏洞利用点<br>
+PHPSESSID我们可控。改为32长度以.php结尾的字符串即可<br>
+接下来找session内容可控处<br>
+在app/home/controller/Member.php中。我们找到了search方法<br>
+<img src="https://guokeya.github.io/post-images/1583137292877.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1583137930673.png" alt="" loading="lazy"><br>
+这里。我们搜索内容可控。并且会放在session内容中。<br>
+这里。我们在登陆时修改phpsession。为xxxxxxxxxxxxxxxxx.php(总长32)<br>
+<img src="https://guokeya.github.io/post-images/1583138812996.png" alt="" loading="lazy"><br>
+登陆成功。会给<code>10c26cc264e03957eb7bba1f6d75.php</code>这个PHPSESSID赋一个UID的值表示登陆<br>
+登陆后搜索<code>&lt;?php phpinfo();?&gt;</code><br>
+此时PHPSESSID还是<code>10c26cc264e03957eb7bba1f6d75.php</code>带有登陆标志。可以通过search的判断<br>
+访问/runtime/session/sess_10c26cc264e03957eb7bba1f6d75.php<br>
+可以看到phpinfo的界面<br>
+<img src="https://guokeya.github.io/post-images/1583138919786.png" alt="" loading="lazy"></p>
 
 							</div>
 	<div class="wow bounceInDown vt-post-tags">
  
 				<a href="https://guokeya.github.io/tag/CTF/" rel="tag">CTF</a>	
 				 
+				<a href="https://guokeya.github.io/tag/Web/" rel="tag">Web安全</a>	
+				 
 					</div>						
 <nav class="navigation3 post-navigation3" role="navigation">
 		
 		<div class="nav-links3">
       
-		<div class="wow bounceInLeft nav-previous3"><a href="https://guokeya.github.io/post/gmCesqdBk/" rel="prev"> ThinkPHP6 任意文件操作漏洞分析</a></div>
 		 
-		 
-		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/mcUK57hAJ/" rel="next"> [SUCTF 2018]annonymous(php lambda)</a></div>
+		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/wRiUmBytM/" rel="next"> [V&amp;N2020 公开赛]HappyCTFd/CHECKIN/TimeTravel</a></div>
 		
 		</div>
 	</nav>

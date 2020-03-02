@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-03-01T02:19:29.247Z</updated>
+    <updated>2020-03-02T08:50:05.168Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,17 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[ThinkPHP6 任意文件操作漏洞分析]]></title>
+        <id>https://guokeya.github.io/post/gmCesqdBk/</id>
+        <link href="https://guokeya.github.io/post/gmCesqdBk/">
+        </link>
+        <updated>2020-03-01T13:50:46.000Z</updated>
+        <summary type="html"><![CDATA[<p>当时i春秋的CTF有一题thinkphp6 任意文件写入getshell。现在来分析一下</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>当时i春秋的CTF有一题thinkphp6 任意文件写入getshell。现在来分析一下</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[[V&N2020 公开赛]HappyCTFd/CHECKIN/TimeTravel]]></title>
         <id>https://guokeya.github.io/post/wRiUmBytM/</id>
@@ -167,23 +178,6 @@ binwalk。foremost得到了一个MP3以及两张图片<br>
         <summary type="html"><![CDATA[<p>进入主页。就说要买V6</p>
 ]]></summary>
         <content type="html"><![CDATA[<p>进入主页。就说要买V6</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[网鼎杯 2018]Comment（Git恢复+二次注入）]]></title>
-        <id>https://guokeya.github.io/post/wang-ding-bei-2018commentgit-hui-fu/</id>
-        <link href="https://guokeya.github.io/post/wang-ding-bei-2018commentgit-hui-fu/">
-        </link>
-        <updated>2020-02-11T10:33:44.000Z</updated>
-        <summary type="html"><![CDATA[<p>扫目录扫到Git。githack恢复下<br>
-我用GitHack只恢复了一个write_do.php但是。里面代码是少了一部分的<br>
-这里需要用到<code>https://github.com/wangyihang/githacker</code>这个工具<br>
-我用的其他工具恢复出来只有文件。没有.git目录</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>扫目录扫到Git。githack恢复下<br>
-我用GitHack只恢复了一个write_do.php但是。里面代码是少了一部分的<br>
-这里需要用到<code>https://github.com/wangyihang/githacker</code>这个工具<br>
-我用的其他工具恢复出来只有文件。没有.git目录</p>
 ]]></content>
     </entry>
 </feed>
