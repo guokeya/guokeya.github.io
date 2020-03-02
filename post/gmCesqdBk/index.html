@@ -183,8 +183,10 @@ window.onload=getCSS();
 
 if ($varSessionId &amp;&amp; $request-&gt;request($varSessionId)) {
     $sessionId = $request-&gt;request($varSessionId);
+    #如果在配置中。自定义了SESSID那就取自定义的
 } else {
     $sessionId = $request-&gt;cookie($cookieName);
+    #否则。就默认PHPSESSID
 }
 #这里sessionId可以由cookieName来。继续看
  $cookieName   = $this-&gt;session-&gt;getName();
