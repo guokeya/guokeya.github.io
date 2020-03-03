@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-03-03T00:24:09.594Z</updated>
+    <updated>2020-03-03T14:11:27.873Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,17 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[[De1CTF 2019]SSRF Me(python代码审计)]]></title>
+        <id>https://guokeya.github.io/post/3aEFZGLd6/</id>
+        <link href="https://guokeya.github.io/post/3aEFZGLd6/">
+        </link>
+        <updated>2020-03-03T13:00:07.000Z</updated>
+        <summary type="html"><![CDATA[<p>进去就有源码~</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>进去就有源码~</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[战队友链]]></title>
         <id>https://guokeya.github.io/post/SxEyR_6MD/</id>
@@ -157,21 +168,6 @@ binwalk。foremost得到了一个MP3以及两张图片<br>
         <content type="html"><![CDATA[<p>下载地址：<code>https://www.lanzous.com/i9e23fi</code><br>
 binwalk。foremost得到了一个MP3以及两张图片<br>
 <img src="https://guokeya.github.io/post-images/1581858172393.png" alt="" loading="lazy"></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[SUCTF 2018]GetShell(无数字字母webshell)]]></title>
-        <id>https://guokeya.github.io/post/suctf-2018getshellwu-shu-zi-zi-mu-webshell/</id>
-        <link href="https://guokeya.github.io/post/suctf-2018getshellwu-shu-zi-zi-mu-webshell/">
-        </link>
-        <updated>2020-02-15T10:52:43.000Z</updated>
-        <summary type="html"><![CDATA[<p>是一个文件上传功能<br>
-取文件内容第6位匹配黑名单(<code>$b</code>)。但是我们并不知道<code>$b</code>内容是啥。只能通过fuzz<br>
-<img src="https://guokeya.github.io/post-images/1581763998906.png" alt="" loading="lazy"></p>
-]]></summary>
-        <content type="html"><![CDATA[<p>是一个文件上传功能<br>
-取文件内容第6位匹配黑名单(<code>$b</code>)。但是我们并不知道<code>$b</code>内容是啥。只能通过fuzz<br>
-<img src="https://guokeya.github.io/post-images/1581763998906.png" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
 </feed>
