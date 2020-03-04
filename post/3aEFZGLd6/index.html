@@ -301,6 +301,11 @@ Task.Exec。action中得包含scan和read。不然你scan读取了flag。怎么�
 在验证签名时。我们输入sign为之前获取的sign。param为flag.txt 。action为readscan<br>
 那么它验证签名的时候md5(密钥+flag.txt+readscan)是相等的<br>
 <img src="https://guokeya.github.io/post-images/1583243145083.png" alt="" loading="lazy"></p>
+<p>第二种解法。利用hashpump进行哈希扩展攻击<br>
+首先。去/geneSign。获取密钥+flag.txt+scan的md5<br>
+利用hash扩展攻击。在最后附加一个read<br>
+<img src="https://guokeya.github.io/post-images/1583281482179.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1583281548624.png" alt="" loading="lazy"></p>
 
 							</div>
 	<div class="wow bounceInDown vt-post-tags">
