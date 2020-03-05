@@ -237,7 +237,10 @@ $a=new Register();
 $a-&gt;checker=new Profile();
 echo base64_encode(serialize($a));
 </code></pre>
-<p>替换后刷新<br>
+<p>为什么payload中文件名是../public/upload/xxx/xx.png。<br>
+在Profile.php中。构造函数。切换目录到了../public/upload<br>
+而我们反序列化。并不会触发construct函数。所以需要自行修改文件路径<br>
+替换后刷新<br>
 <img src="https://guokeya.github.io/post-images/1583394464835.png" alt="" loading="lazy"><br>
 已经触发反序列化。改名了。连接shell搞到flag<br>
 <img src="https://guokeya.github.io/post-images/1583394488597.png" alt="" loading="lazy"></p>
