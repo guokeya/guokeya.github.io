@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-03-04T00:26:29.435Z</updated>
+    <updated>2020-03-05T04:27:14.295Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,13 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[2020/3/5日常划水~~~~]]></title>
+        <id>https://guokeya.github.io/post/yWVl5z9kD/</id>
+        <link href="https://guokeya.github.io/post/yWVl5z9kD/">
+        </link>
+        <updated>2020-03-04T12:39:23.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[[De1CTF 2019]SSRF Me(python代码审计)]]></title>
         <id>https://guokeya.github.io/post/3aEFZGLd6/</id>
@@ -153,21 +160,6 @@ NBA.mp4需要密码<br>
 mima.png不需要密码。<br>
 NBA.mp4需要密码<br>
 思路应该就是mima.png-&gt;NBA.mp4-&gt;flag</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[ctf.show红包题第五弹]]></title>
-        <id>https://guokeya.github.io/post/ctfshow-hong-bao-ti-di-wu-dan/</id>
-        <link href="https://guokeya.github.io/post/ctfshow-hong-bao-ti-di-wu-dan/">
-        </link>
-        <updated>2020-02-16T13:00:39.000Z</updated>
-        <summary type="html"><![CDATA[<p>下载地址：<code>https://www.lanzous.com/i9e23fi</code><br>
-binwalk。foremost得到了一个MP3以及两张图片<br>
-<img src="https://guokeya.github.io/post-images/1581858172393.png" alt="" loading="lazy"></p>
-]]></summary>
-        <content type="html"><![CDATA[<p>下载地址：<code>https://www.lanzous.com/i9e23fi</code><br>
-binwalk。foremost得到了一个MP3以及两张图片<br>
-<img src="https://guokeya.github.io/post-images/1581858172393.png" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
 </feed>

