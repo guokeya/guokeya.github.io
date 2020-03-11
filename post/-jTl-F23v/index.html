@@ -6,7 +6,7 @@
 <meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
 <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
 <meta HTTP-EQUIV="expires" CONTENT="0"> 
-<title>[CISCN2019 华东南赛区]Web4(flask伪造sessin) | 过客</title>	
+<title>[BSidesCF 2020]Hurdles(HTTP请求中的各项值) | 过客</title>	
 
 <link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
 <script type="text/javascript">
@@ -150,10 +150,10 @@ window.onload=getCSS();
 	
 	                      
 		<div class="entry-content">
-			<h1 class="wow swing entry-title">[CISCN2019 华东南赛区]Web4(flask伪造sessin)</h1>
+			<h1 class="wow swing entry-title">[BSidesCF 2020]Hurdles(HTTP请求中的各项值)</h1>
 <div class="entry-meta">
 <div class="wow bounce">
-	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-11 13:28:19" itemprop="datePublished" pubdate="">2020-03-11</time></i>
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-11 14:26:29" itemprop="datePublished" pubdate="">2020-03-11</time></i>
 	          </div>
 			
 </span>
@@ -161,22 +161,71 @@ window.onload=getCSS();
 		</div>
                   
 			<div class="wow slideInLeft entry-summary song">
-				<p>任意文件读取。这个就不说了<br>
-读取/proc/self/environ得到路径/app<br>
-读取/app/app.py得到源码<br>
-<img src="https://guokeya.github.io/post-images/1583904589881.png" alt="" loading="lazy"></p>
+				<p>You'll be rewarded with a flag if you can make it over some /hurdles.<br>
+请求/hurdles<br>
+<img src="https://guokeya.github.io/post-images/1583908893808.png" alt="" loading="lazy"></p>
 <!-- more -->
-<p>过于简单。就不说了。读/sys/class/net/eth0/address</p>
-<pre><code>import random
-mac=&quot;02:42:ae:00:fb:f8&quot;
-random.seed(int(mac.replace(&quot;:&quot;, &quot;&quot;), 16))
-key = str(random.random() * 233)
-print key
-</code></pre>
-<p>得到key<code>138.496124035</code><br>
-用python2加密下数据。替换不行。。<br>
-用python3加密下数据。就好了<br>
-<img src="https://guokeya.github.io/post-images/1583905002906.png" alt="" loading="lazy"></p>
+<p>I'm sorry, I was expecting the PUT Method.<br>
+使用PUT方法请求<br>
+<img src="https://guokeya.github.io/post-images/1583908946769.png" alt="" loading="lazy"></p>
+<p>I'm sorry, Your path would be more exciting if it ended in !<br>
+要求访问!（这道题。我是懵着做出来的）<br>
+<img src="https://guokeya.github.io/post-images/1583909154896.png" alt="" loading="lazy"></p>
+<p>I'm sorry, Your URL did not ask to <code>get</code> the <code>flag</code> in its query string.<br>
+猜测是请求get=flag<br>
+<img src="https://guokeya.github.io/post-images/1583909210966.png" alt="" loading="lazy"></p>
+<p>I'm sorry, I was looking for a parameter named &amp;=&amp;=&amp;<br>
+参数名得是&amp;=&amp;=&amp;。那么得URL编码下<br>
+<img src="https://guokeya.github.io/post-images/1583909302953.png" alt="" loading="lazy"></p>
+<p>I'm sorry, I expected '&amp;=&amp;=&amp;' to equal '%00<br>
+'<br>
+注意。这里有个换行符号<br>
+<img src="https://guokeya.github.io/post-images/1583909356383.png" alt="" loading="lazy"></p>
+<p>I'm sorry, Basically, I was expecting the username player.<br>
+HTTP基础认证。curl--basic指定用户名:密码<br>
+<img src="https://guokeya.github.io/post-images/1583909513458.png" alt="" loading="lazy"></p>
+<p>I'm sorry, Basically, I was expecting the password of the hex representation of the md5 of the string 'open sesame'<br>
+要求密码是open sesame的MD5<br>
+<img src="https://guokeya.github.io/post-images/1583909557041.png" alt="" loading="lazy"></p>
+<p>I'm sorry, I was expecting you to be using a 1337 Browser.<br>
+要求用1337浏览器访问。修改UA头<br>
+<img src="https://guokeya.github.io/post-images/1583909614737.png" alt="" loading="lazy"></p>
+<p>I'm sorry, I was expecting your browser version (v.XXXX) to be over 9000!<br>
+要求浏览器版本为v.9000<br>
+<img src="https://guokeya.github.io/post-images/1583909653821.png" alt="" loading="lazy"></p>
+<p>I'm sorry, I was eXpecting this to be Forwarded-For someone!<br>
+要求XFF头<br>
+<img src="https://guokeya.github.io/post-images/1583909708267.png" alt="" loading="lazy"></p>
+<p>I'm sorry, I was eXpecting this to be Forwarded For someone through another proxy!<br>
+要求用这个XFF代理啥的<code>https://blog.csdn.net/zyhmz/article/details/82505344</code><br>
+X-Forwarded-For: client1, proxy1, proxy2<br>
+<img src="https://guokeya.github.io/post-images/1583909794673.png" alt="" loading="lazy"></p>
+<p>I'm sorry, I was expecting this to be forwarded through 127.0.0.1<br>
+要求XFF代理是127.0.0.1<br>
+<img src="https://guokeya.github.io/post-images/1583909847716.png" alt="" loading="lazy"></p>
+<p>I'm sorry, I was expecting the forwarding client to be 13.37.13.37<br>
+要求客户端是13.37.13.37<br>
+<img src="https://guokeya.github.io/post-images/1583909882547.png" alt="" loading="lazy"></p>
+<p>I'm sorry, I was expecting a Fortune Cookie<br>
+要求cookie有Fortune<br>
+<img src="https://guokeya.github.io/post-images/1583909914167.png" alt="" loading="lazy"></p>
+<p>I'm sorry, I was expecting the cookie to contain the number of the HTTP Cookie (State Management Mechanism) RFC from 2011.<br>
+要求cookie的值是2011的RFC编号。<br>
+<img src="https://guokeya.github.io/post-images/1583909951535.png" alt="" loading="lazy"></p>
+<p>I'm sorry, I expect you to accept only plain text media (MIME) type.<br>
+接受纯文本mime类型<code>https://blog.csdn.net/qq_15071263/article/details/81000313?depth_1-utm_source=distribute.pc_relevant.none-task&amp;utm_source=distribute.pc_relevant.none-task</code><br>
+<img src="https://guokeya.github.io/post-images/1583910125910.png" alt="" loading="lazy"></p>
+<p>I'm sorry, Я ожидал, что вы говорите по-русски.<br>
+翻译了下。语言是俄语<br>
+<img src="https://guokeya.github.io/post-images/1583910264917.png" alt="" loading="lazy"></p>
+<p>I'm sorry, I was expecting to share resources with the origin https://ctf.bsidessf.net<br>
+请求来自于https://ctf.bsidessf.net<br>
+<code>https://www.jianshu.com/p/ccc4416ea298</code><br>
+<img src="https://guokeya.github.io/post-images/1583910359315.png" alt="" loading="lazy"></p>
+<p>i'm sorry, I was expecting you would be refered by https://ctf.bsidessf.net/challenges?<br>
+Referer头</p>
+<p>得到flag<br>
+<img src="https://guokeya.github.io/post-images/1583910412373.png" alt="" loading="lazy"></p>
 
 							</div>
 	<div class="wow bounceInDown vt-post-tags">
@@ -188,10 +237,10 @@ print key
 		
 		<div class="nav-links3">
       
-		<div class="wow bounceInLeft nav-previous3"><a href="https://guokeya.github.io/post/-jTl-F23v/" rel="prev"> [BSidesCF 2020]Hurdles(HTTP请求中的各项值)</a></div>
+		<div class="wow bounceInLeft nav-previous3"><a href="https://guokeya.github.io/post/SfJkH4LGF/" rel="prev"> [HarekazeCTF2019]Avatar Uploader 1(图片判断差异)</a></div>
 		 
 		 
-		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/DWuGlVNuC/" rel="next"> [Black Watch 入群题]Web(简单的sql盲注)</a></div>
+		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/NYz3X1BlK/" rel="next"> [CISCN2019 华东南赛区]Web4(flask伪造sessin)</a></div>
 		
 		</div>
 	</nav>

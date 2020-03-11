@@ -6,7 +6,7 @@
 <meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
 <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
 <meta HTTP-EQUIV="expires" CONTENT="0"> 
-<title>[CISCN2019 华东南赛区]Web4(flask伪造sessin) | 过客</title>	
+<title>[HarekazeCTF2019]Avatar Uploader 1(图片判断差异) | 过客</title>	
 
 <link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
 <script type="text/javascript">
@@ -150,10 +150,10 @@ window.onload=getCSS();
 	
 	                      
 		<div class="entry-content">
-			<h1 class="wow swing entry-title">[CISCN2019 华东南赛区]Web4(flask伪造sessin)</h1>
+			<h1 class="wow swing entry-title">[HarekazeCTF2019]Avatar Uploader 1(图片判断差异)</h1>
 <div class="entry-meta">
 <div class="wow bounce">
-	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-11 13:28:19" itemprop="datePublished" pubdate="">2020-03-11</time></i>
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-11 16:58:51" itemprop="datePublished" pubdate="">2020-03-11</time></i>
 	          </div>
 			
 </span>
@@ -161,37 +161,47 @@ window.onload=getCSS();
 		</div>
                   
 			<div class="wow slideInLeft entry-summary song">
-				<p>任意文件读取。这个就不说了<br>
-读取/proc/self/environ得到路径/app<br>
-读取/app/app.py得到源码<br>
-<img src="https://guokeya.github.io/post-images/1583904589881.png" alt="" loading="lazy"></p>
-<!-- more -->
-<p>过于简单。就不说了。读/sys/class/net/eth0/address</p>
-<pre><code>import random
-mac=&quot;02:42:ae:00:fb:f8&quot;
-random.seed(int(mac.replace(&quot;:&quot;, &quot;&quot;), 16))
-key = str(random.random() * 233)
-print key
+				<p>这题进去登陆就一个上传。光看文字。得到以下信息</p>
+<pre><code>PNG图像。那么后缀名和mime得修改下
+并且小于256KB.这个没啥关系
+图像像素得小于256px*256px
 </code></pre>
-<p>得到key<code>138.496124035</code><br>
-用python2加密下数据。替换不行。。<br>
-用python3加密下数据。就好了<br>
-<img src="https://guokeya.github.io/post-images/1583905002906.png" alt="" loading="lazy"></p>
+<!-- more -->
+<p>php中常用getimagesize函数来获取图像宽和高。本地测试下。随手截了一个小图片<br>
+输出它的宽高<br>
+得到int(24)     int(21)<br>
+结果发现。上传这个图片。拿不到flag。。为啥。<br>
+然后扫描器。没扫到。去看了下github源码<br>
+<img src="https://guokeya.github.io/post-images/1583917656810.png" alt="" loading="lazy"><br>
+先是进行大小判断。基本没影响。<br>
+然后用finfo去判断图片类型。必须是image/png<br>
+接着用getimagesize去判断图片大小<br>
+并且图片类型不能是PNG？？？？<br>
+。首先得过finfo判断。又不能是PNG。一般就条件竞争。或者PHP的特性。差异等<br>
+PNG的宽高是由它的文件格式决定的。<br>
+<img src="https://guokeya.github.io/post-images/1583918387212.png" alt="" loading="lazy"><br>
+假设我把数据全删掉。只包含第一行。getimagesize是否还能读取出来<br>
+<img src="https://guokeya.github.io/post-images/1583918477122.png" alt="" loading="lazy"><br>
+可以看到。把图片破坏后。只留下一个文件头。getimagesize就读取不到它的文件宽高和类型了<br>
+那么就可以绕过getimagesize的判断<br>
+而finfo_file照样可以识别出这是个PNG图片<br>
+PS:猜测。finfo_file是通过文件头判断文件类型。而getimagesize是通过文件结构。来获取信息。<br>
+上传得到flag</p>
 
 							</div>
 	<div class="wow bounceInDown vt-post-tags">
  
 				<a href="https://guokeya.github.io/tag/CTF/" rel="tag">CTF</a>	
 				 
+				<a href="https://guokeya.github.io/tag/Web/" rel="tag">Web安全</a>	
+				 
 					</div>						
 <nav class="navigation3 post-navigation3" role="navigation">
 		
 		<div class="nav-links3">
       
-		<div class="wow bounceInLeft nav-previous3"><a href="https://guokeya.github.io/post/-jTl-F23v/" rel="prev"> [BSidesCF 2020]Hurdles(HTTP请求中的各项值)</a></div>
 		 
-		 
-		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/DWuGlVNuC/" rel="next"> [Black Watch 入群题]Web(简单的sql盲注)</a></div>
+		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/-jTl-F23v/" rel="next"> [BSidesCF 2020]Hurdles(HTTP请求中的各项值)</a></div>
 		
 		</div>
 	</nav>

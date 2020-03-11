@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-03-11T05:37:24.687Z</updated>
+    <updated>2020-03-11T09:23:41.465Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,40 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[[HarekazeCTF2019]Avatar Uploader 1(图片判断差异)]]></title>
+        <id>https://guokeya.github.io/post/SfJkH4LGF/</id>
+        <link href="https://guokeya.github.io/post/SfJkH4LGF/">
+        </link>
+        <updated>2020-03-11T08:58:51.000Z</updated>
+        <summary type="html"><![CDATA[<p>这题进去登陆就一个上传。光看文字。得到以下信息</p>
+<pre><code>PNG图像。那么后缀名和mime得修改下
+并且小于256KB.这个没啥关系
+图像像素得小于256px*256px
+</code></pre>
+]]></summary>
+        <content type="html"><![CDATA[<p>这题进去登陆就一个上传。光看文字。得到以下信息</p>
+<pre><code>PNG图像。那么后缀名和mime得修改下
+并且小于256KB.这个没啥关系
+图像像素得小于256px*256px
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[BSidesCF 2020]Hurdles(HTTP请求中的各项值)]]></title>
+        <id>https://guokeya.github.io/post/-jTl-F23v/</id>
+        <link href="https://guokeya.github.io/post/-jTl-F23v/">
+        </link>
+        <updated>2020-03-11T06:26:29.000Z</updated>
+        <summary type="html"><![CDATA[<p>You'll be rewarded with a flag if you can make it over some /hurdles.<br>
+请求/hurdles<br>
+<img src="https://guokeya.github.io/post-images/1583908893808.png" alt="" loading="lazy"></p>
+]]></summary>
+        <content type="html"><![CDATA[<p>You'll be rewarded with a flag if you can make it over some /hurdles.<br>
+请求/hurdles<br>
+<img src="https://guokeya.github.io/post-images/1583908893808.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[[CISCN2019 华东南赛区]Web4(flask伪造sessin)]]></title>
         <id>https://guokeya.github.io/post/NYz3X1BlK/</id>
@@ -118,32 +152,6 @@ base64隐写。脚本一把梭</p>
         <content type="html"><![CDATA[<p>就一个登陆。上传图片的功能。<br>
 扫下目录。有源码泄露。<br>
 是个TP5框架。找到主要的四个文件</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[2020/3/5日常划水~~~~]]></title>
-        <id>https://guokeya.github.io/post/yWVl5z9kD/</id>
-        <link href="https://guokeya.github.io/post/yWVl5z9kD/">
-        </link>
-        <updated>2020-03-04T12:39:23.000Z</updated>
-        <summary type="html"><![CDATA[<p><strong>[RoarCTF2019]黄金6年</strong><br>
-题目给了MP4。日常右键详细信息。hex查看<br>
-发现末尾有个base64</p>
-]]></summary>
-        <content type="html"><![CDATA[<p><strong>[RoarCTF2019]黄金6年</strong><br>
-题目给了MP4。日常右键详细信息。hex查看<br>
-发现末尾有个base64</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[De1CTF 2019]SSRF Me(python代码审计)]]></title>
-        <id>https://guokeya.github.io/post/3aEFZGLd6/</id>
-        <link href="https://guokeya.github.io/post/3aEFZGLd6/">
-        </link>
-        <updated>2020-03-03T13:00:07.000Z</updated>
-        <summary type="html"><![CDATA[<p>进去就有源码~</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>进去就有源码~</p>
 ]]></content>
     </entry>
 </feed>
