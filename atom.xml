@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-03-11T10:36:40.669Z</updated>
+    <updated>2020-03-11T13:05:05.918Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,13 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[[RootersCTF2019]babyWeb(万能密码)]]></title>
+        <id>https://guokeya.github.io/post/RYRhvFnHn/</id>
+        <link href="https://guokeya.github.io/post/RYRhvFnHn/">
+        </link>
+        <updated>2020-03-11T12:10:05.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[[HarekazeCTF2019]Avatar Uploader 1(图片判断差异)]]></title>
         <id>https://guokeya.github.io/post/SfJkH4LGF/</id>
@@ -137,21 +144,6 @@ base64隐写。脚本一把梭</p>
         <summary type="html"><![CDATA[<center>MISC</center>
 ]]></summary>
         <content type="html"><![CDATA[<center>MISC</center>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[强网杯 2019]Upload(thinkphp代码审计序列化)]]></title>
-        <id>https://guokeya.github.io/post/VmI2NBAXh/</id>
-        <link href="https://guokeya.github.io/post/VmI2NBAXh/">
-        </link>
-        <updated>2020-03-05T06:57:41.000Z</updated>
-        <summary type="html"><![CDATA[<p>就一个登陆。上传图片的功能。<br>
-扫下目录。有源码泄露。<br>
-是个TP5框架。找到主要的四个文件</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>就一个登陆。上传图片的功能。<br>
-扫下目录。有源码泄露。<br>
-是个TP5框架。找到主要的四个文件</p>
 ]]></content>
     </entry>
 </feed>

@@ -6,7 +6,7 @@
 <meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
 <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
 <meta HTTP-EQUIV="expires" CONTENT="0"> 
-<title>[HarekazeCTF2019]Avatar Uploader 1(图片判断差异) | 过客</title>	
+<title>[RootersCTF2019]babyWeb(万能密码) | 过客</title>	
 
 <link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
 <script type="text/javascript">
@@ -150,10 +150,10 @@ window.onload=getCSS();
 	
 	                      
 		<div class="entry-content">
-			<h1 class="wow swing entry-title">[HarekazeCTF2019]Avatar Uploader 1(图片判断差异)</h1>
+			<h1 class="wow swing entry-title">[RootersCTF2019]babyWeb(万能密码)</h1>
 <div class="entry-meta">
 <div class="wow bounce">
-	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-11 16:58:51" itemprop="datePublished" pubdate="">2020-03-11</time></i>
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-11 20:10:05" itemprop="datePublished" pubdate="">2020-03-11</time></i>
 	          </div>
 			
 </span>
@@ -161,49 +161,26 @@ window.onload=getCSS();
 		</div>
                   
 			<div class="wow slideInLeft entry-summary song">
-				<p>这题进去登陆就一个上传。光看文字。得到以下信息</p>
-<pre><code>PNG图像。那么后缀名和mime得修改下
-并且小于256KB.这个没啥关系
-图像像素得小于256px*256px
-</code></pre>
-<!-- more -->
-<p>php中常用getimagesize函数来获取图像宽和高。本地测试下。随手截了一个小图片<br>
-输出它的宽高<br>
-得到int(24)     int(21)<br>
-结果发现。上传这个图片。拿不到flag。。为啥。<br>
-然后扫描器。没扫到。去看了下github源码<br>
-<img src="https://guokeya.github.io/post-images/1583917656810.png" alt="" loading="lazy"><br>
-先是进行大小判断。基本没影响。<br>
-然后用finfo去判断图片类型。必须是image/png<br>
-接着用getimagesize去判断图片大小<br>
-并且图片类型不能是PNG？？？？<br>
-。首先得过finfo判断。又不能是PNG。一般就条件竞争。或者PHP的特性。差异等<br>
-PNG的宽高是由它的文件格式决定的。<br>
-<img src="https://guokeya.github.io/post-images/1583918387212.png" alt="" loading="lazy"><br>
-假设我把数据全删掉。只包含第一行。getimagesize是否还能读取出来<br>
-<img src="https://guokeya.github.io/post-images/1583918477122.png" alt="" loading="lazy"><br>
-可以看到。把图片破坏后。只留下一个文件头。getimagesize就读取不到它的文件宽高和类型了<br>
-那么就可以绕过getimagesize的判断<br>
-而finfo_file照样可以识别出这是个PNG图片<br>
-PS:猜测。finfo_file是通过文件头判断文件类型。而getimagesize是通过文件结构。来获取信息。<br>
-上传得到flag</p>
+				<p>sql注入。关键字过滤的挺少的。<br>
+<img src="https://guokeya.github.io/post-images/1583928635190.png" alt="" loading="lazy"><br>
+通过group by 3。得知只有两个字段<br>
+一个字段为uniqueid。另一个字段应该存的是密码<br>
+要么flag在密码中。要么就输入id。判断登陆<br>
+直接1||1=1 limit 1<br>
+<img src="https://guokeya.github.io/post-images/1583928778085.png" alt="" loading="lazy"><br>
+还是我想太复杂了。甚至都用了字符串比较去比较flag<br>
+居然只是登陆就行了</p>
 
 							</div>
 	<div class="wow bounceInDown vt-post-tags">
  
-				<a href="https://guokeya.github.io/tag/CTF/" rel="tag">CTF</a>	
-				 
-				<a href="https://guokeya.github.io/tag/Web/" rel="tag">Web安全</a>	
-				 
 					</div>						
 <nav class="navigation3 post-navigation3" role="navigation">
 		
 		<div class="nav-links3">
       
-		<div class="wow bounceInLeft nav-previous3"><a href="https://guokeya.github.io/post/RYRhvFnHn/" rel="prev"> [RootersCTF2019]babyWeb(万能密码)</a></div>
 		 
-		 
-		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/-jTl-F23v/" rel="next"> [BSidesCF 2020]Hurdles(HTTP请求中的各项值)</a></div>
+		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/SfJkH4LGF/" rel="next"> [HarekazeCTF2019]Avatar Uploader 1(图片判断差异)</a></div>
 		
 		</div>
 	</nav>
