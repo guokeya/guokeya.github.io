@@ -6,7 +6,7 @@
 <meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
 <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
 <meta HTTP-EQUIV="expires" CONTENT="0"> 
-<title>[RootersCTF2019]I_&lt;3_Flask(fuzz) | 过客</title>	
+<title>[RootersCTF2019]ImgXweb(session伪造) | 过客</title>	
 
 <link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
 <script type="text/javascript">
@@ -150,10 +150,10 @@ window.onload=getCSS();
 	
 	                      
 		<div class="entry-content">
-			<h1 class="wow swing entry-title">[RootersCTF2019]I_&lt;3_Flask(fuzz)</h1>
+			<h1 class="wow swing entry-title">[RootersCTF2019]ImgXweb(session伪造)</h1>
 <div class="entry-meta">
 <div class="wow bounce">
-	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-11 21:39:41" itemprop="datePublished" pubdate="">2020-03-11</time></i>
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-12 08:36:26" itemprop="datePublished" pubdate="">2020-03-12</time></i>
 	          </div>
 			
 </span>
@@ -161,26 +161,32 @@ window.onload=getCSS();
 		</div>
                   
 			<div class="wow slideInLeft entry-summary song">
-				<p>这题进去啥也没有。看名字是flask框架。但是源代码。HTTP头。404。XFF都没能进行SSTI。主页也没功能<br>
-这种情况下。我们肯定得去发现新页面。爆破无果。。<br>
-fuzz了下参数。得到name<br>
-<img src="https://guokeya.github.io/post-images/1583934070603.png" alt="" loading="lazy"><br>
-裸的SSTI。就不多说了。<br>
-<img src="https://guokeya.github.io/post-images/1583934092282.png" alt="" loading="lazy"><br>
-这题更多的是fuzz参数思路吧。</p>
+				<p>有注册。登陆。文件上传功能<br>
+首先登陆处判断注入。并不存在<br>
+登陆上后。文件上传。不能传.htaccess类似的。但是php啥的都可以传。but不解析<br>
+那么应该不是phpweb。java。也不像。估计是python。<br>
+扫描下目录。发现robots.txt<br>
+<img src="https://guokeya.github.io/post-images/1583974068028.png" alt="" loading="lazy"><br>
+仿佛是密钥。<br>
+<img src="https://guokeya.github.io/post-images/1583974091048.png" alt="" loading="lazy"><br>
+修改用户为admin<br>
+发现flag.png。读取得到flag<br>
+<img src="https://guokeya.github.io/post-images/1583974148674.png" alt="" loading="lazy"></p>
 
 							</div>
 	<div class="wow bounceInDown vt-post-tags">
  
+				<a href="https://guokeya.github.io/tag/CTF/" rel="tag">CTF</a>	
+				 
+				<a href="https://guokeya.github.io/tag/Web/" rel="tag">Web安全</a>	
+				 
 					</div>						
 <nav class="navigation3 post-navigation3" role="navigation">
 		
 		<div class="nav-links3">
       
-		<div class="wow bounceInLeft nav-previous3"><a href="https://guokeya.github.io/post/U00Vbfnjz/" rel="prev"> [RootersCTF2019]ImgXweb(session伪造)</a></div>
 		 
-		 
-		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/RYRhvFnHn/" rel="next"> [RootersCTF2019]babyWeb(万能密码)</a></div>
+		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/YxXnoaHlI/" rel="next"> [RootersCTF2019]I_&lt;3_Flask(fuzz)</a></div>
 		
 		</div>
 	</nav>
