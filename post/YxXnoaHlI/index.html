@@ -6,7 +6,7 @@
 <meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
 <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
 <meta HTTP-EQUIV="expires" CONTENT="0"> 
-<title>[RootersCTF2019]babyWeb(万能密码) | 过客</title>	
+<title>[RootersCTF2019]I_&lt;3_Flask(fuzz) | 过客</title>	
 
 <link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
 <script type="text/javascript">
@@ -150,10 +150,10 @@ window.onload=getCSS();
 	
 	                      
 		<div class="entry-content">
-			<h1 class="wow swing entry-title">[RootersCTF2019]babyWeb(万能密码)</h1>
+			<h1 class="wow swing entry-title">[RootersCTF2019]I_&lt;3_Flask(fuzz)</h1>
 <div class="entry-meta">
 <div class="wow bounce">
-	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-11 20:10:05" itemprop="datePublished" pubdate="">2020-03-11</time></i>
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-11 21:39:41" itemprop="datePublished" pubdate="">2020-03-11</time></i>
 	          </div>
 			
 </span>
@@ -161,15 +161,13 @@ window.onload=getCSS();
 		</div>
                   
 			<div class="wow slideInLeft entry-summary song">
-				<p>sql注入。关键字过滤的挺少的。<br>
-<img src="https://guokeya.github.io/post-images/1583928635190.png" alt="" loading="lazy"><br>
-通过group by 3。得知只有两个字段<br>
-一个字段为uniqueid。另一个字段应该存的是密码<br>
-要么flag在密码中。要么就输入id。判断登陆<br>
-直接1||1=1 limit 1<br>
-<img src="https://guokeya.github.io/post-images/1583928778085.png" alt="" loading="lazy"><br>
-还是我想太复杂了。甚至都用了字符串比较去比较flag<br>
-居然只是登陆就行了</p>
+				<p>这题进去啥也没有。看名字是flask框架。但是源代码。HTTP头。404。XFF都没能进行SSTI。主页也没功能<br>
+这种情况下。我们肯定得去发现新页面。爆破无果。。<br>
+fuzz了下参数。得到name<br>
+<img src="https://guokeya.github.io/post-images/1583934070603.png" alt="" loading="lazy"><br>
+裸的SSTI。就不多说了。<br>
+<img src="https://guokeya.github.io/post-images/1583934092282.png" alt="" loading="lazy"><br>
+这题更多的是fuzz参数思路吧。</p>
 
 							</div>
 	<div class="wow bounceInDown vt-post-tags">
@@ -179,10 +177,8 @@ window.onload=getCSS();
 		
 		<div class="nav-links3">
       
-		<div class="wow bounceInLeft nav-previous3"><a href="https://guokeya.github.io/post/YxXnoaHlI/" rel="prev"> [RootersCTF2019]I_&lt;3_Flask(fuzz)</a></div>
 		 
-		 
-		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/SfJkH4LGF/" rel="next"> [HarekazeCTF2019]Avatar Uploader 1(图片判断差异)</a></div>
+		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/RYRhvFnHn/" rel="next"> [RootersCTF2019]babyWeb(万能密码)</a></div>
 		
 		</div>
 	</nav>

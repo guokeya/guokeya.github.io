@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-03-11T13:10:56.630Z</updated>
+    <updated>2020-03-12T00:05:12.808Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,13 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[[RootersCTF2019]I_<3_Flask(fuzz)]]></title>
+        <id>https://guokeya.github.io/post/YxXnoaHlI/</id>
+        <link href="https://guokeya.github.io/post/YxXnoaHlI/">
+        </link>
+        <updated>2020-03-11T13:39:41.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[[RootersCTF2019]babyWeb(万能密码)]]></title>
         <id>https://guokeya.github.io/post/RYRhvFnHn/</id>
@@ -133,17 +140,6 @@ base64隐写。脚本一把梭</p>
 ]]></summary>
         <content type="html"><![CDATA[<p><strong>[ACTF新生赛2020]base64隐写</strong><br>
 base64隐写。脚本一把梭</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[XCTF Misc和Web部分题解]]></title>
-        <id>https://guokeya.github.io/post/DwtTs5lSH/</id>
-        <link href="https://guokeya.github.io/post/DwtTs5lSH/">
-        </link>
-        <updated>2020-03-07T14:16:21.000Z</updated>
-        <summary type="html"><![CDATA[<center>MISC</center>
-]]></summary>
-        <content type="html"><![CDATA[<center>MISC</center>
 ]]></content>
     </entry>
 </feed>
