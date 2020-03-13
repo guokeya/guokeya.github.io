@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-03-12T12:45:51.556Z</updated>
+    <updated>2020-03-13T06:30:17.339Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,13 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[[SWPU2019]Web4(堆叠注入+Thinkphp审计)]]></title>
+        <id>https://guokeya.github.io/post/MzHF-GZP0/</id>
+        <link href="https://guokeya.github.io/post/MzHF-GZP0/">
+        </link>
+        <updated>2020-03-13T05:18:34.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[[SUCTF 2018]MultiSQL(sql读取文件+写入文件)]]></title>
         <id>https://guokeya.github.io/post/t4QExMZtn/</id>
@@ -111,21 +118,6 @@
         <summary type="html"><![CDATA[<p>题目给出了源码</p>
 ]]></summary>
         <content type="html"><![CDATA[<p>题目给出了源码</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[安洵杯 2019]不是文件上传(代码审计)]]></title>
-        <id>https://guokeya.github.io/post/sJTcwGish/</id>
-        <link href="https://guokeya.github.io/post/sJTcwGish/">
-        </link>
-        <updated>2020-03-10T08:54:06.000Z</updated>
-        <summary type="html"><![CDATA[<p>主页就一个文件上传的点。右键源代码发现两个hint吧<br>
-<img src="https://guokeya.github.io/post-images/1583830520899.png" alt="" loading="lazy"><br>
-<img src="https://guokeya.github.io/post-images/1583830536747.png" alt="" loading="lazy"></p>
-]]></summary>
-        <content type="html"><![CDATA[<p>主页就一个文件上传的点。右键源代码发现两个hint吧<br>
-<img src="https://guokeya.github.io/post-images/1583830520899.png" alt="" loading="lazy"><br>
-<img src="https://guokeya.github.io/post-images/1583830536747.png" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
 </feed>
