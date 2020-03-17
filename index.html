@@ -181,6 +181,91 @@ VCT's XZ Blog
 	 
 	   
 	<div class="entry-content">
+		<h1 class="entry-title"><a href="https://guokeya.github.io/post/pd9adBR7c/" rel="bookmark">[DDCTF 2019]homebrew event loop</a></h1>
+		<div class="entry-meta">
+		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-17 09:54:34" itemprop="datePublished" pubdate="">2020-03-17</time></i>
+	 
+			
+		</div>
+
+		<div class="entry-summary jia">
+			<p>题目给出了源码。并且有购买points功能。其他没了
+首先审计代码。删了部分代码
+from flask import Flask, session, request, Response
+import urllib
+
+def trigger_...</p>
+			<p class="readmore">
+				<a href="https://guokeya.github.io/post/pd9adBR7c/" class="link-more">Read more</a>
+			</p>
+		</div>
+		
+	</div>
+	
+</article>
+		
+ 						
+<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
+	
+	 
+	   
+	<div class="entry-content">
+		<h1 class="entry-title"><a href="https://guokeya.github.io/post/lClpsRDJm/" rel="bookmark">Wallbreaker_Easy(Bypass disable_function)</a></h1>
+		<div class="entry-meta">
+		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-16 13:47:35" itemprop="datePublished" pubdate="">2020-03-16</time></i>
+	 
+			
+		</div>
+
+		<div class="entry-summary jia">
+			<p>
+给出了webshell。并且/tmp/130a22b5fcf1e7f489bd341fddbb3353可写
+有open_basedir限制目录。
+我们可以在tmp目录下写文件。然后文件包含利用
+pcntl_alarm,pcntl_fork...</p>
+			<p class="readmore">
+				<a href="https://guokeya.github.io/post/lClpsRDJm/" class="link-more">Read more</a>
+			</p>
+		</div>
+		
+	</div>
+	
+</article>
+		
+ 						
+<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
+	
+	 
+	   
+	<div class="entry-content">
+		<h1 class="entry-title"><a href="https://guokeya.github.io/post/gW7Qnkxsi/" rel="bookmark">[网鼎杯2018]Unfinish(二次注入)</a></h1>
+		<div class="entry-meta">
+		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-15 14:06:16" itemprop="datePublished" pubdate="">2020-03-15</time></i>
+	 
+			
+		</div>
+
+		<div class="entry-summary jia">
+			<p>注入。需要邮箱。用户名。密码。
+登陆。需要邮箱。密码
+登陆后。会限制用户名
+。Web狗的嗅觉。十有八九是二次注入。
+insert into xxx(email,name,pass) values(email,''+database()+''...</p>
+			<p class="readmore">
+				<a href="https://guokeya.github.io/post/gW7Qnkxsi/" class="link-more">Read more</a>
+			</p>
+		</div>
+		
+	</div>
+	
+</article>
+		
+ 						
+<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
+	
+	 
+	   
+	<div class="entry-content">
 		<h1 class="entry-title"><a href="https://guokeya.github.io/post/galW4kTUg/" rel="bookmark">angstroCTF Web+Misc</a></h1>
 		<div class="entry-meta">
 		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-15 10:51:17" itemprop="datePublished" pubdate="">2020-03-15</time></i>
@@ -502,96 +587,6 @@ include 'config.php'; // FLAG is defined in config.php
 if (preg_match('/config\.php\/*$/i', $_SERVER[...</p>
 			<p class="readmore">
 				<a href="https://guokeya.github.io/post/HYkvm--vb/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/sJTcwGish/" rel="bookmark">[安洵杯 2019]不是文件上传(代码审计)</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-10 16:54:06" itemprop="datePublished" pubdate="">2020-03-10</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>主页就一个文件上传的点。右键源代码发现两个hint吧
-
-
-
-提示去github上找源码。一搜就有。。下下来。文件也不多。就三个php
-upload.php      文件上传。
-调用的是helper.php中upload类的upload_b...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/sJTcwGish/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/LaUpgZVXn/" rel="bookmark">[CISCN2019 华东北赛区]Web2(XSS绕过及CSP)</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-09 20:30:00" itemprop="datePublished" pubdate="">2020-03-09</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>注册登陆就不说了。还有两个功能。一个是发表文章。还有一个是输入URL。管理员会访问
-
-在我们发布文章的地址。有CSP
-
-&lt;meta http-equiv=&quot;content-security-policy&quot; cont...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/LaUpgZVXn/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/H7-qyM-1l/" rel="bookmark">2020/3/9日常刷题~~~~~</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-09 15:19:22" itemprop="datePublished" pubdate="">2020-03-09</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>[ACTF新生赛2020]base64隐写
-base64隐写。脚本一把梭
-
-[BSidesCF 2020]Had a bad day
-文件包含得到源码
-
-&lt;?php
-$file = $_GET['category'];
-if(isse...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/H7-qyM-1l/" class="link-more">Read more</a>
 			</p>
 		</div>
 		

