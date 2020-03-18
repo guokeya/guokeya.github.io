@@ -1,723 +1,482 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
-<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
-<meta HTTP-EQUIV="expires" CONTENT="0"> 
-<title>过客</title>	
-
-<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
-<script type="text/javascript">
-function getCSS()
-{
-        datetoday = new Date();
-        timenow=datetoday.getTime();
-        datetoday.setTime(timenow);
-        thehour = datetoday.getHours();
-
-        if (thehour<6)
-
-            display = "https://guokeya.github.io/media/css/night.css";
-
-       else if (thehour>19)
-
-            display = "https://guokeya.github.io/media/css/night.css";   
-
-        else if (thehour>6)
-           
-            display = "https://guokeya.github.io/media/css/day.css";
-
-        else if (thehour<19)
-
-            display = "https://guokeya.github.io/media/css/day.css";
-      
-
-var css = '<';
-        css+='link rel="stylesheet" href='+display+' \/';
-        css+='>';
-        document.write(css);
-}
-</script>
-<link href="https://fonts.googleapis.com/css?family=Dancing+Script|Liu+Jian+Mao+Cao&display=swap" rel="stylesheet">
-<link href="https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css" rel="stylesheet" />
-<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-<script type='text/javascript' src='https://guokeya.github.io/media/scripts/script.js'></script>
-<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet" />
-  <script src="https://cdn.bootcss.com/wow/1.1.2/wow.min.js"></script>
-  <script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>过客</title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
-  <script>wow=new WOW({boxClass:'wow',animateClass:'animated',offset:0,mobile:true,live:true});wow.init();</script>
+  
 
-<script type="text/javascript">
-window.onload=getCSS();
-</script>
+  </head>
+  <body>
+     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io">过客</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1>过客</h1>
+            <span class="subheading">this is a test Web</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+      <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+       
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/PJEZYOdiL/">
+            <h2 class="post-title">
+              CVE-2019-11043漏洞复现(PHP-FPM远程代码执行)
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>漏洞介绍</strong><br>
+Nginx与php-fpm服务器上存在的一处高危漏洞，由于Nginx的fastcgi_split_path_info模块在处理带 %0a 的请求时，对换行符 \n 处置不当使得将PATH_INFO值置为空，从而导致可以通过FCGI_PUTENV与PHP_VALUE相结合，修改当前的php-fpm进程中的php配置。在特殊构造的配置生效的情况下可以触发任意代码执行。目前开源社区已有漏洞Poc公开。</p>
 
-
-</head>
-<body class="home blog">
-    <div id="wrapper">
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">2 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
         
-		<header id="header" class="site-header" >
-			<div class="site-branding">
-									<h1 class="site-title"><a href="https://guokeya.github.io" rel="home">过客</a></h1>
-										
-					<h2 class="site-description">this is a test Web</h2>
-										
-							</div>
-			<nav id="nav-wrapper">
-				<div class="container">
-					<div class="nav-toggle">
-						<div class="bars">
-							<div class="bar"></div>
-							<div class="bar"></div>
-							<div class="bar"></div>
-						</div>
-					</div>
-					<div class="clear"></div>
-					<ul class="dove">
-		 
-     			
-<li>
-	 
-	<a  href="/"> 首页</a></li>
-	
-    
-     			
-<li>
-	 
-	<a  href="/archives"> 归档</a></li>
-	
-    
-     			
-<li>
-	 
-	<a  href="/post/about"> 关于</a></li>
-	
-    
-     			
-<li>
-	 
-	<a  href="/tags"> 分类</a></li>
-	
-    
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/sGZIuaKKU/">
+            <h2 class="post-title">
+              域渗透(PTH)
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>介绍</strong><br>
+域中每个用户的Ticket都是由krbtgt的密码Hash来计算生成的，因此只要我们拿到了krbtgt的密码Hash，就可以随意伪造Ticket，进而使用Ticket登陆域控制器，使用krbtgt用户hash生成的票据被称为Golden Ticket，此类攻击方法被称为票据传递攻击。</p>
 
-</ul>
-</li>		
-		
-</ul>				</div>
-			</nav>
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">2 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/4KUONk_8X/">
+            <h2 class="post-title">
+              域渗透(基础)
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>漏洞环境</strong><br>
+http://vulnstack.qiyuanxuetang.net/vuln/detail/2/</p>
 
-<div class="jingge">
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">3 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/CMV0J6RNE/">
+            <h2 class="post-title">
+              域渗透(IPC入侵)
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>环境</strong><br>
+Server08R2<br>
+kali</p>
 
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">1 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/ZqSGl-Pm7/">
+            <h2 class="post-title">
+              DNScat2使用
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>介绍</strong></p>
 
-    
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">2 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/6eQuN_-1h/">
+            <h2 class="post-title">
+              PowerShell Empire工具使用
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>介绍</strong><br>
+PowerShsell Empire中文简称 “帝国”，是一款针对windows系统平台打造的内网渗透神器，无需Powershell即可运行powershell，mimikatz，可桃皮网络检测，适应性强，类似于meterpreter</p>
 
-    
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">3 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/kR1_jmuDS/">
+            <h2 class="post-title">
+              首届360杯网络安全职业技能大赛 Web(立誓要成为admin) writeup
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>环境说明:</strong><br>
+由于比赛结束。官方也没给源代码和靶机。就没有漏洞环境了</p>
 
-    
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">2 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/31yLuqlo-/">
+            <h2 class="post-title">
+              Mysql数据库学习
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>数据库类型</strong><br>
+数据库类型有关系型数据库和非关系型数据库</p>
 
-    
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">12 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/_zGR5BbA_/">
+            <h2 class="post-title">
+              首届360杯网络安全职业技能大赛 流量分析题（一）writeup
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>题目环境</strong></p>
 
-    
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">5 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/TH30EDM3R/">
+            <h2 class="post-title">
+              CVE-2017-11882漏洞复现和利用
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p>影响版本<br>
+Microsoft Office 2007 Service Pack 3<br>
+Microsoft Office 2010 Service Pack 2<br>
+Microsoft Office 2013 Service Pack 1<br>
+Microsoft Office 2016</p>
 
-    
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">1 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/Z1OZVMVt4/">
+            <h2 class="post-title">
+              Centos 6.5安装完LNMP后的加固
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>1.创建普通用户并进行sudo授权管理</strong></p>
 
-    
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">6 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/fsDq7cBM4/">
+            <h2 class="post-title">
+              纪录下搭建LNMP的过程
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>搭建准备</strong><br>
+Centos6.5<br>
+nginx 1.8.1</p>
 
-    
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">7 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/NTtCrziEm/">
+            <h2 class="post-title">
+              CTF PHP代码审计中的一题任意URL跳转
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>源代码</strong></p>
 
-    
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">2 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/hpyo8CYfD/">
+            <h2 class="post-title">
+              PHP class_exists函数漏洞
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>漏洞介绍</strong><br>
+class_exists()函数，会判断用户传过来的控制器是否存在，默认情况下，如果程序中存在__autoload函数，那么在使用class_exists()函数时，就会自动调用__autoload函数，</p>
 
-    
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">1 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/aMcQL_YEj/">
+            <h2 class="post-title">
+              Mysql 过滤逗号注入
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>实验环境</strong><br>
+i春秋，web SQLI</p>
 
-    
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">2 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        
+        <a class="btn btn-primary float-left" href="https://guokeya.github.io/page/9/">&larr; 上一页</a>
+        
+        
+        <a class="btn btn-primary float-right" href="https://guokeya.github.io/page/11/">下一页 &rarr;</a>
+        
+      </div>
+    </div>
+  </div>
 
-    
-        </header>
-
-		<div id="content" class="container">
-			<div class="row">
-	<div class="col-md-8 site-main">
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/PJEZYOdiL/" rel="bookmark">CVE-2019-11043漏洞复现(PHP-FPM远程代码执行)</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 15:49:51" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>漏洞介绍
-Nginx与php-fpm服务器上存在的一处高危漏洞，由于Nginx的fastcgi_split_path_info模块在处理带 %0a 的请求时，对换行符 \n 处置不当使得将PATH_INFO值置为空，从而导致可以通过FCGI...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/PJEZYOdiL/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/sGZIuaKKU/" rel="bookmark">域渗透(PTH)</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 15:48:37" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>介绍
-域中每个用户的Ticket都是由krbtgt的密码Hash来计算生成的，因此只要我们拿到了krbtgt的密码Hash，就可以随意伪造Ticket，进而使用Ticket登陆域控制器，使用krbtgt用户hash生成的票据被称为Golde...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/sGZIuaKKU/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/4KUONk_8X/" rel="bookmark">域渗透(基础)</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 15:46:27" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>漏洞环境
-http://vulnstack.qiyuanxuetang.net/vuln/detail/2/
-
-环境介绍
-VM1 Win7 Web服务器
-VM2 Server08 域控制器
-VM2 Server03 域成员
-攻击机 Kali...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/4KUONk_8X/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/CMV0J6RNE/" rel="bookmark">域渗透(IPC入侵)</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 15:44:29" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>环境
-Server08R2
-kali
-
-步骤
-IPC经典入侵手法，反弹meterpreter
-Getsystem权限
-
-net use \\域控IP\c$
-net time \\域控IP
-copy bat.bat \\域控IP\c$
-at ...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/CMV0J6RNE/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/ZqSGl-Pm7/" rel="bookmark">DNScat2使用</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 15:43:29" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>介绍
-
-DNScat堪称神器，因为它可以通过DNS协议创建C&amp;C隧道，让攻击者更加隐蔽。你可以访问任何数据以及上传和下载文件，并且获得一个shell。这个工具也是基于53端口的，所以你不需要对DNS服务器进行权威访问，只要通过53端...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/ZqSGl-Pm7/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/6eQuN_-1h/" rel="bookmark">PowerShell Empire工具使用</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 15:40:58" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>介绍
-PowerShsell Empire中文简称 “帝国”，是一款针对windows系统平台打造的内网渗透神器，无需Powershell即可运行powershell，mimikatz，可桃皮网络检测，适应性强，类似于meterpreter...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/6eQuN_-1h/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/kR1_jmuDS/" rel="bookmark">首届360杯网络安全职业技能大赛 Web(立誓要成为admin) writeup</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 15:38:41" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>环境说明:
-由于比赛结束。官方也没给源代码和靶机。就没有漏洞环境了
-
-writeup
-大概，就是有一个登陆界面，注册界面，可以注册用户
-注册admin空格，无果,注册test查看cookie也没有东西。只存在一个session
-但是，注册界...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/kR1_jmuDS/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/31yLuqlo-/" rel="bookmark">Mysql数据库学习</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 15:30:59" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>数据库类型
-数据库类型有关系型数据库和非关系型数据库
-
-1.关系型数据库
-采用了关系模型来组织数据的数据库，用行和列来储存属于，方便用户理解，行和列组成表，一个或多个表组成数据库。用户通过sql语句来查询数据。
-优点：容易理解，sql语句操...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/31yLuqlo-/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/_zGR5BbA_/" rel="bookmark">首届360杯网络安全职业技能大赛 流量分析题（一）writeup</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 15:28:35" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>题目环境
-
-首先，题目给出了一个提示。sql注入没那么难
-附件有个压缩包
-下载压缩包后，打开
-数据包，工具：
-https://github.com/guokeya/tools/blob/master/1.pcap
-https://githu...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/_zGR5BbA_/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/TH30EDM3R/" rel="bookmark">CVE-2017-11882漏洞复现和利用</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 15:27:33" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>影响版本
-Microsoft Office 2007 Service Pack 3
-Microsoft Office 2010 Service Pack 2
-Microsoft Office 2013 Service Pack 1
-Micr...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/TH30EDM3R/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/Z1OZVMVt4/" rel="bookmark">Centos 6.5安装完LNMP后的加固</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 15:24:07" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>1.创建普通用户并进行sudo授权管理
-
-useradd zhb
-password zhb
-vi /etc/sudoers
-zhb    ALL=(ALL)   ALL
-
-
-2.配置SSH服务配置
-vim /etc/ssh/sshd_con...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/Z1OZVMVt4/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/fsDq7cBM4/" rel="bookmark">纪录下搭建LNMP的过程</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 15:15:38" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>搭建准备
-Centos6.5
-nginx 1.8.1
-
-开始搭建
-首先安装配置下本地镜像,配置为本地源
-vim /etc/yum.repos.d/local.repo
-[local]
-name=local
-baseurl=file:///m...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/fsDq7cBM4/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/NTtCrziEm/" rel="bookmark">CTF PHP代码审计中的一题任意URL跳转</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 15:13:34" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>源代码
-
-&lt;?php
-class Redirect {
-    private $websiteHost = 'www.example.com';
-    private function setHeaders($url) {
-   ...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/NTtCrziEm/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/hpyo8CYfD/" rel="bookmark">PHP class_exists函数漏洞</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 15:12:18" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>漏洞介绍
-class_exists()函数，会判断用户传过来的控制器是否存在，默认情况下，如果程序中存在__autoload函数，那么在使用class_exists()函数时，就会自动调用__autoload函数，
-
-代码如下
-?php
-f...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/hpyo8CYfD/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/aMcQL_YEj/" rel="bookmark">Mysql 过滤逗号注入</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-02 15:07:00" itemprop="datePublished" pubdate="">2020-01-02</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>实验环境
-i春秋，web SQLI
-
-正常的sql语句
-select * from test where id=1 and 1=2 union select * from ((select 1)a join (select 2)b join...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/aMcQL_YEj/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 
-
-											   
-	</div>
+  
+    <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
             
-		
-
-			</div>
-														   
-			<nav class="navigation pagination" role="navigation">
-	
-														   
-		<div class="nav-links">
-			
-<a class="next page-numbers" href="https://guokeya.github.io/page/11/">点击查看更多</a></div>
-		
-	</nav>	
-    	<script type="text/javascript">
-//点击加载更多
-jQuery(document).ready(function($) {
-    //点击下一页的链接(即那个a标签)
-    $(' .next').click(function() {
-        $this = $(this);
-        $this.addClass('loading').text('正在努力加载'); //给a标签加载一个loading的class属性，用来添加加载效果
-        var href = $this.attr('href'); //获取下一页的链接地址
-        if (href != undefined) { //如果地址存在
-            $.ajax({ //发起ajax请求
-                url: href,
-                //请求的地址就是下一页的链接
-                type: 'get',
-                //请求类型是get
-                error: function(request) {
-                    //如果发生错误怎么处理
-                },
-                success: function(data) { //请求成功
-                    $this.removeClass('loading').text('点击查看更多'); //移除loading属性
-                    var $res = $(data).find('.post-318 '); //从数据中挑出文章数据，请根据实际情况更改
-                    $('.col-md-8').append($res.fadeIn(500)); //将数据加载加进posts-loop的标签中。
-                    var newhref = $(data).find(' .next').attr('href'); //找出新的下一页链接
-                    if (newhref != undefined) {
-                        $('.next').attr('href', newhref);
-                    } else {
-                        $('.next').remove(); //如果没有下一页了，隐藏
-                    }
-                }
-            });
-        }
-        return false;
-    });
-});
-</script>
-									 
-		</div>
-
-		
-	 	<footer id="colophon" class="site-footer">
-
-			<div class="container">
-	
-				<div class="copyright"><br>Theme:   <a href="https://github.com/shanbufun/gridea-theme-pan" target="_blank" title="Pan"><span>Pan</span></a>.  by <a href="https://shanbu.fun/" target="_blank"  title="山卜方" >Shanbufun</a></div>		
-			</div>
-		
-		</footer>
-
-</div>
-
-<script src="https://cdn.bootcss.com/fitvids/1.2.0/jquery.fitvids.min.js"></script>
-<script type='text/javascript' src='https://guokeya.github.io/media/scripts/marlin-scripts.js'></script>
- <script src="//tokinx.github.io/lately/lately.min.js"></script>
-  <script>jQuery(document).ready(function(){$.lately({'target':'.lately-a,.lately-b,.lately-c'})});</script>
-  <style type="text/css">a.back_to_top {
-    text-decoration: none;
-    position: fixed;
-    bottom: 40px;
-    right: 30px;
-    background: #f0f0f0;
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-    line-height: 36px;
-    font-size: 18px;
-    text-align: center;
-    transition-duration: .5s;
-    transition-propety: background-color;
-    display: none;
-}
-
-a.back_to_top span {
-    color: #888;
-}
-
-a.back_to_top:hover {
-    cursor: pointer;
-    background: #dfdfdf;
-}
-
-a.back_to_top:hover span {
-    color: #555;
-}
-
-@media print, screen and (max-width: 580px) {
-    .back_to_top {
-        display: none !important;
-    }
-}
-
-
-
-</style><a id="back_to_top" href="#" class="back_to_top"><span><i class="iconfont icon-xiangshang"></i></span>
-</a>
-
-
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span>过客</span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
 <script>$(document).ready((function(_this) {
-  return function() {
-    var bt;
-    bt = $('#back_to_top');
-    if ($(document).width() > 480) {
-      $(window).scroll(function() {
-        var st;
-        st = $(window).scrollTop();
-        if (st > 30) {
-          return bt.css('display', 'block');
-        } else {
-          return bt.css('display', 'none');
-        }
-      });
-      return bt.click(function() {
-        $('body,html').animate({
-          scrollTop: 0
-        }, 800);
-        return false;
-      });
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
     }
-  };
-})(this));
-</script>
-
-	
-	
-														   
-</body>
+  })(this));</script>
+  </body>
 </html>
