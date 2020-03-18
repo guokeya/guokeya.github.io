@@ -6,7 +6,7 @@
 <meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
 <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
 <meta HTTP-EQUIV="expires" CONTENT="0"> 
-<title>[BSidesCF 2019]Mixer(CBC整块替换) | 过客</title>	
+<title>[BSidesCF 2020]Bulls23 | 过客</title>	
 
 <link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
 <script type="text/javascript">
@@ -150,10 +150,10 @@ window.onload=getCSS();
 	
 	                      
 		<div class="entry-content">
-			<h1 class="wow swing entry-title">[BSidesCF 2019]Mixer(CBC整块替换)</h1>
+			<h1 class="wow swing entry-title">[BSidesCF 2020]Bulls23</h1>
 <div class="entry-meta">
 <div class="wow bounce">
-	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-18 12:35:44" itemprop="datePublished" pubdate="">2020-03-18</time></i>
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-18 14:29:55" itemprop="datePublished" pubdate="">2020-03-18</time></i>
 	          </div>
 			
 </span>
@@ -161,46 +161,29 @@ window.onload=getCSS();
 		</div>
                   
 			<div class="wow slideInLeft entry-summary song">
-				<p>要求以admin登陆。将HTML中的is_admin改为1也不行。<br>
-并且cookie中存在一个rack.session和user<br>
-<img src="https://guokeya.github.io/post-images/1584506698559.png" alt="" loading="lazy"><br>
-仿佛是加密过后的数据<br>
-修改下user中的值。发现报错<br>
-<img src="https://guokeya.github.io/post-images/1584506803215.png" alt="" loading="lazy"><br>
-然后就没思路。看WP了。<br>
-这题考点在于CBC的整块替换。比如此处<br>
-加密的数据应该是<code>{&quot;first_name&quot;:&quot;A1.00000000000000&quot;,&quot;last_name&quot;:&quot;1231&quot;,&quot;is_admin&quot;:0}</code><br>
-前提知识：CBC是以16字节为一个块。然后进行加密</p>
-<pre><code>{&quot;first_name&quot;:&quot;A
-第一个块
-1.00000000000000
-第二个块
-&quot;,&quot;last_name&quot;:&quot;1
-第三个块
-231&quot;,&quot;is_admin&quot;:
-第四个块
-0}
-第五个块
+				<p>给了一个流量包和网址。<br>
+分析流量包。<br>
+有三个URL</p>
+<pre><code>bash.org
+builts-23-04xxxxxxxxxxxxxxxx&amp;port=8888
+n-gate.com
 </code></pre>
-<p>加密后的数据。分别对应块<br>
-比如。这里我有5个块。加密后的数据长度为160。那么前32就是第一块数据。32-64就是第二块数据<br>
-依次类推<br>
-由于我们只要将is_admin置为1。那么<br>
-只要我们构造firest_name为A1.00000000000000<br>
-A被划入第一块的数据中。占32位<br>
-1.00000000000000加密后占32-64位。我们就可以得到1.000000加密后的值<br>
-将这段加密后的值。放入is_admin后面。就成为了1.000000000000000<br>
-可以成功绕过判断</p>
-<p>接下来。开始构造<br>
-<img src="https://guokeya.github.io/post-images/1584507452312.png" alt="" loading="lazy"></p>
-<pre><code>b=a[0:128]+a[32:64]+a[128:]
-a[0:128]代表数据的前第四个块。
-a[32:64]是1.000000的密文
-a[128:]是0}的密文。附在最后
-</code></pre>
-<p><img src="https://guokeya.github.io/post-images/1584507706711.png" alt="" loading="lazy"><br>
-替换cookie得到flag<br>
-<img src="https://guokeya.github.io/post-images/1584507830791.png" alt="" loading="lazy"></p>
+<p>中间那个。明显不对劲。将js和html脱下来<br>
+<img src="https://guokeya.github.io/post-images/1584513357429.png" alt="" loading="lazy"><br>
+host填node3.buuoj.cn<br>
+port填28692<br>
+连接后。需要用户名密码。继续从流量包中搜<br>
+<img src="https://guokeya.github.io/post-images/1584513411819.png" alt="" loading="lazy"><br>
+websocket流量。追踪TCP流。得到用户名<br>
+<img src="https://guokeya.github.io/post-images/1584513475205.png" alt="" loading="lazy"><br>
+密码在哪。。继续看。发现一堆masked标志的数据<br>
+<img src="https://guokeya.github.io/post-images/1584513632015.png" alt="" loading="lazy"><br>
+并且是单个字符<br>
+脱下来16进制转ascii<br>
+得到密码<br>
+<img src="https://guokeya.github.io/post-images/1584513672798.png" alt="" loading="lazy"><br>
+登陆后得到Flag<br>
+<img src="https://guokeya.github.io/post-images/1584513693149.png" alt="" loading="lazy"></p>
 
 							</div>
 	<div class="wow bounceInDown vt-post-tags">
@@ -214,10 +197,8 @@ a[128:]是0}的密文。附在最后
 		
 		<div class="nav-links3">
       
-		<div class="wow bounceInLeft nav-previous3"><a href="https://guokeya.github.io/post/lbccyP8UU/" rel="prev"> [BSidesCF 2020]Bulls23</a></div>
 		 
-		 
-		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/M9VRUzeY6/" rel="next"> [BSidesCF 2019]SVGMagic(xxe)</a></div>
+		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/9q5WhONzV/" rel="next"> [BSidesCF 2019]Mixer(CBC整块替换)</a></div>
 		
 		</div>
 	</nav>
