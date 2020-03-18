@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-03-17T13:27:19.887Z</updated>
+    <updated>2020-03-18T05:04:19.329Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,20 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[[BSidesCF 2019]Mixer(CBC整块替换)]]></title>
+        <id>https://guokeya.github.io/post/9q5WhONzV/</id>
+        <link href="https://guokeya.github.io/post/9q5WhONzV/">
+        </link>
+        <updated>2020-03-18T04:35:44.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[BSidesCF 2019]SVGMagic(xxe)]]></title>
+        <id>https://guokeya.github.io/post/M9VRUzeY6/</id>
+        <link href="https://guokeya.github.io/post/M9VRUzeY6/">
+        </link>
+        <updated>2020-03-18T02:06:39.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[[HarekazeCTF2019]Easy Notes(代码审计)]]></title>
         <id>https://guokeya.github.io/post/Kpq_sd7RO/</id>
@@ -65,19 +79,5 @@
         <link href="https://guokeya.github.io/post/U00Vbfnjz/">
         </link>
         <updated>2020-03-12T00:36:26.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[RootersCTF2019]I_<3_Flask(fuzz)]]></title>
-        <id>https://guokeya.github.io/post/YxXnoaHlI/</id>
-        <link href="https://guokeya.github.io/post/YxXnoaHlI/">
-        </link>
-        <updated>2020-03-11T13:39:41.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[RootersCTF2019]babyWeb(万能密码)]]></title>
-        <id>https://guokeya.github.io/post/RYRhvFnHn/</id>
-        <link href="https://guokeya.github.io/post/RYRhvFnHn/">
-        </link>
-        <updated>2020-03-11T12:10:05.000Z</updated>
     </entry>
 </feed>

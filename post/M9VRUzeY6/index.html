@@ -6,7 +6,7 @@
 <meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
 <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
 <meta HTTP-EQUIV="expires" CONTENT="0"> 
-<title>[HarekazeCTF2019]Easy Notes(代码审计) | 过客</title>	
+<title>[BSidesCF 2019]SVGMagic(xxe) | 过客</title>	
 
 <link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
 <script type="text/javascript">
@@ -150,10 +150,10 @@ window.onload=getCSS();
 	
 	                      
 		<div class="entry-content">
-			<h1 class="wow swing entry-title">[HarekazeCTF2019]Easy Notes(代码审计)</h1>
+			<h1 class="wow swing entry-title">[BSidesCF 2019]SVGMagic(xxe)</h1>
 <div class="entry-meta">
 <div class="wow bounce">
-	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-17 20:34:45" itemprop="datePublished" pubdate="">2020-03-17</time></i>
+	<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-03-18 10:06:39" itemprop="datePublished" pubdate="">2020-03-18</time></i>
 	          </div>
 			
 </span>
@@ -161,30 +161,14 @@ window.onload=getCSS();
 		</div>
                   
 			<div class="wow slideInLeft entry-summary song">
-				<p>这题。先去github上。把源码下下来。<br>
-先随便用个号登陆。存在一个add note和下载功能。成为admin得到flag。着重看下下载功能。<br>
-<img src="https://guokeya.github.io/post-images/1584448694942.png" alt="" loading="lazy"><br>
-包含了init.php。<br>
-init.php又包含了config.php和lib.php<br>
-lib.php是一些函数。config.php定义了session的保存位置为/var/www/tmp/<br>
-想到写入session伪造admin用户。继续看<br>
-<img src="https://guokeya.github.io/post-images/1584448895681.png" alt="" loading="lazy"><br>
-此处文件名好像可控。我们把用户名改为&quot;sess_&quot;、type改为点号。然后经过替换置空。文件名就为sess_-xxxxxxxx<br>
-现在文件名可控了。内容呢。<br>
-<img src="https://guokeya.github.io/post-images/1584449239165.png" alt="" loading="lazy"><br>
-ok。内容也得到了。<br>
-session默认使用的是php序列化引擎<br>
-当我们输入admin|b:1;时。可以成功访问admin属性为True<br>
-<img src="https://guokeya.github.io/post-images/1584451464338.png" alt="" loading="lazy"><br>
-去靶机上试试<br>
-title为admin|b:1;<br>
-然后下载时。type设置为点号<br>
-会下载一个最终文件名的压缩包。<br>
-仿佛数据不能正常解析<br>
-<img src="https://guokeya.github.io/post-images/1584451538257.png" alt="" loading="lazy"><br>
-我们可以通过|N;来闭合前面的杂乱数据。<br>
-最终效果为xxxx|N;admin|b:1;xxxxxx<br>
-<img src="https://guokeya.github.io/post-images/1584451613820.png" alt="" loading="lazy"></p>
+				<p>进去就一个上传。有一串英文。意思是将SVG转换为PNG。<br>
+先去看看SVG是个啥。<br>
+<img src="https://guokeya.github.io/post-images/1584497478738.png" alt="" loading="lazy"><br>
+OK。SVG是个XML的图片。并且存在可控的内容<br>
+那么。是否存在XXE呢。。构造PAYLOAD<br>
+由于不知道flag路径。一般就是在/flagxxxx。和当前目录flagxxx<br>
+而/proc/self/pwd/代表的是当前路径。可以构造/proc/self/pwd/flag.txt读取文件<br>
+<img src="https://guokeya.github.io/post-images/1584501575464.png" alt="" loading="lazy"></p>
 
 							</div>
 	<div class="wow bounceInDown vt-post-tags">
@@ -198,10 +182,10 @@ title为admin|b:1;<br>
 		
 		<div class="nav-links3">
       
-		<div class="wow bounceInLeft nav-previous3"><a href="https://guokeya.github.io/post/M9VRUzeY6/" rel="prev"> [BSidesCF 2019]SVGMagic(xxe)</a></div>
+		<div class="wow bounceInLeft nav-previous3"><a href="https://guokeya.github.io/post/9q5WhONzV/" rel="prev"> [BSidesCF 2019]Mixer(CBC整块替换)</a></div>
 		 
 		 
-		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/pd9adBR7c/" rel="next"> [DDCTF 2019]homebrew event loop</a></div>
+		<div class="wow bounceInRight nav-next3"><a href="https://guokeya.github.io/post/Kpq_sd7RO/" rel="next"> [HarekazeCTF2019]Easy Notes(代码审计)</a></div>
 		
 		</div>
 	</nav>

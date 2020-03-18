@@ -147,6 +147,67 @@ window.onload=getCSS();
 	 
 	   
 	<div class="entry-content">
+		<h1 class="entry-title"><a href="https://guokeya.github.io/post/fbctf2019eventssti3/" rel="bookmark">[FBCTF2019]Event(SSTI3)</a></h1>
+		<div class="entry-meta">
+		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-26 16:04:17" itemprop="datePublished" pubdate="">2020-01-26</time></i>
+	 
+			
+		</div>
+
+		<div class="entry-summary jia">
+			<p>功能很简单。就一个登陆。一个查看flag。但是flag没有权限
+
+
+随便注册个用户看看。存在留言功能
+
+发送留言处event_important参数存在SSTI。
+
+别问我为什么用__class__
+一开始。用的是{{2*2}}
+发现留言并...</p>
+			<p class="readmore">
+				<a href="https://guokeya.github.io/post/fbctf2019eventssti3/" class="link-more">Read more</a>
+			</p>
+		</div>
+		
+	</div>
+	
+</article>
+		
+ 						
+<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
+	
+	 
+	   
+	<div class="entry-content">
+		<h1 class="entry-title"><a href="https://guokeya.github.io/post/php-de-session-fan-xu-lie-hua/" rel="bookmark">PHP的Session反序列化</a></h1>
+		<div class="entry-meta">
+		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-25 19:13:49" itemprop="datePublished" pubdate="">2020-01-25</time></i>
+	 
+			
+		</div>
+
+		<div class="entry-summary jia">
+			<p>对于反序列化。我们已知的有phar/unserialize。Session也是可以触发反序列化的
+首先。我们看下php对于Session的各项配置
+
+session.save_path = &quot;/tmp&quot;
+#session...</p>
+			<p class="readmore">
+				<a href="https://guokeya.github.io/post/php-de-session-fan-xu-lie-hua/" class="link-more">Read more</a>
+			</p>
+		</div>
+		
+	</div>
+	
+</article>
+		
+ 						
+<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
+	
+	 
+	   
+	<div class="entry-content">
 		<h1 class="entry-title"><a href="https://guokeya.github.io/post/buuctfxiao-yi-de-u-pan/" rel="bookmark">[BUUCTF]小易的U盘</a></h1>
 		<div class="entry-meta">
 		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-24 15:04:21" itemprop="datePublished" pubdate="">2020-01-24</time></i>
@@ -525,67 +586,6 @@ https://yoloyolo.to...</p>
 			<p>d4e8e1f4a0f7e1f3a0e6e1f3f4a1a0d4e8e5a0e6ece1e7a0e9f3baa0c4c4c3d4c6fbb9e1b2e2e5e2b5b4e4b8b7e6e1e1b6b9e4b5e3b8b1b1e3e5b5b6...</p>
 			<p class="readmore">
 				<a href="https://guokeya.github.io/post/ddctf2018degdeg-kai-sa-mi-ma-128/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/hdctfni-neng-fa-xian-shi-me-zhu-si-ma-ji-ma-nei-cun-qu-zheng/" rel="bookmark">[HDCTF]你能发现什么蛛丝马迹吗(内存取证)</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-20 19:01:38" itemprop="datePublished" pubdate="">2020-01-20</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>题目给了一个memory.img
-
-root@kali:/# file memory.img 
-memory.img: data
-
-结合文件名。内存取证
-用volatility神器
-首先看文件的profile
-volatility -f m...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/hdctfni-neng-fa-xian-shi-me-zhu-si-ma-ji-ma-nei-cun-qu-zheng/" class="link-more">Read more</a>
-			</p>
-		</div>
-		
-	</div>
-	
-</article>
-		
- 						
-<article class="wow zoomIn post post-index  post-318 type-post status-publish format-standard hentry category-uncategorized tag-40 tag-39">
-	
-	 
-	   
-	<div class="entry-content">
-		<h1 class="entry-title"><a href="https://guokeya.github.io/post/hctf2018liang-dao-ti-liao-jie-flask-de-session-ji-zhi/" rel="bookmark">[HCTF2018]两道题了解flask的session机制</a></h1>
-		<div class="entry-meta">
-		<i class="iconfont icon-rili"> <time class="lately-a" datetime="2020-01-20 13:25:29" itemprop="datePublished" pubdate="">2020-01-20</time></i>
-	 
-			
-		</div>
-
-		<div class="entry-summary jia">
-			<p>session安全问题
-在Web中。Session一般都存储在服务端用来认证用户身份。用户不可控。
-如果。用户可控Session就会导致安全问题存在
-
-这就要讲到客户端存放Session了。
-Python的Flask框架并没有良好的Sess...</p>
-			<p class="readmore">
-				<a href="https://guokeya.github.io/post/hctf2018liang-dao-ti-liao-jie-flask-de-session-ji-zhi/" class="link-more">Read more</a>
 			</p>
 		</div>
 		
