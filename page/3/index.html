@@ -83,6 +83,62 @@
       <div class="col-lg-8 col-md-10 mx-auto">
        
         <div class="post-preview">
+          <a href="https://guokeya.github.io/post/wRiUmBytM/">
+            <h2 class="post-title">
+              [V&amp;N2020 公开赛]HappyCTFd/CHECKIN/TimeTravel
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>HappyCTFd</strong><br>
+登陆进去是个CTFD（一个开源的CTF平台）界面。<br>
+<img src="https://guokeya.github.io/post-images/1582968206604.png" alt="" loading="lazy"></p>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-02-29</span>
+             <span>,</span>
+             <span class="post-stats">4 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/mcUK57hAJ/">
+            <h2 class="post-title">
+              [SUCTF 2018]annonymous(php lambda)
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p>题目给出了源码</p>
+<pre><code>&lt;?php
+
+$MY = create_function(&quot;&quot;,&quot;die(`cat flag.php`);&quot;);
+$hash = bin2hex(openssl_random_pseudo_bytes(32));
+eval(&quot;function SUCTF_$hash(){&quot;
+    .&quot;global \$MY;&quot;
+    .&quot;\$MY();&quot;
+    .&quot;}&quot;);
+if(isset($_GET['func_name'])){
+    $_GET[&quot;func_name&quot;]();
+    die();
+}
+show_source(__FILE__);
+</code></pre>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-02-28</span>
+             <span>,</span>
+             <span class="post-stats">1 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
           <a href="https://guokeya.github.io/post/m9L1ZJk4j/">
             <h2 class="post-title">
               安恒月赛SSTI的新姿势
@@ -358,54 +414,6 @@ login需要admin密码<br>
             </h3>
           <p class="post-meta">
              <span class="time">2020-02-07</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/vulnhubdc-1dc-2-ba-ji/">
-            <h2 class="post-title">
-               [vulnhub]DC-1/DC-2靶机
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>DC-1</strong><br>
-开放端口</p>
-<pre><code>PORT      STATE SERVICE VERSION
-22/tcp    open  ssh     OpenSSH 6.0p1 Debian 4+deb7u7 (protocol 2.0)
-80/tcp    open  http    Apache httpd 2.2.22 ((Debian))
-111/tcp   open  rpcbind 2-4 (RPC #100000)
-38538/tcp open  status  1 (RPC #100024)
-</code></pre>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-02-06</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/vulnhubsunrise-ba-ji/">
-            <h2 class="post-title">
-               [vulnhub]sunrise靶机
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>开放端口22/80/3306/8080<br>
-<img src="https://guokeya.github.io/post-images/1580896853991.png" alt="" loading="lazy"></p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-02-05</span>
              <span>,</span>
              <span class="post-stats">2 min read</span>
             </p>

@@ -103,8 +103,9 @@
         <div class="col-lg-8 col-md-10 mx-auto">
           <p>注入。需要邮箱。用户名。密码。<br>
 登陆。需要邮箱。密码<br>
-登陆后。会限制用户名<br>
-。Web狗的嗅觉。十有八九是二次注入。<br>
+登陆后。会限制用户名</p>
+<!-- more -->
+<p>。Web狗的嗅觉。十有八九是二次注入。<br>
 <code>insert into xxx(email,name,pass) values(email,''+database()+'',pass)</code><br>
 <img src="https://guokeya.github.io/post-images/1584252580365.png" alt="" loading="lazy"><br>
 如果直接将回显结果放入拼接。会返回0。转为16进制就可以了<br>

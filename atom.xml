@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-03-18T06:49:14.931Z</updated>
+    <updated>2020-03-19T06:57:35.743Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -11,11 +11,103 @@
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
     <entry>
+        <title type="html"><![CDATA[[GWCTF 2019]你的名字(SSTI)]]></title>
+        <id>https://guokeya.github.io/post/eyYhRsEBx/</id>
+        <link href="https://guokeya.github.io/post/eyYhRsEBx/">
+        </link>
+        <updated>2020-03-19T05:57:11.000Z</updated>
+        <summary type="html"><![CDATA[<p>。。感觉是SSTI<br>
+<img src="https://guokeya.github.io/post-images/1584597492085.png" alt="" loading="lazy"><br>
+输入<code>{1+1}</code>返回<code>{1+1}</code><br>
+输入<code>{{1+1}}</code>直接报错。<br>
+这就有点迷了。接触过的SSTI都是构造payload不同。也没遇到过报错这种情况<br>
+看writeup后。发现还能通过<code>{%%}</code>这种方式去注入<br>
+这是一种盲注。通过<code>{% if 1 %}1{% endif %}</code><br>
+可以看到。虽然没回显。但是payload确实正常执行<br>
+<img src="https://guokeya.github.io/post-images/1584598772521.png" alt="" loading="lazy"></p>
+]]></summary>
+        <content type="html"><![CDATA[<p>。。感觉是SSTI<br>
+<img src="https://guokeya.github.io/post-images/1584597492085.png" alt="" loading="lazy"><br>
+输入<code>{1+1}</code>返回<code>{1+1}</code><br>
+输入<code>{{1+1}}</code>直接报错。<br>
+这就有点迷了。接触过的SSTI都是构造payload不同。也没遇到过报错这种情况<br>
+看writeup后。发现还能通过<code>{%%}</code>这种方式去注入<br>
+这是一种盲注。通过<code>{% if 1 %}1{% endif %}</code><br>
+可以看到。虽然没回显。但是payload确实正常执行<br>
+<img src="https://guokeya.github.io/post-images/1584598772521.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[GYCTF2020]Node Game(CRLF头部注入)]]></title>
+        <id>https://guokeya.github.io/post/hz6_KR03h/</id>
+        <link href="https://guokeya.github.io/post/hz6_KR03h/">
+        </link>
+        <updated>2020-03-18T13:25:53.000Z</updated>
+        <summary type="html"><![CDATA[<p>题目给出了源码</p>
+<pre><code>/
+接受action参数。如果没有就默认为index
+file=dirname+/template/+action+.png
+然后用pug进行渲染。可以理解为执行这个文件
+
+/file_upload
+定义了只能由127.0.0.1访问。并且是remoteaddress不能伪造
+那么得找一个SSRF的点
+文件上传。
+filepath=/uploads/+mimetype+/
+而mimetype可控。那么我们可以跨目录
+dir_file=dirname+filepath+filename
+那么我们可以构造任意路径文件写入
+
+/core
+接受一个q参数。然后对其进行黑名单检测
+然后对q输入的值进行请求。。
+当时知道这个点可以SSRF。但是不会构造数据包。。
+</code></pre>
+]]></summary>
+        <content type="html"><![CDATA[<p>题目给出了源码</p>
+<pre><code>/
+接受action参数。如果没有就默认为index
+file=dirname+/template/+action+.png
+然后用pug进行渲染。可以理解为执行这个文件
+
+/file_upload
+定义了只能由127.0.0.1访问。并且是remoteaddress不能伪造
+那么得找一个SSRF的点
+文件上传。
+filepath=/uploads/+mimetype+/
+而mimetype可控。那么我们可以跨目录
+dir_file=dirname+filepath+filename
+那么我们可以构造任意路径文件写入
+
+/core
+接受一个q参数。然后对其进行黑名单检测
+然后对q输入的值进行请求。。
+当时知道这个点可以SSRF。但是不会构造数据包。。
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[[BSidesCF 2020]Bulls23]]></title>
         <id>https://guokeya.github.io/post/lbccyP8UU/</id>
         <link href="https://guokeya.github.io/post/lbccyP8UU/">
         </link>
         <updated>2020-03-18T06:29:55.000Z</updated>
+        <summary type="html"><![CDATA[<p>给了一个流量包和网址。<br>
+分析流量包。<br>
+有三个URL</p>
+<pre><code>bash.org
+builts-23-04xxxxxxxxxxxxxxxx&amp;port=8888
+n-gate.com
+</code></pre>
+]]></summary>
+        <content type="html"><![CDATA[<p>给了一个流量包和网址。<br>
+分析流量包。<br>
+有三个URL</p>
+<pre><code>bash.org
+builts-23-04xxxxxxxxxxxxxxxx&amp;port=8888
+n-gate.com
+</code></pre>
+]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[[BSidesCF 2019]Mixer(CBC整块替换)]]></title>
@@ -23,6 +115,16 @@
         <link href="https://guokeya.github.io/post/9q5WhONzV/">
         </link>
         <updated>2020-03-18T04:35:44.000Z</updated>
+        <summary type="html"><![CDATA[<p>要求以admin登陆。将HTML中的is_admin改为1也不行。<br>
+并且cookie中存在一个rack.session和user<br>
+<img src="https://guokeya.github.io/post-images/1584506698559.png" alt="" loading="lazy"><br>
+仿佛是加密过后的数据</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>要求以admin登陆。将HTML中的is_admin改为1也不行。<br>
+并且cookie中存在一个rack.session和user<br>
+<img src="https://guokeya.github.io/post-images/1584506698559.png" alt="" loading="lazy"><br>
+仿佛是加密过后的数据</p>
+]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[[BSidesCF 2019]SVGMagic(xxe)]]></title>
@@ -30,6 +132,12 @@
         <link href="https://guokeya.github.io/post/M9VRUzeY6/">
         </link>
         <updated>2020-03-18T02:06:39.000Z</updated>
+        <summary type="html"><![CDATA[<p>进去就一个上传。有一串英文。意思是将SVG转换为PNG。<br>
+先去看看SVG是个啥。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>进去就一个上传。有一串英文。意思是将SVG转换为PNG。<br>
+先去看看SVG是个啥。</p>
+]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[[HarekazeCTF2019]Easy Notes(代码审计)]]></title>
@@ -37,6 +145,12 @@
         <link href="https://guokeya.github.io/post/Kpq_sd7RO/">
         </link>
         <updated>2020-03-17T12:34:45.000Z</updated>
+        <summary type="html"><![CDATA[<p>这题。先去github上。把源码下下来。<br>
+先随便用个号登陆。存在一个add note和下载功能。成为admin得到flag。着重看下下载功能。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>这题。先去github上。把源码下下来。<br>
+先随便用个号登陆。存在一个add note和下载功能。成为admin得到flag。着重看下下载功能。</p>
+]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[[DDCTF 2019]homebrew event loop]]></title>
@@ -44,6 +158,12 @@
         <link href="https://guokeya.github.io/post/pd9adBR7c/">
         </link>
         <updated>2020-03-17T01:54:34.000Z</updated>
+        <summary type="html"><![CDATA[<p>题目给出了源码。并且有购买points功能。其他没了<br>
+首先审计代码。删了部分代码</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>题目给出了源码。并且有购买points功能。其他没了<br>
+首先审计代码。删了部分代码</p>
+]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[Wallbreaker_Easy(Bypass disable_function)]]></title>
@@ -51,6 +171,14 @@
         <link href="https://guokeya.github.io/post/lClpsRDJm/">
         </link>
         <updated>2020-03-16T05:47:35.000Z</updated>
+        <summary type="html"><![CDATA[<p><img src="https://guokeya.github.io/post-images/1584337687944.png" alt="" loading="lazy"><br>
+给出了webshell。并且/tmp/130a22b5fcf1e7f489bd341fddbb3353可写<br>
+有open_basedir限制目录。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p><img src="https://guokeya.github.io/post-images/1584337687944.png" alt="" loading="lazy"><br>
+给出了webshell。并且/tmp/130a22b5fcf1e7f489bd341fddbb3353可写<br>
+有open_basedir限制目录。</p>
+]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[[网鼎杯2018]Unfinish(二次注入)]]></title>
@@ -58,6 +186,14 @@
         <link href="https://guokeya.github.io/post/gW7Qnkxsi/">
         </link>
         <updated>2020-03-15T06:06:16.000Z</updated>
+        <summary type="html"><![CDATA[<p>注入。需要邮箱。用户名。密码。<br>
+登陆。需要邮箱。密码<br>
+登陆后。会限制用户名</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>注入。需要邮箱。用户名。密码。<br>
+登陆。需要邮箱。密码<br>
+登陆后。会限制用户名</p>
+]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[angstroCTF Web+Misc]]></title>
@@ -65,19 +201,13 @@
         <link href="https://guokeya.github.io/post/galW4kTUg/">
         </link>
         <updated>2020-03-15T02:51:17.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[SWPU2019]Web4(堆叠注入+Thinkphp审计)]]></title>
-        <id>https://guokeya.github.io/post/MzHF-GZP0/</id>
-        <link href="https://guokeya.github.io/post/MzHF-GZP0/">
-        </link>
-        <updated>2020-03-13T05:18:34.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[SUCTF 2018]MultiSQL(sql读取文件+写入文件)]]></title>
-        <id>https://guokeya.github.io/post/t4QExMZtn/</id>
-        <link href="https://guokeya.github.io/post/t4QExMZtn/">
-        </link>
-        <updated>2020-03-12T12:07:02.000Z</updated>
+        <summary type="html"><![CDATA[<p>ws1:<br>
+追踪TCP流得到Flag<br>
+<img src="https://guokeya.github.io/post-images/1584240752587.png" alt="" loading="lazy"></p>
+]]></summary>
+        <content type="html"><![CDATA[<p>ws1:<br>
+追踪TCP流得到Flag<br>
+<img src="https://guokeya.github.io/post-images/1584240752587.png" alt="" loading="lazy"></p>
+]]></content>
     </entry>
 </feed>
