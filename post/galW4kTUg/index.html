@@ -84,7 +84,7 @@
             <h1>angstroCTF Web+Misc</h1>
             <span class="meta">
             	Posted on
-              2020-03-15，2 min read
+              2020-03-15，4 min read
             </span>
           </div>
         </div>
@@ -187,6 +187,32 @@ githacker下来后git log --reflog<br>
 毫无过滤就带入sql语句。<br>
 <img src="https://guokeya.github.io/post-images/1584242265678.png" alt="" loading="lazy"><br>
 ua头sqlmap跑以下就行</p>
+<p>Defund's Crypt<br>
+题目给出了源码<br>
+就挑关键点说了</p>
+<pre><code>$finfo = new finfo(FILEINFO_MIME_TYPE);
+                    if (false === $ext = array_search(
+                        $finfo-&gt;file($_FILES['imgfile']['tmp_name']),
+                        array(
+                            '.jpg' =&gt; 'image/jpeg',
+                            '.png' =&gt; 'image/png',
+                            '.bmp' =&gt; 'image/bmp',
+                        ),
+                        true
+                    )) {
+                        throw new RuntimeException(&quot;Your memory isn't picturesque enough to be remembered.&quot;);
+                    }
+                    if (strpos($_FILES[&quot;imgfile&quot;][&quot;name&quot;], $ext) === false) {
+                        throw new RuntimeException(&quot;The name of your memory doesn't seem to match its content.&quot;);
+                    }
+                    $bname = basename($_FILES[&quot;imgfile&quot;][&quot;name&quot;]);
+                    $fname = sprintf(&quot;%s%s&quot;, sha1_file($_FILES[&quot;imgfile&quot;][&quot;tmp_name&quot;]), substr($bname, strpos($bname, &quot;.&quot;)));
+</code></pre>
+<p>首先用finfo取判断文件内容。然后用这个文件类型从数组中取对应的后缀名。判断。文件名中是否有类型对应的后缀<br>
+比如。1.jpg它会根据image/jpeg。得到.jpg   然后判断文件名中是否有.jpg<br>
+得到最终的文件名。sha1(文件名)+以点号分割的后缀(也就是最后一个点后面的文件名)<br>
+构造一个1.jpg.php。jpg存在。绕过判断。php以后缀名<br>
+成功上传</p>
 
           
           <p class="next-post">下一篇：
