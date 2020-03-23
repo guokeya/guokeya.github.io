@@ -88,7 +88,7 @@
             <h1>BJDCTF 2nd Web题解</h1>
             <span class="meta">
             	Posted on
-              2020-03-22，5 min read
+              2020-03-22，14 min read
             </span>
           </div>
         </div>
@@ -247,6 +247,236 @@ for i in t:
 </code></pre>
 <p>得到And_th3_3LemEnt5_w1LL_De5tR0y_y0u.php<br>
 访问得到flag</p>
+<p><strong>[BJDCTF 2nd]文件探测</strong><br>
+存在admin.php只允许127.0.0.1访问<br>
+在head头。发现了hint:home.php<br>
+访问home.php跳转到home.php?file=system<br>
+伪协议读取到<br>
+system.php</p>
+<pre><code>&lt;?php
+error_reporting(0);
+if (!isset($_COOKIE['y1ng']) || $_COOKIE['y1ng'] !== sha1(md5('y1ng'))){
+    echo &quot;&lt;script&gt;alert('why you are here!');alert('fxck your scanner');alert('fxck you! get out!');&lt;/script&gt;&quot;;
+    header(&quot;Refresh:0.1;url=index.php&quot;);
+    die;
+}
+
+$str2 = '&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Error:&amp;nbsp;&amp;nbsp;url invalid&lt;br&gt;~$ ';
+$str3 = '&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Error:&amp;nbsp;&amp;nbsp;damn hacker!&lt;br&gt;~$ ';
+$str4 = '&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Error:&amp;nbsp;&amp;nbsp;request method error&lt;br&gt;~$ ';
+
+?&gt;
+&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+&lt;head&gt;
+    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+    &lt;title&gt;File Detector&lt;/title&gt;
+
+    &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;css/normalize.css&quot; /&gt;
+    &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;css/demo.css&quot; /&gt;
+
+    &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;css/component.css&quot; /&gt;
+
+    &lt;script src=&quot;js/modernizr.custom.js&quot;&gt;&lt;/script&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+&lt;section&gt;
+    &lt;form id=&quot;theForm&quot; class=&quot;simform&quot; autocomplete=&quot;off&quot; action=&quot;system.php&quot; method=&quot;post&quot;&gt;
+        &lt;div class=&quot;simform-inner&quot;&gt;
+            &lt;span&gt;&lt;p&gt;&lt;center&gt;File Detector&lt;/center&gt;&lt;/p&gt;&lt;/span&gt;
+            &lt;ol class=&quot;questions&quot;&gt;
+                &lt;li&gt;
+                    &lt;span&gt;&lt;label for=&quot;q1&quot;&gt;ä½ ç¥éç®å½ä¸é½æä»ä¹æä»¶å?&lt;/label&gt;&lt;/span&gt;
+                    &lt;input id=&quot;q1&quot; name=&quot;q1&quot; type=&quot;text&quot;/&gt;
+                &lt;/li&gt;
+                &lt;li&gt;
+                    &lt;span&gt;&lt;label for=&quot;q2&quot;&gt;è¯·è¾å
+¥ä½ æ³æ£æµæä»¶å
+å®¹é¿åº¦çurl&lt;/label&gt;&lt;/span&gt;
+                    &lt;input id=&quot;q2&quot; name=&quot;q2&quot; type=&quot;text&quot;/&gt;
+                &lt;/li&gt;
+                &lt;li&gt;
+                    &lt;span&gt;&lt;label for=&quot;q1&quot;&gt;ä½ å¸æä»¥ä½ç§æ¹å¼è®¿é®ï¼GETï¼POST?&lt;/label&gt;&lt;/span&gt;
+                    &lt;input id=&quot;q3&quot; name=&quot;q3&quot; type=&quot;text&quot;/&gt;
+                &lt;/li&gt;
+            &lt;/ol&gt;
+            &lt;button class=&quot;submit&quot; type=&quot;submit&quot; value=&quot;submit&quot;&gt;æäº¤&lt;/button&gt;
+            &lt;div class=&quot;controls&quot;&gt;
+                &lt;button class=&quot;next&quot;&gt;&lt;/button&gt;
+                &lt;div class=&quot;progress&quot;&gt;&lt;/div&gt;
+                &lt;span class=&quot;number&quot;&gt;
+					&lt;span class=&quot;number-current&quot;&gt;&lt;/span&gt;
+					&lt;span class=&quot;number-total&quot;&gt;&lt;/span&gt;
+				&lt;/span&gt;
+                &lt;span class=&quot;error-message&quot;&gt;&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;span class=&quot;final-message&quot;&gt;&lt;/span&gt;
+    &lt;/form&gt;
+    &lt;span&gt;&lt;p&gt;&lt;center&gt;&lt;a href=&quot;https://gem-love.com&quot; target=&quot;_blank&quot;&gt;@é¢å¥L'Amore&lt;/a&gt;&lt;/center&gt;&lt;/p&gt;&lt;/span&gt;
+&lt;/section&gt;
+
+&lt;script type=&quot;text/javascript&quot; src=&quot;js/classie.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;js/stepsForm.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+    var theForm = document.getElementById( 'theForm' );
+
+    new stepsForm( theForm, {
+        onSubmit : function( form ) {
+            classie.addClass( theForm.querySelector( '.simform-inner' ), 'hide' );
+            var messageEl = theForm.querySelector( '.final-message' );
+            form.submit();
+            messageEl.innerHTML = 'Ok...Let me have a check';
+            classie.addClass( messageEl, 'show' );
+        }
+    } );
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+&lt;?php
+
+$filter1 = '/^http:\/\/127\.0\.0\.1\//i';
+$filter2 = '/.?f.?l.?a.?g.?/i';
+
+
+if (isset($_POST['q1']) &amp;&amp; isset($_POST['q2']) &amp;&amp; isset($_POST['q3']) ) {
+    $url = $_POST['q2'].&quot;.y1ng.txt&quot;;
+    $method = $_POST['q3'];
+
+    $str1 = &quot;~$ python fuck.py -u \&quot;&quot;.$url .&quot;\&quot; -M $method -U y1ng -P admin123123 --neglect-negative --debug --hint=xiangdemei&lt;br&gt;&quot;;
+
+    echo $str1;
+
+    if (!preg_match($filter1, $url) ){
+        die($str2);
+    }
+    if (preg_match($filter2, $url)) {
+        die($str3);
+    }
+    if (!preg_match('/^GET/i', $method) &amp;&amp; !preg_match('/^POST/i', $method)) {
+        die($str4);
+    }
+    $detect = @file_get_contents($url, false);
+    print(sprintf(&quot;$url method&amp;content_size:$method%d&quot;, $detect));
+}
+
+?&gt;
+</code></pre>
+<p>home.php</p>
+<pre><code>&lt;?php
+
+setcookie(&quot;y1ng&quot;, sha1(md5('y1ng')), time() + 3600);
+setcookie('your_ip_address', md5($_SERVER['REMOTE_ADDR']), time()+3600);
+
+if(isset($_GET['file'])){
+    if (preg_match(&quot;/\^|\~|&amp;|\|/&quot;, $_GET['file'])) {
+        die(&quot;forbidden&quot;);
+    }
+
+    if(preg_match(&quot;/.?f.?l.?a.?g.?/i&quot;, $_GET['file'])){
+        die(&quot;not now!&quot;);
+    }
+
+    if(preg_match(&quot;/.?a.?d.?m.?i.?n.?/i&quot;, $_GET['file'])){
+        die(&quot;You! are! not! my! admin!&quot;);
+    }
+
+    if(preg_match(&quot;/^home$/i&quot;, $_GET['file'])){
+        die(&quot;ç¦æ­¢å¥å¨&quot;);
+    }
+
+    else{
+        if(preg_match(&quot;/home$/i&quot;, $_GET['file']) or preg_match(&quot;/system$/i&quot;, $_GET['file'])){
+            $file = $_GET['file'].&quot;.php&quot;;
+        }
+        else{
+            $file = $_GET['file'].&quot;.fxxkyou!&quot;;
+        }
+        echo &quot;ç°å¨è®¿é®çæ¯ &quot;.$file . &quot;&lt;br&gt;&quot;;
+        require $file;
+    }
+} else {
+    echo &quot;&lt;script&gt;location.href='./home.php?file=system'&lt;/script&gt;&quot;;
+}
+</code></pre>
+<p>首先从home.php审计。是个文件包含。但是只允许包含home和system<br>
+并且会对cookie赋值<br>
+继续对system.php审计。<br>
+接受三个参数q1/q2/q3<br>
+会读取q2。然后q3带入sprintf回显。<br>
+<img src="https://guokeya.github.io/post-images/1584922291497.png" alt="" loading="lazy"><br>
+结合之前的admin.php只允许本地访问。可以造成SSRF。<br>
+读取一下。得到源码<br>
+<img src="https://guokeya.github.io/post-images/1584922469392.png" alt="" loading="lazy"></p>
+<pre><code> &lt;?php
+error_reporting(0);
+session_start();
+$f1ag = 'f1ag{s1mpl3_SSRF_@nd_spr1ntf}'; //fake
+
+function aesEn($data, $key)
+{
+    $method = 'AES-128-CBC';
+    $iv = md5($_SERVER['REMOTE_ADDR'],true);
+    return  base64_encode(openssl_encrypt($data, $method,$key, OPENSSL_RAW_DATA , $iv));
+}
+
+function Check()
+{
+    if (isset($_COOKIE['your_ip_address']) &amp;&amp; $_COOKIE['your_ip_address'] === md5($_SERVER['REMOTE_ADDR']) &amp;&amp; $_COOKIE['y1ng'] === sha1(md5('y1ng')))
+        return true;
+    else
+        return false;
+}
+
+if ( $_SERVER['REMOTE_ADDR'] == &quot;127.0.0.1&quot; ) {
+    highlight_file(__FILE__);
+} else {
+    echo &quot;&lt;head&gt;&lt;title&gt;403 Forbidden&lt;/title&gt;&lt;/head&gt;&lt;body bgcolor=black&gt;&lt;center&gt;&lt;font size='10px' color=white&gt;&lt;br&gt;only 127.0.0.1 can access! You know what I mean right?&lt;br&gt;your ip address is &quot; . $_SERVER['REMOTE_ADDR'];
+}
+
+
+$_SESSION['user'] = md5($_SERVER['REMOTE_ADDR']);
+
+if (isset($_GET['decrypt'])) {
+    $decr = $_GET['decrypt'];
+    if (Check()){
+        $data = $_SESSION['secret'];
+        include 'flag_2sln2ndln2klnlksnf.php';
+        $cipher = aesEn($data, 'y1ng');
+        if ($decr === $cipher){
+            echo WHAT_YOU_WANT;
+        } else {
+            die('爬');
+        }
+    } else{
+        header(&quot;Refresh:0.1;url=index.php&quot;);
+    }
+} else {
+    //I heard you can break PHP mt_rand seed
+    mt_srand(rand(0,9999999));
+    $length = mt_rand(40,80);
+    $_SESSION['secret'] = bin2hex(random_bytes($length));
+}
+
+
+?&gt;
+</code></pre>
+<p>开始审计<br>
+1。开启session。<br>
+2。判断是否是本地访问。如果是本地访问就显示源码。否则就403（这里没有直接Die退出。可以继续执行下面的代码。我憨憨了。在这卡了一天一夜。没发现。所有东西都想SSRF去了）<br>
+3。判断是否存在decrypt参数。赋值给<code>$decr</code><br>
+4。判断cookie赋值。这个在home.php中会自动赋值<br>
+5。将session中的密钥带入aesEn函数进行加密。<br>
+6。判断输入和加密结果是否一致<br>
+。。下面就很简单了<br>
+构造密钥为空。那么aesEn函数是aesEn('','y1ng')<br>
+本地跑下就能知道结果<br>
+<img src="https://guokeya.github.io/post-images/1584923217521.png" alt="" loading="lazy"><br>
+得到密钥。删除PHPSESSION。URL编码。得到flag</p>
 
           
           <p class="next-post">下一篇：
