@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-03-23T00:38:18.527Z</updated>
+    <updated>2020-03-23T02:34:07.739Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,21 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[BJDCTF 2nd Misc题解]]></title>
+        <id>https://guokeya.github.io/post/cH8uL3WLS/</id>
+        <link href="https://guokeya.github.io/post/cH8uL3WLS/">
+        </link>
+        <updated>2020-03-23T02:01:55.000Z</updated>
+        <summary type="html"><![CDATA[<p><strong>[BJDCTF 2nd]最简单的misc-y1ng</strong><br>
+加上PNG文件头。16进制转字符串得到Flag<br>
+<img src="https://guokeya.github.io/post-images/1584929122458.png" alt="" loading="lazy"></p>
+]]></summary>
+        <content type="html"><![CDATA[<p><strong>[BJDCTF 2nd]最简单的misc-y1ng</strong><br>
+加上PNG文件头。16进制转字符串得到Flag<br>
+<img src="https://guokeya.github.io/post-images/1584929122458.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[BJDCTF 2nd Crypto题解]]></title>
         <id>https://guokeya.github.io/post/RqbtW7BSC/</id>
@@ -185,21 +200,6 @@ n-gate.com
 ]]></summary>
         <content type="html"><![CDATA[<p>题目给出了源码。并且有购买points功能。其他没了<br>
 首先审计代码。删了部分代码</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Wallbreaker_Easy(Bypass disable_function)]]></title>
-        <id>https://guokeya.github.io/post/lClpsRDJm/</id>
-        <link href="https://guokeya.github.io/post/lClpsRDJm/">
-        </link>
-        <updated>2020-03-16T05:47:35.000Z</updated>
-        <summary type="html"><![CDATA[<p><img src="https://guokeya.github.io/post-images/1584337687944.png" alt="" loading="lazy"><br>
-给出了webshell。并且/tmp/130a22b5fcf1e7f489bd341fddbb3353可写<br>
-有open_basedir限制目录。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p><img src="https://guokeya.github.io/post-images/1584337687944.png" alt="" loading="lazy"><br>
-给出了webshell。并且/tmp/130a22b5fcf1e7f489bd341fddbb3353可写<br>
-有open_basedir限制目录。</p>
 ]]></content>
     </entry>
 </feed>
