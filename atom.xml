@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-03-23T03:01:52.649Z</updated>
+    <updated>2020-03-24T01:46:36.922Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,20 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[BUUCTF kzone(sql注入)]]></title>
+        <id>https://guokeya.github.io/post/2bwK125wR/</id>
+        <link href="https://guokeya.github.io/post/2bwK125wR/">
+        </link>
+        <updated>2020-03-24T01:38:00.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[CSAWQual 2019]Web_Unagi(XXE绕过。报错带数据)]]></title>
+        <id>https://guokeya.github.io/post/7C_iGmzXN/</id>
+        <link href="https://guokeya.github.io/post/7C_iGmzXN/">
+        </link>
+        <updated>2020-03-23T06:43:00.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[BJDCTF 2nd Misc题解]]></title>
         <id>https://guokeya.github.io/post/cH8uL3WLS/</id>
@@ -174,32 +188,6 @@ n-gate.com
 ]]></summary>
         <content type="html"><![CDATA[<p>进去就一个上传。有一串英文。意思是将SVG转换为PNG。<br>
 先去看看SVG是个啥。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[HarekazeCTF2019]Easy Notes(代码审计)]]></title>
-        <id>https://guokeya.github.io/post/Kpq_sd7RO/</id>
-        <link href="https://guokeya.github.io/post/Kpq_sd7RO/">
-        </link>
-        <updated>2020-03-17T12:34:45.000Z</updated>
-        <summary type="html"><![CDATA[<p>这题。先去github上。把源码下下来。<br>
-先随便用个号登陆。存在一个add note和下载功能。成为admin得到flag。着重看下下载功能。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>这题。先去github上。把源码下下来。<br>
-先随便用个号登陆。存在一个add note和下载功能。成为admin得到flag。着重看下下载功能。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[DDCTF 2019]homebrew event loop]]></title>
-        <id>https://guokeya.github.io/post/pd9adBR7c/</id>
-        <link href="https://guokeya.github.io/post/pd9adBR7c/">
-        </link>
-        <updated>2020-03-17T01:54:34.000Z</updated>
-        <summary type="html"><![CDATA[<p>题目给出了源码。并且有购买points功能。其他没了<br>
-首先审计代码。删了部分代码</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>题目给出了源码。并且有购买points功能。其他没了<br>
-首先审计代码。删了部分代码</p>
 ]]></content>
     </entry>
 </feed>

