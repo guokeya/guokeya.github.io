@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-03-24T01:46:36.922Z</updated>
+    <updated>2020-03-24T07:50:31.248Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,19 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[[HBCTF2017]大美西安(sql注入)]]></title>
+        <id>https://guokeya.github.io/post/0OsnFmmwE/</id>
+        <link href="https://guokeya.github.io/post/0OsnFmmwE/">
+        </link>
+        <updated>2020-03-24T07:02:46.000Z</updated>
+        <summary type="html"><![CDATA[<p>首先就一个登陆和注册。貌似没注入。<br>
+进去以后URL如下<code>http://00f9d39c-5972-4a18-9744-2d59c6264341.node3.buuoj.cn/index.php?file=download</code></p>
+]]></summary>
+        <content type="html"><![CDATA[<p>首先就一个登陆和注册。貌似没注入。<br>
+进去以后URL如下<code>http://00f9d39c-5972-4a18-9744-2d59c6264341.node3.buuoj.cn/index.php?file=download</code></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[BUUCTF kzone(sql注入)]]></title>
         <id>https://guokeya.github.io/post/2bwK125wR/</id>
@@ -175,19 +188,6 @@ n-gate.com
 并且cookie中存在一个rack.session和user<br>
 <img src="https://guokeya.github.io/post-images/1584506698559.png" alt="" loading="lazy"><br>
 仿佛是加密过后的数据</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[BSidesCF 2019]SVGMagic(xxe)]]></title>
-        <id>https://guokeya.github.io/post/M9VRUzeY6/</id>
-        <link href="https://guokeya.github.io/post/M9VRUzeY6/">
-        </link>
-        <updated>2020-03-18T02:06:39.000Z</updated>
-        <summary type="html"><![CDATA[<p>进去就一个上传。有一串英文。意思是将SVG转换为PNG。<br>
-先去看看SVG是个啥。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>进去就一个上传。有一串英文。意思是将SVG转换为PNG。<br>
-先去看看SVG是个啥。</p>
 ]]></content>
     </entry>
 </feed>
