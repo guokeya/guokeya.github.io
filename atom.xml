@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-03-25T07:57:12.703Z</updated>
+    <updated>2020-03-26T09:04:15.083Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,37 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[[SWPUCTF 2016]Web blogsys(hash扩展攻击+变量覆盖)]]></title>
+        <id>https://guokeya.github.io/post/SEjm4dSEi/</id>
+        <link href="https://guokeya.github.io/post/SEjm4dSEi/">
+        </link>
+        <updated>2020-03-26T08:13:59.000Z</updated>
+        <summary type="html"><![CDATA[<p>github下载源码审计。<br>
+首先从配置文件common.php开始审计<br>
+一个很明显的变量覆盖漏洞<br>
+<img src="https://guokeya.github.io/post-images/1585210783118.png" alt="" loading="lazy"></p>
+]]></summary>
+        <content type="html"><![CDATA[<p>github下载源码审计。<br>
+首先从配置文件common.php开始审计<br>
+一个很明显的变量覆盖漏洞<br>
+<img src="https://guokeya.github.io/post-images/1585210783118.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[2020/3/26 MISC划水~~~~]]></title>
+        <id>https://guokeya.github.io/post/Vpv2f9doQ/</id>
+        <link href="https://guokeya.github.io/post/Vpv2f9doQ/">
+        </link>
+        <updated>2020-03-26T04:33:59.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Java学习笔记~~~]]></title>
+        <id>https://guokeya.github.io/post/IO3l_LwX0/</id>
+        <link href="https://guokeya.github.io/post/IO3l_LwX0/">
+        </link>
+        <updated>2020-03-25T09:31:14.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[[HITCON 2017]Baby^h Master PHP(Phar反序列化+匿名函数)]]></title>
         <id>https://guokeya.github.io/post/mxi0D8iIJ/</id>
@@ -87,105 +118,6 @@ show呢。是读取这个gif文件。</p>
         <content type="html"><![CDATA[<p><strong>[BJDCTF 2nd]fake google</strong><br>
 模板注入。不多说了。没过滤<br>
 <img src="https://guokeya.github.io/post-images/1584885032222.png" alt="" loading="lazy"></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[GWCTF 2019]你的名字(SSTI)]]></title>
-        <id>https://guokeya.github.io/post/eyYhRsEBx/</id>
-        <link href="https://guokeya.github.io/post/eyYhRsEBx/">
-        </link>
-        <updated>2020-03-19T05:57:11.000Z</updated>
-        <summary type="html"><![CDATA[<p>。。感觉是SSTI<br>
-<img src="https://guokeya.github.io/post-images/1584597492085.png" alt="" loading="lazy"><br>
-输入<code>{1+1}</code>返回<code>{1+1}</code><br>
-输入<code>{{1+1}}</code>直接报错。<br>
-这就有点迷了。接触过的SSTI都是构造payload不同。也没遇到过报错这种情况<br>
-看writeup后。发现还能通过<code>{%%}</code>这种方式去注入<br>
-这是一种盲注。通过<code>{% if 1 %}1{% endif %}</code><br>
-可以看到。虽然没回显。但是payload确实正常执行<br>
-<img src="https://guokeya.github.io/post-images/1584598772521.png" alt="" loading="lazy"></p>
-]]></summary>
-        <content type="html"><![CDATA[<p>。。感觉是SSTI<br>
-<img src="https://guokeya.github.io/post-images/1584597492085.png" alt="" loading="lazy"><br>
-输入<code>{1+1}</code>返回<code>{1+1}</code><br>
-输入<code>{{1+1}}</code>直接报错。<br>
-这就有点迷了。接触过的SSTI都是构造payload不同。也没遇到过报错这种情况<br>
-看writeup后。发现还能通过<code>{%%}</code>这种方式去注入<br>
-这是一种盲注。通过<code>{% if 1 %}1{% endif %}</code><br>
-可以看到。虽然没回显。但是payload确实正常执行<br>
-<img src="https://guokeya.github.io/post-images/1584598772521.png" alt="" loading="lazy"></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[GYCTF2020]Node Game(CRLF头部注入)]]></title>
-        <id>https://guokeya.github.io/post/hz6_KR03h/</id>
-        <link href="https://guokeya.github.io/post/hz6_KR03h/">
-        </link>
-        <updated>2020-03-18T13:25:53.000Z</updated>
-        <summary type="html"><![CDATA[<p>题目给出了源码</p>
-<pre><code>/
-接受action参数。如果没有就默认为index
-file=dirname+/template/+action+.png
-然后用pug进行渲染。可以理解为执行这个文件
-
-/file_upload
-定义了只能由127.0.0.1访问。并且是remoteaddress不能伪造
-那么得找一个SSRF的点
-文件上传。
-filepath=/uploads/+mimetype+/
-而mimetype可控。那么我们可以跨目录
-dir_file=dirname+filepath+filename
-那么我们可以构造任意路径文件写入
-
-/core
-接受一个q参数。然后对其进行黑名单检测
-然后对q输入的值进行请求。。
-当时知道这个点可以SSRF。但是不会构造数据包。。
-</code></pre>
-]]></summary>
-        <content type="html"><![CDATA[<p>题目给出了源码</p>
-<pre><code>/
-接受action参数。如果没有就默认为index
-file=dirname+/template/+action+.png
-然后用pug进行渲染。可以理解为执行这个文件
-
-/file_upload
-定义了只能由127.0.0.1访问。并且是remoteaddress不能伪造
-那么得找一个SSRF的点
-文件上传。
-filepath=/uploads/+mimetype+/
-而mimetype可控。那么我们可以跨目录
-dir_file=dirname+filepath+filename
-那么我们可以构造任意路径文件写入
-
-/core
-接受一个q参数。然后对其进行黑名单检测
-然后对q输入的值进行请求。。
-当时知道这个点可以SSRF。但是不会构造数据包。。
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[BSidesCF 2020]Bulls23]]></title>
-        <id>https://guokeya.github.io/post/lbccyP8UU/</id>
-        <link href="https://guokeya.github.io/post/lbccyP8UU/">
-        </link>
-        <updated>2020-03-18T06:29:55.000Z</updated>
-        <summary type="html"><![CDATA[<p>给了一个流量包和网址。<br>
-分析流量包。<br>
-有三个URL</p>
-<pre><code>bash.org
-builts-23-04xxxxxxxxxxxxxxxx&amp;port=8888
-n-gate.com
-</code></pre>
-]]></summary>
-        <content type="html"><![CDATA[<p>给了一个流量包和网址。<br>
-分析流量包。<br>
-有三个URL</p>
-<pre><code>bash.org
-builts-23-04xxxxxxxxxxxxxxxx&amp;port=8888
-n-gate.com
-</code></pre>
 ]]></content>
     </entry>
 </feed>
