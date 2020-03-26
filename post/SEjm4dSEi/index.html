@@ -112,7 +112,7 @@
 继续搜。<code>$id</code>从哪来<br>
 <img src="https://guokeya.github.io/post-images/1585210959321.png" alt="" loading="lazy"><br>
 首先判断是否登陆。然后取session中的user值带入数据库查询。将返回的id作为值定义为变量id<br>
-突然想到个二次注入。联合查询修改返回结果。但是。common.php中进行了转义。<br>
+突然想到个二次注入。联合查询修改返回结果。但是。结果会被intval强制转换为数字<br>
 继续看。。。<br>
 这里是判断用户登陆。然后存在。才会将id赋值。。<br>
 如果用户登陆后。又删掉了呢。sql语句查询不到结果。然后id就不会被赋值。可以通过变量覆盖控制id</p>
