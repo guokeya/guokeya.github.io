@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-03-26T14:30:37.713Z</updated>
+    <updated>2020-03-27T09:26:51.016Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,25 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[易霖博YCTF-共克时艰-停课不停赛(web)]]></title>
+        <id>https://guokeya.github.io/post/__L5upFyj/</id>
+        <link href="https://guokeya.github.io/post/__L5upFyj/">
+        </link>
+        <updated>2020-03-27T09:09:09.000Z</updated>
+        <summary type="html"><![CDATA[<p><strong>注一下</strong><br>
+好像是攻防世界的原题。。<br>
+注册一个&quot;||updatexml(1,(version()),1)#<br>
+登陆后。修改密码会报错。报错注入拿flag。用()绕过空格<br>
+<code>&quot;||updatexml(1,concat(0x7e,(select(flag)from(flag)),0x7e),1)#</code></p>
+]]></summary>
+        <content type="html"><![CDATA[<p><strong>注一下</strong><br>
+好像是攻防世界的原题。。<br>
+注册一个&quot;||updatexml(1,(version()),1)#<br>
+登陆后。修改密码会报错。报错注入拿flag。用()绕过空格<br>
+<code>&quot;||updatexml(1,concat(0x7e,(select(flag)from(flag)),0x7e),1)#</code></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[[SWPUCTF 2016]Web blogsys(hash扩展攻击+变量覆盖)]]></title>
         <id>https://guokeya.github.io/post/SEjm4dSEi/</id>
@@ -104,20 +123,5 @@ show呢。是读取这个gif文件。</p>
         <link href="https://guokeya.github.io/post/RqbtW7BSC/">
         </link>
         <updated>2020-03-23T00:28:41.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[BJDCTF 2nd Web题解]]></title>
-        <id>https://guokeya.github.io/post/5v8N4S11B/</id>
-        <link href="https://guokeya.github.io/post/5v8N4S11B/">
-        </link>
-        <updated>2020-03-22T13:48:24.000Z</updated>
-        <summary type="html"><![CDATA[<p><strong>[BJDCTF 2nd]fake google</strong><br>
-模板注入。不多说了。没过滤<br>
-<img src="https://guokeya.github.io/post-images/1584885032222.png" alt="" loading="lazy"></p>
-]]></summary>
-        <content type="html"><![CDATA[<p><strong>[BJDCTF 2nd]fake google</strong><br>
-模板注入。不多说了。没过滤<br>
-<img src="https://guokeya.github.io/post-images/1584885032222.png" alt="" loading="lazy"></p>
-]]></content>
     </entry>
 </feed>
