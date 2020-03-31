@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-03-30T10:06:38.657Z</updated>
+    <updated>2020-03-31T12:49:13.579Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,28 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[[NCTF2019]phar matches everything(phar反序列化)]]></title>
+        <id>https://guokeya.github.io/post/1byvbzb_I/</id>
+        <link href="https://guokeya.github.io/post/1byvbzb_I/">
+        </link>
+        <updated>2020-03-31T08:39:01.000Z</updated>
+        <summary type="html"><![CDATA[<p>这题得从github上下源码。<br>
+进入web。有两个功能。一个是判断文件类型。一个是文件上传。配合源码。分析一下<br>
+文件上传：</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>这题得从github上下源码。<br>
+进入web。有两个功能。一个是判断文件类型。一个是文件上传。配合源码。分析一下<br>
+文件上传：</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[GoogleCTF2019 Quals]Bnv(本地dtdxxe)]]></title>
+        <id>https://guokeya.github.io/post/lkyWhDNE/</id>
+        <link href="https://guokeya.github.io/post/lkyWhDNE/">
+        </link>
+        <updated>2020-03-31T01:30:24.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[WUST-CTF2020(Web/Misc/Crypto)]]></title>
         <id>https://guokeya.github.io/post/drd8ISfKe/</id>
@@ -215,19 +237,5 @@ show呢。是读取这个gif文件。</p>
         <content type="html"><![CDATA[<p>首先就一个登陆和注册。貌似没注入。<br>
 进去以后URL如下<code>http://00f9d39c-5972-4a18-9744-2d59c6264341.node3.buuoj.cn/index.php?file=download</code></p>
 ]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[BUUCTF kzone(sql注入)]]></title>
-        <id>https://guokeya.github.io/post/2bwK125wR/</id>
-        <link href="https://guokeya.github.io/post/2bwK125wR/">
-        </link>
-        <updated>2020-03-24T01:38:00.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[CSAWQual 2019]Web_Unagi(XXE绕过。报错带数据)]]></title>
-        <id>https://guokeya.github.io/post/7C_iGmzXN/</id>
-        <link href="https://guokeya.github.io/post/7C_iGmzXN/">
-        </link>
-        <updated>2020-03-23T06:43:00.000Z</updated>
     </entry>
 </feed>
