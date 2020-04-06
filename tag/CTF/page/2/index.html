@@ -84,6 +84,45 @@
       <div class="col-lg-8 col-md-10 mx-auto">
        
         <div class="post-preview">
+          <a href="https://guokeya.github.io/post/hz6_KR03h/">
+            <h2 class="post-title">
+              [GYCTF2020]Node Game(CRLF头部注入)
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p>题目给出了源码</p>
+<pre><code>/
+接受action参数。如果没有就默认为index
+file=dirname+/template/+action+.png
+然后用pug进行渲染。可以理解为执行这个文件
+
+/file_upload
+定义了只能由127.0.0.1访问。并且是remoteaddress不能伪造
+那么得找一个SSRF的点
+文件上传。
+filepath=/uploads/+mimetype+/
+而mimetype可控。那么我们可以跨目录
+dir_file=dirname+filepath+filename
+那么我们可以构造任意路径文件写入
+
+/core
+接受一个q参数。然后对其进行黑名单检测
+然后对q输入的值进行请求。。
+当时知道这个点可以SSRF。但是不会构造数据包。。
+</code></pre>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-03-18</span>
+             <span>,</span>
+             <span class="post-stats">3 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
           <a href="https://guokeya.github.io/post/lbccyP8UU/">
             <h2 class="post-title">
               [BSidesCF 2020]Bulls23
@@ -385,26 +424,6 @@ n-gate.com
              <span class="time">2020-03-11</span>
              <span>,</span>
              <span class="post-stats">1 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/HYkvm--vb/">
-            <h2 class="post-title">
-              [Zer0pts2020]Can you guess it?
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>题目给出了源码</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-03-10</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
             </p>
         </div>
         <hr>
