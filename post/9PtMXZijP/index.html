@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>Java学习笔记~~~ | 过客</title>
+  <title>nodejs学习笔记~~~ | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="Java学习笔记~~~ | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="nodejs学习笔记~~~ | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,8 +25,8 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
-    <meta property="og:description" content="Java学习笔记~~~"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/IO3l_LwX0/"/>
+    <meta property="og:description" content="nodejs学习笔记~~~"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/9PtMXZijP/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="过客"/>
@@ -81,10 +81,10 @@
           	<span class="tags">
           	 
         </span>
-            <h1>Java学习笔记~~~</h1>
+            <h1>nodejs学习笔记~~~</h1>
             <span class="meta">
             	Posted on
-              2020-04-08，1 min read
+              2020-04-07，2 min read
             </span>
           </div>
         </div>
@@ -97,52 +97,92 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <p>1。<br>
-Jre只包含运行环境。而Jdk包含运行环境和开发环境<br>
-2。<br>
-java环境配置</p>
-<pre><code>这里我用ubuntu自带的包。
-sudo apt install openjdk-9-jdk-headless
-</code></pre>
-<p>3。</p>
-<p>编写一个最简单的hello world<br>
-hello.java</p>
-<pre><code>public class hello {
-//public class 后面代表定义一个类的名称,类是java中基本组织单位
-	public static void main(String[] args) {
-		System.out.println(&quot;Hello, World!!&quot;);
+          <p>HTTP模块</p>
+<pre><code>var http = require('http');
+#导入http模块
+http.createServer(function(request,response){
+    #创建http对象。包含两个参数。request和response
+	if(request.url='/'){
+    #如果请求的是/。就进行以下操作
+	response.writeHead(200,{'COntent-Type':'text/html;charset=utf-8'})
+    #返回头
+	response.write('hello world');
+    #返回文本
+	console.log(request.url);
+    #在终端输出
+	response.end();
+    #返回头结束
 	}
+}).listen(808);
+#监听本地808端口
+</code></pre>
+<p>Node.js核心模块</p>
+<pre><code>http    网络操作
+htttps   网络操作
+http2   网络操作
+url     url地址操作
+fs  文件操作
+path    路径操作
+os  操作系统信息
+net 底层网络操作
+util    工具函数模块
+</code></pre>
+<p>调用函数。</p>
+<pre><code>var http = require('http');
+http.createServer(function(request,response){
+	if(request.url='/'){
+	response.writeHead(200,{'COntent-Type':'text/html;charset=utf-8'})
+	test(response,'test')
+    #调用自定义的test函数
+	response.end();
+	}
+}).listen(808);
+function test(response,test){
+    #传入response和test
+	response.write(test)
 }
 </code></pre>
-<pre><code>javac hello.java
-#会生成一个 hello.class文件
-java hello
-#会执行hello.class
-#修改hello.java后需要重新编译class文件
-java代码中的class名。必须和文件名相同
-</code></pre>
-<p>4。<br>
-java中的各种类型</p>
-<pre><code>public class test {
-	public static void main(String[] args) {
-		System.out.println(1);
-        //数字
-		System.out.println('b');
-        //java中。单引号表示单个字符。
-		System.out.println(&quot;ABC&quot;);
-        //双引号代表字符串
-        System.out.println(true);
-        System.out.println(false);
-        //会输出true/false
+<p>调用其他文件中的函数</p>
+<pre><code>index.js
+
+var http = require('http');
+var func = require('./func.js')
+http.createServer(function(request,response){
+	if(request.url='/'){
+	response.writeHead(200,{'COntent-Type':'text/html;charset=utf-8'})
+	func.test(response,'test')
+    #当func.js中定义了exports。可以写成func(response,'test')
+    #调用自定义的test函数
+	response.end();
 	}
+}).listen(808);
+</code></pre>
+<pre><code>func.js
+
+function test(response,test){
+    #传入response和test
+	response.write(test)
 }
+#当导入此模块时。自动执行test函数
+#module.exports = test;
+</code></pre>
+<p>当有多个自定义函数时。也可以不写exports或者多个export</p>
+<pre><code>module.exports={
+    test1:function(response,name){
+        response.write(name);
+    },
+    test2:function(response,age){
+        response.write(age);
+    }
+}
+
 </code></pre>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/9PtMXZijP/">
+            <a href="https://guokeya.github.io/post/PvC7m4Rig/">
               <span class="post-title">
-                nodejs学习笔记~~~&rarr;
+                typecho反序列化复现&rarr;
               </span>
             </a>
           </p>
