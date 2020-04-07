@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-04-07T05:35:39.625Z</updated>
+    <updated>2020-04-07T08:44:57.961Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -16,6 +16,25 @@
         <link href="https://guokeya.github.io/post/IO3l_LwX0/">
         </link>
         <updated>2020-04-08T09:31:14.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[virink_2019_files_share(任意文件读取)]]></title>
+        <id>https://guokeya.github.io/post/pRfgCKg1vY/</id>
+        <link href="https://guokeya.github.io/post/pRfgCKg1vY/">
+        </link>
+        <updated>2020-04-07T08:26:42.000Z</updated>
+        <summary type="html"><![CDATA[<p>查看源代码发现</p>
+<pre><code>	&lt;link rel=&quot;icon&quot; href=&quot;/uploads/favicon.ico&quot; type=&quot;image/x-icon&quot; /&gt;
+	&lt;!-- Hint : flag in f1ag_Is_h3re --&gt;
+	&lt;!-- 趣味题，真的是为了出题而出题的，别打我。 By Virink --&gt;
+</code></pre>
+]]></summary>
+        <content type="html"><![CDATA[<p>查看源代码发现</p>
+<pre><code>	&lt;link rel=&quot;icon&quot; href=&quot;/uploads/favicon.ico&quot; type=&quot;image/x-icon&quot; /&gt;
+	&lt;!-- Hint : flag in f1ag_Is_h3re --&gt;
+	&lt;!-- 趣味题，真的是为了出题而出题的，别打我。 By Virink --&gt;
+</code></pre>
+]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[nodejs学习笔记~~~]]></title>
@@ -215,25 +234,6 @@ else{
     highlight_file(__FILE__);
 }
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[易霖博YCTF-共克时艰-停课不停赛(web)]]></title>
-        <id>https://guokeya.github.io/post/L5upFyj/</id>
-        <link href="https://guokeya.github.io/post/L5upFyj/">
-        </link>
-        <updated>2020-03-27T09:09:09.000Z</updated>
-        <summary type="html"><![CDATA[<p><strong>注一下</strong><br>
-好像是攻防世界的原题。。<br>
-注册一个&quot;||updatexml(1,(version()),1)#<br>
-登陆后。修改密码会报错。报错注入拿flag。用()绕过空格<br>
-<code>&quot;||updatexml(1,concat(0x7e,(select(flag)from(flag)),0x7e),1)#</code></p>
-]]></summary>
-        <content type="html"><![CDATA[<p><strong>注一下</strong><br>
-好像是攻防世界的原题。。<br>
-注册一个&quot;||updatexml(1,(version()),1)#<br>
-登陆后。修改密码会报错。报错注入拿flag。用()绕过空格<br>
-<code>&quot;||updatexml(1,concat(0x7e,(select(flag)from(flag)),0x7e),1)#</code></p>
 ]]></content>
     </entry>
 </feed>
