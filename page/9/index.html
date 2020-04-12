@@ -83,6 +83,71 @@
       <div class="col-lg-8 col-md-10 mx-auto">
        
         <div class="post-preview">
+          <a href="https://guokeya.github.io/post/KZ-7hNWpu/">
+            <h2 class="post-title">
+              Mysql无列名注入/PDO/变量注入
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>简介</strong><br>
+在mysql=&gt;5版本中有information_schema数据库可以获取库名表名列名，在sql注入中十分常见。当过滤or时。这个库就会被过滤。<br>
+在Mysql5.5.x之后。默认使用innodb作为存储引擎</p>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-10</span>
+             <span>,</span>
+             <span class="post-stats">3 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/bOdJWyLg5/">
+            <h2 class="post-title">
+              Pwn(绕过ASLR)
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>关于ASLR</strong><br>
+ASLR（地址随机化）是一种针对缓冲区溢出的安全保护技术，通过对堆、栈、共享库映射等线性区布局的随机化，通过增加攻击者预测目的地址的难度，防止攻击者直接定位攻击代码位置，达到阻止溢出攻击的目的。<br>
+但是，地址随机化不是对所有模块和内存区都进行随机化！</p>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-09</span>
+             <span>,</span>
+             <span class="post-stats">6 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/vj4GJHsC-/">
+            <h2 class="post-title">
+              [ISITDTU 2019]EasyPHP(无数字字母Webshell进阶)
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p>过滤了大部分的函数以及[\x00-\x20][0-9]&quot;$&amp;.,|[{_defgops以及\x7f<br>
+并且。输出的字符串中。最多13种不同的字符。比如。%ff%73就算两个字符</p>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-06</span>
+             <span>,</span>
+             <span class="post-stats">5 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
           <a href="https://guokeya.github.io/post/njWohancx/">
             <h2 class="post-title">
               FBCTF 2019 RCEService(pcre_match回溯)
@@ -119,7 +184,7 @@
           <p class="post-meta">
              <span class="time">2020-01-05</span>
              <span>,</span>
-             <span class="post-stats">3 min read</span>
+             <span class="post-stats">4 min read</span>
             </p>
         </div>
         <hr>
@@ -326,74 +391,6 @@ canary保护机制是随机生成一个4字节整数。放在EBP前面。和一�
              <span class="time">2020-01-02</span>
              <span>,</span>
              <span class="post-stats">5 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/xRMKFLalK/">
-            <h2 class="post-title">
-              Mysql REGEXP正则注入
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>过滤源码如下：</p>
-<pre><code>$black_list = &quot;/limit|by|substr|mid|,|admin|benchmark|like|or|char|union|substring|select|greatest|%00|\'|=| |in|&lt;|&gt;|-|\.|\(\)|#|and|if|database|users|where|table|concat|insert|join|having|sleep/i&quot;;
-If $_POST['passwd'] === admin's password,
-Then you will get the flag;
-</code></pre>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">1 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/w1zR2_3-1/">
-            <h2 class="post-title">
-              [GXYCTF2/SUCTF/INCTF](命令执行Bypass)
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>进入页面。就一个框。输入IP。就想到DVWA的命令注入。一般就&amp;,&amp;&amp;,||,|,;执行命令</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">7 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/NKxxYI57q/">
-            <h2 class="post-title">
-              GET命令执行漏洞[HITCON 2017]SSRFme
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>源码如下<br>
-<img src="https://guokeya.github.io/post-images/1577959882761.png" alt="" loading="lazy"><br>
-分析代码<br>
-1.<br>
-首先就是根据IP。创建个沙盒文件夹</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">3 min read</span>
             </p>
         </div>
         <hr>
