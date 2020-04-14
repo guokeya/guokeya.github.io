@@ -103,6 +103,29 @@
         </div>
         
         <div class="post-preview">
+          <a href="https://guokeya.github.io/post/Pge2AMv4N/">
+            <h2 class="post-title">
+              [Byte Bandits CTF 2020]imgaccess2(任意文件读取.htaccess)
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p>看着Y1ng师傅的博客复现一波</p>
+<pre><code>https://github.com/ByteBandits/bbctf-2020
+</code></pre>
+<p>docker环境就不说了docker-compose up -d 一把梭</p>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-04-14</span>
+             <span>,</span>
+             <span class="post-stats">4 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
           <a href="https://guokeya.github.io/post/7ypXebxyd/">
             <h2 class="post-title">
               SSRF打mysql(CTFSHOW红包题)
@@ -368,79 +391,6 @@ burp抓个包试试注入<br>
             </h3>
           <p class="post-meta">
              <span class="time">2020-03-29</span>
-             <span>,</span>
-             <span class="post-stats">9 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/dYX5OTKjq/">
-            <h2 class="post-title">
-              MRCTF(Web+Misc+Crypto)
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <center>web</center>
-<p><strong>Ezpop</strong></p>
-<pre><code>&lt;?php
-//flag is in flag.php
-//And Crack It!
-class Modifier {
-    protected  $var;
-    public function append($value){
-        include($value);
-    }
-    public function __invoke(){
-        $this-&gt;append($this-&gt;var);
-    }
-}
-
-class Show{
-    public $source;
-    public $str;
-    public function __construct($file='index.php'){
-        $this-&gt;source = $file;
-        echo 'Welcome to '.$this-&gt;source.&quot;&lt;br&gt;&quot;;
-    }
-    public function __toString(){
-        return $this-&gt;str-&gt;source;
-    }
-
-    public function __wakeup(){
-        if(preg_match(&quot;/gopher|http|file|ftp|https|dict|\.\./i&quot;, $this-&gt;source)) {
-            echo &quot;hacker&quot;;
-            $this-&gt;source = &quot;index.php&quot;;
-        }
-    }
-}
-
-class Test{
-    public $p;
-    public function __construct(){
-        $this-&gt;p = array();
-    }
-
-    public function __get($key){
-        $function = $this-&gt;p;
-        return $function();
-    }
-}
-
-if(isset($_GET['pop'])){
-    @unserialize($_GET['pop']);
-}
-else{
-    $a=new Show;
-    highlight_file(__FILE__);
-}
-</code></pre>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-03-28</span>
              <span>,</span>
              <span class="post-stats">9 min read</span>
             </p>

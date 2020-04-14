@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-04-12T12:00:23.248Z</updated>
+    <updated>2020-04-14T10:28:21.419Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,23 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[[Byte Bandits CTF 2020]imgaccess2(任意文件读取.htaccess)]]></title>
+        <id>https://guokeya.github.io/post/Pge2AMv4N/</id>
+        <link href="https://guokeya.github.io/post/Pge2AMv4N/">
+        </link>
+        <updated>2020-04-14T08:47:06.000Z</updated>
+        <summary type="html"><![CDATA[<p>看着Y1ng师傅的博客复现一波</p>
+<pre><code>https://github.com/ByteBandits/bbctf-2020
+</code></pre>
+<p>docker环境就不说了docker-compose up -d 一把梭</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>看着Y1ng师傅的博客复现一波</p>
+<pre><code>https://github.com/ByteBandits/bbctf-2020
+</code></pre>
+<p>docker环境就不说了docker-compose up -d 一把梭</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[SSRF打mysql(CTFSHOW红包题)]]></title>
         <id>https://guokeya.github.io/post/7ypXebxyd/</id>
@@ -121,23 +138,6 @@ burp抓个包试试注入<br>
         <content type="html"><![CDATA[<p>u1s1。BUU一分题太顶了</p>
 <p>这题。看了好久WP的情况下才复现。。。<br>
 涉及类的知识有点多。命名空间。继承。接口。啥的</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[PWNHUB 公开赛 2018]傻 fufu 的工作日(上传差异绕过)]]></title>
-        <id>https://guokeya.github.io/post/M776tFt3/</id>
-        <link href="https://guokeya.github.io/post/M776tFt3/">
-        </link>
-        <updated>2020-04-01T13:10:44.000Z</updated>
-        <summary type="html"><![CDATA[<p>访问index.php.bak得到index.php的源码</p>
-<pre><code>&lt;?php /* PHP Encode by  http://Www.PHPJiaMi.Com/ */error_reporting(0);ini_set(&quot;display_errors&quot;, 0);if(!defined('jnggfmpt')){define('jnggfmpt',__FILE__);if(!function_exists(&quot;鯒仅熫&quot;)){functi.省略。。。。。。
-</code></pre>
-<p>可以看出这是个phpjiami的加密文件。得解密</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>访问index.php.bak得到index.php的源码</p>
-<pre><code>&lt;?php /* PHP Encode by  http://Www.PHPJiaMi.Com/ */error_reporting(0);ini_set(&quot;display_errors&quot;, 0);if(!defined('jnggfmpt')){define('jnggfmpt',__FILE__);if(!function_exists(&quot;鯒仅熫&quot;)){functi.省略。。。。。。
-</code></pre>
-<p>可以看出这是个phpjiami的加密文件。得解密</p>
 ]]></content>
     </entry>
 </feed>
