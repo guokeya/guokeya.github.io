@@ -83,6 +83,42 @@
       <div class="col-lg-8 col-md-10 mx-auto">
        
         <div class="post-preview">
+          <a href="https://guokeya.github.io/post/gxybaby-ncpan-duan-shu-da-xiao/">
+            <h2 class="post-title">
+              [GXY]Baby nc(判断数大小)
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <pre><code>from pwn import *
+context.log_level='debug'
+r=remote(&quot;183.129.189.60&quot;,10014)
+flag='34028236692093846346337460'
+for a in range(10):
+    for i in range(10):
+    	guess=str(flag)+str(i)+(27-1-len(flag))*'0'
+        r.sendline(guess)
+        result=r.recv(10)
+        if 'big' in result:
+            flag+=str(i-1)
+            break
+        if i==9 and 'small' in result:
+            flag+='9'
+            break
+    print(flag)
+</code></pre>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-27</span>
+             <span>,</span>
+             <span class="post-stats">1 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
           <a href="https://guokeya.github.io/post/lctf-bestphps-revengesoap-fan-xu-lie-hua/">
             <h2 class="post-title">
               LCTF bestphp’s revenge（SOAP反序列化）
@@ -380,27 +416,6 @@ bnhn s wwy vffg vffg rrhy fhnv
             <h3 class="post-subtitle">
               <p>不说了。魔性。满分<br>
 <img src="https://guokeya.github.io/post-images/1579588648712.png" alt="" loading="lazy"></p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-21</span>
-             <span>,</span>
-             <span class="post-stats">1 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/an-heng-bei-qi-yue-sai-ruo-kou-ling-lsb-yin-xie-mo-er-si-mi-ma/">
-            <h2 class="post-title">
-              [安恒杯七月赛]弱口令(LSB隐写+摩尔斯密码)
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>题目提示是弱口令。。然而爆破了好久都没出来<br>
-winrar打开。发现有备注。空白的。但是又好像有内容</p>
 
             </h3>
           <p class="post-meta">

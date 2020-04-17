@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-04-17T06:57:05.105Z</updated>
+    <updated>2020-04-17T11:56:35.886Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,19 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[ctf473831530_2018_web_virink_web(php-fpm+rsync)]]></title>
+        <id>https://guokeya.github.io/post/8lQ_BdeyN/</id>
+        <link href="https://guokeya.github.io/post/8lQ_BdeyN/">
+        </link>
+        <updated>2020-04-17T11:00:25.000Z</updated>
+        <summary type="html"><![CDATA[<p>首先就是写shell。。。。<br>
+20长度写shell。。这个不多说了</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>首先就是写shell。。。。<br>
+20长度写shell。。这个不多说了</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[[FireshellCTF2020]URL TO PDF]]></title>
         <id>https://guokeya.github.io/post/HixADj8UG/</id>
@@ -142,12 +155,5 @@ burp抓个包试试注入<br>
 在index.php中。对所有输入进行了addslashes转义。<br>
 在login.php中</p>
 ]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Java学习笔记~~~]]></title>
-        <id>https://guokeya.github.io/post/IO3l_LwX0/</id>
-        <link href="https://guokeya.github.io/post/IO3l_LwX0/">
-        </link>
-        <updated>2020-04-08T09:31:14.000Z</updated>
     </entry>
 </feed>
