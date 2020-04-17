@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-04-15T07:20:42.347Z</updated>
+    <updated>2020-04-17T06:57:05.105Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,36 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[[FireshellCTF2020]URL TO PDF]]></title>
+        <id>https://guokeya.github.io/post/HixADj8UG/</id>
+        <link href="https://guokeya.github.io/post/HixADj8UG/">
+        </link>
+        <updated>2020-04-17T06:35:59.000Z</updated>
+        <summary type="html"><![CDATA[<p>输入URL。可以获得一个pdf<br>
+感觉是SSRF</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>输入URL。可以获得一个pdf<br>
+感觉是SSRF</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[b01lers2020]Scrambled(python脚本编写)]]></title>
+        <id>https://guokeya.github.io/post/dyBQujG-Z/</id>
+        <link href="https://guokeya.github.io/post/dyBQujG-Z/">
+        </link>
+        <updated>2020-04-16T00:23:36.000Z</updated>
+        <summary type="html"><![CDATA[<p>cookie中存在transmissions字段<br>
+内容是<code>kxkxkxkxshfd16kxkxkxkxsh</code><br>
+去除kxkxkxkxsh就剩下fd16<br>
+这个意思是。d是第flag的第16位。第15位是f</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>cookie中存在transmissions字段<br>
+内容是<code>kxkxkxkxshfd16kxkxkxkxsh</code><br>
+去除kxkxkxkxsh就剩下fd16<br>
+这个意思是。d是第flag的第16位。第15位是f</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[fmkq的简化版'如此木大'详解(SSRF。python格式化字符串)]]></title>
         <id>https://guokeya.github.io/post/F9iDWh0g3/</id>
@@ -119,31 +149,5 @@ burp抓个包试试注入<br>
         <link href="https://guokeya.github.io/post/IO3l_LwX0/">
         </link>
         <updated>2020-04-08T09:31:14.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[virink_2019_files_share(任意文件读取)]]></title>
-        <id>https://guokeya.github.io/post/pRfgCKg1vY/</id>
-        <link href="https://guokeya.github.io/post/pRfgCKg1vY/">
-        </link>
-        <updated>2020-04-07T08:26:42.000Z</updated>
-        <summary type="html"><![CDATA[<p>查看源代码发现</p>
-<pre><code>	&lt;link rel=&quot;icon&quot; href=&quot;/uploads/favicon.ico&quot; type=&quot;image/x-icon&quot; /&gt;
-	&lt;!-- Hint : flag in f1ag_Is_h3re --&gt;
-	&lt;!-- 趣味题，真的是为了出题而出题的，别打我。 By Virink --&gt;
-</code></pre>
-]]></summary>
-        <content type="html"><![CDATA[<p>查看源代码发现</p>
-<pre><code>	&lt;link rel=&quot;icon&quot; href=&quot;/uploads/favicon.ico&quot; type=&quot;image/x-icon&quot; /&gt;
-	&lt;!-- Hint : flag in f1ag_Is_h3re --&gt;
-	&lt;!-- 趣味题，真的是为了出题而出题的，别打我。 By Virink --&gt;
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[nodejs学习笔记~~~]]></title>
-        <id>https://guokeya.github.io/post/9PtMXZijP/</id>
-        <link href="https://guokeya.github.io/post/9PtMXZijP/">
-        </link>
-        <updated>2020-04-07T03:59:01.000Z</updated>
     </entry>
 </feed>
