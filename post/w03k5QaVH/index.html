@@ -84,7 +84,7 @@
             <h1> Chive CTF WP</h1>
             <span class="meta">
             	Posted on
-              2020-04-18，4 min read
+              2020-04-18，5 min read
             </span>
           </div>
         </div>
@@ -147,6 +147,25 @@ print '%d' % ((1 - n * i) / e)
 <h2 id="皇帝的flag">皇帝的flag</h2>
 <p><code>http://zero.rovelast.com/</code><br>
 复制粘贴完事</p>
+<h2 id="摩斯探长前传">摩斯探长前传</h2>
+<p>文档中大写字母就输出。小写字母就pass</p>
+<pre><code>data='文档中的字'
+result=''
+for i in data:
+        if 64&lt;ord(i)&lt;91:
+                result+=i
+print(result.replace('ZERO','0').replace('ONE','1'))
+</code></pre>
+<p>得到</p>
+<pre><code>============== RESTART: C:\Users\Administrator\Desktop\1 (3).py ==============
+ZEROZEROONEZEROPZEROONEZEROZEROPZEROONEPONEONEZEROPONEONEONEONEZEROONEONEPZEROZEROZEROZEROPZEROONEONEONEONEPONEZEROZEROPZEROZEROZEROONEONEPZEROZEROONEONEZEROONEPZEROONEONEONEONEPONEZEROPZEROZEROONEONEZEROONEPZEROONEONEZEROPZEROONEZEROZEROPZEROZEROZEROZEROONEPZEROONEONEONEONEPONEZEROPZEROZEROONEONEZEROONEPZEROZEROZEROZEROZEROPZEROONEONEONEONEPONEONEONEONEZEROPZEROZEROZEROZEROPONEONEZEROZEROZEROPONEONEONEONEONEZEROONE
+&gt;&gt;&gt; 
+============== RESTART: C:\Users\Administrator\Desktop\1 (3).py ==============
+0010P0100P01P110P1111011P0000P01111P100P00011P001101P01111P10P001101P0110P0100P00001P01111P10P001101P00000P01111P11110P0000P11000P1111101
+</code></pre>
+<p>根据题目morse。这是个摩斯密码。然后P应该是空格<br>
+<code>http://www.all-tool.cn/Tools/morse/</code>用这个解<br>
+其他的解不出来。</p>
 <h1 id="centerwebcenter"><center>Web</center></h1>
 <h2 id="index">index.?</h2>
 <p>curl -i http://vps.vaala.cat:28082/index.php</p>
