@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-04-19T00:56:38.250Z</updated>
+    <updated>2020-04-19T12:29:27.646Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,13 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[虎符CTF Web WP]]></title>
+        <id>https://guokeya.github.io/post/Bw0qUYeRI/</id>
+        <link href="https://guokeya.github.io/post/Bw0qUYeRI/">
+        </link>
+        <updated>2020-04-19T10:04:52.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[ Chive CTF WP]]></title>
         <id>https://guokeya.github.io/post/w03k5QaVH/</id>
@@ -140,12 +147,5 @@ burp抓个包试试注入<br>
 输入单引号 返回请停止输入危险字符/单词!<br>
 用双引号试了下。没反应。应该就是单引号的注入</p>
 ]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[js原型参数污染]]></title>
-        <id>https://guokeya.github.io/post/JVOBLI1rh/</id>
-        <link href="https://guokeya.github.io/post/JVOBLI1rh/">
-        </link>
-        <updated>2020-04-08T13:16:42.000Z</updated>
     </entry>
 </feed>
