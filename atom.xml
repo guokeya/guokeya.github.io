@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-04-20T07:48:44.290Z</updated>
+    <updated>2020-04-20T08:14:32.339Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,13 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[NPUCTF web两题WP]]></title>
+        <id>https://guokeya.github.io/post/a2pNpf37_/</id>
+        <link href="https://guokeya.github.io/post/a2pNpf37_/">
+        </link>
+        <updated>2020-04-20T08:06:07.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[虎符CTF Web WP]]></title>
         <id>https://guokeya.github.io/post/Bw0qUYeRI/</id>
@@ -129,23 +136,6 @@
         <content type="html"><![CDATA[<p>首先推荐一篇文章。复现都讲的很清楚了<br>
 <code>https://paper.seebug.org/510/#03</code><br>
 这里我用kali做实验。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[某入群题2]]></title>
-        <id>https://guokeya.github.io/post/Y59x961oO/</id>
-        <link href="https://guokeya.github.io/post/Y59x961oO/">
-        </link>
-        <updated>2020-04-11T07:32:36.000Z</updated>
-        <summary type="html"><![CDATA[<p>就一个登陆界面。目录也没扫出来。无源码泄露。<br>
-burp抓个包试试注入<br>
-输入单引号 返回请停止输入危险字符/单词!<br>
-用双引号试了下。没反应。应该就是单引号的注入</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>就一个登陆界面。目录也没扫出来。无源码泄露。<br>
-burp抓个包试试注入<br>
-输入单引号 返回请停止输入危险字符/单词!<br>
-用双引号试了下。没反应。应该就是单引号的注入</p>
 ]]></content>
     </entry>
 </feed>
