@@ -139,10 +139,25 @@ console.log(jwt.sign({secretid,username,password}, null, {algorithm: 'none'});
 <p>通过run.php的报错和index.php的代码。。eval(code)没<code>$</code>。<br>
 大致可以判断是个nodejs。<br>
 后台大致是<code>eval(code)</code><br>
-过滤了部分字符。用数组就可以绕过<br>
+用</p>
+<pre><code>var err = new Error();err.stack;
+打印出当前栈中的错误。可以看到vm2
+</code></pre>
+<p>过滤了部分字符。用数组就可以绕过<br>
 <code>https://github.com/patriksimek/vm2/issues/225</code><br>
 一把梭<br>
-<img src="https://guokeya.github.io/post-images/1587299335240.png" alt="" loading="lazy"></p>
+<img src="https://guokeya.github.io/post-images/1587299335240.png" alt="" loading="lazy"><br>
+数组可以绕过过滤。也可以通过\x的方式来绕过</p>
+<pre><code>js中。可以用[]代替.
+TypeError.prototype==TypeError[`\xxx\xxx\xxx\xxx`]
+``反引号代替双引号
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1587368301725.png" alt="" loading="lazy"><br>
+赵总的payload。是用占位符来拼接字符串</p>
+<pre><code>`${`${`prototyp`}e`}`
+`${&quot;prototype&quot;}`
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1587368642388.png" alt="" loading="lazy"></figure>
 <h1 id="web3">Web3</h1>
 <p>给出了源码</p>
 <pre><code>&lt;?php
