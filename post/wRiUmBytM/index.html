@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>[V&amp;N2020 公开赛]HappyCTFd/CHECKIN/TimeTravel | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="[V&amp;N2020 公开赛]HappyCTFd/CHECKIN/TimeTravel | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="[V&amp;N2020 公开赛]HappyCTFd/CHECKIN/TimeTravel | 过客 » Feed" href="http://localhost:4000/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="[V&amp;N2020 公开赛]HappyCTFd/CHECKIN/TimeTravel"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/wRiUmBytM/"/>
+    <meta property="og:url" content="http://localhost:4000/post/wRiUmBytM/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="过客"/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io">过客</a>
+      <a class="navbar-brand" href="http://localhost:4000">过客</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,7 +80,7 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
             
         </span>
             <h1>[V&amp;N2020 公开赛]HappyCTFd/CHECKIN/TimeTravel</h1>
@@ -101,11 +101,11 @@
         <div class="col-lg-8 col-md-10 mx-auto">
           <p><strong>HappyCTFd</strong><br>
 登陆进去是个CTFD（一个开源的CTF平台）界面。<br>
-<img src="https://guokeya.github.io/post-images/1582968206604.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1582968206604.png" alt="" loading="lazy"></p>
 <!-- more -->
 <p>看了下没啥东西。<br>
 接着搜到了CTFD的CVE。貌似还挺新的<br>
-<img src="https://guokeya.github.io/post-images/1582968254588.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582968254588.png" alt="" loading="lazy"><br>
 <code>https://www.colabug.com/2020/0204/6940556/</code><br>
 具体就是注册一个空格admin用户。<br>
 首会经过判断。用户名是否存在。此时空格admin!=admin<br>
@@ -113,13 +113,13 @@
 此时。我们去重置密码。就会重置admin的密码</p>
 <p><strong>开始复现</strong><br>
 首先注册一个空格admin用户。邮箱是buuoj的内网邮箱。等会重置要用到<br>
-<img src="https://guokeya.github.io/post-images/1582968627428.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582968627428.png" alt="" loading="lazy"><br>
 然后重置密码<br>
-<img src="https://guokeya.github.io/post-images/1582968671489.png" alt="" loading="lazy"><br>
-<img src="https://guokeya.github.io/post-images/1582968690363.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582968671489.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582968690363.png" alt="" loading="lazy"><br>
 重置完。用admin+你重置的密码登陆即可<br>
 有个flagflag你在哪的channge。下载附件就有flag了<br>
-<img src="https://guokeya.github.io/post-images/1582968764347.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1582968764347.png" alt="" loading="lazy"></p>
 <p><strong>CHECKIN</strong><br>
 进去就给了源码</p>
 <pre><code>
@@ -160,7 +160,7 @@ if __name__ == &quot;__main__&quot;:
 去buuoj开个linux labs。nc监听端口<br>
 尝试bash反弹。失败。python反弹失败。<br>
 最后python3 成功反弹shell<br>
-<img src="https://guokeya.github.io/post-images/1582976992650.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582976992650.png" alt="" loading="lazy"><br>
 这里讲下proc各项的内容</p>
 <pre><code>在/proc文件系统中，每一个进程都有一个相应的文件 。
 比如我python启动了一个http服务。那么就会在/proc下创建一个对应的文件
@@ -177,13 +177,13 @@ if __name__ == &quot;__main__&quot;:
 <p>/proc/pid/fd/这个会包含程序打开的每个文件的链接.。即使文件被删了。链接还是会存在<br>
 这道题。python打开了flag.txt。然而又删掉了<br>
 这时python对应进程下的fd下会有flag.txt的链接<br>
-<img src="https://guokeya.github.io/post-images/1582977396138.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582977396138.png" alt="" loading="lazy"><br>
 这里python的进程ID是11。fd下的3链接的是flag.txt<br>
 直接cat就行了<br>
-<img src="https://guokeya.github.io/post-images/1582977453886.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1582977453886.png" alt="" loading="lazy"></p>
 <p><strong>TimeTravel</strong><br>
 给出了源码<br>
-<img src="https://guokeya.github.io/post-images/1583028732148.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1583028732148.png" alt="" loading="lazy"></p>
 <pre><code>首先。包含了vendor/autoload.php
 导入GuzzleHttp\Client
 new 一个Client()。访问127.0.0.1:5000/api/eligible
@@ -202,12 +202,12 @@ new 一个Client()。访问127.0.0.1:5000/api/eligible
 我们可以修改请求。也可以修改响应
 </code></pre>
 <p>首先。开启个VPS。<br>
-<img src="https://guokeya.github.io/post-images/1583029133652.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583029133652.png" alt="" loading="lazy"><br>
 拿到flag</p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/mcUK57hAJ/">
+            <a href="http://localhost:4000/post/mcUK57hAJ/">
               <span class="post-title">
                 [SUCTF 2018]annonymous(php lambda)&rarr;
               </span>
@@ -242,7 +242,7 @@ new 一个Client()。访问127.0.0.1:5000/api/eligible
             
               
               <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -257,10 +257,10 @@ new 一个Client()。访问127.0.0.1:5000/api/eligible
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

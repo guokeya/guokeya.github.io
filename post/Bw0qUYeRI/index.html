@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>虎符CTF Web WP | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="虎符CTF Web WP | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="虎符CTF Web WP | 过客 » Feed" href="http://localhost:4000/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="虎符CTF Web WP"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/Bw0qUYeRI/"/>
+    <meta property="og:url" content="http://localhost:4000/post/Bw0qUYeRI/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="过客"/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io">过客</a>
+      <a class="navbar-brand" href="http://localhost:4000">过客</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -120,7 +120,7 @@ sid不能==undefined。不能===null。长度不能&gt;secrets并且&lt;=0
 <p>乍一看没什么特别的点。<br>
 但是当初看过一题。修改JWT头。算法改为None。签名置空。绕过登陆<br>
 先抓个包看看jwt<br>
-<img src="https://guokeya.github.io/post-images/1587297173537.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1587297173537.png" alt="" loading="lazy"><br>
 那么我们要将secret置为空。然后sid又要过下面的判断<br>
 这里<code>[]</code>可以过所有判断<br>
 那么现在就可以构造</p>
@@ -146,18 +146,18 @@ console.log(jwt.sign({secretid,username,password}, null, {algorithm: 'none'});
 <p>过滤了部分字符。用数组就可以绕过<br>
 <code>https://github.com/patriksimek/vm2/issues/225</code><br>
 一把梭<br>
-<img src="https://guokeya.github.io/post-images/1587299335240.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1587299335240.png" alt="" loading="lazy"><br>
 数组可以绕过过滤。也可以通过\x的方式来绕过</p>
 <pre><code>js中。可以用[]代替.
 TypeError.prototype==TypeError[`\xxx\xxx\xxx\xxx`]
 ``反引号代替双引号
 </code></pre>
-<p><img src="https://guokeya.github.io/post-images/1587368301725.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1587368301725.png" alt="" loading="lazy"><br>
 赵总的payload。是用占位符来拼接字符串</p>
 <pre><code>`${`${`prototyp`}e`}`
 `${&quot;prototype&quot;}`
 </code></pre>
-<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1587368642388.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1587368642388.png" alt="" loading="lazy"></figure>
 <h1 id="web3">Web3</h1>
 <p>给出了源码</p>
 <pre><code>&lt;?php
@@ -257,7 +257,7 @@ readfile($file_path)
 已知session存放在/var/babyctf/sess_sessionID
 那么attr置空。filename为session就行了
 </code></pre>
-<p><img src="https://guokeya.github.io/post-images/1587293541850.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1587293541850.png" alt="" loading="lazy"><br>
 复制session内容(有个不可见的字符。。也要复制上去)到文件。函数算一下hash值<br>
 第一关。这就过去了。还要搞个success.txt<br>
 <code>file_exists</code>这个函数。用来匹配文件或文件夹是否存在。那么我们可以创建一个file_exists文件夹</p>
@@ -268,11 +268,11 @@ readfile($file_path)
 </code></pre>
 <p>这个题。会自动删除文件。我真是。。。。。。mmp<br>
 开BURP一直跑<br>
-<img src="https://guokeya.github.io/post-images/1587293888927.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1587293888927.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/w03k5QaVH/">
+            <a href="http://localhost:4000/post/w03k5QaVH/">
               <span class="post-title">
                  Chive CTF WP&rarr;
               </span>
@@ -307,7 +307,7 @@ readfile($file_path)
             
               
               <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -322,10 +322,10 @@ readfile($file_path)
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

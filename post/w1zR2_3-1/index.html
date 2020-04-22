@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>[GXYCTF2/SUCTF/INCTF](命令执行Bypass) | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="[GXYCTF2/SUCTF/INCTF](命令执行Bypass) | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="[GXYCTF2/SUCTF/INCTF](命令执行Bypass) | 过客 » Feed" href="http://localhost:4000/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="[GXYCTF2/SUCTF/INCTF](命令执行Bypass)"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/w1zR2_3-1/"/>
+    <meta property="og:url" content="http://localhost:4000/post/w1zR2_3-1/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="过客"/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io">过客</a>
+      <a class="navbar-brand" href="http://localhost:4000">过客</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,9 +80,9 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
             
-            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            <a href="http://localhost:4000/tag/Web/" class="tag">Web安全</a>
             
         </span>
             <h1>[GXYCTF2/SUCTF/INCTF](命令执行Bypass)</h1>
@@ -104,16 +104,16 @@
           <p>进入页面。就一个框。输入IP。就想到DVWA的命令注入。一般就&amp;,&amp;&amp;,||,|,;执行命令</p>
 <!-- more -->
 <p>我这里用了;执行命令<br>
-<img src="https://guokeya.github.io/post-images/1577960968903.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1577960968903.png" alt="" loading="lazy"></p>
 <p>看到有个flag.php，直接读取不行。<br>
 提示：fxck your space!<br>
 看来是空格被过滤了。使用$IFS$9绕过<br>
 提示：fxck your flag!<br>
 flag又被过滤<br>
 。那就先看看index.php<br>
-<img src="https://guokeya.github.io/post-images/1577960979886.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1577960979886.png" alt="" loading="lazy"><br>
 不能有完整的flag字符串。那就变量拼接一下<br>
-<img src="https://guokeya.github.io/post-images/1577960994485.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1577960994485.png" alt="" loading="lazy"><br>
 其他解题方法也挺多的。下面总结下：<br>
 过滤空格：</p>
 <pre><code>$IFS/
@@ -173,7 +173,7 @@ Linux可执行的终端：</p>
 最后拼接 为&quot;file &quot;<span class='katex-error' title='ParseError: KaTeX parse error: Can&#039;t use function &#039;\&quot;&#039; in math mode at position 2: a\̲&quot;̲ \&quot;'>a\&quot; \&quot;</span>b&quot;&quot;<br>
 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mi mathvariant="normal">和</mi></mrow><annotation encoding="application/x-tex">a和</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mord cjk_fallback">和</span></span></span></span>b都被双引号包括。<br>
 仔细查看正则过滤。发现\匹配的并不是\，由于\转义成了\，\|\就变成了|,包含|的字符就会被置空<br>
-<img src="https://guokeya.github.io/post-images/1578196205090.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578196205090.png" alt="" loading="lazy"><br>
 由于\可以转义双引号。那么我们就能逃逸<br>
 当我们输入a=\&amp;b=%0al\s%0a时。system执行的内容就变成了下面这样<br>
 &quot;file &quot;\&quot; &quot; l\s &quot;&quot;==&quot;file &quot; &quot; &quot;回车l\s回车&quot; &quot;<br>
@@ -183,7 +183,7 @@ Linux可执行的终端：</p>
 第四五个双引号闭合了我们的命令。第一个%0a(换行)执行了file &quot;<br>
 第二个换行执行了l\s<br>
 最后一个双引号就被忽略了。因为命令已经执行完毕<br>
-<img src="https://guokeya.github.io/post-images/1578196163173.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578196163173.png" alt="" loading="lazy"><br>
 之后读取flag就完事了。用\绕过关键字<br>
 <strong>读取文件的其他命令</strong></p>
 <pre><code>cat
@@ -254,10 +254,10 @@ highlight_file(__FILE__);
 由于不能出现函数。那么就可以通过异或或取反这类操作。构造出一个</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">p</span><span class="mord mathdefault">u</span><span class="mord mathdefault">t</span><span class="mord cjk_fallback">就</span><span class="mord cjk_fallback">行</span><span class="mord cjk_fallback">了</span><span class="mord cjk_fallback">由</span><span class="mord cjk_fallback">于</span><span class="mord cjk_fallback">不</span><span class="mord cjk_fallback">能</span><span class="mord cjk_fallback">出</span><span class="mord cjk_fallback">现</span><span class="mord cjk_fallback">函</span><span class="mord cjk_fallback">数</span><span class="mord cjk_fallback">。</span><span class="mord cjk_fallback">那</span><span class="mord cjk_fallback">么</span><span class="mord cjk_fallback">就</span><span class="mord cjk_fallback">可</span><span class="mord cjk_fallback">以</span><span class="mord cjk_fallback">通</span><span class="mord cjk_fallback">过</span><span class="mord cjk_fallback">异</span><span class="mord cjk_fallback">或</span><span class="mord cjk_fallback">或</span><span class="mord cjk_fallback">取</span><span class="mord cjk_fallback">反</span><span class="mord cjk_fallback">这</span><span class="mord cjk_fallback">类</span><span class="mord cjk_fallback">操</span><span class="mord cjk_fallback">作</span><span class="mord cjk_fallback">。</span><span class="mord cjk_fallback">构</span><span class="mord cjk_fallback">造</span><span class="mord cjk_fallback">出</span><span class="mord cjk_fallback">一</span><span class="mord cjk_fallback">个</span></span></span></span>a=_POST[a];eval($$a)<br>
 <code>${~%A0%AF%B0%AC%AB}[a];eval($b);</code><br>
 介绍个小trips。eval\echo在PHP中属于语言结构而不是函数,一个eval函数只能执行一次<br>
-<img src="https://guokeya.github.io/post-images/1578224328365.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578224328365.png" alt="" loading="lazy"><br>
 当然还能通过拼接字符串的方式去执行命令<br>
 定义一个变量。内容是以点拼接的函数最后调用变量+参数<br>
-<img src="https://guokeya.github.io/post-images/1578224451671.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578224451671.png" alt="" loading="lazy"><br>
 <strong>加强版</strong></p>
 <pre><code>&lt;?php
 
@@ -328,11 +328,11 @@ $e=a.s.s.e.r.t
 $e($d)
 //assert(current($_POST))
 </code></pre>
-<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1578226084152.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1578226084152.png" alt="" loading="lazy"></figure>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/NKxxYI57q/">
+            <a href="http://localhost:4000/post/NKxxYI57q/">
               <span class="post-title">
                 GET命令执行漏洞[HITCON 2017]SSRFme&rarr;
               </span>
@@ -367,7 +367,7 @@ $e($d)
             
               
               <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -382,10 +382,10 @@ $e($d)
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

