@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>安恒元旦月赛逆向--扫雷 | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="安恒元旦月赛逆向--扫雷 | 过客 » Feed" href="http://localhost:4000/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="安恒元旦月赛逆向--扫雷 | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="安恒元旦月赛逆向--扫雷"/>
-    <meta property="og:url" content="http://localhost:4000/post/an-heng-yuan-dan-yue-sai-ni-xiang-sao-lei/"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/an-heng-yuan-dan-yue-sai-ni-xiang-sao-lei/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="过客"/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="http://localhost:4000">过客</a>
+      <a class="navbar-brand" href="https://guokeya.github.io">过客</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,7 +80,7 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
             
         </span>
             <h1>安恒元旦月赛逆向--扫雷</h1>
@@ -102,14 +102,14 @@
           <p>就是一个扫雷。IDA64位打开即可<br>
 下载地址：<code>https://github.com/guokeya/tools/raw/master/%E6%89%AB%E9%9B%B7.exe</code></p>
 <!-- more -->
-<p><img src="http://localhost:4000/post-images/1579763527136.png" alt="" loading="lazy"><br>
+<p><img src="https://guokeya.github.io/post-images/1579763527136.png" alt="" loading="lazy"><br>
 代码非常多。主要看最后几行。有if判断<br>
-<img src="http://localhost:4000/post-images/1579763652472.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579763652472.png" alt="" loading="lazy"><br>
 第一个判断game如果！=601就设置为1<br>
 就没有else了。这应该是初始化之类。game为排雷数<br>
 第二个判断。game==1.就 <code>printf(asc_4861F8)</code><br>
 我们来看下asc_4861F8这里是个啥。双击进入<br>
-<img src="http://localhost:4000/post-images/1579763749423.png" alt="" loading="lazy"></p>
+<img src="https://guokeya.github.io/post-images/1579763749423.png" alt="" loading="lazy"></p>
 <pre><code>if game==1{
     输出游戏结束
 }else{
@@ -118,16 +118,16 @@
 </code></pre>
 <p>那么re()函数。十有八九是输出flag的<br>
 进入re函数<br>
-<img src="http://localhost:4000/post-images/1579763825742.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579763825742.png" alt="" loading="lazy"><br>
 如果game=601。说明扫出了所有雷。输入flag<br>
-<img src="http://localhost:4000/post-images/1579763929580.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579763929580.png" alt="" loading="lazy"><br>
 调用for循环。将flaga中的数据。依次减j。j等于4时。清空为0<br>
 接着看flaga中的数据是啥。j在前面并没有赋值。那么j初始值又是什么<br>
 分别点进去看看<br>
 flaga内容如下<br>
-<img src="http://localhost:4000/post-images/1579764076099.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579764076099.png" alt="" loading="lazy"><br>
 j的初始值内容如下<br>
-<img src="http://localhost:4000/post-images/1579764084948.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579764084948.png" alt="" loading="lazy"><br>
 python还原下</p>
 <pre><code>a=[0x67,0x6E,0x64,0x67,0x7C,0x67,0x34,0x30,0x62,0x66,0x66,0x33,0x3a,0x36,0x3C,0x62,0x62,0x37,0x3C,0x61,0x63,0x64,0x68,0x35,0x37,0x67,0x33,0x35,0x38,0x68,0x35,0x30,0x67,0x3A,0x3B,0x33,0x66,0x7F,0x26]
 j=1
@@ -140,11 +140,11 @@ for i in a:
     print(chr(i),end='')
 </code></pre>
 <p>得到flag<br>
-<img src="http://localhost:4000/post-images/1579764122232.png" alt="" loading="lazy"></p>
+<img src="https://guokeya.github.io/post-images/1579764122232.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
-            <a href="http://localhost:4000/post/misc-zhong-ge-chong-jia-mi-te-zheng/">
+            <a href="https://guokeya.github.io/post/misc-zhong-ge-chong-jia-mi-te-zheng/">
               <span class="post-title">
                 Misc中各种加密特征&rarr;
               </span>
@@ -179,7 +179,7 @@ for i in a:
             
               
               <li class="list-inline-item">
-              <a href="http://localhost:4000/atom.xml" target="_blank">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -194,10 +194,10 @@ for i in a:
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

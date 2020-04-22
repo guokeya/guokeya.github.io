@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>PowerShell Empire工具使用 | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="PowerShell Empire工具使用 | 过客 » Feed" href="http://localhost:4000/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="PowerShell Empire工具使用 | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="PowerShell Empire工具使用"/>
-    <meta property="og:url" content="http://localhost:4000/post/6eQuN_-1h/"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/6eQuN_-1h/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="过客"/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="http://localhost:4000">过客</a>
+      <a class="navbar-brand" href="https://guokeya.github.io">过客</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,7 +80,7 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="http://localhost:4000/tag/EfzSPkBWE/" class="tag">渗透测试</a>
+            <a href="https://guokeya.github.io/tag/EfzSPkBWE/" class="tag">渗透测试</a>
             
         </span>
             <h1>PowerShell Empire工具使用</h1>
@@ -109,45 +109,45 @@ PowerShsell Empire中文简称 “帝国”，是一款针对windows系统平台
 <p>安装到这就结束了。末尾会让你输入随机生成的密码。直接回车就好了<br>
 /opt/Empire/empire<br>
 启动,如果报错no module xxxx，就用pip install xxx，装需要的模块就行了。这里是python2.7<br>
-<img src="http://localhost:4000/post-images/1577950890028.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1577950890028.png" alt="" loading="lazy"><br>
 基本使用<br>
 help查看Empire使用帮助信息<br>
-<img src="http://localhost:4000/post-images/1577950898882.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1577950898882.png" alt="" loading="lazy"><br>
 listeners 设置监听，这里报错没建立监听<br>
 uselistener tab 可以看到这里有9种模式<br>
-<img src="http://localhost:4000/post-images/1577950905043.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1577950905043.png" alt="" loading="lazy"><br>
 我们设置一个http，试试<br>
 uselistener http<br>
 info查看具体参数设置<br>
 这里我设置了host和Name参数，host绑定IP，Name，这个实例的名字<br>
-<img src="http://localhost:4000/post-images/1577950910104.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1577950910104.png" alt="" loading="lazy"><br>
 execute执行<br>
-<img src="http://localhost:4000/post-images/1577950914143.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1577950914143.png" alt="" loading="lazy"><br>
 再次执行listeners，查看激活的listener，由于第一次我们没配置，所以没显示<br>
-<img src="http://localhost:4000/post-images/1577950921062.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1577950921062.png" alt="" loading="lazy"><br>
 Tips:当你开启多个监听的时候，必须使用不同的名称(Name)，不然怎么区分，并且使用不同的端口，如果端口被占用了。会有以下提示<br>
-<img src="http://localhost:4000/post-images/1577950925945.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1577950925945.png" alt="" loading="lazy"><br>
 back<br>
 返回上一层<br>
 #以上就是监听端口，下面生成木马<br>
 usestaget [tab]<br>
 可以看到这里有很多模块，multi为通用模块，osx mac，Linux，windows，生成的文件类型有bat,lnk,sct,vbs,xml等<br>
-<img src="http://localhost:4000/post-images/1577950932437.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1577950932437.png" alt="" loading="lazy"><br>
 launcher 语言类型 Name<br>
 launcher powershell abc<br>
 #语言类型可以tab键查看<br>
-<img src="http://localhost:4000/post-images/1577950939269.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1577950939269.png" alt="" loading="lazy"><br>
 复制到受害者机器上执行(cmd中复制粘贴)<br>
-<img src="http://localhost:4000/post-images/1577950944944.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1577950944944.png" alt="" loading="lazy"><br>
 agents<br>
 列出当前反弹的shell,结尾红色是失效的<br>
 list stale<br>
 列出当前已丢失的反弹shell<br>
-<img src="http://localhost:4000/post-images/1577950949911.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1577950949911.png" alt="" loading="lazy"><br>
 interact U1RGLT7Z<br>
 进入shell，这个U1RGLT7Z是agents开头显示的那个<br>
 直接敲命令就可以了<br>
-<img src="http://localhost:4000/post-images/1577950954152.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1577950954152.png" alt="" loading="lazy"><br>
 sc<br>
 目标截图<br>
 shell net user<br>
@@ -158,7 +158,7 @@ creds<br>
 查看hash和明文<br>
 creds export/root/test.csv<br>
 导出hash凭证<br>
-<img src="http://localhost:4000/post-images/1577950959747.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1577950959747.png" alt="" loading="lazy"><br>
 删除主机<br>
 kill name<br>
 #删除名为xxx<br>
@@ -177,12 +177,12 @@ recon #侦察
 situational_awareness #评估主机运行环境，网络运行环境
 trollsploit #恶作剧
 </code></pre>
-<p><img src="http://localhost:4000/post-images/1577950975026.png" alt="" loading="lazy"><br>
+<p><img src="https://guokeya.github.io/post-images/1577950975026.png" alt="" loading="lazy"><br>
 参考文章：https://www.freebuf.com/sectool/158393.html</p>
 
           
           <p class="next-post">下一篇：
-            <a href="http://localhost:4000/post/kR1_jmuDS/">
+            <a href="https://guokeya.github.io/post/kR1_jmuDS/">
               <span class="post-title">
                 首届360杯网络安全职业技能大赛 Web(立誓要成为admin) writeup&rarr;
               </span>
@@ -217,7 +217,7 @@ trollsploit #恶作剧
             
               
               <li class="list-inline-item">
-              <a href="http://localhost:4000/atom.xml" target="_blank">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -232,10 +232,10 @@ trollsploit #恶作剧
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

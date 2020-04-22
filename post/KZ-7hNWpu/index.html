@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>Mysql无列名注入/PDO/变量注入 | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="Mysql无列名注入/PDO/变量注入 | 过客 » Feed" href="http://localhost:4000/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="Mysql无列名注入/PDO/变量注入 | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="Mysql无列名注入/PDO/变量注入"/>
-    <meta property="og:url" content="http://localhost:4000/post/KZ-7hNWpu/"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/KZ-7hNWpu/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="过客"/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="http://localhost:4000">过客</a>
+      <a class="navbar-brand" href="https://guokeya.github.io">过客</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,7 +80,7 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="http://localhost:4000/tag/Web/" class="tag">Web安全</a>
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
             
         </span>
             <h1>Mysql无列名注入/PDO/变量注入</h1>
@@ -109,13 +109,13 @@
 innodb_table_stats
 </code></pre>
 <p>这两个表都会存储数据库和对应的表。但是没有列<br>
-<img src="http://localhost:4000/post-images/1578658585224.png" alt="" loading="lazy"><br>
-<img src="http://localhost:4000/post-images/1578658624176.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1578658585224.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1578658624176.png" alt="" loading="lazy"><br>
 select group_concat(table_name) from mysql.innodb_table_stats<br>
 即可获取所有表名<br>
 <strong>2。</strong><br>
 mysql&gt;5.7。新增了sys数据库。基础数据来自于performance_chema和information_schema两个库，但是本身数据库不存储数据，这个表只有<code>ROOT</code>用户才有权限查看<br>
-<img src="http://localhost:4000/post-images/1578659020994.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1578659020994.png" alt="" loading="lazy"><br>
 <strong>无列名注入</strong><br>
 当我们使用第一种方式查询到表名的时候。那么是没有列名的。所以就要配合无列名注入<br>
 所谓无列名注入。就是不需要列名。直接查询数据</p>
@@ -123,22 +123,22 @@ mysql&gt;5.7。新增了sys数据库。基础数据来自于performance_chema和
 我们将列名为1，2，3然后查询数据
 第一行是我们查询的1，2，3后面跟着表中的数据
 </code></pre>
-<p><img src="http://localhost:4000/post-images/1578659252323.png" alt="" loading="lazy"><br>
+<p><img src="https://guokeya.github.io/post-images/1578659252323.png" alt="" loading="lazy"><br>
 这就相当于改了表的列名。之后。我们将某一列取出来即可</p>
 <pre><code>select `2` from (select 1,2,3 union select * from user)a;
 将select 1,2,3的结果拼接select * from user 的结果，然后将第二列取出来
 select 1，2，3要根据表的字段而定。语句最后一个字母是别名。
 这就获取到了列名
 </code></pre>
-<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1578659356118.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1578659356118.png" alt="" loading="lazy"></figure>
 <pre><code>当程序过滤了反引号时。语句就不能正常执行了。我们还可以通过别名替代反引号
 as 取别名。将select 1,2,3 union select * from user的结果取别名为b。
 个人感觉就像是赋值给变量差不多
 </code></pre>
-<figure data-type="image" tabindex="2"><img src="http://localhost:4000/post-images/1578659962615.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://guokeya.github.io/post-images/1578659962615.png" alt="" loading="lazy"></figure>
 <pre><code>这里都是分列的。可以通过group_concat来拼接字符串一起输出
 </code></pre>
-<p><img src="http://localhost:4000/post-images/1578660136811.png" alt="" loading="lazy"><br>
+<p><img src="https://guokeya.github.io/post-images/1578660136811.png" alt="" loading="lazy"><br>
 <strong>变量注入</strong><br>
 这个注入方式。需要同一个页面存在两个注入</p>
 <pre><code>注入点1：SELECT * FROM USERS WHERE USERNAME='$name';
@@ -146,20 +146,20 @@ as 取别名。将select 1,2,3 union select * from user的结果取别名为b。
 </code></pre>
 <p>原理就是将查询结果分别插入@a,@b,@c<br>
 然后再另一个页面中查询@c的结果。<br>
-<img src="http://localhost:4000/post-images/1578660395682.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1578660395682.png" alt="" loading="lazy"><br>
 <strong>PDO注入</strong><br>
 这种方法需要利用PDO来对数据库进行操作，于是就能够执行多条语句从而进行注入，主要可以利用prepare和execute来执行数据库语句，从而绕过很多过滤进行注入。</p>
 <pre><code>select 1;set @test=unhex('73656c6563742f2a2a2f76657273696f6e2829');prepare abc from @test;execute abc;
 </code></pre>
 <p>首先将我们要执行的sql语句转换为16进制<br>
-<img src="http://localhost:4000/post-images/1578660808179.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1578660808179.png" alt="" loading="lazy"><br>
 将解码后的sql语句赋值给test，prepare定义名为abc的sql语句为@test，此时abc=select version();<br>
 最后execute执行<br>
-<img src="http://localhost:4000/post-images/1578660924248.png" alt="" loading="lazy"></p>
+<img src="https://guokeya.github.io/post-images/1578660924248.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
-            <a href="http://localhost:4000/post/bOdJWyLg5/">
+            <a href="https://guokeya.github.io/post/bOdJWyLg5/">
               <span class="post-title">
                 Pwn(绕过ASLR)&rarr;
               </span>
@@ -194,7 +194,7 @@ as 取别名。将select 1,2,3 union select * from user的结果取别名为b。
             
               
               <li class="list-inline-item">
-              <a href="http://localhost:4000/atom.xml" target="_blank">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -209,10 +209,10 @@ as 取别名。将select 1,2,3 union select * from user的结果取别名为b。
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">
