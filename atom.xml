@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-04-21T02:20:46.787Z</updated>
+    <updated>2020-04-22T04:56:29.031Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,13 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[PyCalX 1&2]]></title>
+        <id>https://guokeya.github.io/post/bBSaaelaQ/</id>
+        <link href="https://guokeya.github.io/post/bBSaaelaQ/">
+        </link>
+        <updated>2020-04-21T14:01:04.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[NPUCTF web WP]]></title>
         <id>https://guokeya.github.io/post/a2pNpf37_/</id>
@@ -121,21 +128,6 @@
 <pre><code>https://github.com/ByteBandits/bbctf-2020
 </code></pre>
 <p>docker环境就不说了docker-compose up -d 一把梭</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[SSRF打mysql(CTFSHOW红包题)]]></title>
-        <id>https://guokeya.github.io/post/7ypXebxyd/</id>
-        <link href="https://guokeya.github.io/post/7ypXebxyd/">
-        </link>
-        <updated>2020-04-12T00:53:48.000Z</updated>
-        <summary type="html"><![CDATA[<p>首先推荐一篇文章。复现都讲的很清楚了<br>
-<code>https://paper.seebug.org/510/#03</code><br>
-这里我用kali做实验。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>首先推荐一篇文章。复现都讲的很清楚了<br>
-<code>https://paper.seebug.org/510/#03</code><br>
-这里我用kali做实验。</p>
 ]]></content>
     </entry>
 </feed>
