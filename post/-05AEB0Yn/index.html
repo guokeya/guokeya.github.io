@@ -154,7 +154,8 @@ $phar-&gt;stopBuffering();
 <p>没啥东西。class.php中限制了上传文件不能出现<code>&lt;?</code>。而在构造phar时有个setStub参数就会出现<code>&lt;?php __HALT_COMPILER();?&gt;</code>。这里用script标签绕过<br>
 其他就没什么了。SOAP+CRLF<br>
 了解下ReflectionClass函数以及newInstanceArgs函数具体是咋回事就行了<br>
-传上去后。用<code>php://filter/resource=phar://upload/48cd8b43081896fbd0931d204f947663/18e2999891374a475d0687ca9f989d83.jpg</code>绕过前缀限制。触发phar反序列化<br>
+传上去后。用<br>
+<code>php://filter/resource=phar://upload/48cd8b43081896fbd0931d204f947663/18e2999891374a475d0687ca9f989d83.jpg</code>绕过前缀限制。触发phar反序列化<br>
 <img src="https://guokeya.github.io/post-images/1587625103827.png" alt="" loading="lazy"></p>
 
           

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-04-23T06:58:50.234Z</updated>
+    <updated>2020-04-24T00:44:10.279Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,13 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[[De1CTF 2019]Giftbox(动态执行代码。TOTP)]]></title>
+        <id>https://guokeya.github.io/post/ZCTKGPLuV/</id>
+        <link href="https://guokeya.github.io/post/ZCTKGPLuV/">
+        </link>
+        <updated>2020-04-23T13:24:12.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[[SUCTF 2019]Upload Labs 2(phar反序列化)]]></title>
         <id>https://guokeya.github.io/post/-05AEB0Yn/</id>
@@ -93,25 +100,6 @@
 内容是<code>kxkxkxkxshfd16kxkxkxkxsh</code><br>
 去除kxkxkxkxsh就剩下fd16<br>
 这个意思是。d是第flag的第16位。第15位是f</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[fmkq的简化版'如此木大'详解(SSRF。python格式化字符串)]]></title>
-        <id>https://guokeya.github.io/post/F9iDWh0g3/</id>
-        <link href="https://guokeya.github.io/post/F9iDWh0g3/">
-        </link>
-        <updated>2020-04-15T06:37:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>首先是php的SSRF。<br>
-<img src="https://guokeya.github.io/post-images/1586933034426.png" alt="" loading="lazy"><br>
-可以用进制绕过。<br>
-格式化字符串。用<code>%1$s</code>绕过<br>
-之后就是探测开放端口</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>首先是php的SSRF。<br>
-<img src="https://guokeya.github.io/post-images/1586933034426.png" alt="" loading="lazy"><br>
-可以用进制绕过。<br>
-格式化字符串。用<code>%1$s</code>绕过<br>
-之后就是探测开放端口</p>
 ]]></content>
     </entry>
 </feed>
