@@ -88,7 +88,7 @@
             <h1>安恒四月月赛 WP</h1>
             <span class="meta">
             	Posted on
-              2020-04-25，3 min read
+              2020-04-25，5 min read
             </span>
           </div>
         </div>
@@ -207,6 +207,46 @@ $b = unserialize(read(write(serialize($a))));
 </code></pre>
 <p>Object对象。A。两个属性。第一个属性8个字符串。username。值为3个字符串xxx<br>
 password属性。值为Object对象B。然后XXXXPOP链</p>
+<h2 id="web2">Web2</h2>
+<p>没环境。当时也没做。就看WP复现下<br>
+sprintf格式化注入</p>
+<p>可以利用%1$去吃掉后面的一个字符。也就是单引号</p>
+<p><img src="https://guokeya.github.io/post-images/1587817779250.png" alt="" loading="lazy"><br>
+也可以利用%1$c。配合39.构造单引号</p>
+<p><img src="https://guokeya.github.io/post-images/1587817840551.png" alt="" loading="lazy"><br>
+然后进入下一关。配置写漏洞</p>
+<pre><code>&lt;?php
+error_reporting(0);
+session_save_path('session');
+session_start();
+require_once './init.php';
+if($_SESSION['login']!=1){
+    die(&quot;&lt;script&gt;window.location.href='./index.php'&lt;/script&gt;&quot;);
+}
+if($_GET['shell']){
+    $shell= addslashes($_GET['shell']);
+    $file = file_get_contents('./shell.php');
+    $file = preg_replace(&quot;/\\\$shell = '.*';/s&quot;, &quot;\$shell = '{$shell}';&quot;, $file);
+    file_put_contents('./shell.php', $file);
+}else{
+    echo &quot;set your shell&quot;.&quot;&lt;br&gt;&quot;;
+    chdir(&quot;/&quot;);
+    highlight_file(dirname(__FILE__).&quot;/admin.php&quot;);
+}
+?&gt;
+</code></pre>
+<p>P神博客都有<br>
+<code>https://www.leavesongs.com/PENETRATION/thinking-about-config-file-arbitrary-write.html</code></p>
+<pre><code>第一次输入：;phpinfo(); 
+$shell=';phpinfo();';
+第二次输入：$0
+在正则中。会将整个字符串。填进去
+$shell = '$shell=';phpinfo();';';
+</code></pre>
+<p>最后用LD bypass disable_funcntion<br>
+这里mail,error_log都禁了<br>
+用gnupg扩展触发。<br>
+<code>https://www.anquanke.com/post/id/197745?from=singlemessage</code></p>
 
           
           <p class="next-post">下一篇：
