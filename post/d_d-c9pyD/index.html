@@ -247,6 +247,19 @@ $shell = '$shell=';phpinfo();';';
 这里mail,error_log都禁了<br>
 用gnupg扩展触发。<br>
 <code>https://www.anquanke.com/post/id/197745?from=singlemessage</code></p>
+<p>纪录下能触发LD的函数</p>
+<pre><code>mb_send_mail
+exec
+system
+passthru
+shell_exec
+error_log
+mail
+gnupg_init
+imap_mail
+pcntl_exec
+new gnupg()
+</code></pre>
 
           
           <p class="next-post">下一篇：
