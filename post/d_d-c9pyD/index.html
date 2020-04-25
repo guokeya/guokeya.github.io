@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>[Byte Bandits CTF 2020]imgaccess2(任意文件读取.htaccess) | 过客</title>
+  <title>安恒四月月赛 WP | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="[Byte Bandits CTF 2020]imgaccess2(任意文件读取.htaccess) | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="安恒四月月赛 WP | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,8 +25,8 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
-    <meta property="og:description" content="[Byte Bandits CTF 2020]imgaccess2(任意文件读取.htaccess)"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/Pge2AMv4N/"/>
+    <meta property="og:description" content="安恒四月月赛 WP"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/d_d-c9pyD/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="过客"/>
@@ -80,15 +80,11 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
-            
-            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
-            
         </span>
-            <h1>[Byte Bandits CTF 2020]imgaccess2(任意文件读取.htaccess)</h1>
+            <h1>安恒四月月赛 WP</h1>
             <span class="meta">
             	Posted on
-              2020-04-14，4 min read
+              2020-04-25，1 min read
             </span>
           </div>
         </div>
@@ -101,114 +97,56 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <p>看着Y1ng师傅的博客复现一波</p>
-<pre><code>https://github.com/ByteBandits/bbctf-2020
+          <p>题目名都忘了。。。。</p>
+<h1 id="centermisccenter"><center>MISC</center></h1>
+<h2 id="6g的题">6G的题</h2>
+<p>flag就在下载的文件里面<br>
+<code>curl http://server.zhaoj.in:8888/1GTest.file --output -|grep -a flag{</code></p>
+<h2 id="blueshark">Blueshark</h2>
+<p><img src="https://guokeya.github.io/post-images/1587810574655.png" alt="" loading="lazy"><br>
+右键复制值。然后得到一个7z。爆破得到密码141854<br>
+解压得到Flag</p>
+<h2 id="keyboard">Keyboard</h2>
+<p>内存取证filescan得到keyboard-log\t.txt<br>
+<img src="https://guokeya.github.io/post-images/1587810867617.png" alt="" loading="lazy"><br>
+有种密码叫QWE(键盘密码)<br>
+解密下<br>
+<img src="https://guokeya.github.io/post-images/1587810919180.png" alt="" loading="lazy"><br>
+然后。将那个secret拖入veracrypt。用KEYBOARDDRAOBYEK这个密钥解密<br>
+对解密出来的文件。Ctrl+F<br>
+<img src="https://guokeya.github.io/post-images/1587811055821.png" alt="" loading="lazy"></p>
+<h2 id="awdshell">AWDshell</h2>
+<p>查看HTTP请求。发现一句话木马<br>
+<img src="https://guokeya.github.io/post-images/1587811172886.png" alt="" loading="lazy"><br>
+得到源码<br>
+<img src="https://guokeya.github.io/post-images/1587811222922.png" alt="" loading="lazy"><br>
+分析下数据包。倒数第二个数据包是查看Flag的<br>
+<img src="https://guokeya.github.io/post-images/1587811338929.png" alt="" loading="lazy"><br>
+本地搭webshell。然后将这个base64请求。发过去。看看明文<br>
+<img src="https://guokeya.github.io/post-images/1587811415071.png" alt="" loading="lazy"><br>
+定位加密函数<br>
+<img src="https://guokeya.github.io/post-images/1587811565449.png" alt="" loading="lazy"><br>
+搞懂加密流程,现在就缺一个key<br>
+<img src="https://guokeya.github.io/post-images/1587811740495.png" alt="" loading="lazy"><br>
+可以看见。他的key是根据sessionid来的。我们本地搭个环境。sessionID。数据包中有</p>
+<pre><code>$key=@substr(str_pad(session_id(),16,'a'),0,16);
 </code></pre>
-<p>docker环境就不说了docker-compose up -d 一把梭</p>
-<!-- more -->
-<p><img src="https://guokeya.github.io/post-images/1586854122757.png" alt="" loading="lazy"><br>
-就一个文件上传功能。暂时还没遇到过python文件上传直接getshell。<br>
-上传后可以查看图片<br>
-<img src="https://guokeya.github.io/post-images/1586854186630.png" alt="" loading="lazy"><br>
-<code>http://192.168.0.128:7003/view/f528764d624db129b32c21fbca0cb8d6/1.jpg</code><br>
-F12查看view/md5/1.jpg又是指向的<code>/uploads/f528764d624db129b32c21fbca0cb8d6/1.jpg</code><br>
-<img src="https://guokeya.github.io/post-images/1586854240883.png" alt="" loading="lazy"><br>
-直接访问图片直接爆500？？？<br>
-<img src="https://guokeya.github.io/post-images/1586854282673.png" alt="" loading="lazy"><br>
-看了writeup都不知道为啥会爆500<br>
-这里Y1ng师傅猜测是以path:path这样传值。然后去读取对应的文件<br>
-直接给出payload</p>
-<pre><code>..%252f..%252f..%252f..%252f..%252f..%252etc%252fpasswd
-</code></pre>
-<p>这里没找到原因。我本地搭建环境时。两次URL编码并没有绕过。只解了一次URL编码<br>
-任意文件读取../app.py<br>
-得到源码</p>
-<pre><code>from flask import Flask, render_template, request, flash, redirect, send_file
-from urllib.parse import urlparse
-import re
-import os
-from hashlib import md5
-import asyncio
-import requests
-
-app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = os.path.join(os.curdir, &quot;uploads&quot;)
-# app.config['UPLOAD_FOLDER'] = &quot;/uploads&quot;
-app.config['MAX_CONTENT_LENGTH'] = 1*1024*1024
-app.secret_key = b'_5#y2L&quot;F4Q8z\n\xec]/'
-ALLOWED_EXTENSIONS = {'png', 'jpg', 's'}
-
-if not os.path.exists(app.config['UPLOAD_FOLDER']):
-    os.mkdir(app.config['UPLOAD_FOLDER'])
-
-def secure_filename(filename):
-    return re.sub(r&quot;(\.\.|/)&quot;, &quot;&quot;, filename)
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-@app.route(&quot;/&quot;)
-def index():
-    return render_template(&quot;home.html&quot;)
-
-@app.route(&quot;/upload&quot;, methods=[&quot;POST&quot;])
-def upload():
-    caption = request.form[&quot;caption&quot;]
-    file = request.files[&quot;image&quot;]
-
-    if file.filename == '':
-        flash('No selected file')
-        return redirect(&quot;/&quot;)
-    elif not allowed_file(file.filename):
-        flash('Please upload images only.')
-        return redirect(&quot;/&quot;)
-    else:
-        if not request.headers.get(&quot;X-Real-IP&quot;):
-           ip = request.remote_addr
-        else:
-           ip = request.headers.get(&quot;X-Real-IP&quot;)
-        dirname = md5(ip.encode()).hexdigest()
-        filename = secure_filename(file.filename)
-        upload_directory = os.path.join(app.config['UPLOAD_FOLDER'], dirname)
-        if not os.path.exists(upload_directory):
-            os.mkdir(upload_directory)
-        upload_path = os.path.join(app.config['UPLOAD_FOLDER'], dirname, filename)
-        file.save(upload_path)
-        return render_template(&quot;uploaded.html&quot;, path = os.path.join(dirname, filename))
-
-@app.route(&quot;/view/&lt;path:path&gt;&quot;)
-def view(path):
-    return render_template(&quot;view.html&quot;, path = path)
-
-@app.route(&quot;/uploads/&lt;path:path&gt;&quot;)
-def uploads(path):
-    # TODO(noob):
-    # zevtnax told me use apache for static files. I've
-    # already configured it to serve /uploads_apache but it
-    # still needs testing. I'm a security noob anyways.
-    return send_file(os.path.join(app.config['UPLOAD_FOLDER'], path))
-
-if __name__ == &quot;__main__&quot;:
-    app.run(port=5000)
-</code></pre>
-<p>在最后有个uploads_apache。是用apache去访问<br>
-然后继续看文件上传代码</p>
-<pre><code>filename = secure_filename(file.filename)
-upload_directory = os.path.join(app.config['UPLOAD_FOLDER'], dirname)
-upload_path = os.path.join(app.config['UPLOAD_FOLDER'], dirname, filename)file.save(upload_path)
-</code></pre>
-<p>filename。经过secure_filename函数处理。最终变成文件名。然后保存<br>
-secure_filename会处理..或者/<br>
-所以我们可以传入.htacces..s<br>
-处理后..被置空。然后就变成了.htaccess<br>
-然后通过upload_apache去上传.htaccess和php的图片马就getshell了</p>
+<p>得到key<br>
+<img src="https://guokeya.github.io/post-images/1587811894119.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1587812005046.png" alt="" loading="lazy"></p>
+<h1 id="centerreversecenter"><center>Reverse</center></h1>
+<p>ida打开。<br>
+<img src="https://guokeya.github.io/post-images/1587812123088.png" alt="" loading="lazy"><br>
+将我们的输入^6然后加1<br>
+与akhb~chdaZrdaZudqduvdZvvv|比较<br>
+反向推一下就得到Flag<br>
+<img src="https://guokeya.github.io/post-images/1587812225018.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/f4vFSdzi7/">
+            <a href="https://guokeya.github.io/post/ZCTKGPLuV/">
               <span class="post-title">
-                2020/04/13 MISC划水&rarr;
+                [De1CTF 2019]Giftbox(动态执行代码。TOTP)&rarr;
               </span>
             </a>
           </p>
