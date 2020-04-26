@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-04-25T13:50:19.912Z</updated>
+    <updated>2020-04-26T08:17:18.001Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,20 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[[GWCTF 2019]mypassword(xss)]]></title>
+        <id>https://guokeya.github.io/post/NN6i2N3G-/</id>
+        <link href="https://guokeya.github.io/post/NN6i2N3G-/">
+        </link>
+        <updated>2020-04-26T07:16:18.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Websec 刷题]]></title>
+        <id>https://guokeya.github.io/post/QWCfu8amD/</id>
+        <link href="https://guokeya.github.io/post/QWCfu8amD/">
+        </link>
+        <updated>2020-04-26T01:27:36.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[安恒四月月赛 WP]]></title>
         <id>https://guokeya.github.io/post/d_d-c9pyD/</id>
@@ -65,31 +79,5 @@
         <link href="https://guokeya.github.io/post/w03k5QaVH/">
         </link>
         <updated>2020-04-18T08:48:17.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[ctf473831530_2018_web_virink_web(php-fpm+rsync)]]></title>
-        <id>https://guokeya.github.io/post/8lQ_BdeyN/</id>
-        <link href="https://guokeya.github.io/post/8lQ_BdeyN/">
-        </link>
-        <updated>2020-04-17T11:00:25.000Z</updated>
-        <summary type="html"><![CDATA[<p>首先就是写shell。。。。<br>
-20长度写shell。。这个不多说了</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>首先就是写shell。。。。<br>
-20长度写shell。。这个不多说了</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[FireshellCTF2020]URL TO PDF]]></title>
-        <id>https://guokeya.github.io/post/HixADj8UG/</id>
-        <link href="https://guokeya.github.io/post/HixADj8UG/">
-        </link>
-        <updated>2020-04-17T06:35:59.000Z</updated>
-        <summary type="html"><![CDATA[<p>输入URL。可以获得一个pdf<br>
-感觉是SSRF</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>输入URL。可以获得一个pdf<br>
-感觉是SSRF</p>
-]]></content>
     </entry>
 </feed>
