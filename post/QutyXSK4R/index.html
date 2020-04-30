@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>Java学习笔记~~~ | 过客</title>
+  <title>[CSAWQual 2016]i_got_id（perl文件上传） | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="Java学习笔记~~~ | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="[CSAWQual 2016]i_got_id（perl文件上传） | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,8 +25,8 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
-    <meta property="og:description" content="Java学习笔记~~~"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/IO3l_LwX0/"/>
+    <meta property="og:description" content="[CSAWQual 2016]i_got_id（perl文件上传）"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/QutyXSK4R/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="过客"/>
@@ -81,10 +81,10 @@
           	<span class="tags">
           	 
         </span>
-            <h1>Java学习笔记~~~</h1>
+            <h1>[CSAWQual 2016]i_got_id（perl文件上传）</h1>
             <span class="meta">
             	Posted on
-              2020-04-08，5 min read
+              2020-04-28，1 min read
             </span>
           </div>
         </div>
@@ -97,192 +97,28 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <p>1。<br>
-Jre只包含运行环境。而Jdk包含运行环境和开发环境<br>
-2。<br>
-java环境配置</p>
-<pre><code>这里我用ubuntu自带的包。
-sudo apt install openjdk-9-jdk-headless
-</code></pre>
-<p>3。</p>
-<p>编写一个最简单的hello world<br>
-hello.java</p>
-<pre><code>public class hello {
-//public class 后面代表定义一个类的名称,类是java中基本组织单位
-	public static void main(String[] args) {
-		System.out.println(&quot;Hello, World!!&quot;);
-	}
-}
-</code></pre>
-<pre><code>javac hello.java
-#会生成一个 hello.class文件
-java hello
-#会执行hello.class
-#修改hello.java后需要重新编译class文件
-java代码中的class名。必须和文件名相同
-</code></pre>
-<p>4。<br>
-java中的各种类型</p>
-<pre><code>public class test {
-	public static void main(String[] args) {
-		System.out.println(1);
-        //数字
-		System.out.println('b');
-        //java中。单引号表示单个字符。
-		System.out.println(&quot;ABC&quot;);
-        //双引号代表字符串
-        System.out.println(true);
-        System.out.println(false);
-        //会输出true/false
-        //java中定义变量int num=123;
-        //123不能超过int的数据大小范围
-	}
-}
-</code></pre>
-<p>5.作用域</p>
-<pre><code>public class Demo03{
-	public static void main(String[] args){
-		{
-			int num=60;
-			System.out.println(num);
-		}
-        //在{}中是一个单独的作用域。num只在这里面生效。出了{}就没了
-		int num=10;
-		System.out.println(num);
-        //上面{}结束。num没了。所以可以重新定义num
-	}
-}
-</code></pre>
-<p>6.类型转换</p>
-<pre><code>public class Demo04{
-    public static void main(String[] args){
-        long num = 100;
-        System.out.println(num);
-        //进行隐式转换。数据范围从小到大进行转换
-        int num2 = (int) 100L;
-        System.out.println(num2);
-        //不符合从小到大转换原则。所以不能进行隐式抓换。进行强制类型转换
-        //范围小的范围 范围小的变量名 = (范围小的类型) 原本范围的大数据
-        int num3 = (int) 3.99;
-        //会转换为3.不存在四舍五入
-        char zifu='A';
-        System.out.println(zifu+a);
-        //会将字符转换为ASCII码。然后+1
+          <p>看着WP复现了下。。。‘<br>
+直接就猜后端源码。太强了</p>
+<pre><code>if ($cgi-&gt;upload('file')) {
+    my $file = $cgi-&gt;param('file');
+    while (&lt;$file&gt;) {
+        print &quot;$_&quot;;
+        print &quot;&lt;br /&gt;&quot;;
     }
 }
 </code></pre>
-<pre><code>public class demo1{
-	public static void main(String[] args){
-		String str1=&quot;Hello&quot;;
-		System.out.println(str1);
-        //之前是char类型。Char类型表示单个字符。String表示字符串
-		String str2=&quot;java&quot;;
-		System.out.println(str2+(20+30));
-        //当字符串类型转换时。其他的会被转为字符串。并且。优先级都一样
-        //str2+'20'+'30'。而不是str2+'50'
-	}
-}
-</code></pre>
-<p>7.三元运算</p>
-<pre><code>public class demo2{
-	public static void main(String[] args){
-		int a=10;
-		int b=20;
-		int max = a&gt;b?a:b;
-        //比较?True:False
-		System.out.println(max);
-	}
-}
-</code></pre>
-<p>8.调用函数</p>
-<pre><code>public class demo4{
-	public static void main(String[] args){
-		int num1=1;
-		int num2=2;
-		System.out.println(add(num1,num2));
-        //输出函数return的返回值
-		
-	}
-	public static int add(int a,int b){
-        //定义返回类型为int。参数a和b都是int类型
-		int result=a+b;
-		return result;
-	}
-}
-</code></pre>
-<p>9.重载</p>
-<pre><code>public class demo{
-	public static void main(String[] args){
-		System.out.println(add(1,2));
-		System.out.println(add(1,2,3));
-        //当参数同个函数。参数会变化时。用重载。两个参数。就会自动选择两个参数的函数。
-	}
-	public static int add(int a,int b){
-		return a+b;
-	}
-	public static int add(int a,int b,int c){
-		return a+b+b;
-	}
-}
-</code></pre>
-<p>10.package包和import<br>
-package。类似于php下的命名空间。<br>
-当前目录结构如下</p>
-<pre><code>---java
-    ---test
-        test1.class
-        test2.class
-    test1.class
-</code></pre>
-<p>为了防止同名冲突。我们可以在java前面写上package test;<br>
-说明我这个包是在test空间下的<br>
-编译：<br>
-在java目录下javac test/test1.java<br>
-执行：<br>
-在java目录下java test.test1<br>
-第一个test是包所在的空间。第二个test是test1这个class</p>
-<p>import<br>
-类似于php的include。<br>
-用来导入一个包<br>
-test1.java</p>
-<pre><code>package test;
-import test.test2;
-
-public class test1{
-	public static void main(String[] args){
-		test2.test();	
-	}
-}
-</code></pre>
-<p>test2.java</p>
-<pre><code>package test;
-public class test2{
-	public static void test(){
-		System.out.println(&quot;test!!1&quot;);
-	}
-}
-</code></pre>
-<p>test2.java在test空间下。有test方法<br>
-test1.java在test空间下。导入test空间下的test2类。调用test方法</p>
-<p>11.数组<br>
-java中数组一旦定义不可改变不可追加。并且里面的数据。都得是同一个类型</p>
-<pre><code>public class test{
-	public static void main(String[] args){
-		String[] test= new String[]{&quot;test&quot;,&quot;123&quot;,&quot;zhb&quot;,&quot;guoke&quot;,&quot;what&quot;};
-        //定义了一个String类型的数组。名为test。动态定义
-		for(String S:test){
-            #循环从test数组中取出值。转换为String类型。因为他取出来是数据在内存中的地址
-			System.out.println(S);
-		}
-	}
-}
-</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1588076778163.png" alt="" loading="lazy"><br>
+首先。他会接受file的值。也就是我们上传的文件。<br>
+然后去读取<br>
+如果我们在文件前。先给了他一个file参数的值。也就是ARGV。参数<br>
+他就会去读ARGV。此时我们URL传参?/flag<br>
+/flag作为参数传进去了。程序就会读取到Flag</p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/pRfgCKg1vY/">
+            <a href="https://guokeya.github.io/post/NN6i2N3G-/">
               <span class="post-title">
-                virink_2019_files_share(任意文件读取)&rarr;
+                [GWCTF 2019]mypassword(xss)&rarr;
               </span>
             </a>
           </p>

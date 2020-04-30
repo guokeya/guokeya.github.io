@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-04-26T08:17:18.001Z</updated>
+    <updated>2020-04-30T07:46:19.509Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,13 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[[CSAWQual 2016]i_got_id（perl文件上传）]]></title>
+        <id>https://guokeya.github.io/post/QutyXSK4R/</id>
+        <link href="https://guokeya.github.io/post/QutyXSK4R/">
+        </link>
+        <updated>2020-04-28T12:25:11.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[[GWCTF 2019]mypassword(xss)]]></title>
         <id>https://guokeya.github.io/post/NN6i2N3G-/</id>
@@ -72,12 +79,5 @@
         <link href="https://guokeya.github.io/post/Bw0qUYeRI/">
         </link>
         <updated>2020-04-19T10:04:52.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[ Chive CTF WP]]></title>
-        <id>https://guokeya.github.io/post/w03k5QaVH/</id>
-        <link href="https://guokeya.github.io/post/w03k5QaVH/">
-        </link>
-        <updated>2020-04-18T08:48:17.000Z</updated>
     </entry>
 </feed>
