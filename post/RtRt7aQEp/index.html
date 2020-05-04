@@ -236,11 +236,16 @@ base64解码得到Flag</p>
 }
 </code></pre>
 <p>直接包含/var/log/nginx/access.log<br>
+还有一种解法包含本身。<br>
+xxx.com/xxx.php?all_info_i_want=&amp;file=xxxx.php<br>
+同时对这个URL进行文件上传。然后就会死循环。导致临时文件保留。<br>
 包含getshell<br>
 FLAG貌似在/etc/opt/下。。。我也忘了</p>
 <h1 id="web_wustctf_朴实无华_revenge">WEB_WUSTCTF_朴实无华_Revenge</h1>
 <p>第一层队内ha1c9on大佬直接用<code>0-01-0</code>绕过了。。他的回答是。随手一猜就出来了<br>
 tqltql😂<br>
+预期解是<code>1000000000000000.00000000000000010</code><br>
+通过php的精度问题。比较相等<br>
 第二层。MD5一直跑。得到<code>0e1138100474</code></p>
 <pre><code>import hashlib
 
