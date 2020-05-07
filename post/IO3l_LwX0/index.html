@@ -84,7 +84,7 @@
             <h1>Java学习笔记~~~</h1>
             <span class="meta">
             	Posted on
-              2020-04-08，5 min read
+              2020-04-08，6 min read
             </span>
           </div>
         </div>
@@ -268,11 +268,42 @@ test1.java在test空间下。导入test空间下的test2类。调用test方法</
 java中数组一旦定义不可改变不可追加。并且里面的数据。都得是同一个类型</p>
 <pre><code>public class test{
 	public static void main(String[] args){
+        //int[] array = new int[3];
+        //动态定义了一个3个int元素的的数组
+        //访问array。会得到数组的内存地址。[0][1]由于未赋值。会返回0
 		String[] test= new String[]{&quot;test&quot;,&quot;123&quot;,&quot;zhb&quot;,&quot;guoke&quot;,&quot;what&quot;};
-        //定义了一个String类型的数组。名为test。动态定义
+        //静态定义了一个String类型的数组。名为test。
 		for(String S:test){
             #循环从test数组中取出值。转换为String类型。因为他取出来是数据在内存中的地址
 			System.out.println(S);
+		}
+	}
+}
+</code></pre>
+<pre><code>public class test{
+    public static void main(String[] args){
+        String[] test = new String[]{&quot;1&quot;,&quot;1&quot;,3&quot;};
+        int len = test.length;
+        System.out.println(&quot;test数组的长度是:&quot;+len);
+        //通过length属性。来得到数组的长度
+        for(int i=0;i&lt;test.length;i++){
+                System.out.println(test[i]);
+        }
+    }
+}
+</code></pre>
+<p>对数组进行倒叙</p>
+<pre><code>public class demo2{
+	public static void main(String[] args){
+		int[] a={10,20,30,40};
+		for(int i=0;i&lt;a.length-1;i++){
+			int max=a.length-1-i;
+			int temp=a[i];
+			a[i]=a[max];
+			a[max]=temp;
+		}
+		for(int i=0;i&lt;a.length;i++){
+			System.out.println(a[i]);
 		}
 	}
 }
