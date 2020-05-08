@@ -83,54 +83,6 @@
       <div class="col-lg-8 col-md-10 mx-auto">
        
         <div class="post-preview">
-          <a href="https://guokeya.github.io/post/vulnhubdc-1dc-2-ba-ji/">
-            <h2 class="post-title">
-               [vulnhub]DC-1/DC-2靶机
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>DC-1</strong><br>
-开放端口</p>
-<pre><code>PORT      STATE SERVICE VERSION
-22/tcp    open  ssh     OpenSSH 6.0p1 Debian 4+deb7u7 (protocol 2.0)
-80/tcp    open  http    Apache httpd 2.2.22 ((Debian))
-111/tcp   open  rpcbind 2-4 (RPC #100000)
-38538/tcp open  status  1 (RPC #100024)
-</code></pre>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-02-06</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/vulnhubsunrise-ba-ji/">
-            <h2 class="post-title">
-               [vulnhub]sunrise靶机
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>开放端口22/80/3306/8080<br>
-<img src="https://guokeya.github.io/post-images/1580896853991.png" alt="" loading="lazy"></p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-02-05</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
           <a href="https://guokeya.github.io/post/vulnhubfive86-2-ba-ji/">
             <h2 class="post-title">
               [vulnhub]Five86-2靶机
@@ -563,6 +515,75 @@ unserialize($_GET[&quot;data&quot;]);
              <span class="time">2020-01-30</span>
              <span>,</span>
              <span class="post-stats">1 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/gxybaby-ncpan-duan-shu-da-xiao/">
+            <h2 class="post-title">
+              [GXY]Baby nc(判断数大小)
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <pre><code>from pwn import *
+context.log_level='debug'
+r=remote(&quot;183.129.189.60&quot;,10014)
+flag='34028236692093846346337460'
+for a in range(10):
+    for i in range(10):
+    	guess=str(flag)+str(i)+(27-1-len(flag))*'0'
+        r.sendline(guess)
+        result=r.recv(10)
+        if 'big' in result:
+            flag+=str(i-1)
+            break
+        if i==9 and 'small' in result:
+            flag+='9'
+            break
+    print(flag)
+</code></pre>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-27</span>
+             <span>,</span>
+             <span class="post-stats">1 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/lctf-bestphps-revengesoap-fan-xu-lie-hua/">
+            <h2 class="post-title">
+              LCTF bestphp’s revenge（SOAP反序列化）
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <h1 id="indexphp">index.php</h1>
+<pre><code> &lt;?php
+highlight_file(__FILE__);
+$b = 'implode';
+call_user_func($_GET['f'], $_POST);
+session_start();
+if (isset($_GET['name'])) {
+    $_SESSION['name'] = $_GET['name'];
+}
+var_dump($_SESSION);
+$a = array(reset($_SESSION), 'welcome_to_the_lctf2018');
+call_user_func($b, $a);
+?&gt;
+</code></pre>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-26</span>
+             <span>,</span>
+             <span class="post-stats">5 min read</span>
             </p>
         </div>
         <hr>
