@@ -80,11 +80,13 @@
           <div class="post-heading">
           	<span class="tags">
           	 
+            <a href="https://guokeya.github.io/tag/取证分析/" class="tag">取证分析</a>
+            
         </span>
             <h1>nodejs学习笔记~~~</h1>
             <span class="meta">
             	Posted on
-              2020-04-07，4 min read
+              2020-05-08，7 min read
             </span>
           </div>
         </div>
@@ -267,12 +269,148 @@ path.resolv  从源地址from到目的地址
 path.isAbsolute 检查是否是绝对路径
 path.relative   获取从from 到to的相对路径
 </code></pre>
+<p>动态调用函数</p>
+<pre><code>function say(word) {
+  console.log(word);
+}
+
+function execute(someFunction, value) {
+  someFunction(value);
+}
+
+execute(say, &quot;Hello&quot;);
+//感觉和php的动态执行代码一样。函数带入函数执行。
+</code></pre>
+<p>动态调用匿名函数</p>
+<pre><code>function execute(someFunction, value) {
+  someFunction(value);
+}
+
+execute(function(word){ console.log(word) }, &quot;Hello&quot;);
+</code></pre>
+<p>尝试写了一个任意文件读取。。。。刚接触。代码略丑</p>
+<pre><code>var http = require(&quot;http&quot;);
+#http模块
+var fs = require(&quot;fs&quot;);
+#文件读取模块
+var url = require(&quot;url&quot;);
+#URL解析模块
+var data='';
+function onRequest(request,response){
+	requesturl=url.parse(request.url).pathname;
+    #获取请求路径。如/test/readfile
+	if(requesturl=='/readfile'){
+		try{
+			file=url.parse(request.url,true).query.file;
+            #获取url中的参数
+			file=file.replace('../','');
+            #简单的过滤
+			data=fs.readFileSync(file,'utf-8');
+            #读取文件
+		}catch(e){
+            #如果出现错误。就赋值为error。并在本地返回错误信息
+			console.log(e);
+			data=&quot;error&quot;;
+		}
+	}else{
+		data=&quot;your request url is : &quot;+request.url;
+	}
+	response.writeHead(200,{&quot;COntent-Type&quot;:&quot;text/plain&quot;});
+	response.write(data);
+    #返回结果
+	response.end();
+}
+http.createServer(onRequest).listen(8888);
+console.log(&quot;server has start&quot;);
+</code></pre>
+<p>nodejs文件操作<br>
+单纯的打开文件</p>
+<pre><code>var fs = require(&quot;fs&quot;);
+console.log(&quot;ready open the file&quot;);
+fs.open('input.txt','r+',function(err,fd){
+	if(err){
+		console.log(err);
+	}
+	console.log(&quot;open success&quot;);
+});
+</code></pre>
+<p>isFile函数。判断是否为文件</p>
+<pre><code>var fs = require(&quot;fs&quot;);
+console.log(&quot;ready open the file&quot;);
+fs.stat('input.txt',function(err,stats){
+	console.log(stats.isFile());
+});
+</code></pre>
+<p>stats的方法还有。<br>
+isDirectory<br>
+是否是目录<br>
+isBlockDevice()<br>
+是否是块设备<br>
+等等。感觉就是判断文件类型。</p>
+<p>写入文件</p>
+<pre><code>fs.writeFile('input.txt','this is write data',function(err){
+	if (err){
+		console.log(err);
+	}
+});
+</code></pre>
+<p>读取文件内容</p>
+<pre><code>var fs = require(&quot;fs&quot;);
+var buf = new Buffer.alloc(1024);
+fs.open('input.txt','r+',function(err,fd) {
+	if(err){
+		console.log(err);
+	}
+	fs.read(fd,buf,0,buf.length,0,function(err,bytes){
+		if(err){
+			console.log(err);
+		}
+		console.log(bytes+&quot; read&quot;);
+		if(bytes &gt; 0){
+			console.log(buf.slice(0,bytes).toString());
+		}
+	});
+});
+</code></pre>
+<p>fs.read(文件描述符。数据存入的buff对象。buffer中存数据的起始位置。  读取文件中数据的字节数。读取文件内容的起始位置。回调函数)</p>
+<p>删除文件</p>
+<pre><code>fs.unlink('xxx',function(err){
+    if(err){
+        return console.log(err);
+    }
+});
+</code></pre>
+<p>创建目录</p>
+<pre><code>fs.mkdir('/tmp/test/',function(err){
+    if(err){
+        return console.log(err);
+    }
+});
+</code></pre>
+<p>遍历目录</p>
+<pre><code>fs.readdir('/tmp/',function(err,files){
+    if(err){
+        return console.log(error);
+    }
+    files.forEach(function(file){
+        console.log(file);
+    });
+});
+</code></pre>
+<p>HTTPPOST请求</p>
+<pre><code>	request.on('data',function(chunk){
+		body+=chunk;
+	});
+    request.on('end',function(){
+        file=querystring.parse(body).file;
+    }
+</code></pre>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/PvC7m4Rig/">
+            <a href="https://guokeya.github.io/post/WbMhNdDm1/">
               <span class="post-title">
-                typecho反序列化复现&rarr;
+                LFI2019(文件包含。无数字字母webshell)&rarr;
               </span>
             </a>
           </p>
