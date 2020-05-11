@@ -114,7 +114,7 @@ $a=new FileHandler();
 echo urlencode(serialize($a));
 </code></pre>
 <p>这里如果带上了contents属性。就不能读取。不知道为啥。<br>
-或者就是带上属性。然后修改类的属性数量。3改为2。表示这个类只有两个属性<br>
+或者就是带上属性。然后修改类的属性数量。3改为2。表示这个类只有两个属性(貌似这里修改属性可以绕过destruct切换目录)<br>
 还能通过/proc/self/cmdline获得apache的配置文件路径<br>
 然后用绝对路径去读取<br>
 还有一种解法是。利用S代替s &quot;\00*\00xxx&quot;这样。</p>
