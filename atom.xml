@@ -2,13 +2,28 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-05-13T00:54:52.932Z</updated>
+    <updated>2020-05-13T01:56:46.530Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[[FireshellCTF2020]Cars]]></title>
+        <id>https://guokeya.github.io/post/6tkxFuPHB/</id>
+        <link href="https://guokeya.github.io/post/6tkxFuPHB/">
+        </link>
+        <updated>2020-05-13T01:40:13.000Z</updated>
+        <summary type="html"><![CDATA[<p>题目给了个APK。咱也不会啊。题目还有个docker。估计会有get。post方法<br>
+全局搜下<br>
+<img src="https://guokeya.github.io/post-images/1589334482776.png" alt="" loading="lazy"></p>
+]]></summary>
+        <content type="html"><![CDATA[<p>题目给了个APK。咱也不会啊。题目还有个docker。估计会有get。post方法<br>
+全局搜下<br>
+<img src="https://guokeya.github.io/post-images/1589334482776.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[[pasecactf_2019]flask_ssti]]></title>
         <id>https://guokeya.github.io/post/zIiwsY95N/</id>
@@ -105,12 +120,5 @@
         <link href="https://guokeya.github.io/post/d_d-c9pyD/">
         </link>
         <updated>2020-04-25T09:36:14.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[De1CTF 2019]Giftbox(动态执行代码。TOTP)]]></title>
-        <id>https://guokeya.github.io/post/ZCTKGPLuV/</id>
-        <link href="https://guokeya.github.io/post/ZCTKGPLuV/">
-        </link>
-        <updated>2020-04-23T13:24:12.000Z</updated>
     </entry>
 </feed>
