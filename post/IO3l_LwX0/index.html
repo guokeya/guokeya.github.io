@@ -84,7 +84,7 @@
             <h1>Java学习笔记~~~</h1>
             <span class="meta">
             	Posted on
-              2020-05-08，6 min read
+              2020-05-08，8 min read
             </span>
           </div>
         </div>
@@ -308,12 +308,98 @@ java中数组一旦定义不可改变不可追加。并且里面的数据。都�
 	}
 }
 </code></pre>
+<p>创建函数</p>
+<pre><code>public class index{
+	public static void main(String[] args){
+		String [] array={&quot;test&quot;,&quot;123&quot;,&quot;dfkjfkd&quot;};
+		printarr(array);
+	}
+	public static void printarr(String[] array){
+		for(int i=0;i&lt;array.length;i++){
+			System.out.println(array[i]);
+		}
+	}
+}
+</code></pre>
+<p>创建了一个名为printarr的函数。参数是String类型的数组。然后形参名为array。</p>
+<p>用数组返回一个函数的多个结果</p>
+<pre><code>public class index{
+	public static void main(String[] args){
+		int [] test={1,2,3,4,5};
+		int [] func_result=printarr(test);
+		System.out.println(&quot;The Num Array Sum is : &quot;+func_result[0]);
+		System.out.println(&quot;The Num Array pingjun is : &quot;+func_result[1]);
+	}
+	public static int[] printarr(int[] arr){
+		int [] result= new int[2];
+		int sum = 0;
+		for(int i=0;i&lt;arr.length;i++){
+			sum+=arr[i];
+		}
+		result[0]=sum;
+		result[1]=sum/arr.length;
+		return result;
+		
+	}
+}
+</code></pre>
+<p>面向过程：需要实现一个功能时。每个步骤亲力亲为。处理所有细节。<br>
+面向对象：不关心具体步骤。就找一个能实现该功能的人。</p>
+<p>面向过程</p>
+<pre><code>public class test{
+	public static void main(String[] args){
+		int[] array = {10,20,30,40};
+		for(int i=0;i&lt;array.length;i++){
+			if(i==0){
+				System.out.print(&quot;[&quot;+array[i]+&quot;,&quot;);
+			}else if(i==array.length-1){
+				System.out.print(array[i]+&quot;]&quot;);
+			}else{
+				System.out.print(array[i]+&quot;,&quot;);
+			}
+		}
+	}
+}
+尝试打印一个[10,20,30,40]
+</code></pre>
+<p>面向对象</p>
+<pre><code>System.out.println(Arrays.toString(array));
+直接使用JDK给我们提供的Arrays类中的tostring方法。
+</code></pre>
+<p>stu.java</p>
+<pre><code>public class stu{
+	String name;
+	String home;
+	int age;
+	public void printage(){
+		System.out.println(&quot;my age is &quot;+age);
+	}
+}
+</code></pre>
+<p>定义了一个stu类。其中有三个属性和一个方法<br>
+stu1.java</p>
+<pre><code>public class stu1{
+	public static void main(String[] args){
+		stu student = new stu();
+		student.age=10;
+		student.name=&quot;test&quot;;
+		student.home=&quot;China&quot;;
+		System.out.println(student.age);
+		System.out.println(student.home);
+		System.out.println(student.name);
+		student.printage();
+	}
+}
+</code></pre>
+<p>如果包在当前目录。就可以直接用。无需导入。<br>
+<code>类名 对象名 = new 类名();</code><br>
+然后对成员变量进行赋值调用</p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/9PtMXZijP/">
+            <a href="https://guokeya.github.io/post/WbMhNdDm1/">
               <span class="post-title">
-                nodejs学习笔记~~~&rarr;
+                LFI2019(文件包含。无数字字母webshell)&rarr;
               </span>
             </a>
           </p>
