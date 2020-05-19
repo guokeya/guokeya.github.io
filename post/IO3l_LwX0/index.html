@@ -84,7 +84,7 @@
             <h1>Java学习笔记~~~</h1>
             <span class="meta">
             	Posted on
-              2020-05-08，8 min read
+              2020-05-08，9 min read
             </span>
           </div>
         </div>
@@ -394,6 +394,56 @@ stu1.java</p>
 <p>如果包在当前目录。就可以直接用。无需导入。<br>
 <code>类名 对象名 = new 类名();</code><br>
 然后对成员变量进行赋值调用</p>
+<p>private关键字：<br>
+Person.java</p>
+<pre><code>public class Person{
+	String name;
+	private int age;
+	public void show(){
+		System.out.println(&quot;I am &quot;+name+&quot; my age is : &quot;+age);
+	}
+	public void setAge(int num){
+		if (0&lt;num&amp;&amp;num&lt;100){
+			age = num;
+		}else{
+			age = 0;
+		}
+	}
+	public int getAge(){
+		return age;
+	}
+
+}
+</code></pre>
+<p>test.java</p>
+<pre><code>public class test{
+	public static void main(String[] args){
+		Person person = new Person();
+		person.show();
+		person.name=&quot;test&quot;;
+		person.setAge(-20);
+		person.show();
+	}
+}
+</code></pre>
+<p>使用private关键字。使age属性只能由类内调用。<br>
+定义了两个方法。<br>
+一个setAge()。接受参数为int类型。并且对传入的值做了if判断。保证数据的正确性<br>
+一个getAge()。返回num属性。由于外部不能直接调用num属性。所以嘚通过getAge这个方法来获取num属性</p>
+<p>构造方法。<br>
+当一个方法和类名相同时。那么这就是构造方法<br>
+构造方法不用写返回值。连void都不用写。也不能用return返回任何东西。<br>
+如果没有编写任意的构造方法。那么编译器会给你一个默认的构造方法。啥也不敢<br>
+构造方法也支持重载。</p>
+<pre><code>public class Student{
+    private String name;
+    private int age;
+    public Student(String name,int age){
+        this.name=name;
+        this.age=age;
+    }
+}
+</code></pre>
 
           
           <p class="next-post">下一篇：

