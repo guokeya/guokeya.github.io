@@ -84,7 +84,7 @@
             <h1>Java学习笔记~~~</h1>
             <span class="meta">
             	Posted on
-              2020-05-08，9 min read
+              2020-05-08，11 min read
             </span>
           </div>
         </div>
@@ -444,6 +444,80 @@ Person.java</p>
     }
 }
 </code></pre>
+<p>调用java API<br>
+java中的函数。需要导入</p>
+<pre><code>import java.util.*;
+public class test{
+	public static void main(String[] args){
+		Scanner sc = new Scanner(System.in);
+		String  str = sc.next();
+		System.out.println(str);
+	}
+}
+</code></pre>
+<p>利用匿名函数。直接调用Scanner</p>
+<pre><code>import java.util.*;
+public class test{
+	public static void main(String[] args){
+		method(new Scanner(System.in));
+	}
+	public static void method(Scanner sc){
+		int num = sc.nextInt();
+		System.out.println(num);
+	}
+}
+</code></pre>
+<p>继承<br>
+extends 用来继承类。<br>
+子类会继承 父类中的属性</p>
+<p>java的序列化和反序列化<br>
+首先。序列化的类。需要实现Serializable接口<br>
+实现这个接口。就先得导入包<br>
+Person.java</p>
+<pre><code>import java.io.*;
+public class Person implements Serializable{
+	private String name;
+	private int age;
+	public Person(String name,int age){
+		this.name=name;
+		this.age=age;
+	}
+    #构造函数
+	public Person(){
+	}
+    #构造函数
+	public String toString(){
+		return &quot;Person{&quot;+&quot;name='&quot;+name+&quot;'&quot;+&quot;,age=&quot;+age+'}';
+	}
+    #当直接println输出这个类时。就会触发toString。
+}
+</code></pre>
+<p>seri.java</p>
+<pre><code>import java.io.*;
+public class seri{
+	public static void main(String[] args) throws Exception{
+        #需要有Exception来接受错误
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(&quot;Person.txt&quot;));
+        #对象输出流。ObjectOutput/FileOutPut/Person.txt
+		oos.writeObject(new Person(&quot;name&quot;,18));
+        #写入文件
+		oos.close();
+        #释放文件
+		ObjectInputStream oss = new ObjectInputStream(new FileInputStream(&quot;Person.txt&quot;));
+        #对象输入流。ObjectInput/FileInput/Person.txt
+		Person o = (Person)oss.readObject();
+        #读取对象。类型/名称/类
+		oss.close();
+		System.out.println(o);
+        //输出类。触发toString。感觉和PHP那个魔法函数一样
+	}
+}
+</code></pre>
+<p>static关键字：静态关键字<br>
+静态优先于非静态加载到内存中(静态优先于对象进入到内存中)<br>
+被static修饰的成员变量不能被序列化。序列化的都是对象<br>
+transient关键字:瞬态关键字<br>
+加了transient关键字。就不会被反序列化。</p>
 
           
           <p class="next-post">下一篇：
