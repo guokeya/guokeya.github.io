@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-06-02T07:06:03.112Z</updated>
+    <updated>2020-06-02T07:42:19.403Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -16,6 +16,25 @@
         <link href="https://guokeya.github.io/post/fGjL-wZQn/">
         </link>
         <updated>2020-06-01T12:36:02.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[RCTF2020 Calc(数字webshell以及php交互)]]></title>
+        <id>https://guokeya.github.io/post/KeT9UAVHR/</id>
+        <link href="https://guokeya.github.io/post/KeT9UAVHR/">
+        </link>
+        <updated>2020-05-31T15:15:04.000Z</updated>
+        <summary type="html"><![CDATA[<p>访问calc.php得到源码</p>
+<pre><code>['[a-z]', '[\x7f-\xff]', '\s',&quot;'&quot;, '&quot;', '`', '\[', '\]','\$', '_', '\\\\','\^', ',']
+不允许出现a-z以及一些不可见字符。等
+</code></pre>
+<p>但是这里还允许数字。括号。点。|&amp;</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>访问calc.php得到源码</p>
+<pre><code>['[a-z]', '[\x7f-\xff]', '\s',&quot;'&quot;, '&quot;', '`', '\[', '\]','\$', '_', '\\\\','\^', ',']
+不允许出现a-z以及一些不可见字符。等
+</code></pre>
+<p>但是这里还允许数字。括号。点。|&amp;</p>
+]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[网鼎杯(redis 带口令的主从复制RCE)]]></title>
@@ -72,12 +91,5 @@
         <link href="https://guokeya.github.io/post/9A3mVZGSa/">
         </link>
         <updated>2020-05-15T10:07:07.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[D3CTF 2019]EzUpload(phar反序列化/.htaccess)]]></title>
-        <id>https://guokeya.github.io/post/x5o3GMTlC/</id>
-        <link href="https://guokeya.github.io/post/x5o3GMTlC/">
-        </link>
-        <updated>2020-05-15T01:48:53.000Z</updated>
     </entry>
 </feed>

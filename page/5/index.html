@@ -83,6 +83,34 @@
       <div class="col-lg-8 col-md-10 mx-auto">
        
         <div class="post-preview">
+          <a href="https://guokeya.github.io/post/eyYhRsEBx/">
+            <h2 class="post-title">
+              [GWCTF 2019]你的名字(SSTI)
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p>。。感觉是SSTI<br>
+<img src="https://guokeya.github.io/post-images/1584597492085.png" alt="" loading="lazy"><br>
+输入<code>{1+1}</code>返回<code>{1+1}</code><br>
+输入<code>{{1+1}}</code>直接报错。<br>
+这就有点迷了。接触过的SSTI都是构造payload不同。也没遇到过报错这种情况<br>
+看writeup后。发现还能通过<code>{%%}</code>这种方式去注入<br>
+这是一种盲注。通过<code>{% if 1 %}1{% endif %}</code><br>
+可以看到。虽然没回显。但是payload确实正常执行<br>
+<img src="https://guokeya.github.io/post-images/1584598772521.png" alt="" loading="lazy"></p>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-03-19</span>
+             <span>,</span>
+             <span class="post-stats">1 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
           <a href="https://guokeya.github.io/post/hz6_KR03h/">
             <h2 class="post-title">
               [GYCTF2020]Node Game(CRLF头部注入)
@@ -395,30 +423,6 @@ n-gate.com
              <span class="time">2020-03-11</span>
              <span>,</span>
              <span class="post-stats">1 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/SfJkH4LGF/">
-            <h2 class="post-title">
-              [HarekazeCTF2019]Avatar Uploader 1(图片判断差异)
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>这题进去登陆就一个上传。光看文字。得到以下信息</p>
-<pre><code>PNG图像。那么后缀名和mime得修改下
-并且小于256KB.这个没啥关系
-图像像素得小于256px*256px
-</code></pre>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-03-11</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
             </p>
         </div>
         <hr>
