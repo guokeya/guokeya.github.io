@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-06-03T06:46:04.222Z</updated>
+    <updated>2020-06-05T01:51:16.970Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,29 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[[HarekazeCTF2019]Avatar Uploader 2(include phar+代码审计)]]></title>
+        <id>https://guokeya.github.io/post/R-EENXBLc/</id>
+        <link href="https://guokeya.github.io/post/R-EENXBLc/">
+        </link>
+        <updated>2020-06-05T00:47:10.000Z</updated>
+        <summary type="html"><![CDATA[<p>github下源码审计<br>
+首先从index.php看。<br>
+导入了三个文件</p>
+<pre><code>require_once('config.php');
+require_once('lib/util.php');
+require_once('lib/session.php');
+</code></pre>
+]]></summary>
+        <content type="html"><![CDATA[<p>github下源码审计<br>
+首先从index.php看。<br>
+导入了三个文件</p>
+<pre><code>require_once('config.php');
+require_once('lib/util.php');
+require_once('lib/session.php');
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[l33t-hoster(.htaccess+disable_function+计算器)]]></title>
         <id>https://guokeya.github.io/post/fGjL-wZQn/</id>
@@ -84,12 +107,5 @@
         <link href="https://guokeya.github.io/post/Hb42X2pY3/">
         </link>
         <updated>2020-05-17T13:08:37.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[HITCON 2019]Buggy_Net(ASP)]]></title>
-        <id>https://guokeya.github.io/post/9A3mVZGSa/</id>
-        <link href="https://guokeya.github.io/post/9A3mVZGSa/">
-        </link>
-        <updated>2020-05-15T10:07:07.000Z</updated>
     </entry>
 </feed>
