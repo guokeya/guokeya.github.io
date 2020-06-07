@@ -84,6 +84,60 @@
       <div class="col-lg-8 col-md-10 mx-auto">
        
         <div class="post-preview">
+          <a href="https://guokeya.github.io/post/xnuca2019qualifiereasyphphtaccess-li-yong/">
+            <h2 class="post-title">
+              [XNUCA2019Qualifier]EasyPHP(.htaccess利用)
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <pre><code>&lt;?php
+    $files = scandir('./'); 
+    foreach($files as $file) {
+        if(is_file($file)){
+            if ($file !== &quot;index.php&quot;) {
+                unlink($file);
+            }
+        }
+    }
+    include_once(&quot;fl3g.php&quot;);
+    if(!isset($_GET['content']) || !isset($_GET['filename'])) {
+        highlight_file(__FILE__);
+        die();
+    }
+    $content = $_GET['content'];
+    if(stristr($content,'on') || stristr($content,'html') || stristr($content,'type') || stristr($content,'flag') || stristr($content,'upload') || stristr($content,'file')) {
+        echo &quot;Hacker&quot;;
+        die();
+    }
+    $filename = $_GET['filename'];
+    if(preg_match(&quot;/[^a-z\.]/&quot;, $filename) == 1) {
+        echo &quot;Hacker&quot;;
+        die();
+    }
+    $files = scandir('./'); 
+    foreach($files as $file) {
+        if(is_file($file)){
+            if ($file !== &quot;index.php&quot;) {
+                unlink($file);
+            }
+        }
+    }
+    file_put_contents($filename, $content . &quot;\nJust one chance&quot;);
+?&gt;
+</code></pre>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-02-01</span>
+             <span>,</span>
+             <span class="post-stats">6 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
           <a href="https://guokeya.github.io/post/lctf-bestphps-revengesoap-fan-xu-lie-hua/">
             <h2 class="post-title">
               LCTF bestphp’s revenge（SOAP反序列化）
@@ -393,28 +447,6 @@ if (isset($_GET['a'])) {
              <span class="time">2020-01-15</span>
              <span>,</span>
              <span class="post-stats">7 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/R7LJ4aK5U/">
-            <h2 class="post-title">
-              [WesternCTF2018]shrine（SSTi2）
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>给出了源代码</p>
-<pre><code>import flask
-</code></pre>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-15</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
             </p>
         </div>
         <hr>
