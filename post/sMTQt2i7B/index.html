@@ -88,7 +88,7 @@
             <h1>RACTF(Web)</h1>
             <span class="meta">
             	Posted on
-              2020-06-07，3 min read
+              2020-06-07，4 min read
             </span>
           </div>
         </div>
@@ -174,7 +174,26 @@ limit遍历。还有一个用户的flag<br>
 Ha1师傅的字典🐂🍺。扫出了sitemap.xml<br>
 得到sitemap.xml.bak<br>
 <img src="https://guokeya.github.io/post-images/1591545681701.png" alt="" loading="lazy"><br>
-<img src="https://guokeya.github.io/post-images/1591545689896.png" alt="" loading="lazy"></p>
+<img src="https://guokeya.github.io/post-images/1591545689896.png" alt="" loading="lazy"><br>
+最后一个挑战。burp抓包看到__adminPortal<br>
+带上登陆后的session访问得到<br>
+<img src="https://guokeya.github.io/post-images/1591630627156.png" alt="" loading="lazy"><br>
+F12发现unicode字符。实质上是普通字符+一堆unicode字符。unicode把普通字符覆盖了。写个脚本匹配出里面的普通字符得到Flag<br>
+<img src="https://guokeya.github.io/post-images/1591630669717.png" alt="" loading="lazy"></p>
+<pre><code>import requests
+import string
+c = {
+'session':'854b2123-1894-40c6-bcc1-032d3a7da846'
+}
+s=string.printable
+result=requests.get(url='http://88.198.219.20:45041/__adminPortal',cookies=c).text
+data=result.split('&lt;h3 style=&quot;display:none&quot;&gt;')
+for i in data[1]:
+    if i in s:
+        print(i,end='')
+    else:
+        pass
+</code></pre>
 <p>取证题就会一个流量分析。。<br>
 WIFI数据包。拿rockyou爆破出密码<br>
 然后解密数据包导出PDF得到Flag</p>

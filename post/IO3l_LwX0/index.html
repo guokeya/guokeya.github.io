@@ -84,7 +84,7 @@
             <h1>Java学习笔记~~~</h1>
             <span class="meta">
             	Posted on
-              2020-05-08，11 min read
+              2020-05-08，12 min read
             </span>
           </div>
         </div>
@@ -445,13 +445,54 @@ Person.java</p>
 }
 </code></pre>
 <p>调用java API<br>
-java中的函数。需要导入</p>
+java中的函数。需要导入<br>
+利用scanner和switch进行简易的计算器</p>
 <pre><code>import java.util.*;
-public class test{
+public class index{
 	public static void main(String[] args){
+		Scanner sc =new Scanner(System.in);
+		int FirstNum = sc.nextInt();
+		int SecondNum = sc.nextInt();
+		String op = sc.next();
+		switch(op){
+			case &quot;+&quot;:
+				System.out.println(FirstNum+&quot;+&quot;+SecondNum+&quot;=&quot;+(FirstNum+SecondNum));
+				break;
+			case &quot;-&quot;:
+				System.out.println(FirstNum+&quot;-&quot;+SecondNum+&quot;=&quot;+(FirstNum-SecondNum));
+				break;
+			case &quot;*&quot;:
+				System.out.println(FirstNum+&quot;*&quot;+SecondNum+&quot;=&quot;+(FirstNum*SecondNum));
+				break;
+			case &quot;/&quot;:
+				System.out.println(FirstNum+&quot;/&quot;+SecondNum+&quot;=&quot;+(FirstNum/SecondNum));
+				break;
+			default :
+				System.out.println(&quot;Invaild op&quot;);
+		}
+
+	}
+} 
+</code></pre>
+<p>利用random和scanner猜数字</p>
+<pre><code>import java.util.*;
+public class index{
+	public static void main(String[] args){
+		Random r = new Random();
 		Scanner sc = new Scanner(System.in);
-		String  str = sc.next();
-		System.out.println(str);
+		int RandomNum = r.nextInt(100);
+		System.out.println(RandomNum);
+		while (true){
+			int input=sc.nextInt();
+			if (input &lt; RandomNum){
+				System.out.println(&quot;intpu &lt; RandomNum&quot;);
+			}else if (input &gt; RandomNum){
+				System.out.println(&quot;input &gt; RandomNum&quot;);
+			}else{
+				System.out.println(&quot;Bingo!!&quot;);
+				break;
+			}
+		}
 	}
 }
 </code></pre>
