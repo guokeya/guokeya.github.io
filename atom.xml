@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-06-07T16:03:11.259Z</updated>
+    <updated>2020-06-08T09:13:48.164Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,19 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[[RCTF2019]calcalcalc (盲注)]]></title>
+        <id>https://guokeya.github.io/post/xUUCnsZ57/</id>
+        <link href="https://guokeya.github.io/post/xUUCnsZ57/">
+        </link>
+        <updated>2020-06-08T06:52:56.000Z</updated>
+        <summary type="html"><![CDATA[<p>github下源码。<br>
+打开index.hbs。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>github下源码。<br>
+打开index.hbs。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[RACTF(Web)]]></title>
         <id>https://guokeya.github.io/post/sMTQt2i7B/</id>
@@ -114,12 +127,5 @@ require_once('lib/session.php');
         <link href="https://guokeya.github.io/post/EWi0aHBCb/">
         </link>
         <updated>2020-05-25T00:22:25.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[swpu 2019 web6(soap wsdl)]]></title>
-        <id>https://guokeya.github.io/post/EY20O7D3Q/</id>
-        <link href="https://guokeya.github.io/post/EY20O7D3Q/">
-        </link>
-        <updated>2020-05-20T06:17:13.000Z</updated>
     </entry>
 </feed>
