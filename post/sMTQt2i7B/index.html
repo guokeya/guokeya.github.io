@@ -88,7 +88,7 @@
             <h1>RACTF(Web)</h1>
             <span class="meta">
             	Posted on
-              2020-06-07，4 min read
+              2020-06-07，5 min read
             </span>
           </div>
         </div>
@@ -197,6 +197,43 @@ for i in data[1]:
 <p>取证题就会一个流量分析。。<br>
 WIFI数据包。拿rockyou爆破出密码<br>
 然后解密数据包导出PDF得到Flag</p>
+<p>杂项python。</p>
+<pre><code>import math
+
+x = 0.0
+z = 0.0
+flag_x = 10000000000000.0
+flag_z = 10000000000000.0
+print(&quot;Your player is at 0,0&quot;)
+print(&quot;The flag is at 10000000000000, 10000000000000&quot;)
+print(&quot;Enter your next position in the form x,y&quot;)
+print(&quot;You can move a maximum of 10 metres at a time&quot;)
+for _ in range(100):
+    print(f&quot;Current position: {x}, {z}&quot;)
+    try:
+        move = input(&quot;Enter next position(maximum distance of 10): &quot;).split(&quot;,&quot;)
+        new_x = float(move[0])
+        new_z = float(move[1])
+    except Exception:
+        continue
+    diff_x = new_x - x
+    diff_z = new_z - z
+    dist = math.sqrt(diff_x ** 2 + diff_z ** 2)
+    if dist &gt; 10:
+        print(&quot;You moved too far&quot;)
+    else:
+        x = new_x
+        z = new_z
+    if x == 10000000000000 and z == 10000000000000:
+        print(&quot;ractf{#####################}&quot;)
+        break
+</code></pre>
+<p>问题就出在这个float函数上<br>
+float函数支持nan,inf这些<br>
+如果传入字符。float后与x相减。依旧是nan<br>
+然后<code>math.sqrt(nan**2-diff_z**2)</code>依旧是nan<br>
+而字符串又始终比数字大。<br>
+<img src="https://guokeya.github.io/post-images/1591679014119.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
