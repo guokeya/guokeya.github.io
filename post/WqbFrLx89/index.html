@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
   <head>
       <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>过客</title>
+  <title>记录一次渗透测试。 | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="记录一次渗透测试。 | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,9 +25,15 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
+    <meta property="og:description" content="记录一次渗透测试。"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/WqbFrLx89/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="过客"/>
   </head>
   <body>
-     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
       <a class="navbar-brand" href="https://guokeya.github.io">过客</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,75 +71,94 @@
       </div>
     </div>
   </nav>
+  <!-- Page Header -->
   <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="site-heading">
-            <h1>过客</h1>
-            <span class="subheading">TEST</span>
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+        </span>
+            <h1>记录一次渗透测试。</h1>
+            <span class="meta">
+            	Posted on
+              2020-06-10，3 min read
+            </span>
           </div>
         </div>
       </div>
     </div>
   </header>
-      <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-       
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/cve-2019-0193apache-solr-yuan-cheng-ming-ling-zhi-xing-lou-dong-fu-xian/">
-            <h2 class="post-title">
-              CVE-2019-0193:Apache Solr远程命令执行漏洞复现
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>影响范围</strong><br>
-Apache Solr &lt; 8.2.0</p>
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/li-yong-huan-jing-bian-liang-ld_preload-rao-guo-php-disable_function-zhi-xing-xi-tong-ming-ling/">
-            <h2 class="post-title">
-              利用环境变量LD_PRELOAD绕过php disable_function执行系统命令
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>利用条件</strong><br>
-php未禁用putenv，mail函数</p>
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>一开始。ha1师傅发了个站。开冲<br>
+是个基于thinkphp的cms。<br>
+并没有关debug。访问admin就是后台<br>
+<img src="https://guokeya.github.io/post-images/1591775114428.png" alt="" loading="lazy"><br>
+搜了下是tpay cms 然而没啥洞。<br>
+通过访问根目录报错。知道这是thinkphp5.0.24也无果。<br>
+然后搜了下指纹。发现了同样用了这个CMS的站。用test.com表示<br>
+test.com同样没关debug。5.0.23可以RCE一把梭<br>
+直接curl反弹shell<br>
+开始很多端口。<br>
+<img src="https://guokeya.github.io/post-images/1591776081295.png" alt="" loading="lazy"></p>
+<pre><code>80        一开始的Web       www用户
+8888    宝塔Linux          root用户
+3306    Mysql       
+6379    Redis      Redis用户
+....
+</code></pre>
+<p>先搜集一波各种密码</p>
+<pre><code>Mysql           root            password1
+                     blog           password1
+Redis           空密码
+</code></pre>
+<p>这里很多密码都是同一个。尝试root密码。成功。欸。然后之前开了很多的端口。密码都是这个。<br>
+以root用户查看下端口</p>
+<pre><code>tcp        0      0 0.0.0.0:21              0.0.0.0:*               LISTEN      3493/pure-ftpd (SER 
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      3454/sshd           
+tcp        0      0 0.0.0.0:888             0.0.0.0:*               LISTEN      5615/nginx: master  
+tcp        0      0 0.0.0.0:8888            0.0.0.0:*               LISTEN      7698/python         
+tcp        0      0 0.0.0.0:12345           0.0.0.0:*               LISTEN      1217/sshd           
+tcp        0      0 0.0.0.0:345             0.0.0.0:*               LISTEN      694/su              
+tcp        0      0 127.0.0.1:25            0.0.0.0:*               LISTEN      4201/master         
+tcp        0      0 0.0.0.0:443             0.0.0.0:*               LISTEN      5615/nginx: master  
+tcp        0      0 0.0.0.0:65534           0.0.0.0:*               LISTEN      31571/su            
+tcp        0      0 0.0.0.0:11211           0.0.0.0:*               LISTEN      22561/memcached     
+tcp        0      0 0.0.0.0:6379            0.0.0.0:*               LISTEN      19542/redis-server  
+tcp        0      0 0.0.0.0:3308            0.0.0.0:*               LISTEN      3095/sshd           
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      5615/nginx: master  
+tcp        0      0 0.0.0.0:880             0.0.0.0:*               LISTEN      13794/python        
+tcp        0      0 0.0.0.0:8081            0.0.0.0:*               LISTEN      868/sshd            
+tcp        0      0 0.0.0.0:4433            0.0.0.0:*               LISTEN      13794/python        
+</code></pre>
+<p>在数据库中。有得到了一个用户名username1<br>
+。那么利用这个用户名username1+password1即可登陆这个服务器上的大部分Web。<br>
+他貌似还挂了frp。可以日内网<br>
+停手跑路跑路</p>
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">4 min read</span>
-            </p>
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/6IpnTQdmW/">
+              <span class="post-title">
+                ACTF up up(提权)&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
         </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        
-        <a class="btn btn-primary float-left" href="https://guokeya.github.io/page/15/">&larr; 上一页</a>
-        
-        
       </div>
     </div>
-  </div>
-
-  
-    <!-- Footer -->
+  </article>
+ <!-- Footer -->
   <footer>
     <div class="container">
       <div class="row">
@@ -213,3 +238,4 @@ php未禁用putenv，mail函数</p>
   })(this));</script>
   </body>
 </html>
+

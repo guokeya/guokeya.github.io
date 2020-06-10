@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-06-09T15:17:27.571Z</updated>
+    <updated>2020-06-10T08:24:03.279Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,13 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[记录一次渗透测试。]]></title>
+        <id>https://guokeya.github.io/post/WqbFrLx89/</id>
+        <link href="https://guokeya.github.io/post/WqbFrLx89/">
+        </link>
+        <updated>2020-06-10T07:39:54.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[ACTF up up(提权)]]></title>
         <id>https://guokeya.github.io/post/6IpnTQdmW/</id>
@@ -134,12 +141,5 @@ require_once('lib/session.php');
         <link href="https://guokeya.github.io/post/UwrwldTcP/">
         </link>
         <updated>2020-05-29T06:50:54.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[WHUCTF HappyGame]]></title>
-        <id>https://guokeya.github.io/post/ldU_lz95g/</id>
-        <link href="https://guokeya.github.io/post/ldU_lz95g/">
-        </link>
-        <updated>2020-05-26T15:38:41.000Z</updated>
     </entry>
 </feed>
