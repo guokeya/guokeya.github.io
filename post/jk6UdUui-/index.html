@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
   <head>
       <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>过客</title>
+  <title>Windows下参数污染跨目录执行文件 | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="Windows下参数污染跨目录执行文件 | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,9 +25,15 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
+    <meta property="og:description" content="Windows下参数污染跨目录执行文件"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/jk6UdUui-/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="过客"/>
   </head>
   <body>
-     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
       <a class="navbar-brand" href="https://guokeya.github.io">过客</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,96 +71,94 @@
       </div>
     </div>
   </nav>
+  <!-- Page Header -->
   <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="site-heading">
-            <h1>过客</h1>
-            <span class="subheading">TEST</span>
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>Windows下参数污染跨目录执行文件</h1>
+            <span class="meta">
+            	Posted on
+              2020-06-11，2 min read
+            </span>
           </div>
         </div>
       </div>
     </div>
   </header>
-      <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-       
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/redis-rce-lou-dong-fu-xian/">
-            <h2 class="post-title">
-              Redis RCE 漏洞复现
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>影响范围</strong><br>
-Redis 4.x-Redis 5.x 未授权利用</p>
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">1 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/cve-2019-0193apache-solr-yuan-cheng-ming-ling-zhi-xing-lou-dong-fu-xian/">
-            <h2 class="post-title">
-              CVE-2019-0193:Apache Solr远程命令执行漏洞复现
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>影响范围</strong><br>
-Apache Solr &lt; 8.2.0</p>
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>原文链接</p>
+<pre><code>https://hackingiscool.pl/cmdhijack-command-argument-confusion-with-path-traversal-in-cmd-exe
+</code></pre>
+<!-- more -->
+<p>大致意思就是当你是cmd.exe /c执行命令的时候</p>
+<pre><code>cmd.exe -c &quot;ping 127.0.0.1/../../../../../../../../windows/system32/ipconfig.exe&quot;
+ping 127.0.0.1被当作一个目录。然后../到其他目录执行exe
+最后就变成了cmd.exe -c &quot;windows/system32/ipconfig.exe&quot;
+成功执行了ipconfig.exe
+</code></pre>
+<h1 id="开始复现">开始复现</h1>
+<p>服务器配置：Server2012+phpstudy2018(PHP7.2-nts+Nginx)<br>
+index.php</p>
+<pre><code>&lt;?php
+if(isset($_POST['host'])){
+	$host=$_POST['host'];
+	$command=escapeshellcmd(&quot;dir $host&quot;);
+	echo system($command);
+}else{
+	echo &quot;No host specified.&quot;;
+}
+</code></pre>
+<p>利用escapeshellcmd函数。对所有可能产生命令注入的符号进行转义<br>
+然后执行dir 拼接<br>
+<img src="https://guokeya.github.io/post-images/1591806551261.png" alt="" loading="lazy"><br>
+当我们输入恶意的payload。成功跳出计算器<br>
+<img src="https://guokeya.github.io/post-images/1591806591386.png" alt="" loading="lazy"><br>
+具体执行的就是<code>windows/system32/calc.exe</code><br>
+C盘下存在很多exe<br>
+<img src="https://guokeya.github.io/post-images/1591806753546.png" alt="" loading="lazy"><br>
+system32目录下主要是</p>
+<pre><code>cmd.exe             会创建一个cmd进程
+calc.exe              弹计算器
+systeminfo.exe   systeminfo命令
+ipconfig.exe       ipconfig命令
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1591806885023.png" alt="" loading="lazy"><br>
+并且。他可以执行任意目录的可执行文件<br>
+windows下又有exe和com两种可执行文件。只要你知道目录。想办法把文件传上去<br>
+就可以跨目录执行exe。比如自己写的C语言程序。Msf木马等。反弹shell<br>
+<img src="https://guokeya.github.io/post-images/1591807046111.png" alt="" loading="lazy"></p>
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/li-yong-huan-jing-bian-liang-ld_preload-rao-guo-php-disable_function-zhi-xing-xi-tong-ming-ling/">
-            <h2 class="post-title">
-              利用环境变量LD_PRELOAD绕过php disable_function执行系统命令
-            </h2>
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/WqbFrLx89/">
+              <span class="post-title">
+                记录一次渗透测试。&rarr;
+              </span>
             </a>
-            <h3 class="post-subtitle">
-              <p><strong>利用条件</strong><br>
-php未禁用putenv，mail函数</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">4 min read</span>
-            </p>
+          </p>
+        
+        <div class="comment">
+          
         </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        
-        <a class="btn btn-primary float-left" href="https://guokeya.github.io/page/15/">&larr; 上一页</a>
-        
-        
       </div>
     </div>
-  </div>
-
-  
-    <!-- Footer -->
+  </article>
+ <!-- Footer -->
   <footer>
     <div class="container">
       <div class="row">
@@ -234,3 +238,4 @@ php未禁用putenv，mail函数</p>
   })(this));</script>
   </body>
 </html>
+
