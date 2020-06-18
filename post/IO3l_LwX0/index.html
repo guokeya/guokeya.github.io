@@ -84,7 +84,7 @@
             <h1>Java学习笔记~~~</h1>
             <span class="meta">
             	Posted on
-              2020-05-08，12 min read
+              2020-05-08，15 min read
             </span>
           </div>
         </div>
@@ -559,6 +559,99 @@ public class seri{
 被static修饰的成员变量不能被序列化。序列化的都是对象<br>
 transient关键字:瞬态关键字<br>
 加了transient关键字。就不会被反序列化。</p>
+<p>ArrayList在java.util.ArrayList包<br>
+表示集合。一般的数组长度不能随意变化。<br>
+Arraylist可以随意变化长度。后面有个<code>&lt;E&gt;</code><br>
+表示泛型。就是只能是统一的类型。比如String，int</p>
+<pre><code>import java.util.ArrayList;
+//导入包
+public class main{
+	public static void main(String[] args){
+        //new一个ArrayList对象。类型都是String类型。()默认大小为10。
+		ArrayList&lt;String&gt; list = new ArrayList&lt;&gt;();
+        //用add添加数据。只能是String类型
+		list.add(&quot;test&quot;);
+		list.add(&quot;test2&quot;);
+		System.out.println(list);
+	}
+}
+</code></pre>
+<p><code>https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html</code>手册</p>
+<pre><code>import java.util.ArrayList;
+public class main{
+	public static void main(String[] args){
+		ArrayList&lt;String&gt; list = new ArrayList&lt;&gt;();
+		list.add(&quot;test&quot;);
+		list.add(&quot;test2&quot;);
+		list.add(&quot;test3&quot;);
+		String GetData=list.get(1);
+		System.out.println(&quot;数组中取出的字符为&quot;+GetData);
+		String RemoveData=list.remove(1);
+		System.out.println(&quot;数组中删除的字符为&quot;+RemoveData);
+	}
+}
+</code></pre>
+<p>遍历集合</p>
+<pre><code>import java.util.ArrayList;
+public class main{
+	public static void main(String[] args){
+		ArrayList&lt;String&gt; list = new ArrayList&lt;&gt;();
+		list.add(&quot;test&quot;);
+		list.add(&quot;test2&quot;);
+		list.add(&quot;test3&quot;);
+		for(int i=0;i&lt;list.size();i++){
+			System.out.println(list.get(i));
+		}
+	}
+}
+</code></pre>
+<p>String是引用类型。基本类型需要用到包装类</p>
+<pre><code>基本类型                    包装类
+byte                            Byte
+short                           Short
+int                                Integer
+long                             Long
+float                             Float
+double                         Double
+char                              Character
+boolean                        Boolean
+</code></pre>
+<pre><code>import java.util.ArrayList;
+public class main{
+	public static void main(String[] args){
+		ArrayList&lt;Integer&gt; list = new ArrayList&lt;&gt;();
+		list.add(1);
+		list.add(2);
+		list.add(3);
+		for(int i=0;i&lt;list.size();i++){
+			int GetData=list.get(i);
+            //包装类后。类型就用基本类型就行了
+			System.out.println(GetData);
+		}
+	}
+}
+</code></pre>
+<p>arraylist存储对象</p>
+<pre><code>import java.util.ArrayList;
+public class main{
+	public static void main(String[] args){
+		stu s=new stu();
+		s.setname(&quot;test&quot;);
+		s.setage(190);
+                stu s2=new stu();
+                s.setname(&quot;test2&quot;);
+                s.setage(180);
+
+		ArrayList&lt;stu&gt; stuclass = new ArrayList&lt;&gt;();
+		stuclass.add(s);
+		stuclass.add(s2);
+		System.out.println(stuclass);
+		stu result = stuclass.get(0);
+		System.out.println(result.getname());
+		System.out.println(result.getage());
+	}
+}
+</code></pre>
 
           
           <p class="next-post">下一篇：

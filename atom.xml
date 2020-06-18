@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-06-16T13:08:23.447Z</updated>
+    <updated>2020-06-18T09:02:20.036Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,13 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[Connect-The-Dots 靶机渗透]]></title>
+        <id>https://guokeya.github.io/post/mT80JFOVo/</id>
+        <link href="https://guokeya.github.io/post/mT80JFOVo/">
+        </link>
+        <updated>2020-06-18T08:34:27.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[natraj 靶机渗透]]></title>
         <id>https://guokeya.github.io/post/9REuNTopQ/</id>
@@ -93,19 +100,6 @@
         <summary type="html"><![CDATA[<p>我们输入的东西。管理员会给你点赞</p>
 ]]></summary>
         <content type="html"><![CDATA[<p>我们输入的东西。管理员会给你点赞</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[RCTF2019]calcalcalc (盲注)]]></title>
-        <id>https://guokeya.github.io/post/xUUCnsZ57/</id>
-        <link href="https://guokeya.github.io/post/xUUCnsZ57/">
-        </link>
-        <updated>2020-06-08T06:52:56.000Z</updated>
-        <summary type="html"><![CDATA[<p>github下源码。<br>
-打开index.hbs。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>github下源码。<br>
-打开index.hbs。</p>
 ]]></content>
     </entry>
 </feed>

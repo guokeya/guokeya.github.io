@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-       <meta http-equiv="content-type" content="text/html; charset=utf-8">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta content="yes" name="apple-mobile-web-app-capable" />
   <meta content="black" name="apple-mobile-web-app-status-bar-style" />
@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>标签列表 | 过客</title>
+  <title>Connect-The-Dots 靶机渗透 | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="标签列表 | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="Connect-The-Dots 靶机渗透 | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,6 +25,11 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
+    <meta property="og:description" content="Connect-The-Dots 靶机渗透"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/mT80JFOVo/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="过客"/>
   </head>
   <body>
   	<!-- Navigation -->
@@ -66,81 +71,92 @@
       </div>
     </div>
   </nav>
-<!-- Page Header -->
+  <!-- Page Header -->
   <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-            <h1 class="tag-tl">Tags</h1>
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/EfzSPkBWE/" class="tag">渗透测试</a>
+            
+        </span>
+            <h1>Connect-The-Dots 靶机渗透</h1>
+            <span class="meta">
+            	Posted on
+              2020-06-18，2 min read
+            </span>
           </div>
         </div>
       </div>
     </div>
   </header>
-  <div class="container">
-    <div class="row">
-     
-      <div class="col-lg-8 col-md-10 mx-auto">
-       
-           <div class="post-preview tag-list">
-          <a href="https://guokeya.github.io/tag/EfzSPkBWE/" class="tag">
-              渗透测试
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>nmap扫一波端口<br>
+<img src="https://guokeya.github.io/post-images/1592469309248.png" alt="" loading="lazy"><br>
+可以看到。这里开了个21端口。<br>
+不能匿名登陆。先放着<br>
+还有个2049.这个是NFS的服务端口。测试存在未授权<br>
+<img src="https://guokeya.github.io/post-images/1592469800941.png" alt="" loading="lazy"><br>
+这边文件是靶机上所属用户的UID的。。只能知道他存在用户。<br>
+本机有1000UID的用户。名字就是本机的用户<br>
+继续看80<br>
+dirb下发现了<br>
+<img src="https://guokeya.github.io/post-images/1592469909789.png" alt="" loading="lazy"><br>
+backups。。是个视频<br>
+images图片<br>
+其他就是apache的默认文档<br>
+这里还存在index.htm和index.html看看<br>
+在index.htm中有个注释。是index.html没有的</p>
+<pre><code>&lt;!-- WIP since browser keeps on hanging due to some unknown resource consumption. Need to figure it out. --&gt;
+&lt;!-- &lt;script type=&quot;text/javascript&quot; src=&quot;../../mysite/register.html&quot;&gt;&lt;/script&gt; --&gt;
+</code></pre>
+<p>这里得到新的目录。依旧存在目录遍历<br>
+<img src="https://guokeya.github.io/post-images/1592470026194.png" alt="" loading="lazy"><br>
+在css文件中。找到jsfuck<br>
+<img src="https://guokeya.github.io/post-images/1592470062688.png" alt="" loading="lazy"><br>
+得到了密码TryToGuessThisNorris@2k19<br>
+看到这密码。还以为用户名Norris。密码2k19。。<br>
+再去FTP爆破下。发现norris用户存在。<br>
+ssh 练上去<br>
+在家目录的ftp/files发现很多bak文件。想移到web目录的。偶然看见web目录有个.swp泄露<br>
+<img src="https://guokeya.github.io/post-images/1592470362747.png" alt="" loading="lazy"><br>
+下下来。得到morris用户密码<br>
+最后就是提权了<br>
+<code>https://nxnjz.net/2018/08/an-interesting-privilege-escalation-vector-getcap</code><br>
+这里讲到了一个新的东西。setcap<br>
+这个setcap功能。主要是为了分离root用户的特权<br>
+比如。某个程序不受读权限限制。某个程序不受XX限制<br>
+感觉和SUID差不多。但是SUID是执行的时候以XX用户执行。<br>
+这个是执行的时候就不受限制<br>
+<code>https://www.cnblogs.com/nf01/articles/10418141.html</code><br>
+这个靶机中。就给tar设置了cap_dac_override。tar就具有了RWX的权限。<br>
+那么我们就可以通过tar直接备份root<br>
+拿到flag<br>
+<img src="https://guokeya.github.io/post-images/1592470903925.png" alt="" loading="lazy"></p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/9REuNTopQ/">
+              <span class="post-title">
+                natraj 靶机渗透&rarr;
+              </span>
             </a>
-        </div>
+          </p>
         
-           <div class="post-preview tag-list">
-          <a href="https://guokeya.github.io/tag/CTF/" class="tag">
-              CTF
-            </a>
+        <div class="comment">
+          
         </div>
-        
-           <div class="post-preview tag-list">
-          <a href="https://guokeya.github.io/tag/Web/" class="tag">
-              Web安全
-            </a>
-        </div>
-        
-           <div class="post-preview tag-list">
-          <a href="https://guokeya.github.io/tag/漏洞复现/" class="tag">
-              漏洞复现
-            </a>
-        </div>
-        
-           <div class="post-preview tag-list">
-          <a href="https://guokeya.github.io/tag/z6LGuzLFL/" class="tag">
-              杂项
-            </a>
-        </div>
-        
-           <div class="post-preview tag-list">
-          <a href="https://guokeya.github.io/tag/取证分析/" class="tag">
-              取证分析
-            </a>
-        </div>
-        
-           <div class="post-preview tag-list">
-          <a href="https://guokeya.github.io/tag/Pwn/" class="tag">
-              Pwn
-            </a>
-        </div>
-        
-           <div class="post-preview tag-list">
-          <a href="https://guokeya.github.io/tag/系统安全/" class="tag">
-              系统安全
-            </a>
-        </div>
-        
-           <div class="post-preview tag-list">
-          <a href="https://guokeya.github.io/tag/木马免杀/" class="tag">
-              木马免杀
-            </a>
-        </div>
-        
       </div>
     </div>
-  </div>
+  </article>
  <!-- Footer -->
   <footer>
     <div class="container">
@@ -221,3 +237,4 @@
   })(this));</script>
   </body>
 </html>
+
