@@ -84,7 +84,7 @@
             <h1>Java学习笔记~~~</h1>
             <span class="meta">
             	Posted on
-              2020-05-08，18 min read
+              2020-05-08，22 min read
             </span>
           </div>
         </div>
@@ -556,7 +556,31 @@ public class test{
 </code></pre>
 <p>继承<br>
 extends 用来继承类。<br>
-子类会继承 父类中的属性</p>
+子类会继承 父类中的属性和方法</p>
+<pre><code>System.out.println(num);//局部变量
+System.out.println(this.num);//本地的成员变量
+System.out.println(super.num);//父类的成员变量
+</code></pre>
+<p>如果子类继承的父类中。方法重名了。调用的时候会先从字类开始找。如果子类没这个方法。就去父类找。否则就直接调用子类的方法</p>
+<p>重写：<br>
+父类和子类都是同一个方法名。参数列表也相同。叫重写。否则。就是重载了。方法名相同。参数不相同<br>
+子类的返回值必须小于等于父类的返回值。最大的类是object。父类是object。那么子类的返回值只能比object小或者相等。</p>
+<pre><code>父类：
+public object method(){
+        return null;
+}
+子类：
+public String method(){
+    return null;
+}
+</code></pre>
+<p>子类方法的权限必须大于等于父类方法的权限<br>
+public&gt;protected&gt;(default)&gt;private</p>
+<pre><code>private int name;
+父类
+int name;
+//不写权限。就是default。子类
+</code></pre>
 <p>java的序列化和反序列化<br>
 首先。序列化的类。需要实现Serializable接口<br>
 实现这个接口。就先得导入包<br>
@@ -734,6 +758,201 @@ public class main{
 		System.out.println(result.getname());
 		System.out.println(result.getage());
 	}
+}
+</code></pre>
+<p>抽象类/方法</p>
+<pre><code>现有两个子类。猫/狗 
+它们都继承一个父类。动物
+想继承父类的eat方法。输出吃xx。
+如果是猫。那就输出吃🐟
+如果是狗。就输出吃骨头
+这就要用到抽象方法。
+</code></pre>
+<p>抽象方法。就是加上abstract关键字。然后去掉大括号。<br>
+抽象方法所在的类。必须是抽象类。<br>
+如何调用抽象类：<br>
+1.必须新建一个子类。然后继承这个抽象类。<br>
+2.然后重写抽象方法<br>
+3.最后new一个子类。调用抽象的方法<br>
+抽象类</p>
+<pre><code>public abstract class main{
+	public abstract void eat();
+}
+</code></pre>
+<p>子类</p>
+<pre><code>public class cat extends main{
+	public void eat(){
+		System.out.println(&quot;cat eat fish&quot;);
+	}
+}
+</code></pre>
+<p>调用</p>
+<pre><code>public class test{
+	public static void main(String[] args){
+		cat c=new cat();
+		c.eat();
+    }
+}
+</code></pre>
+<p>当抽象类有两个抽象方法。子类只重写了一个抽象方法的时候。那么子类还是抽象类。还得用子类的子类去重写这个抽象方法</p>
+<pre><code>public abstract class main{
+	public abstract void eat();
+    public abstract void sleep();
+}
+</code></pre>
+<pre><code>public abstract class cat extends main{
+	public void eat(){
+		System.out.println(&quot;cat eat fish&quot;);
+	}
+}
+</code></pre>
+<pre><code>public abstract class cat2 extends cat{
+	public void sleep(){
+		System.out.println(&quot;cat sleep&quot;);
+	}
+}
+</code></pre>
+<pre><code>public class test{
+	public static void main(String[] args){
+		cat2 c=new cat2();
+		c.eat();
+        c.sleep();
+    }
+}
+</code></pre>
+<p>手法红包案例<br>
+用户父类</p>
+<pre><code>public class User{
+	private String name;
+	private int money;
+	public User(){
+	}
+	public User(String name,int money){
+		this.name = name;
+		this.money = money;
+	}
+	public void show(){
+		System.out.println(&quot;My name is :&quot;+name+&quot; I Have &quot;+money);
+	}
+	public String getName(){
+		return name;
+	}
+	public void setName(String name){
+		this.name=name;
+	}
+	public int getMoney(){
+		return money;
+	}
+	public void setMoney(int money){
+		this.money=money;
+	}
+}
+</code></pre>
+<p>群主</p>
+<pre><code>import java.util.ArrayList;
+public class Manager extends User{
+	public Manager(){
+		
+	}
+	public Manager(String name,int money){
+		super(name,money);
+	}
+	public ArrayList&lt;Integer&gt; send(int totalMoney,int count){
+		ArrayList&lt;Integer&gt; redList = new ArrayList&lt;&gt;();
+		int leftMoney = super.getMoney();
+		if(totalMoney&gt;leftMoney){
+			System.out.println(&quot;yu e buzu &quot;);
+			return redList;
+		}
+		super.setMoney(leftMoney - totalMoney);
+		int avg = totalMoney / count;
+		int mod = totalMoney % count;
+		for (int i=0;i&lt;count-1;i++){
+			redList.add(avg);
+		}
+		int last = avg +mod;
+		redList.add(last);
+		return redList;
+	}
+}
+</code></pre>
+<p>用户类</p>
+<pre><code>import java.util.*;
+public class Member extends User{
+	public Member(){
+
+	}
+	public Member(String name,int money){
+		super(name,money);
+	}
+	public void receive(ArrayList&lt;Integer&gt; list){
+		int index = new Random().nextInt(list.size());
+		int delta = list.remove(index);
+		int money = super.getMoney();
+		super.setMoney(money + delta);
+	}
+}
+</code></pre>
+<p>main</p>
+<pre><code>import java.util.ArrayList;
+public class main{
+	public static void main(String[] args){
+		Manager manager = new Manager(&quot;admin&quot;,100);
+		Member A = new Member(&quot;A&quot;,0);
+		Member B = new Member(&quot;B&quot;,0);
+		Member C = new Member(&quot;C&quot;,0);
+		manager.show();
+		A.show();
+		B.show();
+		C.show();
+		ArrayList&lt;Integer&gt; redlist = manager.send(20,3);
+		A.receive(redlist);
+		B.receive(redlist);
+		C.receive(redlist);
+		manager.show();
+                A.show();
+                B.show();
+                C.show();
+	
+	}
+}
+</code></pre>
+<p>接口。<br>
+接口</p>
+<pre><code>public interface  Myinterface{
+	public abstract void method1();
+	public abstract void method2();
+	public abstract void method3();
+	public abstract void method4();
+}
+</code></pre>
+<p>重写接口</p>
+<pre><code>public class Myinterface2 implements Myinterface{
+	public void method1(){
+		System.out.println(&quot;this is 1&quot;);
+	}
+        public void method2(){
+		System.out.println(&quot;this is 2&quot;);
+        }
+        public void method3(){
+		System.out.println(&quot;this is 3&quot;);
+        }
+        public void method4(){
+		System.out.println(&quot;this is 4&quot;);
+        }
+
+}
+</code></pre>
+<p>调用</p>
+<pre><code>public class Main{
+	public static void main(String[] args){
+		Myinterface2 inter = new Myinterface2();
+		inter.method1();
+		inter.method2();
+		inter.method3();
+
+	}
+
 }
 </code></pre>
 
