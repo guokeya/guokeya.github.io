@@ -84,7 +84,7 @@
             <h1>Java学习笔记~~~</h1>
             <span class="meta">
             	Posted on
-              2020-05-08，22 min read
+              2020-05-08，25 min read
             </span>
           </div>
         </div>
@@ -952,8 +952,129 @@ public class main{
 		inter.method3();
 
 	}
-
 }
+</code></pre>
+<p>通常是一个接口。多个类实现。。如果我要更改接口的抽象方法。那么岂不是所有调用的类都要重新实现一遍新增的抽象方法。<br>
+这里可以用默认抽象方法。</p>
+<pre><code>public interface  Myinterface{
+	public abstract void method1();
+	public abstract void method2();
+	public abstract void method3();
+	public abstract void method4();
+    public default void methodDefault(){
+        System.out.println(&quot;默认方法&quot;);
+    }
+}
+</code></pre>
+<p>把abstract改为default。就成了默认方法。类中不用实现这个方法<br>
+调用的话。直接就</p>
+<pre><code>Myinterface1 m = new Myinterface1();
+Myinterface1.methodDefault();
+//Myinterface1类中并没有实现这个methodDefault方法。可以直接调用。应为是默认方法
+</code></pre>
+<p>接口的静态方法</p>
+<pre><code>public interface  Myinterface{
+    public static void methodstatic(){
+        System.out.println(&quot;默认方法&quot;);
+    }
+}
+</code></pre>
+<p>类</p>
+<pre><code>public class   Myinterface1 implements Myinterface{
+}
+</code></pre>
+<p>main</p>
+<pre><code>public class Main{
+	public static void main(String[] args){
+        Myinterface.methodstatic();
+        //直接接口名.静态方法。这样调用
+	}
+}
+</code></pre>
+<p>常量定义与使用</p>
+<pre><code>public interface Myinterface1{
+	public static final int num =10;
+}
+</code></pre>
+<pre><code>public class main{
+	public static void main(String[] args){
+		int num = Myinterface1.num;
+		System.out.println(num);
+	}
+}
+</code></pre>
+<p>java9中。接口的内容可以是</p>
+<pre><code>1。成员变量必须是常量。
+[public] [static] [final] 数据类型 常量名称 = 值;
+//[]表示可省略
+2。接口中最重要的是抽象方法
+[public] [abstract] 返回值类型 方法名称(参数列表){}
+实现类必须覆盖重写接口的所有抽象方法。除非实现类是抽象类。还得有一个实现类去实现抽象方法
+3。从Java 8开始。接口允许定义默认方法
+public default 返回值类型 方法名称(参数列表){}
+默认方法也可以被覆盖。以实现类为准。
+4。java8开始。接口允许定义静态方法
+public static final 返回值类型 方法名称(参数列表){}
+直接用接口名称调用
+5。从java9 开始。接口允许定义私有方法
+private 返回值类型 方法名称(参数列表){}
+//私有方法
+private static 返回值类型 方法名称(参数列表){}
+//静态私有方法
+private只有自己能调用。不能被实现类调用。
+</code></pre>
+<p>一个类可以实现多个接口。<br>
+定义两个接口</p>
+<pre><code>public interface MyinterfaceA{
+	public abstract void methodA();
+    public abstract void methodC();
+    public default void methoddefault(){
+            System.out.println(&quot;默认方法AAA&quot;);
+    }
+}
+</code></pre>
+<pre><code>public interface MyinterfaceB{
+	public abstract void methodB();
+    public abstract void methodC();
+    public default void methoddefault(){
+            System.out.println(&quot;默认方法BBB&quot;);
+    }
+}
+</code></pre>
+<p>实现两个接口</p>
+<pre><code>public class Myinterface implements MyinterfaceA,MyinterfaceB{
+	public void methodA(){
+		System.out.println(&quot;this is A&quot;);
+	}
+	public void methodB(){
+		System.out.println(&quot;this is B&quot;);
+	}
+    public void methodC(){
+		System.out.println(&quot;this is C&quot;);
+	}
+    public void methoddefault(){
+        System.out.println(&quot;重写两个接口的默认方法&quot;);
+    }
+}
+</code></pre>
+<p>调用</p>
+<pre><code>public class main{
+	public static void main(String[] args){
+		Myinterface A= new Myinterface();
+		A.methodA();
+		A.methodB();
+        A.methodC();
+	}
+}
+</code></pre>
+<p>如果两个接口里。都有同样的方法methodC。那么只需要实现一次就可以了<br>
+如果两个接口都设置了默认方法。那么接口实现的时候。就会冲突。又要执行A的默认方法又要执行B的默认方法。所以。我们还得重写一个默认方法</p>
+<pre><code>public class Zi extends Fu implements Myinterface{
+}
+==============================================
+Zi z = new Zi();
+z.method();
+//子类继承了父类。并且又实现了Myinterface接口。那么会优先调用父类的method方法
 </code></pre>
 
           
