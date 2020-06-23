@@ -84,7 +84,7 @@
             <h1>Java学习笔记~~~</h1>
             <span class="meta">
             	Posted on
-              2020-05-08，25 min read
+              2020-05-08，28 min read
             </span>
           </div>
         </div>
@@ -1075,6 +1075,104 @@ private只有自己能调用。不能被实现类调用。
 Zi z = new Zi();
 z.method();
 //子类继承了父类。并且又实现了Myinterface接口。那么会优先调用父类的method方法
+</code></pre>
+<p>多态。<br>
+一般new对象都是子类名 a = new 子类()<br>
+但是。多态有点不太一样。<br>
+它是父类 a = new 子类();<br>
+fu.java</p>
+<pre><code>public class fu{
+	int num = 10;
+	public void shownum(){
+		System.out.println(num);
+	}
+	public void method(){
+		System.out.println(&quot;methodfangfa&quot;);
+	}
+	public void methodfu(){
+		System.out.println(&quot;fuleifangfa&quot;);
+	}
+}
+</code></pre>
+<p>zi.java</p>
+<pre><code>public class zi extends fu{
+	int num = 200;
+	public void shownum(){
+		System.out.println(num);
+	}
+	public void method(){
+		System.out.println(&quot;zilei method fangfa&quot;);
+	}
+	public void methodzi(){
+		System.out.println(&quot;zileifangfa&quot;);
+	}
+}
+</code></pre>
+<p>main.java</p>
+<pre><code>public class main{
+	public static void main(String[] args){
+		fu z=new zi();
+		System.out.println(z.num);
+		z.shownum();
+        z.methodzi();//报错
+	}
+}
+</code></pre>
+<p>这里就一个口诀。<br>
+对于成员变量：编译看左边。运行看左边<br>
+对于成员方法：编译看左边。运行看右边<br>
+如果你左边编译不成功。就无法执行<br>
+在main.java中。new了一个zi类。<br>
+调用z的num变量。那么输出的却是fu类的变量。<br>
+因为它编译看左边。是fu类。存在这个num变量。然后编程成功。运行看左边。调用的fu类num变量<br>
+调用z的method方法。输出的是zi类的method方法。因为编译看左边。fu类中存在method方法。成功编译。然后运行看右边。调用子类的method方法<br>
+调用z的shownum。输出的是zi类的num变量。因为它调用的zi类的shownum。输出当前类的num。<br>
+调用z的methodzi。会报错。因为编译看左边。fu类没有这个methodzi方法。编译不通过。<br>
+调用z的methodfu。成功输出fu类的methodfu方法。因为编译。fu类中存在methodfu方法。调用zi类的methodfu方法。由于不存在。就会往父类去找。找到methodfu方法。从而调用</p>
+<p>对象的向上转型。<br>
+其实就是多态</p>
+<pre><code>动物类 a = new 猫类();
+这里动物类比猫类范围要大。就是从猫类(小)-&gt;动物类(大)。向上转型
+double num=100;
+就是从int转为double
+</code></pre>
+<p>向下还原。<br>
+由于之前的多态中。如果父类没有一个方法。而子类中有。那么是调用不了的。<br>
+这里用向下还原。使父类 a = new 子类();重新恢复成一个子类<br>
+Animal.java</p>
+<pre><code>public class Animal{
+	public void eat(){
+		System.out.println(&quot;eat gai eat's dongxi&quot;);
+	}
+}
+</code></pre>
+<p>Cat.java</p>
+<pre><code>public class Cat extends Animal{
+	public void eat(){
+		System.out.println(&quot;eat fish&quot;);
+	}
+	public void cat(){
+		System.out.println(&quot;cat is good&quot;);
+	}
+}
+</code></pre>
+<p>main.java</p>
+<pre><code>public class main{
+	public static void main(String[] args){
+		Animal animal = new Cat();
+		animal.eat();
+		Cat cat = (Cat) animal;
+        //子类名  xxx = (子类名) 原来的对象名
+		cat.cat();
+	}
+}
+</code></pre>
+<p>instanceof关键字</p>
+<pre><code>if (animal instanceof Cat){
+    //判断animal对象是不是本来的Cat
+    	Cat cat = (Cat) animal;
+		cat.cat();
+}
 </code></pre>
 
           
