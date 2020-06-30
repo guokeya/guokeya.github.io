@@ -84,7 +84,7 @@
             <h1>Java学习笔记~~~</h1>
             <span class="meta">
             	Posted on
-              2020-05-08，28 min read
+              2020-05-08，35 min read
             </span>
           </div>
         </div>
@@ -1173,6 +1173,280 @@ Animal.java</p>
     	Cat cat = (Cat) animal;
 		cat.cat();
 }
+</code></pre>
+<p>类的toString方法。和PHP差不多。就是把类当字符串的时候会调用。可以重写一下</p>
+<pre><code>public class Person{
+	private String name;
+	private int age;
+	public Person(){
+	}
+	public String toString(){
+		return &quot;Class name is :&quot;+this.getClass().getName()+&quot; and name is &quot;+this.name+&quot; age is &quot;+this.age;
+	}
+	public Person(String name,int age){
+		this.name=name;
+		this.age=age;
+	}
+	public void Getinfo(){
+		System.out.println(&quot;My name is &quot;+this.name+&quot; and My Age is &quot;+this.age);
+	}
+}
+</code></pre>
+<pre><code>public class main{
+	public static void main(String[] args){
+		Person p =new  Person(&quot;admin&quot;,19);
+		p.Getinfo();
+		System.out.println(p);
+	}
+}
+</code></pre>
+<p>使用equal比较两个对象</p>
+<pre><code>public class main{
+	public static void main(String[] args){
+        Person p1 = new Person('name',16);
+        Person p2 = new Person('test2',1);
+        System.out.println(p1.equals(p2));
+        //False
+        //java中。基本数据类型。比较的是值。而引用数据类型。比较的是地址。
+        //new的一个新类。地址必定是不一样的。所以不相等
+	}
+}
+</code></pre>
+<p>如果想实现。值相同。就返回True。那么可以重写equals方法</p>
+<pre><code>upblic boolean equals(Object obj){
+        Person p = (Person)obj;
+        //强制转换。
+        boolean b = this.name.equals(p.name)&amp;&amp;this.age==p.age
+        //当前类的name和age值和传入对象的name和age进行比较
+        return b;
+}
+</code></pre>
+<p>Objects.equals(a1,a2)。可以判断值是否相同<br>
+如果a1==a2就返回True，否则。判断不是null。再进行比较<br>
+用StringBuilder。构造字符串</p>
+<pre><code>public class main{
+	public static void main(String[] args){
+		StringBuilder str1 = new StringBuilder();
+        //可以直接把参数当作形参传入
+		str1.append(&quot;abc&quot;).append(12);
+        //利用append传入字符串拼接。abc12。append方法返回的是this对象。也就是StringBuilder对象
+		System.out.println(str1);
+        String str2 =bu.toString();
+        System.out.println(str2);
+	}
+}
+</code></pre>
+<p>Java使用JDBC</p>
+<pre><code>JDBC就相当于PHP中PDO技术。可以连接各种数据库。
+首先就是下个JDBC的jar文件。
+然后。目录如下
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1593429846718.png" alt="" loading="lazy"></figure>
+<pre><code>package cn.itcast.jdbc;
+
+import com.mysql.cj.protocol.x.StatementExecuteOkMessageListener;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class jdbcDemo {
+    public static void main(String[] args) throws Exception{
+        //Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;);
+        //注册驱动.在java5后。他会自动注册。可写可不写
+        Statement stmt = null;
+        Connection conn = null;
+        //先定义两个类。用来保存连接类。否则。进入try catch。作用域不同。无法相互调用
+        try{
+            conn = DriverManager.getConnection(&quot;jdbc:mysql://192.168.0.128:3306/test?serverTimezone=GMT%2B8&quot;,&quot;root&quot;,&quot;cnm13579.&quot;);
+            //获取数据库连接对象。jdbc:数据库类型://IP:端口/数据库名?时间          用户名     密码
+            //String sql = &quot;update user set password='tetetes' where username='admin'&quot;;
+            String sql = &quot;delete from user where username='guoke'&quot;;
+            //定义sql语句
+            stmt= conn.createStatement();
+            //stmt是一个用来执行sql的对象
+            int count = stmt.executeUpdate(sql);
+            //调用执行sql的对象中的executeUpdate这个方法。sql作为参数传入。返回值是个int。印象行数
+            if (count&gt;0){
+                System.out.println(&quot;影响行数：&quot;+count);
+                //通过判断返回值。判断程序是否执行成功
+            }else{
+                System.out.println(&quot;未成功更新。请检查操作&quot;);
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+            //如果报错就输出
+        }finally {
+            //没报错。就开始释放连接。注意：这里报错了程序还会正常执行。但是连接对象缺没正常赋值。所以得先判断下是否赋值。再释放
+            if (stmt !=null){
+                //万一有啥特殊原因。释放失败就打印错误信息
+                try{
+                    stmt.close();
+                }catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            if (conn !=null){
+                try {
+                    conn.close();
+                }catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<p>下面写下select的结果集<br>
+用的是executeQuery函数</p>
+<pre><code>package cn.itcast.jdbc;
+
+
+import java.sql.*;
+
+public class jdbcDemo2 {
+    public static void main(String[] args) throws Exception{
+        Statement stmt = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        try{
+            conn = DriverManager.getConnection(&quot;jdbc:mysql://192.168.0.128:3306/test?serverTimezone=GMT%2B8&quot;,&quot;root&quot;,&quot;cnm13579.&quot;);
+            String sql = &quot;select * from user&quot;;
+            //定义了sql语句
+            stmt= conn.createStatement();
+            //创建执行sql语句的对象。
+            rs = stmt.executeQuery(sql);
+            //调用sql语句的函数。执行查询类的sql语句
+            while(rs.next()){
+                //rs.next()用来将游标向下移动。默认是字段那一行的。然后next到数据的一行。就可以接受数据了。并且他的返回值是下一行的数据
+                String username = rs.getString(&quot;username&quot;);
+                //getString。用于获取String类型的值。还有getInt执行。用于获取ID啥的
+                String password = rs.getString(&quot;password&quot;);
+                System.out.println(&quot;username is &quot; + username + &quot; and you password is &quot; + password);
+                //返回结果
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            if (stmt !=null){
+                try{
+                    stmt.close();
+                }catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            if (conn !=null){
+                try {
+                    conn.close();
+                }catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<p>使用prepare和jdbc工具类。简化查询</p>
+<pre><code>package cn.itcast.jdbc;
+
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URL;
+import java.sql.*;
+import java.util.Properties;
+
+public class jdbcutils {
+    private static String url;
+    private static String username;
+    private static String password;
+    private static String driver;
+    private static Connection conn;
+    private static PreparedStatement stmt;
+    private static String sql;
+    private static ResultSet rs;
+    static {
+        try{
+            ClassLoader classloader = jdbcutils.class.getClassLoader();
+            URL res = classloader.getResource(&quot;jdbc.properties&quot;);
+            String Path = res.getPath();
+            Properties pro = new Properties();
+            pro.load(new FileReader(Path));
+            url = pro.getProperty(&quot;url&quot;);
+            username = pro.getProperty(&quot;username&quot;);
+            password = pro.getProperty(&quot;password&quot;);
+            driver = pro.getProperty(&quot;driver&quot;);
+            Class.forName(driver);
+        }catch(IOException e){
+            e.printStackTrace();
+        }catch(ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    private static Connection Getconn() throws Exception{
+        return DriverManager.getConnection(url,username,password);
+    }
+
+    public static void dbclose()throws Exception{
+        if (conn != null) {
+            try {
+                conn.close();
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        if (stmt != null) {
+            try {
+                stmt.close();
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        System.out.println(&quot;成功关闭数据库连接&quot;);
+    }
+    public static boolean UserLogin(String username, String password) throws Exception{
+        sql = &quot;select * from user where username=? and password=?&quot;;
+        conn = Getconn();
+        stmt = conn.prepareStatement(sql);
+        stmt.setString(1,username);
+        stmt.setString(2,password);
+        rs = stmt.executeQuery();
+        return rs.next();
+    }
+}
+</code></pre>
+<pre><code>package cn.itcast.jdbc;
+
+
+import java.sql.*;
+import java.util.Scanner;
+
+public class jdbcDemo3 {
+    public static void main(String[] args) throws Exception{
+        boolean rs = false;
+        jdbcutils jdbcutil= new jdbcutils();
+        String username=null;
+        String password=null;
+        Scanner sc = new Scanner(System.in);
+        try{
+            System.out.println(&quot;请输入用户名&quot;);
+            username = sc.nextLine();
+            System.out.println(&quot;请输入密码&quot;);
+            password = sc.nextLine();
+            rs = jdbcutil.UserLogin(username,password);
+            if(rs){
+                System.out.println(&quot;登陆成功&quot;);
+            }else{
+                System.out.println(&quot;登陆失败&quot;);
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            jdbcutil.dbclose();
+        }
+    }
+}
+
 </code></pre>
 
           
