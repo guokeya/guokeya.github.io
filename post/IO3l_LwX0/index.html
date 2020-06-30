@@ -84,7 +84,7 @@
             <h1>Java学习笔记~~~</h1>
             <span class="meta">
             	Posted on
-              2020-05-08，35 min read
+              2020-05-08，37 min read
             </span>
           </div>
         </div>
@@ -1448,6 +1448,51 @@ public class jdbcDemo3 {
 }
 
 </code></pre>
+<p>有三种方式。获取Class对象</p>
+<pre><code>        Class cls = Class.forName(&quot;com.company.Person&quot;);
+        System.out.println(cls);
+        Class cls2 = Person.class;
+        System.out.println(cls2);
+        Person p = new Person();
+        Class cls3 = p.getClass();
+        System.out.println(cls3);
+</code></pre>
+<p>并且。cls<mark>cls2</mark>cls3<br>
+因为Class对象。只会加载一次。所以他引用的地址都是一样的<br>
+而new对象。他会重新创建一个内存空间。应用地址是不相同</p>
+<p>Tomcat部署Web应用</p>
+<pre><code>1。直接把文件夹。拖到webapps。然后访问/文件夹名/index.html   或者。压缩。改名war。然后直接拖webapps。会自动解压文件。
+2。配置conf/server.xml。加入
+&lt;Context docBase=&quot;C:\Users\Administrator\Desktop\JAVAWEB&quot; path=&quot;/hello&quot; /&gt;
+访问/hello/index.htlm即可。就是虚拟目录。把一个目录连接到web的hello
+3。conf\Catalina\localhost\test.xml
+内容为
+&lt;Context docBase=&quot;C:\Users\Administrator\Desktop\JAVAWEB&quot;/&gt;
+访问test/index.html即可。如果是abc.xml。就访问abc/index.html
+</code></pre>
+<p>目录结构</p>
+<pre><code>Web项目根目录
+        Web-INF目录
+                web.xml：web项目的核心配置文件
+                classes目录：放置classes字节码
+                lib目录：放置依赖的jar包
+</code></pre>
+<p>编写servlet<br>
+首先。在src下新建一个cn.itcast.web.servlet<br>
+然后新建一个ServletDemo1。实现servlet接口<br>
+重写当中的server方法<br>
+<img src="https://guokeya.github.io/post-images/1593516563162.png" alt="" loading="lazy"><br>
+修改WEB-INF下的web.xml<br>
+<img src="https://guokeya.github.io/post-images/1593516622334.png" alt="" loading="lazy"><br>
+访问localhost/test/demo1。等于访问ServletDemo1类中的server方法<br>
+1。访问demo1<br>
+2。在web.xml中url-pattern中查找。是否有/demo1这个路径<br>
+3。找到/demo1对应的servetname为demo1，然后再去上面的servelet中查找。找到对应的demo1。<br>
+再找到cn.itcast.web.servet.ServletDemo1。从而进入这个类<br>
+4。将类加载进内存。Class.forName(&quot;xx&quot;)<br>
+5。创建对象。并且调用server方法。<br>
+由于类实现接口必须重写方法。不然编译时不通过。所以这里可以直接调用server方法<br>
+<img src="https://guokeya.github.io/post-images/1593517627178.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
