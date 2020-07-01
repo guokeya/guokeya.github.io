@@ -84,7 +84,7 @@
             <h1>Java学习笔记~~~</h1>
             <span class="meta">
             	Posted on
-              2020-05-08，37 min read
+              2020-05-08，43 min read
             </span>
           </div>
         </div>
@@ -1492,7 +1492,231 @@ public class jdbcDemo3 {
 4。将类加载进内存。Class.forName(&quot;xx&quot;)<br>
 5。创建对象。并且调用server方法。<br>
 由于类实现接口必须重写方法。不然编译时不通过。所以这里可以直接调用server方法<br>
-<img src="https://guokeya.github.io/post-images/1593517627178.png" alt="" loading="lazy"></p>
+<img src="https://guokeya.github.io/post-images/1593517627178.png" alt="" loading="lazy"><br>
+我们可以实现继承其他实现Servet接口的类。<br>
+GenericServlet：将Servet接口中其他的方法都做了空实现。就剩下server方法。用于自己重写<br>
+HTTPServet：对HTTP协议的封装。继承与GenericServet。自己可以重写doGet和doPost</p>
+<pre><code>package cn.itcast.web.servlet;
+
+import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+@WebServlet(&quot;/demo3&quot;)
+public class ServletDemo3 extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //super.doGet(req, resp);
+        System.out.println(&quot;当前执行的是GET方法&quot;);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //super.doPost(req, resp);
+        System.out.println(&quot;当前执行的是POST方法&quot;);
+    }
+}
+</code></pre>
+<p>路径配置</p>
+<pre><code>@WebServlet(&quot;/demo3&quot;)
+访问/demo3即可
+@WebServlet(&quot;/demo/3&quot;)
+访问/demo/3即可
+@WebServlet(&quot;*&quot;)
+那么访问任意页面。都是当前的类。除非。访问的地址已经注册。通配符的优先级低
+@WebServlet(&quot;*.php&quot;)
+访问任何路径下任何php的后缀。都会访问当前类。注意不能加/
+</code></pre>
+<p>request对象的使用</p>
+<pre><code>package cn.itcast.request;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Enumeration;
+
+@WebServlet(&quot;/RequestDemo1&quot;)
+public class RequestDemo1 extends HttpServlet {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println(&quot;请求模式是：&quot;+request.getMethod());
+        System.out.println(&quot;请求虚拟路径是：&quot;+request.getContextPath());
+        System.out.println(&quot;请求serlet路径是：&quot;+request.getServletPath());
+        System.out.println(&quot;请求的参数是：&quot;+request.getQueryString());
+        System.out.println(&quot;请求URI是：&quot;+request.getRequestURI());
+        System.out.println(&quot;请求URL是：&quot;+request.getRequestURL());
+        System.out.println(&quot;请求协议是：&quot;+request.getProtocol());
+        System.out.println(&quot;请求的客户IP是：&quot;+request.getRemoteAddr());
+        System.out.println(&quot;请求头的Host是：&quot;+request.getHeader(&quot;Host&quot;));
+        Enumeration&lt;String&gt; header = request.getHeaderNames();
+        //获取请求头所有name值
+        while(header.hasMoreElements()){
+            //判断是否还有其他元素
+            String name = header.nextElement();
+            //获取下一个元素
+            String value = request.getHeader(name);
+            //通过元素获取header
+            System.out.println(name+&quot;：&quot;+value);
+        }
+    }
+}
+</code></pre>
+<p>判断Referer和UA</p>
+<pre><code>package cn.itcast.request;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+@WebServlet(&quot;/RequestDemo2&quot;)
+public class RequestDemo2 extends HttpServlet {
+    String Referer = null;
+    String RemoteIP = null;
+    String UA = null;
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Referer = req.getHeader(&quot;referer&quot;);
+        RemoteIP = req.getRemoteAddr();
+        if (req.getHeader(&quot;user-agent&quot;).contains(&quot;Chrome&quot;)){
+            UA = &quot;谷歌浏览器&quot;;
+        }else{
+            UA = &quot;暂定火狐浏览器(:还没写&quot;;
+        }
+        if(Referer==null) {
+            resp.setContentType(&quot;text/html;charset=utf-8&quot;);
+            resp.getWriter().write(&quot;非法访问&quot;);
+        }
+        if (Referer.contains(&quot;/test/index.jsp&quot;)){
+            resp.setContentType(&quot;text/html;charset=utf-8&quot;);
+            resp.getWriter().write(&quot;来自&quot;+Referer+&quot;的客户&lt;br /&gt;您的IP为：&quot;+RemoteIP+&quot;&lt;br /&gt;您的浏览器类型为：&quot;+UA);
+        }
+    }
+}
+</code></pre>
+<p>获取POST数据</p>
+<pre><code>    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        BufferedReader data = req.getReader();
+        String line = null;
+        while((line = data.readLine()) !=null){
+            System.out.println(line);
+        }
+    }
+</code></pre>
+<p>接受单个GET或POST参数的数据</p>
+<pre><code>package cn.itcast.request;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+import java.io.IOException;
+
+@WebServlet(&quot;/RequestDemo3&quot;)
+public class RequestDemo3  extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String[] data = req.getParameterValues(&quot;username&quot;);
+        for(String name:data){
+            System.out.println(name);
+        }
+        //获取所有值。在java中。username=1&amp;username=2。实际上传的是个数组。并不会覆盖值。在php语言中。只会接受后一个参数的值
+        //this.doPost(req,resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String username = null;
+        String password = null;
+        try{
+            username=req.getParameter(&quot;username&quot;);
+            password=req.getParameter(&quot;password&quot;);
+            if(username==null || password==null){
+                resp.setContentType(&quot;text/html;charset=utf-8&quot;);
+                resp.getWriter().write(&quot;用户名或密码不能为空&quot;);
+            }else {
+                resp.setContentType(&quot;text/html;charset=utf-8&quot;);
+                resp.getWriter().write(&quot;当前用户：&quot; + username + &quot;&lt;br /&gt;用户密码：&quot; + password);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+<p>接受所有参数的数据</p>
+<pre><code>    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Map&lt;String,String[]&gt; parameterMap = req.getParameterMap();
+        //定义Map的数据类型。String和String数组
+        Set&lt;String&gt; keyset = parameterMap.keySet();
+        //获取所有的键
+        for(String name:keyset){
+        //遍历键
+            String[] values = parameterMap.get(name);
+        //从数组中取出键对应的值
+            for(String value:values){
+        //遍历值。这里存值的时候都是[&quot;test&quot;]这种。数组类型传入的。所以遍历的时候都是数组。
+                System.out.println(name+&quot;：&quot;+value);
+            }
+        }
+    }
+</code></pre>
+<p>域内存值 and 转发<br>
+demo5</p>
+<pre><code>package cn.itcast.request;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+@WebServlet(&quot;/RequestDemo5&quot;)
+public class RequestDemo5 extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute(&quot;msg&quot;,&quot;Hello World&quot;);
+        req.getRequestDispatcher(&quot;/RequestDemo6&quot;).forward(req,resp);
+    }
+}
+</code></pre>
+<p>demo6</p>
+<pre><code>package cn.itcast.request;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+@WebServlet(&quot;/RequestDemo6&quot;)
+public class RequestDemo6 extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Object msg = req.getAttribute(&quot;msg&quot;);
+        System.out.println(msg);
+        removeAttribute(msg);
+    }
+}
+
+</code></pre>
 
           
           <p class="next-post">下一篇：
