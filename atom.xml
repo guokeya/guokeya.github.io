@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-07-01T13:57:20.252Z</updated>
+    <updated>2020-07-03T08:12:50.064Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,13 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[四川省安恒杯的一题nodejs(原型参数污染+VM逃逸)]]></title>
+        <id>https://guokeya.github.io/post/TNTpg4W40/</id>
+        <link href="https://guokeya.github.io/post/TNTpg4W40/">
+        </link>
+        <updated>2020-07-03T07:49:38.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[[Zer0pts2020]urlapp(CRLF+Redis)]]></title>
         <id>https://guokeya.github.io/post/mKSM0CA-A/</id>
@@ -72,12 +79,5 @@
         <link href="https://guokeya.github.io/post/9xxCZNo3L/">
         </link>
         <updated>2020-06-16T05:21:59.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Windows命令执行bypass]]></title>
-        <id>https://guokeya.github.io/post/54_P8boj9/</id>
-        <link href="https://guokeya.github.io/post/54_P8boj9/">
-        </link>
-        <updated>2020-06-12T13:20:56.000Z</updated>
     </entry>
 </feed>
