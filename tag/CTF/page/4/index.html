@@ -84,6 +84,48 @@
       <div class="col-lg-8 col-md-10 mx-auto">
        
         <div class="post-preview">
+          <a href="https://guokeya.github.io/post/PvC7m4Rig/">
+            <h2 class="post-title">
+              typecho反序列化复现
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p>之前在MRCTF还是WUST上有个typecho的反序列化来着。只做到了SSRF。现在来复现下</p>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-04-06</span>
+             <span>,</span>
+             <span class="post-stats">3 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/iG-_evz93/">
+            <h2 class="post-title">
+              [CISCN2019 总决赛 Day1 Web4]Laravel1(反序列化)
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p>u1s1。BUU一分题太顶了</p>
+<p>这题。看了好久WP的情况下才复现。。。<br>
+涉及类的知识有点多。命名空间。继承。接口。啥的</p>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-04-04</span>
+             <span>,</span>
+             <span class="post-stats">2 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
           <a href="https://guokeya.github.io/post/M776tFt3/">
             <h2 class="post-title">
               [PWNHUB 公开赛 2018]傻 fufu 的工作日(上传差异绕过)
@@ -410,71 +452,6 @@ show呢。是读取这个gif文件。</p>
             </h3>
           <p class="post-meta">
              <span class="time">2020-03-19</span>
-             <span>,</span>
-             <span class="post-stats">1 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/hz6_KR03h/">
-            <h2 class="post-title">
-              [GYCTF2020]Node Game(CRLF头部注入)
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>题目给出了源码</p>
-<pre><code>/
-接受action参数。如果没有就默认为index
-file=dirname+/template/+action+.png
-然后用pug进行渲染。可以理解为执行这个文件
-
-/file_upload
-定义了只能由127.0.0.1访问。并且是remoteaddress不能伪造
-那么得找一个SSRF的点
-文件上传。
-filepath=/uploads/+mimetype+/
-而mimetype可控。那么我们可以跨目录
-dir_file=dirname+filepath+filename
-那么我们可以构造任意路径文件写入
-
-/core
-接受一个q参数。然后对其进行黑名单检测
-然后对q输入的值进行请求。。
-当时知道这个点可以SSRF。但是不会构造数据包。。
-</code></pre>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-03-18</span>
-             <span>,</span>
-             <span class="post-stats">3 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/lbccyP8UU/">
-            <h2 class="post-title">
-              [BSidesCF 2020]Bulls23
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>给了一个流量包和网址。<br>
-分析流量包。<br>
-有三个URL</p>
-<pre><code>bash.org
-builts-23-04xxxxxxxxxxxxxxxx&amp;port=8888
-n-gate.com
-</code></pre>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-03-18</span>
              <span>,</span>
              <span class="post-stats">1 min read</span>
             </p>

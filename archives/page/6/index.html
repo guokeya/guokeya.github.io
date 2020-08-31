@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+       <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta content="yes" name="apple-mobile-web-app-capable" />
   <meta content="black" name="apple-mobile-web-app-status-bar-style" />
@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>安恒2020年元旦月赛(CRC32) | 过客</title>
+  <title>归档 | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="安恒2020年元旦月赛(CRC32) | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="归档 | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,11 +25,6 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
-    <meta property="og:description" content="安恒2020年元旦月赛(CRC32)"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/UHqjpDUeS/"/>
-    <meta property="og:locale" content="zh-CN"/>
-    <meta property="og:type" content="website"/>
-    <meta property="og:site_name" content="过客"/>
   </head>
   <body>
   	<!-- Navigation -->
@@ -78,106 +73,48 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-          	<span class="tags">
-          	 
-            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
-            
-        </span>
-            <h1>安恒2020年元旦月赛(CRC32)</h1>
-            <span class="meta">
-            	Posted on
-              2020-01-02，3 min read
-            </span>
+            <h1 class="tag-tl">Archives</h1>
           </div>
         </div>
       </div>
     </div>
   </header>
-
   <!-- Post Content -->
   <article>
     <div class="container">
       <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <p>binwalk。提示a-z0-9。6位密码</p>
-<!-- more -->
-<p><img src="https://guokeya.github.io/post-images/1577963573481.png" alt="" loading="lazy"><br>
-爆破得到abc123<br>
-解压后。获得一个压缩包，还是需要密码<br>
-<img src="https://guokeya.github.io/post-images/1577963653417.png" alt="" loading="lazy"><br>
-这里就要提一下CRC32爆破了</p>
-<pre><code>CRC32：循环冗余校验。用来校验文件是否出错
-就是将文件的每个数据块都进行运算。然后输出一个CRC32
-修改任何一个数据。都会导致CRC32变化
-</code></pre>
-<pre><code>CRC32爆破。即用暴力破解。去循环输出字符串的各种拼接。然后计算CRC32。计算是否于压缩包内的CRC32相同。
-</code></pre>
-<p>我们可以看到。在压缩包中。有1/2/3.txt。还有一个hint.txt<br>
-分别是4字节/2字节/2字节/23字节<br>
-由于CRC32采取的是暴力破解的方法。对于计算小文件还好。但是对于大文件。23位字符串循环爆破。。恐怕得不偿失<br>
-所以。这里我们就爆破1/2/3.txt</p>
-<pre><code>import string
-import binascii
-dic=string.printable
-#字典。所有字符串
-crc=0x7D90EE19
-#4字节的CRC值
-for a in dic:
-    for b in dic:
-        for c in dic:
-            for d in dic:
-                s=a+b+c+d
-                #循环拼接字符串,4字节就4个循环。2字节就2个循环
-                if crc==(binascii.crc32(s)&amp;0xffffffff):
-                #计算CRC32值。并且比较
-                    print s
-                    exit(0)
-</code></pre>
-<p>最后得出结果<br>
-1.txt：Blow<br>
-2.txt：it<br>
-3.txt：up</p>
-<pre><code>获得了这三个。我就尝试用ZIP明文攻击。将3个文件压缩。然后和密文压缩包进行明文攻击
-然而明文攻击需要满足一个条件。就是压缩算法相同。我将3个文件压缩后。3个文件的字节大小永远在4字节左右。
-密文压缩包的大小为17字节。因为加密算法不同。这里无法用ZIP明文攻击
-</code></pre>
-<p>然后发现。这三个字符拼接起来就是压缩包密码<br>
-<img src="https://guokeya.github.io/post-images/1577964166741.png" alt="" loading="lazy"><br>
-OK。提示outguess。然后key是它(炸弹人)的生日<br>
-然而。百度搜到20120223。<br>
-outguess -k 20120223 -r Ziggs.jpg -t flag.txt<br>
-并没有flag。<br>
-题目名称叫爆破。。<br>
-想到编个脚本循环输出年月日放入命令里爆破</p>
-<pre><code>for i in range(1,13):
-    if len(str(i))==1:
-        i='0'+str(i)
-    for b in range(1,32):
-        if len(str(b))==1:
-            b='0'+str(b)
-        for a in range(2012,2015):
-            s=str(a)+str(i)+str(b)
-            print 'outguess -k '+s+' -r Ziggs.jpg -t '+s+'.txt'
-</code></pre>
-<p>python脚本输出2012年-2015年的所有年月日。然后放入命令中<br>
-将python输出的所有可能性放入1.sh执行<br>
-<img src="https://guokeya.github.io/post-images/1577964481310.png" alt="" loading="lazy"></p>
-
-          
-          <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/PtXCVUYYQ/">
-              <span class="post-title">
-                Web hash长度扩展攻击&rarr;
-              </span>
-            </a>
-          </p>
         
-        <div class="comment">
-          
+      
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-archives">
+    <h2 class="year">2020</h2>
+    
+                
+        <a href="https://guokeya.github.io/post/cve-2019-0193apache-solr-yuan-cheng-ming-ling-zhi-xing-lou-dong-fu-xian/" class="post">
+          <h2 class="post-title Archives">
+            CVE-2019-0193:Apache Solr远程命令执行漏洞复现
+          </h2>
+          <div class="time post-meta">2020-01-02</div>
+        </a>
+  
+                    
+                
+        <a href="https://guokeya.github.io/post/li-yong-huan-jing-bian-liang-ld_preload-rao-guo-php-disable_function-zhi-xing-xi-tong-ming-ling/" class="post">
+          <h2 class="post-title Archives">
+            利用环境变量LD_PRELOAD绕过php disable_function执行系统命令
+          </h2>
+          <div class="time post-meta">2020-01-02</div>
+        </a>
+  
+                    
         </div>
+        </div>
+        
       </div>
     </div>
   </article>
+
+
  <!-- Footer -->
   <footer>
     <div class="container">
@@ -258,4 +195,3 @@ outguess -k 20120223 -r Ziggs.jpg -t flag.txt<br>
   })(this));</script>
   </body>
 </html>
-

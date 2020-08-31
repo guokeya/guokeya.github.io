@@ -84,7 +84,7 @@
             <h1>Java学习笔记~~~</h1>
             <span class="meta">
             	Posted on
-              2020-05-08，43 min read
+              2020-05-08，52 min read
             </span>
           </div>
         </div>
@@ -1716,6 +1716,319 @@ public class RequestDemo6 extends HttpServlet {
     }
 }
 
+</code></pre>
+<p>Java反射获取属性</p>
+<pre><code>package cn.itcast.jdbc;
+
+
+import java.lang.reflect.Field;
+
+public class Re{
+    public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException {
+        Class person = Person.class;
+        //获取class队形
+        Field[] fileds = person.getFields();
+        //获取所有的public属性
+        for (Field field : fileds){
+            System.out.println(field);
+        }
+        
+        Field a = person.getField(&quot;Pass&quot;);
+        //得到person类的Pass属性
+        Person p = new Person(&quot;guoke&quot;,19);
+        //new一个新的Person对象
+        Object value = a.get(p);
+        //get获取P对象Pass的值。返回一个Object对象
+        System.out.println(value);
+        //输出。为null
+        a.set(p,&quot;mmd&quot;);
+        //设置pass属性的值。
+        System.out.println(p);
+        //添加toString。输出
+        Person p  = new Person(&quot;guoke&quot;,19);
+        Field Name = person.getDeclaredField(&quot;Name&quot;);
+        //获取所有的属性。public,private等
+        Name.setAccessible(true);
+        //忽略访问权限修饰符的安全检查。不加这个。会拒绝对private这些属性的访问
+        Object value = Name.get(p);
+        //获取Name属性
+        System.out.println(value);
+        //输出
+    }
+}
+</code></pre>
+<p>Java反射获取构造函数</p>
+<pre><code>package cn.itcast.jdbc;
+
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
+public class Re{
+    public static void main(String[] args) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        Class person = Person.class;
+        //获取class对象
+        Constructor con = person.getConstructor(String.class,int.class);
+        //获取构造函数
+        Object person1 = con.newInstance(&quot;test&quot;,19);
+        //new一个新函数
+        System.out.println(person1);
+        
+    }
+}
+</code></pre>
+<p>java反射获取方法</p>
+<pre><code>package cn.itcast.jdbc;
+
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+public class Re{
+    public static void main(String[] args) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        Class person = Person.class;
+        //获取class对象
+        Method test = person.getMethod(&quot;test&quot;);
+        //获取test方法
+        Person p = new Person();
+        //new一个对象
+        test.invoke(p);
+        //对p对象执行test方法
+        Method test2 = person.getMethod(&quot;test2&quot;,String.class);
+        //获取test2方法。带一个String参数
+        Person p2 = new Person();
+        //new一个对象
+        test2.invoke(p2,&quot;测试&quot;);
+        //执行person2对象的test2方法。并且带一个参数
+        Method[] methods= person.getMethods();
+        //获取所有public方法。包括Object自带的一些方法
+        for(Method method : methods){
+            String name = method.getName();
+            //获取方法名
+            System.out.println(method);
+        }
+    }
+}
+
+</code></pre>
+<p>Java反射获取类型</p>
+<pre><code>package cn.itcast.jdbc;
+
+
+import java.lang.reflect.InvocationTargetException;
+
+public class Re{
+    public static void main(String[] args) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        Class person = Person.class;
+        String ClassName = person.getName();
+        System.out.println(ClassName);
+    }
+}
+</code></pre>
+<p>利用反射执行任意类的任意方法</p>
+<pre><code>package cn.itcast.jdbc;
+
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Properties;
+
+public class Re{
+    public static void main(String[] args) throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+        Properties pro = new Properties();
+        //加载配置文件。转换为集合
+        ClassLoader classLoader = ReflectTest.class.getClassLoader();
+        //
+        InputStream is = classLoader.getResourceAsStream(&quot;pro.properties&quot;);
+        //获取内容的字节流
+        pro.load(is);
+        //加载
+        String className = pro.getProperty(&quot;className&quot;);
+        String methodName = pro.getProperty(&quot;methodName&quot;);
+        //获取数据
+        Class cls = Class.forName(className);
+        //讲类加载入内存
+        Object obj = cls.newInstance();
+        //new一个新类
+        Method method = cls.getMethod(methodName);
+        //获取对应的方法
+        method.invoke(obj);
+        //执行方法
+    }
+}
+</code></pre>
+<p>对应的pro.properties</p>
+<pre><code>className=cn.itcast.jdbc.Person
+methodName=test
+</code></pre>
+<p>String相关的内容</p>
+<pre><code>String()	创建一个内容为空的字符串
+String(byte[])	根据指定的字节数组创建对象
+String(byte[]，int，int)	根据字节数组的一部分创建对象
+String(char[])	根据指定的字符数组创建对象
+String(char[]，int，int)	根据字符数组的一部分创建对象
+String(String)	根据指定的字符串内容创建对象
+String(byte[] bytes, Charset charset)	使用指定的编码构造字符串对象
+equals()	比较字符串的内容是否相等，区分大小写
+equalsIgnoreCase()	比较字符串的内容是否相等，忽略大小写
+contains(String str)	判断大字符串中是否包含小字符串
+startsWith()	判断字符串是否以某个字符串开头
+endsWith()	判断字符串是否以某个字符串结尾
+isEmpty()	判断字符串是否为空
+getBytes()	把字符串转成字节数组
+getCharArray()	把字符串转成字符数组
+valueOf(char[] chs)	把字符数组转成字符串
+valueOf(int i)	把int类型的数据转成字符串
+toLowerCase()	把字符串转成小写
+toUpperCase()	把字符串转成大写
+concat(String str)	字符串拼接
+replace(char old,char new)	替换字符
+replace(String old,String new)	替换字符串
+trim()	去掉字符串两端空格
+compareTo()	按字典顺序比较字符串
+compareToIngnoreCase()	按字典顺序比较字符串，忽略大小写
+format()	格式化字符串
+</code></pre>
+<p>File类</p>
+<pre><code>package cn.itcast.jdbc;
+
+
+import java.io.File;
+import java.io.IOException;
+
+public class FileDemo {
+    public static void main(String[] args) throws IOException {
+        File file = new File(&quot;C:\\Users\\Administrator\\Desktop\\JAVA\\test&quot;);
+        //得到File对象
+        file.mkdir();
+        //创建目录
+        File file2 = new File(&quot;C:\\Users\\Administrator\\Desktop\\JAVA\\test\\1.txt&quot;);
+        file2.createNewFile();
+        //创建文件
+        File file3 = new File(&quot;C:\\Users\\Administrator\\Desktop\\JAVA\\test\\abc\\abc&quot;);
+        file3.mkdirs();
+        //会自动创建不存在的目录
+        File file4 = new File(&quot;C:\\Users\\Administrator\\Desktop\\JAVA\\test\\test.txt&quot;);
+        file4.delete();
+        //删除文件/目录。但是貌似不能递归删除目录
+        File oldFile = new File(&quot;C:\\Users\\Administrator\\Desktop\\JAVA\\test\\1.txt&quot;);
+        File newFile = new File(&quot;C:\\Users\\Administrator\\Desktop\\JAVA\\test\\2.txt&quot;);
+        oldFile.renameTo(newFile);
+        //文件重命名
+    }
+}
+</code></pre>
+<p>一些File相关的函数：</p>
+<p>isDirectory()	判断是否是目录<br>
+isFile()	判断是否是文件<br>
+exists()	判断是否是存在<br>
+canRead()	判断是否是可读<br>
+canWrite()	判断是否是可写<br>
+isHidden()	判断是否是隐藏<br>
+isAbsolute()	是否是绝对路径</p>
+<pre><code>返回值	方法	功能描述
+String	getAbsolutePath()	获取绝对路径
+String	getPath()	获取相对路径
+String	getParent()	获取父目录
+String	getName()	获取名称
+long	getFreeSpace()	获取剩余可用空间
+long	getTotalSpace()	获取总大小
+long	length()	获取长度，字节数
+long	lastModified()	获取最后一次修改时间，毫秒值
+String[]	list()	获取指定目录下的所有文件或文件夹的名称数组
+File[]	listFiles()	获取指定目录下的所有文件或文件夹的File数组
+</code></pre>
+<pre><code>package cn.itcast.jdbc;
+
+import java.io.File;
+import java.io.IOException;
+public class FileDemo {
+    public static void main(String[] args) throws IOException {
+        File file = new File(&quot;C:\\Users\\Administrator\\Desktop\\JAVA\\test\\2.txt&quot;);
+
+        System.out.println(&quot;绝对路径:&quot; + file.getAbsolutePath());
+        System.out.println(&quot;相对路径:&quot; + file.getPath());
+        System.out.println(&quot;文件名:&quot; + file.getName());
+        System.out.println(&quot;文件大小:&quot; + file.length());
+        System.out.println(&quot;修改日期:&quot; + file.lastModified());
+    }
+}
+</code></pre>
+<p>获得目录下所有文件</p>
+<pre><code>package cn.itcast.jdbc;
+
+import java.io.File;
+import java.io.IOException;
+public class FileDemo {
+    public static void main(String[] args) throws IOException {
+        File file = new File(&quot;C:\\Users\\Administrator\\Desktop\\JAVA\\test\\..\\test\\&quot;);
+        String[] s = file.list();
+        //返回文件名
+        for(String Filename:s){
+            System.out.println(Filename);
+        }
+        File[] fileArray = file.listFiles();
+        //返回绝对路径
+        for (File f : fileArray) {
+            System.out.println(f);
+        }
+    }
+}
+</code></pre>
+<p>查找指定后缀名的文件</p>
+<pre><code>package cn.itcast.jdbc;
+
+import java.io.File;
+import java.io.FilenameFilter;
+import java.io.IOException;
+public class FileDemo {
+    public static void main(String[] args) throws IOException {
+        File file = new File(&quot;C:\\Users\\Administrator\\Desktop\\JAVA\\test&quot;);
+        String[] strArray = file.list(new FilenameFilter() {public boolean accept(File dira, String name) { return new File(dira, name).isFile() &amp;&amp; name.endsWith(&quot;.jpg&quot;); }});
+        for (String s : strArray) {
+            System.out.println(s);
+        }
+    }
+}
+</code></pre>
+<p>写入文件</p>
+<pre><code>package cn.itcast.jdbc;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+public class FileDemo {
+    public static void main(String[] args) throws IOException {
+        FileOutputStream file = new FileOutputStream(&quot;233.txt&quot;);
+        file.write(&quot;This is a test Strings\n&quot;.getBytes());
+        //file.write参数类型为bytes。
+        byte[] bys={97,98,99,100,101};
+        file.write(bys);
+        file.close();
+    }
+}
+</code></pre>
+<p>读取文件</p>
+<pre><code>package cn.itcast.jdbc;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+public class FileDemo {
+    public static void main(String[] args) throws IOException {
+        FileInputStream fis = new FileInputStream(&quot;233.txt&quot;);
+    //打开文件
+        byte[] bys = new byte[2048];
+        //2048个字节
+        int len = 0;
+        while ((len = fis.read(bys)) != -1) {
+            //read读取2048个字节大小。返回实际int类型实际读取的字节。如果不等于 -1.就说明读取正常
+            System.out.print(new String(bys, 0, len));
+            //输出。将字节，0，读取的字节长度。转换为String类型
+        }
+        fis.close();
+    }
+}
 </code></pre>
 
           

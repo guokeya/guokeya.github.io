@@ -84,6 +84,51 @@
       <div class="col-lg-8 col-md-10 mx-auto">
        
         <div class="post-preview">
+          <a href="https://guokeya.github.io/post/SfJkH4LGF/">
+            <h2 class="post-title">
+              [HarekazeCTF2019]Avatar Uploader 1(图片判断差异)
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p>这题进去登陆就一个上传。光看文字。得到以下信息</p>
+<pre><code>PNG图像。那么后缀名和mime得修改下
+并且小于256KB.这个没啥关系
+图像像素得小于256px*256px
+</code></pre>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-03-11</span>
+             <span>,</span>
+             <span class="post-stats">2 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/DWuGlVNuC/">
+            <h2 class="post-title">
+              [Black Watch 入群题]Web(简单的sql盲注)
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p>一个登陆。三条信息。点击信息。发现真实的请求<br>
+<img src="https://guokeya.github.io/post-images/1583891081282.png" alt="" loading="lazy"></p>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-03-11</span>
+             <span>,</span>
+             <span class="post-stats">1 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
           <a href="https://guokeya.github.io/post/HYkvm--vb/">
             <h2 class="post-title">
               [Zer0pts2020]Can you guess it?(fuzz)
@@ -367,175 +412,6 @@ login需要admin密码<br>
              <span class="time">2020-02-09</span>
              <span>,</span>
              <span class="post-stats">1 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/bjdctf-web-ti-jie/">
-            <h2 class="post-title">
-              BJDCTF  Web题解
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>[BJDCTF2020]Mark loves</strong></p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-02-03</span>
-             <span>,</span>
-             <span class="post-stats">10 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/2020-xin-chun-hong-bao-ti-fan-xu-lie-hua-pop-lian/">
-            <h2 class="post-title">
-              [2020 新春红包题]反序列化pop链
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>这题也是根据2019全国大学生安全运维赛 EZPOP改编的<br>
-具体代码如下</p>
-<pre><code>&lt;?php
-error_reporting(0);
-
-class A {
-
-    protected $store;
-
-    protected $key;
-
-    protected $expire;
-
-    public function __construct($store, $key = 'flysystem', $expire = null) {
-        $this-&gt;key = $key;
-        $this-&gt;store = $store;
-        $this-&gt;expire = $expire;
-    }
-
-    public function cleanContents(array $contents) {
-        $cachedProperties = array_flip([
-            'path', 'dirname', 'basename', 'extension', 'filename',
-            'size', 'mimetype', 'visibility', 'timestamp', 'type',
-        ]);
-
-        foreach ($contents as $path =&gt; $object) {
-            if (is_array($object)) {
-                $contents[$path] = array_intersect_key($object, $cachedProperties);
-            }
-        }
-
-        return $contents;
-    }
-
-    public function getForStorage() {
-        $cleaned = $this-&gt;cleanContents($this-&gt;cache);
-
-        return json_encode([$cleaned, $this-&gt;complete]);
-    }
-
-    public function save() {
-        $contents = $this-&gt;getForStorage();
-
-        $this-&gt;store-&gt;set($this-&gt;key, $contents, $this-&gt;expire);
-    }
-
-    public function __destruct() {
-        if (!$this-&gt;autosave) {
-            $this-&gt;save();
-        }
-    }
-}
-
-class B {
-
-    protected function getExpireTime($expire): int {
-        return (int) $expire;
-    }
-
-    public function getCacheKey(string $name): string {
-        // 使缓存文件名随机
-        $cache_filename = $this-&gt;options['prefix'] . uniqid() . $name;
-        if(substr($cache_filename, -strlen('.php')) === '.php') {
-          die('?');
-        }
-        return $cache_filename;
-    }
-
-    protected function serialize($data): string {
-        if (is_numeric($data)) {
-            return (string) $data;
-        }
-
-        $serialize = $this-&gt;options['serialize'];
-
-        return $serialize($data);
-    }
-
-    public function set($name, $value, $expire = null): bool{
-        $this-&gt;writeTimes++;
-
-        if (is_null($expire)) {
-            $expire = $this-&gt;options['expire'];
-        }
-
-        $expire = $this-&gt;getExpireTime($expire);
-        $filename = $this-&gt;getCacheKey($name);
-
-        $dir = dirname($filename);
-
-        if (!is_dir($dir)) {
-            try {
-                mkdir($dir, 0755, true);
-            } catch (\Exception $e) {
-                // 创建失败
-            }
-        }
-
-        $data = $this-&gt;serialize($value);
-
-        if ($this-&gt;options['data_compress'] &amp;&amp; function_exists('gzcompress')) {
-            //数据压缩
-            $data = gzcompress($data, 3);
-        }
-
-        $data = &quot;&lt;?php\n//&quot; . sprintf('%012d', $expire) . &quot;\n exit();?&gt;\n&quot; . $data;
-        $result = file_put_contents($filename, $data);
-
-        if ($result) {
-            return $filename;
-        }
-
-        return null;
-    }
-
-}
-
-if (isset($_GET['src']))
-{
-    highlight_file(__FILE__);
-}
-
-$dir = &quot;uploads/&quot;;
-
-if (!is_dir($dir))
-{
-    mkdir($dir);
-}
-unserialize($_GET[&quot;data&quot;]);
-</code></pre>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-02-02</span>
-             <span>,</span>
-             <span class="post-stats">9 min read</span>
             </p>
         </div>
         <hr>
