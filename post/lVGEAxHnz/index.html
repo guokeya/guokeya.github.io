@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-       <meta http-equiv="content-type" content="text/html; charset=utf-8">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta content="yes" name="apple-mobile-web-app-capable" />
   <meta content="black" name="apple-mobile-web-app-status-bar-style" />
@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>CTF | 过客</title>
+  <title>DDCTF 卡片商店(整数溢出+go cookie基础) | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="CTF | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="DDCTF 卡片商店(整数溢出+go cookie基础) | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,6 +25,11 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
+    <meta property="og:description" content="DDCTF 卡片商店(整数溢出+go cookie基础)"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/lVGEAxHnz/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="过客"/>
   </head>
   <body>
   	<!-- Navigation -->
@@ -66,94 +71,98 @@
       </div>
     </div>
   </nav>
-<!-- Page Header -->
+  <!-- Page Header -->
   <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-            <h1 class="tag-tl">#CTF</h1>
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>DDCTF 卡片商店(整数溢出+go cookie基础)</h1>
+            <span class="meta">
+            	Posted on
+              2020-09-04，2 min read
+            </span>
           </div>
         </div>
       </div>
     </div>
   </header>
+
+  <!-- Post Content -->
+  <article>
     <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-       
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/oUQYTq6U9/">
-            <h2 class="post-title">
-              CTF PHP代码审计中file_put_contents函数利用
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>源码分析</p>
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>主页并没有啥东西。<br>
+一个借进来。一个借出去<br>
+<img src="https://guokeya.github.io/post-images/1599229608198.png" alt="" loading="lazy"><br>
+但是。借进来没任何限制。。借出去有限制<br>
+<img src="https://guokeya.github.io/post-images/1599229688799.png" alt="" loading="lazy"><br>
+点击兑换礼物。并不行。。限制有未还款<br>
+然后等一会。。它的账单就会清空。。。但是卡片不会<br>
+<img src="https://guokeya.github.io/post-images/1599229766180.png" alt="" loading="lazy"><br>
+此时兑换。得到一个key<br>
+<img src="https://guokeya.github.io/post-images/1599229788631.png" alt="" loading="lazy"><br>
+访问/flag。不行。提示您不是幸运玩家<br>
+并且。我们还没用到这个key<br>
+然后google搜go cookie securitykey github<br>
+得到这个库<code>https://github.com/gorilla/securecookie</code><br>
+根据里面的实例。我们写一个解析cookie的代码</p>
+<pre><code>package main
+//导入包
+import (
+	&quot;fmt&quot;
+	&quot;github.com/gorilla/securecookie&quot;
+)
+//定义secret
+var (
+	hashKey = []byte(&quot;Udc13VD5adM_c10nPxFu@v12&quot;)
+	init       = securecookie.New(hashKey, nil)
+	cookie       = &quot;MTU5OTIyMzkzOHxEdi1CQkFFQ180SUFBUkFCRUFBQV81dl9nZ0FDQm5OMGNtbHVad3dJQUFaM1lXeHNaWFFHYzNSeWFXNW5ER1FBWW5zaWIzZHBibWR6SWpwYlhTd2lhVzUyWlhOMGN5STZXMTBzSW0xdmJtVjVJam94TWpJeU1qSXhPRFE1T0RrNU9ERTNOeXdpYm05M1gzUnBiV1VpT2pFMU9Ua3lNak0xT0RBc0luTjBZWEowWDNScGJXVWlPakUxT1RreU1qTTBNREI5Qm5OMGNtbHVad3dIQUFWaFpHMXBiZ1JpYjI5c0FnSUFBQT09fJpiqcBLlxJJIorq5kZWajwO4UHCF02nu8z9OVlphBvj&quot;
+)
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">1 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/Olw-A4WVi/">
-            <h2 class="post-title">
-              Mysql limit注入
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>实验环境</strong><br>
-http://lab1.xseclab.com/sqli5_5ba0bba6a6d1b30b956843f757889552/index.php?start=0&amp;num=1</p>
+func main() {
+	var values map[interface{}]interface{}
+//这里定义数据类型。就是你cookie解析后得到数据的类型。
+//https://blog.csdn.net/houyanhua1/article/details/88712058。
+//这篇文章中说了。可以用空接口存储任意数据
+	if err := init.Decode(&quot;session&quot;,cookie, &amp;values); err == nil {
+        //解析cookie。放到values里
+		fmt.Print(values)
+		values[&quot;admin&quot;] = true
+        //将admin属性设置为True
+		fmt.Print(init.Encode(&quot;session&quot;, values))
+        //加密输出
+	}
+}
+</code></pre>
+<p>数据如下<br>
+<img src="https://guokeya.github.io/post-images/1599230251965.png" alt="" loading="lazy"><br>
+替换cookie访问flag就行</p>
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/li-yong-huan-jing-bian-liang-ld_preload-rao-guo-php-disable_function-zhi-xing-xi-tong-ming-ling/">
-            <h2 class="post-title">
-              利用环境变量LD_PRELOAD绕过php disable_function执行系统命令
-            </h2>
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/2j6oKGITZ/">
+              <span class="post-title">
+                强网杯 web题&rarr;
+              </span>
             </a>
-            <h3 class="post-subtitle">
-              <p><strong>利用条件</strong><br>
-php未禁用putenv，mail函数</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">4 min read</span>
-            </p>
+          </p>
+        
+        <div class="comment">
+          
         </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        
-        <a class="btn btn-primary float-left" href="https://guokeya.github.io/tag/CTF/page/10/">&larr; 上一页</a>
-        
-        
       </div>
     </div>
-  </div>
-
-  
+  </article>
  <!-- Footer -->
   <footer>
     <div class="container">
@@ -234,3 +243,4 @@ php未禁用putenv，mail函数</p>
   })(this));</script>
   </body>
 </html>
+

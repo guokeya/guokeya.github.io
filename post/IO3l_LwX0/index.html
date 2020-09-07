@@ -84,7 +84,7 @@
             <h1>Java学习笔记~~~</h1>
             <span class="meta">
             	Posted on
-              2020-05-08，52 min read
+              2020-05-08，54 min read
             </span>
           </div>
         </div>
@@ -2027,6 +2027,93 @@ public class FileDemo {
             //输出。将字节，0，读取的字节长度。转换为String类型
         }
         fis.close();
+    }
+}
+</code></pre>
+<p>java RMI<br>
+就是远程调用类<br>
+嘚继承一个remote接口。然后实现remote接口的类。一个客户端。一个服务端<br>
+继承remote类<br>
+IHello.java</p>
+<pre><code>package cn.itcast.jdbc;
+
+
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
+public interface IHello extends Remote {
+    public String sayHelloToSomeBody(String someBodyName) throws RemoteException;
+}
+</code></pre>
+<p>实现接口类<br>
+Client.java</p>
+<pre><code>package cn.itcast.jdbc;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
+
+    public class Client extends UnicastRemoteObject implements IHello{
+    public Client() throws RemoteException {
+        super();
+    }
+    public String sayHelloToSomeBody(String someBodyName) throws RemoteException {
+        System.out.println(&quot;Connected sucessfully!&quot;);
+        return &quot;你好，&quot; + someBodyName + &quot;!&quot;;
+    }
+}
+</code></pre>
+<p>服务端</p>
+<pre><code>package cn.itcast.jdbc;
+
+import java.net.MalformedURLException;
+import java.rmi.AlreadyBoundException;
+import java.rmi.Naming;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+public class Server {
+    public static void main(String args[]) {
+        try {
+            IHello rhello = new Client();
+            //new一个类
+            LocateRegistry.createRegistry(8888);
+            //在8888运行这个服务
+            System.setProperty(&quot;java.rmi.server.hostname&quot;,&quot;127.0.0.1&quot;);
+            Naming.bind(&quot;rmi://localhost:8888/RHello&quot;, rhello);
+            //讲本地的8888/RHello.绑定rhello类
+            System.out.println(&quot;&gt;&gt;&gt;&gt;&gt;INFO:远程IHello对象绑定成功！&quot;);
+        } catch (RemoteException e) {
+            System.out.println(&quot;创建远程对象发生异常！&quot;);
+            e.printStackTrace();
+        } catch (AlreadyBoundException e) {
+            System.out.println(&quot;发生重复绑定对象异常！&quot;);
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            System.out.println(&quot;发生URL畸形异常！&quot;);
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+<p>客户端</p>
+<pre><code>package cn.itcast.jdbc;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+public class ClientConnect {
+    public static void main(String args[]) {
+        try {
+            IHello rhello = (IHello) Naming.lookup(&quot;rmi://127.0.0.1:8888/RHello&quot;);
+            //查找本地8888端口的RHello
+            System.out.println(rhello.sayHelloToSomeBody(&quot;Erich&quot;));
+            //调用IHello类的sayHelloToSomeBody方法
+        } catch (NotBoundException e) {
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            e.printStackTrace();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 }
 </code></pre>
