@@ -122,7 +122,10 @@ OK。那么现在存在反序列化漏洞但是有白名单<br>
 </code></pre>
 <p>这就又涉及到java的动态代理<br>
 如果不清楚。看<code>https://www.jianshu.com/p/e575bba365f8</code>这篇文章。看懂就没啥问题了</p>
-<p>这里呢。首先反序列化会触发InfoInvocationHandler的invoke方法。然后调用传入类的checkAllInfo方法<br>
+<p>这里呢。首先反序列化会触发InfoInvocationHandler的invoke方法。然后调用传入类的</p>
+<pre><code>代理对象在执行被代理对象的任意方法时，会首先执行我们之前重写的InvocationHandler的invoke方法。同时会传入三个参数
+</code></pre>
+<p>checkAllInfo方法<br>
 到了这里。我们是不是可以把Databaseinfo类放入这个代理类中。导致</p>
 <pre><code>this.info = Databaseinfo类
 下面继续调用
