@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>Java Spring学习 | 过客</title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="Java Spring学习 | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="Java Spring学习"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/Yd4bfDRXN/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="过客"/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io">过客</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>Java Spring学习</h1>
+            <span class="meta">
+            	Posted on
+              2020-09-17，7 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <h1 id="spring程序的步骤">Spring程序的步骤</h1>
+<p>xxx.java调用Spring.getBean(ID标识)<br>
+然后Spring框架去XML配置文件中获得ID标识对应的Bean类名<br>
+然后通过反射创建ean对象。返回对象</p>
+<p>在Spring配置文件中。<br>
+<code>&lt;bean id=&quot;Helloclass&quot; class=&quot;HelloWorld&quot; scope=&quot;prototype&quot;&gt;</code><br>
+scope取值为singleton时</p>
+<pre><code>Bean只会实例化一个类
+并且在ApplicationContext context = new ClassPathXmlApplicationContext(&quot;spring-config.xml&quot;);
+加载配置文件时。就实例化了类
+容器在。对象就一直在
+应用卸载。对象被销毁
+</code></pre>
+<p>scope取值为prototype时</p>
+<pre><code>Bean会实例化多个类
+在HelloWorld hello = (HelloWorld) context.getBean(&quot;Helloclass&quot;);
+获取Bean才会实例化类
+对象在使用中。就会存活
+对象不用。就会销毁
+</code></pre>
+<p>指定初始化方法和销毁方法</p>
+<pre><code>在配置文件中添加
+init-method=&quot;init&quot; destroy-method=&quot;destory&quot;
+在实现类中添加对应的init函数和destory函数。就能在类初始化和销毁时执行函数
+</code></pre>
+<p>工厂静态方法实例化</p>
+<pre><code>就是将某个函数如下编写
+public static 类名 class(){
+    return new 类名();
+}
+在spring配置文件中。
+&lt;bean id=&quot;User&quot; class=&quot;HelloWorld&quot; factory-method=&quot;save&quot; /&gt;
+这样。在查找User类的时候。就会通过HelloWorld类中的save方法查找
+</code></pre>
+<p>工厂实例方法实例化</p>
+<pre><code>    &lt;bean id=&quot;UserDaoDemo&quot; class=&quot;UserDaoDemo&quot; init-method=&quot;init&quot; destroy-method=&quot;destory&quot; /&gt;
+    &lt;bean id=&quot;test&quot; factory-bean=&quot;UserDaoDemo&quot; factory-method=&quot;save&quot; /&gt;
+    就是执行一个类名和方法名
+</code></pre>
+<p>导入其他配置文件</p>
+<pre><code>&lt;import resource=&quot;applicationContext-user.xml&quot; /&gt;
+&lt;import resource=&quot;xxxxxxxxxx.xml&quot; /&gt;
+</code></pre>
+<p>依赖注入：<br>
+比如现在。我有一个UserDao接口。然后UserDaompl类去实现接口<br>
+<img src="https://guokeya.github.io/post-images/1600348776595.png" alt="" loading="lazy"><br>
+UserService接口。UserServicempl类去实现接口<br>
+<img src="https://guokeya.github.io/post-images/1600348821474.png" alt="" loading="lazy"><br>
+这里UserServicempl类。想要调用UserDaompl类中的save方法。输出字符串。<br>
+定义了一个set方法。然后UserServicempl类的save()方法。调用this.UserDaompl的save()方法<br>
+这就存在依赖问题。我们可以在配置文件中。直接把定义的类当作参数传入</p>
+<pre><code>    &lt;bean id=&quot;UserDao&quot; class=&quot;UserDaompl&quot; /&gt;
+    &lt;bean id=&quot;UserService&quot; class=&quot;UserServicempl&quot;&gt;
+        &lt;property name=&quot;userDaompl&quot; ref=&quot;UserDao&quot;&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+    一个UserService标识。对应UserServicempl类
+    然后userDaompl对应set方法的参数类型。然后传入参数是UserDao
+</code></pre>
+<p>利用p属性构造依赖</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:p=&quot;http://www.springframework.org/schema/p&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+    &lt;bean id=&quot;UserDao&quot; class=&quot;UserDaompl&quot; /&gt;
+
+    &lt;bean id=&quot;UserService&quot; class=&quot;UserServicempl&quot; p:userDaompl-ref=&quot;UserDao&quot;&gt;&lt;/bean&gt;
+&lt;/beans&gt;
+
+前面添加一个xmlns:p=&quot;http://www.springframework.org/schema/p&quot;
+后面直接加上p:set函数名-ref=&quot;参数&quot;
+</code></pre>
+<p>利用构造函数依赖</p>
+<pre><code>public class UserServicempl implements  UserService{
+    private UserDaompl UserDaompl;
+    public UserServicempl(){}
+    public UserServicempl(UserDaompl UserDaompl){
+        this.UserDaompl = UserDaompl;
+    }
+    @Override
+    public void save() {
+        UserDaompl.save();
+    }
+}
+
+</code></pre>
+<p>然后spring-config.xml配置如下</p>
+<pre><code>    &lt;bean id=&quot;UserService&quot; class=&quot;UserServicempl&quot;&gt;
+        &lt;constructor-arg name=&quot;UserDaompl&quot; ref=&quot;UserDao&quot;&gt;&lt;/constructor-arg&gt;
+    &lt;/bean&gt;
+
+UserDaompl是参数名。UserDao传入的标识符
+</code></pre>
+<p>之前我们注入的一直是对象。<br>
+现在来注入点字符串。数字<br>
+还是原来的类。只不过我们添加了</p>
+<pre><code> private String Name;
+
+    public void setName(String name) {
+        Name = name;
+    }
+
+    public void setAge(int age) {
+        Age = age;
+    }
+
+    private int Age;
+
+</code></pre>
+<p>最后我们配置spring-config.xml</p>
+<pre><code>    &lt;bean id=&quot;UserService&quot; class=&quot;UserServicempl&quot;&gt;
+        &lt;property name=&quot;Age&quot; value=&quot;19&quot; /&gt;
+        &lt;property name=&quot;Name&quot; value=&quot;Guoke&quot; /&gt;
+    &lt;/bean&gt;
+
+
+    &lt;property&gt;里面写构造函数的参数。后面跟值
+</code></pre>
+<p>配置集合数据类型</p>
+<pre><code>private List&lt;String&gt; strList;
+    private Map&lt;String,User&gt; userMap;
+    private Properties properties;
+
+    public void setStrList(List&lt;String&gt; strList) {
+        this.strList = strList;
+    }
+
+    public void setUserMap(Map&lt;String, User&gt; userMap) {
+        this.userMap = userMap;
+    }
+
+    public void setProperties(Properties properties) {
+        this.properties = properties;
+    }
+</code></pre>
+<p>spring-config.xml配置</p>
+<pre><code>    &lt;bean id=&quot;UserService&quot; class=&quot;UserServicempl&quot;&gt;
+    &lt;!--这里是List的配置方式--&gt;
+        &lt;property name=&quot;strList&quot;&gt;
+            &lt;list&gt;
+                &lt;value&gt;abc&lt;/value&gt;
+                &lt;value&gt;fdfddf&lt;/value&gt;
+                &lt;value&gt;xx&lt;/value&gt;
+            &lt;/list&gt;
+        &lt;/property&gt;
+    &lt;!--这里是Usermap的配置方式。最后面定义了两个类。分别给了两个标识。并且set函数存入数据--&gt;
+        &lt;property name=&quot;userMap&quot;&gt;
+            &lt;map&gt;
+                &lt;entry key=&quot;user1&quot; value-ref=&quot;User1&quot;&gt;&lt;/entry&gt;
+                &lt;entry key=&quot;user2&quot; value-ref=&quot;User2&quot;&gt;&lt;/entry&gt;
+            &lt;/map&gt;
+        &lt;/property&gt;
+&lt;!--这里是properties的配置方式。props内部还有prop--&gt;
+        &lt;property name=&quot;properties&quot;&gt;
+            &lt;props&gt;
+                &lt;prop key=&quot;a1&quot;&gt;pp1&lt;/prop&gt;
+                &lt;prop key=&quot;a2&quot;&gt;pp2&lt;/prop&gt;
+            &lt;/props&gt;
+        &lt;/property&gt;
+    &lt;/bean&gt;
+
+    &lt;bean id=&quot;User1&quot; class=&quot;User&quot;&gt;
+        &lt;property name=&quot;addr&quot; value=&quot;shaoxing&quot;&gt;&lt;/property&gt;
+        &lt;property name=&quot;name&quot; value=&quot;guoke&quot;&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+    &lt;bean id=&quot;User2&quot; class=&quot;User&quot;&gt;
+        &lt;property name=&quot;addr&quot; value=&quot;lishui&quot;&gt;&lt;/property&gt;
+        &lt;property name=&quot;name&quot; value=&quot;xxx&quot;&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+</code></pre>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/t746TU6pM/">
+              <span class="post-title">
+                羊城杯 Easy Java(jdbc反序列化)&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span>过客</span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+
