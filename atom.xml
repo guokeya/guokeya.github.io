@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-09-28T14:39:01.503Z</updated>
+    <updated>2020-09-29T00:01:03.033Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,13 +10,6 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
-    <entry>
-        <title type="html"><![CDATA[TPshop后台文件上传漏洞(20200104版本)]]></title>
-        <id>https://guokeya.github.io/post/YOOIZxLl9/</id>
-        <link href="https://guokeya.github.io/post/YOOIZxLl9/">
-        </link>
-        <updated>2020-09-28T14:17:46.000Z</updated>
-    </entry>
     <entry>
         <title type="html"><![CDATA[CTFSHOW月饼杯 Web3(sql注入+命令注入)]]></title>
         <id>https://guokeya.github.io/post/O56WhAqxd/</id>
@@ -79,5 +72,12 @@
         <link href="https://guokeya.github.io/post/fAqKypsaK/">
         </link>
         <updated>2020-08-11T14:16:28.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[WMCTF webweb(反序列化POP链)]]></title>
+        <id>https://guokeya.github.io/post/FwBD1-mLA/</id>
+        <link href="https://guokeya.github.io/post/FwBD1-mLA/">
+        </link>
+        <updated>2020-08-03T06:44:03.000Z</updated>
     </entry>
 </feed>
