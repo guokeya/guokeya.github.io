@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-       <meta http-equiv="content-type" content="text/html; charset=utf-8">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta content="yes" name="apple-mobile-web-app-capable" />
   <meta content="black" name="apple-mobile-web-app-status-bar-style" />
@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>CTF | 过客</title>
+  <title>RCTF(disk vmdk)/安洵杯(easy misc 盲水印+base58) | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="CTF | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="RCTF(disk vmdk)/安洵杯(easy misc 盲水印+base58) | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,6 +25,11 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
+    <meta property="og:description" content="RCTF(disk vmdk)/安洵杯(easy misc 盲水印+base58)"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/0xqllMHWc/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="过客"/>
   </head>
   <body>
   	<!-- Navigation -->
@@ -66,197 +71,79 @@
       </div>
     </div>
   </nav>
-<!-- Page Header -->
+  <!-- Page Header -->
   <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-            <h1 class="tag-tl">#CTF</h1>
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/z6LGuzLFL/" class="tag">杂项</a>
+            
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+        </span>
+            <h1>RCTF(disk vmdk)/安洵杯(easy misc 盲水印+base58)</h1>
+            <span class="meta">
+            	Posted on
+              2020-09-29，1 min read
+            </span>
           </div>
         </div>
       </div>
     </div>
   </header>
+
+  <!-- Post Content -->
+  <article>
     <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-       
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/NTtCrziEm/">
-            <h2 class="post-title">
-              CTF PHP代码审计中的一题任意URL跳转
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>源代码</strong></p>
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <h1 id="rctf-disk">RCTF disk</h1>
+<p>题目给了vmdk。也就是虚拟机的玩意。<br>
+可以用7z直接打开。注意。。右键7Z解压时没用的。嘚先打开7Z。然后打开vmdk文件。复制出来<br>
+得到0.fat<br>
+搜RCTF。得到前半段CTF<br>
+用VeraCrypt。进行挂载。密码是rctf。<br>
+得到一个txt。txt内又是一个密码RCTF2019<br>
+继续用新密码挂载。然而发现。磁盘打不开了。<br>
+用winhex打开磁盘。搜索字符串。得到后半段Flag</p>
+<h1 id="easy-misc">easy misc</h1>
+<p>打开压缩包。有注释。有个算数。<br>
+得到7NNULLULL,<br>
+然后掩码爆破得到<br>
+2019456NNULLULL,<br>
+解压得到decode.txt。里面是对应表<br>
+<img src="https://guokeya.github.io/post-images/1601379636279.png" alt="" loading="lazy"><br>
+小姐姐的图formost出来两个图。盲水印得到in 11.txt</p>
+<pre><code> python bwm.py decode 00000000.png 00000232.png flag.png
+</code></pre>
+<p>然后read文件内里。有hint.txt。告诉我们只取前16个字符<br>
+依次替换<br>
+<img src="https://guokeya.github.io/post-images/1601380265851.png" alt="" loading="lazy"><br>
+发现解密不了。加个=填充<br>
+得到</p>
+<pre><code>Ao(mgHY?i2ARAkQB5_^!?Y!Sj0ms
+</code></pre>
+<p>base85得到Flag</p>
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/hpyo8CYfD/">
-            <h2 class="post-title">
-              PHP class_exists函数漏洞
-            </h2>
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/YOOIZxLl9/">
+              <span class="post-title">
+                TPshop后台文件上传漏洞(20200104版本)&rarr;
+              </span>
             </a>
-            <h3 class="post-subtitle">
-              <p><strong>漏洞介绍</strong><br>
-class_exists()函数，会判断用户传过来的控制器是否存在，默认情况下，如果程序中存在__autoload函数，那么在使用class_exists()函数时，就会自动调用__autoload函数，</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">1 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
+          </p>
         
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/aMcQL_YEj/">
-            <h2 class="post-title">
-              Mysql 过滤逗号注入
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>实验环境</strong><br>
-i春秋，web SQLI</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
+        <div class="comment">
+          
         </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/Vy_VN303p/">
-            <h2 class="post-title">
-              泛微OA WorkflowCenterTreeData接口注入漏洞(限oracle数据库)
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>漏洞描述</strong><br>
-泛微e-cology OA系统的WorkflowCenterTreeData接口在使用oracle数据库时,由于内置sql语句拼接不严,导致其存在sql注入漏洞</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">6 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/kp45piq14/">
-            <h2 class="post-title">
-              CTF PHP代码审计中intval，数字判断，整数溢出
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>代码分析</strong></p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/oUQYTq6U9/">
-            <h2 class="post-title">
-              CTF PHP代码审计中file_put_contents函数利用
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>源码分析</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">1 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/Olw-A4WVi/">
-            <h2 class="post-title">
-              Mysql limit注入
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>实验环境</strong><br>
-http://lab1.xseclab.com/sqli5_5ba0bba6a6d1b30b956843f757889552/index.php?start=0&amp;num=1</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/li-yong-huan-jing-bian-liang-ld_preload-rao-guo-php-disable_function-zhi-xing-xi-tong-ming-ling/">
-            <h2 class="post-title">
-              利用环境变量LD_PRELOAD绕过php disable_function执行系统命令
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>利用条件</strong><br>
-php未禁用putenv，mail函数</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">4 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        
-        <a class="btn btn-primary float-left" href="https://guokeya.github.io/tag/CTF/page/10/">&larr; 上一页</a>
-        
-        
       </div>
     </div>
-  </div>
-
-  
+  </article>
  <!-- Footer -->
   <footer>
     <div class="container">
@@ -337,3 +224,4 @@ php未禁用putenv，mail函数</p>
   })(this));</script>
   </body>
 </html>
+
