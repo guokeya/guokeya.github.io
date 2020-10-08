@@ -1,433 +1,105 @@
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0">
-    <meta name="description" content="题目给了个sh
- ${*%c-dFqjfo}  e$'\u0076'al &quot;$(   ${*%%Q+n\{}   &quot;${@~}&quot; $'\160'r&quot;&quot;$'\151'$@nt&quot;f&q..." />
-    <meta name="keywords" content="CTF" />
-    <link rel="stylesheet" href="https://guokeya.github.io/media/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
-    
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/styles/vs2015.min.css">
-    
-    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/highlight.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/js/clipboard.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/css/live2d.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
-    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
-    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.13.1/css/all.min.css" rel="stylesheet">
-    <!-- 数学公式 -->
-    
-    <title>过客</title>
-    
-    <style>
-        .markdownIt-TOC {
-            padding-left: 2px;
-            width: 100%;
-        }
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>RedPwnCTF的一题sh混淆杂项(uglybash) | 过客</title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="RedPwnCTF的一题sh混淆杂项(uglybash) | 过客 » Feed" href="http://localhost:4000/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
 
-        .markdownIt-TOC li {
-            padding-left: 2%;
-        }
-    </style>
-    
-</head>
-
-<body>
-    <div id="landlord">
-        <div class="message" style="opacity:0"></div>
-        <canvas id="live2d" width="240" height="250" class="live2d"></canvas>
-    </div>
-    <div id="codeCopyText" style="display: none">代码复制成功了哦</div>
-    <div id="domainname" style="display:none">https://guokeya.github.io</div>
-    <!-- 响应式布局，针对PC端内容显示 -->
-    <div id="content">
-        <div>
-            <div id="bar">
-                <head>
-  <!-- 引入Bootstrap核心样式文件 -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/css/bootstrap.min.css">
-</head>
-<style>
-  @media screen and (max-width:1200px) and (min-width: 768px) {
-    @media (min-width: 768px) {
-      .navbar-nav {
-        float: right;
-        margin: 0;
-      }
-    }
-  }
-  @media screen and (max-width:768px){
-    .mbapspan{
-      padding: 0;
-    }
-  }
-</style>
-
-<body>
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#barmenu"
-          aria-expanded="false" id="barbutton">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="https://guokeya.github.io">过客&nbsp;&nbsp;|</a>
-        <span class="navbar-brand mbapspan"><i id="mbaplayer" class="fa fa-play-circle-o" aria-hidden="true"
-            style="font-size: 28px;top: 12px;position: absolute;" onclick="aplayerPlay();"></i></span>
-      </div>
-
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="barmenu">
-        <ul class="nav navbar-nav">
+    <meta property="og:description" content="RedPwnCTF的一题sh混淆杂项(uglybash)"/>
+    <meta property="og:url" content="http://localhost:4000/post/IWVADGzub/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="过客"/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="http://localhost:4000">过客</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
           
-          
-          <li>
-            <a href="/">
-              首页
-            </a>
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
           </li>
           
-          
-          
-          <li>
-            <a href="/archives">
-              归档
-            </a>
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
           </li>
           
-          
-          
-          <li>
-            <a href="/post/about">
-              关于
-            </a>
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
           </li>
           
-          
-          
-          <li>
-            <a href="/tags">
-              分类
-            </a>
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
           </li>
-          
-          
-          
-          
-          <li><a href="https://guokeya.github.io/friends">友链</a></li>
-
           
         </ul>
-      </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-  </nav>
-
-
-  <!-- 引入jQuery核心js文件 -->
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
-  <script>
-  var btstate = false;
-  var bt = $("#barbutton");
-  var bm = $("#barmenu");
-  bt.click(function(){
-    dropdown();
-  })
-  function dropdown(){
-    console.log(btstate);
-    //下拉
-    if(btstate==false){
-      bt.removeClass("collapsed");
-      bt.attr("aria-expanded","true");
-      bm.attr("aria-expanded","true")
-      bm.fadeIn(700);
-      btstate = true;
-    }
-    else{
-      bt.addClass("collapsed");
-      bt.attr("aria-expanded","false");
-      bm.removeClass("in");
-      bm.hide();
-      bm.attr("aria-expanded","false");
-      btstate = false;
-    }
-  }
-  </script> 
-</body>
-            </div>
-            <div class="row">
-                <div class="side"><body>
-    
-
-
-
-    
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <a class="navbar-brand" href="https://guokeya.github.io"
-                    style="font-size:21px">过客&nbsp;&nbsp;|&nbsp;&nbsp;</a>
-                <a class="navbar-brand" href=""
-                    style="font-size:15px;font-family:kaiti">TEST</a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse">
-                
-                <div class="search nav navbar-nav" style="margin-top:8px">
-                    <!-- <input type="text" class="search-input" placeholder="标题搜索(●'◡'●)" /> -->
-                    <input type="text" class="search-input" placeholder="标题搜索 ⚆_⚆ つ♡">
-                    <div class="search-results"></div>
-                </div>
-                
-                <div class="search nav navbar-nav searchtop">
-                <a title="text" onclick="document.getElementById('socialMenu').style.display='block'"><i><img class="social"
-                    src="https://guokeya.github.io/media/images/social.png" alt=""></i></a>
-            </div>
-            <ul class="nav navbar-nav" style="float: right;margin-right:5%">
-                
-                
-                <li>
-                    <a href="/" style="color:white">
-                        首页
-                    </a>
-                </li>
-                
-                
-                
-                <li>
-                    <a href="/archives" style="color:white">
-                        归档
-                    </a>
-                </li>
-                
-                
-                
-                <li>
-                    <a href="/post/about" style="color:white">
-                        关于
-                    </a>
-                </li>
-                
-                
-                
-                <li>
-                    <a href="/tags" style="color:white">
-                        分类
-                    </a>
-                </li>
-                
-                
-                
-                  
-                <li><a href="https://guokeya.github.io/friends" style="color:white">友链</a></li>
-                
-                  <li><img src="https://guokeya.github.io/images/avatar.png?v=1602162296852" alt=""
-                class="menutopavatar"></li>
-            </ul>
-        </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
-    <div id="socialMenu">
-        <div class="animate">
-            <div class="socialContainer">
-                
-                
-                
-                
-                
-                
-            </div>
-            <div id="qq" style="display:none"></div>
-        </div>
+      </div>
     </div>
-    <!-- 引入jQuery核心js文件 -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
-    <script>
-        var social = document.getElementById('socialMenu');
-        // 鼠标点击模型外区域关闭登录框
-        window.onclick = function (event) {
-            if (event.target == social) {
-                social.style.display = "none";
-            }
-        }
-    </script>
-    
-</body>
-<script>
-    //-------------------------------------------------搜索
-    // 获取搜索框、搜索按钮、清空搜索、结果输出对应的元素
-    var searchInput = document.querySelector('.search-input');
-    var searchResults = document.querySelector('.search-results');
-
-    // 申明保存文章的标题、链接、内容的数组变量
-    var searchValue = '',
-        arrItems = [],
-        arrLinks = [],
-        arrTitles = [],
-        arrResults = [],
-        indexItem = [],
-        itemLength = 0;
-    var tmpDiv = document.createElement('div');
-    tmpDiv.className = 'result-item';
-
-    // ajax 的兼容写法
-    var xhr = new XMLHttpRequest() || new ActiveXObject('Microsoft.XMLHTTP');
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            xml = xhr.responseXML;
-            arrItems = xml.getElementsByTagName('entry');
-            itemLength = arrItems.length;
-            // 遍历并保存所有文章对应的标题、链接、内容到对应的数组中
-            // 同时过滤掉 HTML 标签
-            for (i = 0; i < itemLength; i++) {
-                var link = arrItems[i].getElementsByTagName('link')[0];
-                arrLinks[i] = link.getAttribute("href");
-                arrTitles[i] = arrItems[i].getElementsByTagName('title')[0].
-                childNodes[0].nodeValue.replace(/<.*?>/g, '');
-            }
-        }
-    }
-
-    // 开始获取根目录下 feed.xml 文件内的数据
-    xhr.open('get', '/atom.xml', true);
-    xhr.send();
-
-
-
-    // 输入框内容变化后就开始匹配，可以不用点按钮
-    // 经测试，onkeydown, onchange 等方法效果不太理想，
-    // 存在输入延迟等问题，最后发现触发 input 事件最理想，
-    // 并且可以处理中文输入法拼写的变化
-    searchInput.oninput = function () {
-        setTimeout(searchConfirm, 0);
-    }
-    searchInput.onfocus = function () {
-        searchResults.style.display = 'block';
-    }
-
-    function searchConfirm() {
-        if (searchInput.value == '') {
-            searchResults.style.display = 'none';
-        } else if (searchInput.value.search(/^\s+$/) >= 0) {
-            // 检测输入值全是空白的情况
-            searchInit();
-            var itemDiv = tmpDiv.cloneNode(true);
-            itemDiv.innerText = '请输入有效内容...';
-            searchResults.appendChild(itemDiv);
-        } else {
-            // 合法输入值的情况
-            searchInit();
-            searchValue = searchInput.value;
-            // 在标题、内容中查找
-            searchMatching(arrTitles, searchValue);
-        }
-    }
-
-    // 每次搜索完成后的初始化
-    function searchInit() {
-        arrResults = [];
-        indexItem = [];
-        searchResults.innerHTML = '';
-        searchResults.style.display = 'block';
-    }
-
-    function searchMatching(arr1, input) {
-        // 忽略输入大小写
-        input = new RegExp(input, 'i');
-        // 在所有文章标题、内容中匹配查询值
-        for (i = 0; i < itemLength; i++) {
-            if (arr1[i].search(input) !== -1) {
-                var arr = arr1;
-                indexItem.push(i); // 保存匹配值的索引
-                var indexContent = arr[i].search(input);
-                // 此时 input 为 RegExp 格式 /input/i，转换为原 input 字符串长度
-                var l = input.toString().length - 3;
-                var step = 10;
-
-                // 将匹配到内容的地方进行黄色标记，并包括周围一定数量的文本
-                arrResults.push(arr[i].slice(indexContent - step, indexContent));
-            }
-        }
-
-        // 输出总共匹配到的数目
-        var totalDiv = tmpDiv.cloneNode(true);
-        totalDiv.innerHTML = '<b>总匹配：' + indexItem.length + ' 项<hr></b>';
-        searchResults.appendChild(totalDiv);
-
-        // 未匹配到内容的情况
-        if (indexItem.length == 0) {
-            var itemDiv = tmpDiv.cloneNode(true);
-            itemDiv.innerText = '未匹配到内容...';
-            searchResults.appendChild(itemDiv);
-        }
-
-        // 将所有匹配内容进行组合
-        for (i = 0; i < arrResults.length; i++) {
-            var itemDiv = tmpDiv.cloneNode(true);
-            itemDiv.innerHTML = '<b>[' + arrTitles[indexItem[i]] +
-                ']</b><p>' + arrResults[i] + "</p><hr />";
-            itemDiv.setAttribute('onclick', 'changeHref(arrLinks[indexItem[' + i + ']])');
-            searchResults.appendChild(itemDiv);
-        }
-    }
-
-    function changeHref(href) {
-        location.href = href;
-    }
-
-    function showqq() {
-        var qq = document.getElementById("qq").innerHTML;
-        if (qq != '')
-            window.location.href = "tencent://message/?uin=" + qq + "&Site=&Menu=yes";
-        else
-            alert("博主暂未设置QQ联系方式");
-    }
-</script>
-</div>
-                
-            <div class="col-md-2 col-lg-3"></div>
-            <div id="postmain" class="col-xs-12 col-sm-12 col-md-8  col-lg-6 posttop" >
-                <link rel="stylesheet" href="https://guokeya.github.io/media/css/font-awesome.css">
-
-<body>
-    <div class="allcontent" id="postdetail">
-        <div class="postshow" style="padding-bottom: 0;">
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
             
-            <div class="postdetailimg" style="width:100%;overflow: hidden;">
-                
-                <img src="" class="postimage">
-                
-            </div>
-            <div class="postinfo-detail">
-                <div class="postdate"><i class="fa fa-calendar"></i>2020-06-22</div>
-            <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 8 min read</div>
-            <div class="posttag">
-                
-                <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
-                    <i class="fa fa-tag"></i> CTF
-                </a>
-                
-            </div>
+        </span>
+            <h1>RedPwnCTF的一题sh混淆杂项(uglybash)</h1>
+            <span class="meta">
+            	Posted on
+              2020-06-22，8 min read
+            </span>
+          </div>
         </div>
-        
-        <div id="articlecontent">
-            <div id="texttitle" style="text-align: center">
-                <h2>RedPwnCTF的一题sh混淆杂项(uglybash)</h2>
-                <!-- id 将作为查询条件 -->
-                <div id="pl" style="display:none">https://guokeya.github.io/post/IWVADGzub/</div>
-                <div id="rootaddr" style="display:none">https://guokeya.github.io</div>
-                <span id="hotnum">
-                    <h4><i class="fa fa-eye" aria-hidden="true" style="color: #FF8C00;"></i>&nbsp;&nbsp;热度</i>: <i
-                            class="hotnum">loading...</i></h4>
-                </span>
-            </div>
-            <div class="text ">
-                <p>题目给了个sh</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>题目给了个sh</p>
 <pre><code> ${*%c-dFqjfo}  e$'\u0076'al &quot;$(   ${*%%Q+n\{}   &quot;${@~}&quot; $'\160'r&quot;&quot;$'\151'$@nt&quot;f&quot; %s   ' }~~@{$  &quot;)   }La?cc87J##@{$   ;   }  ;  }8CC3vD/qX$t/*{$   }~~*{$   &quot;}] &quot;}^@{$&quot;  y4R2SV$   &quot;}cIqe[\(\%@{$&quot; &quot;}xk:W=Y2##@{$&quot; [JzbY6E{$&quot;   s%   ft'&quot;'&quot;'n'&quot;'&quot;''&quot;'&quot;'i'&quot;'&quot;'r\p  { ; }*!{$ ]  )e#22+)2}8Kr6&gt;#*{$#82*01#3}^*{$((   [$ &quot;};(\S-[\/@{$&quot;   &quot;},@{$&quot;   ]  )71}|$1+d/$_dj/*{$#8+)2#16*1&quot;}xp.{\$Z~[\%@{$&quot;#}~*{$7&quot;1&quot;-((  [$ &quot;@$&quot;  &quot;}oMAHn%%@{$&quot;   ))  )0&quot;1&quot;01&quot;}^@{$&quot;#4}]\oh&gt;-%%@{$+)&quot;a&quot;1#21&quot;-&quot;+l#&quot;1&quot;&quot;5&quot;-})\+{\$rMTE%%@{$((   (($ }Omm&quot;\V#*{$   }8z&lt;TPr/*{$   ]   ))11&quot;#&quot;2+)&quot;2&quot;&quot;#&quot;&quot;7&quot;&quot;5&quot;-&quot;}qJ)\)\!\{\#/Ije&gt;VU//@{$&quot;-2}_axM-*/*{$#&quot;7&quot;&quot;3&quot;(-(-( [$ }f9~U//*{$  }#Jgkvc#@{$   ))  )1#}7e[\Trh{\//@{$4+)0#62*0#}*{$&quot;9&quot;(( (($ }S(\{\0)\##@{$   ] )21&quot;}jAVg1-%%@{$&quot;&quot;#&quot;5+)&quot;1&quot;1#}*{$4}*{$-*&quot;0&quot;1#&quot;}~~@{$&quot;&quot;3&quot;-((   [$   }^^*{$   ]   )11#}*!{$&quot;3&quot;+)1*$#93*2#&quot;6&quot;5&quot;@$&quot;((   [$  }0c;x]\^Y//*{$  })\mei/b6B1atD)\//*{$  ]  )1&quot;1&quot;0001#2&quot;}fhF`\x/s77vTa[\/@{$&quot;+)0*$#}R&quot;\&gt;(\/RTS8//*{$&quot;6&quot;+l&quot;#&quot;03-((  [$ }^^@{$ ))   ))31&quot;#&quot;5+)11#7--00&quot;}&amp;*]\7//@{$&quot;1#2}`\g]\&lt;Roj/}\~(\&lt;Qq/*{$(-(-(  (($  }~@{$  ))   )&quot;1&quot;&quot;#&quot;5}mR&amp;&lt;7r/}\dC!\s*k/*{$3+)i#65-6&quot;1&quot;#}NojyN70T##*{$92}@!{$((  (($  },,*{$ ]  )i}Ym5{\y##@{$#}!\a.8/*{$&quot;0&quot;2},,*{$+)01#4+&quot;b&quot;#94}*{$-((  [$   }@{$   }~*{$ )) )52#8+)0#62*0#05(( (($  })\C62X/*{$  }mibf/*{$ )) )&quot;4&quot;2&quot;#&quot;6}~f`\^/@{$1}3NKi^FgW/*{$+)2}=&quot;\ulQ;/*{$&quot;#&quot;7}@!{$3-+k#35-((   (($  }*{$ }*{$  ] )i#16+)01#3*11#2}?L7X&gt;/~^MeZH/@{$-((   [$  *$  }@{$   ))  )222#3+)11},,@{$#&quot;2&quot;*1&quot;1&quot;#4-((   (($   &quot;}@{$&quot; }*!{$ ]   )d#53}e~+uz61###@{$+)0}~~*{$01#2--2&quot;1&quot;&quot;#&quot;3((   [$ }~~*{$   ))   )j&quot;}^^@{$&quot;#&quot;},@{$&quot;0}~*{$3+)11#4-}ml;.##@{$+&quot;1&quot;#8}&quot;\r&quot;\&gt;cohJ/*{$4(( (($   }*!{$   )) )&quot;a&quot;1&quot;#&quot;&quot;1&quot;5+)03#7-e}^^*{$#12-((  (($ &quot;}~@{$&quot;  ))  ))22&quot;1&quot;#3+)2#&quot;}Y9cefj9%%@{$&quot;41-*$-&quot;y&quot;#84(-(-(   (($   }^^@{$   ))   )011}~~@{$1},,*{$#2+)&quot;1&quot;#52*11#3-}^^*{$(( (($  }*{$ ]   ))0#&quot;1&quot;1+)0#04*0&quot;#&quot;2&quot;},,@{$&quot;1}*!{$(-(-( [$   }~~@{$ ))   )43#2&quot;}gC@u/@{$&quot;1+)&quot;1&quot;1}pQCP//*{$#2-}^@{$*01#*$8(( (($ }dlz&quot;\T%%*{$  },h]\rj`\}\/RPQto&quot;\/*{$   )) ))1#2}Vf}\]\Nu##@{$1+)11&quot;#&quot;2--0})\HIZ/*{$#05(-(-(  (($   },,*{$ }~~@{$ ))  )&quot;a&quot;#&quot;6&quot;3&quot;}TIP]\@V##@{$&quot;+)2}`\.\%Qxt/?:4,/@{$#02-*01#3-}{\Di6HUx@%@{$((  (($ &quot;}~@{$&quot; }34v@##*{$   ]  ))11#&quot;5&quot;+)h&quot;}BdoI#@{$&quot;1#1}t*f+fWlA//*{$2+2}~~*{$&quot;1&quot;#},,*{$5-(-(-(   [$   };y$!\M8##@{$  ))   )1#&quot;7&quot;&quot;1&quot;+)0*$&quot;#&quot;&quot;1&quot;3*0#5}*{$1&quot;}Rw6a//@{$&quot;(( (($   }Q-Vf9d%%*{$  ))   )1},,*{$#15+)0}+lDQf%@{$#&quot;2&quot;*0#74((  (($   }_%$KT9f/iTW~$_/*{$  @$  ]   )&quot;m&quot;#3},@{$&quot;3&quot;+)1&quot;1&quot;#2-*0#&quot;5&quot;1(( [$  &quot;},@{$&quot;   }TX`\`\%%@{$ ] )&quot;1&quot;1#5&quot;}FE=UU=W./&amp;&lt;&quot;\8l7/@{$&quot;+)0#3*01#3-((   [$ }*{$   }aO;R&quot;\w/9jJF1//*{$   ]   )&quot;2&quot;1#&quot;}9uT]\j1f;##@{$&quot;&quot;6&quot;+)j#&quot;7&quot;4-&quot;}^^@{$&quot;-b#14-((   [$   }^^*{$ }~~*{$ )) ))1&quot;#&quot;34+)&quot;0&quot;1#}exP&quot;\/TG!\)\T!\?//@{$6+1}*!{$#0}&lt;7V&amp;/*{$6-(-(-(   (($ }Mi@S&lt;]\Q#*{$ }^^*{$   ]   )2}}\2jz]\G49/#dn&gt;8/*{$2#&quot;}&lt;FTeK&amp;n,//@{$&quot;3&quot;},,@{$&quot;+)1#3-+00}I3cO.O;Z%%@{$&quot;1&quot;#&quot;2&quot;-},*{$(( [$ }B;h_1VnC%%*{$   &quot;}@{$&quot;  ]  )01}*{$#3+)1#*$8&quot;3&quot;--02#4((  [$  }.\np,/?{\~b03//*{$  &quot;},@{$&quot; ))  ))02#4+)&quot;n&quot;#}SPKP8tw##@{$45--1&quot;#&quot;03(-(-(  (($  &quot;}@{$&quot;   ]   ))n&quot;#&quot;14+)s#44+2}@{$2#}~*{$8}7Qq~iq%%*{$(-(-(   [$   *$   ]   )21&quot;#&quot;4+)n&quot;}~@{$&quot;#}\\@&lt;f$4/*{$45--&quot;1&quot;2&quot;#&quot;3-(( [$  }@{$ }*{$ ))   )41#&quot;3&quot;1+)0&quot;#&quot;15*11#&quot;6&quot;(( (($   },,@{$ ]   )d#}t_=_//*{$8}ha5]\78/*{$&quot;1&quot;+)01#3&quot;-&quot;*1&quot;}G2T~wh2##@{$&quot;&quot;#&quot;64-(( [$  }^^@{$   }.T9P_8Gv//*{$ ]   )2&quot;#&quot;73&quot;}$oE?##@{$&quot;+)1},,*{$&quot;1&quot;#}K.o%o$t/uR@fekB#/@{$2-&quot;0&quot;&quot;1&quot;#}@bCU%*{$4((  [$  &quot;}3nB?u8fG//@{$&quot; ))  )&quot;3&quot;&quot;2&quot;&quot;#&quot;11&quot;@$&quot;+)0&quot;}~@{$&quot;1#4-+a#5&quot;4&quot;-((  (($ }~y?mRx/BM&quot;\H]\//*{$  &quot;}4^4rR/@{$&quot; ]   )&quot;G&quot;#74}~@{$+)2#52}@!{$&quot;-&quot;*a#7&quot;1&quot;((  [$  }@!{$ }~~*{$   ]  ))1#84+)31#5+h#03(-(-(  [$   }&amp;+?82EU%%*{$   }@!{$   ]   )l&quot;#&quot;&quot;3&quot;2+)1}~*{$#21*0&quot;}4[\P!\/|Ec{\e/@{$&quot;1}*{$&quot;#&quot;5-((  [$ }:p-c^h+/:r#lsa//*{$ }*{$ ))  )00}@!{$1#}BFcS!\%@{$2+)1#&quot;0&quot;6*1#}~~*{$71-(( (($  }~~*{$ }&quot;\&amp;`\QS*%*{$   ]   )z&quot;#&quot;44+)11&quot;#&quot;&quot;5&quot;-*2#4&quot;2&quot;((   [$   &quot;}^^@{$&quot; }RU*x9!\22/ySk%Ir/@{$ ))  )e&quot;#&quot;0&quot;5&quot;+)2#7&quot;2&quot;*&quot;1&quot;1#2&quot;-&quot;(( (($  }*{$ }LNt)\,//@{$ ))   ))0#}}\TMHUEV//*{$0}{\^WK!\##*{$6+)11#6-}ahZD^2~/:C,Io\C/*{$-&quot;1&quot;#65-&quot;}H@zpzY8%@{$&quot;(-(-(   (($  &quot;}QrL2J\~%%@{$&quot;  &quot;}n(\7?)\)\J%%@{$&quot;  ]   )0&quot;1&quot;&quot;#&quot;11+)0#&quot;8&quot;2-11}*{$&quot;#&quot;4((  [$   }(\L-.D:/.41yxK]\//*{$  ]   ))21&quot;#&quot;7+)2#24--&quot;f&quot;&quot;#&quot;32(-(-(  [$ },*{$ }@!{$ ] )22#81}^*{$+)1&quot;1&quot;#4}~*{$&quot;-&quot;*001#}*{$2(( [$ }^^@{$   },,@{$   ] )j},,*{$#&quot;}u7=$6]\/o43H//@{$&quot;2&quot;5&quot;+)1&quot;1&quot;&quot;1&quot;&quot;#&quot;2-101#2-((  [$  }$Wil##@{$  }l=:G&gt;(\-#@{$  ] ))0#75}~~@{$+)1&quot;#&quot;&quot;9&quot;+1&quot;}JZ2I7=&amp;/@{$&quot;&quot;1&quot;#}~~*{$3(-(-(  [$  ni  y4R2SV  rof &amp;&amp;   },,@{$  )  }^*{$  g  }^^*{$ y   }g$U-b9%@{$   j   }*!{$   n }~@{$  *$  u   &quot;}(\whfI/@{$&quot;  &quot;}@{$&quot;  z  }RH|&lt;=z##@{$   }~~@{$  '&quot;'&quot;'ax\'&quot;'&quot;'$   }^^@{$  a }~*{$ }dS^Db6G}\%*{$   h   }@{$   }^*{$ r  &quot;}m&amp;Jk:b?/WBG02h}\_/@{$&quot;  \ }T|qd//*{$  }OM`\6.o%@{$   {\  }H%ynnO(\u//*{$   }g8Gv|R~/*{$  _\  }-:zfUz%%*{$ }\   })\#?1{\OK/@{$ *$  i  }__b5W:RE//@{$  s   }%&lt;Oy{\I//*{$ }&quot;\-iPfz]\g/ug|0w8/*{$   l }L#vh$/{\wLz8/@{$ }60-tI0&lt;%%*{$ 3  &quot;}^@{$&quot; o }euc*##@{$   c  }~~*{$  }~~*{$  d }_h)\)\{\/i$V2/@{$   e   *$   }(\&amp;`\C?*3%%@{$   ,\ &quot;}@{$&quot; }~@{$  t   &quot;},@{$&quot;   }^^*{$ #\  }*^RXtV##*{$   m  &quot;}@{$&quot;   f &quot;},@{$&quot;   (=JzbY6E     ($&quot;  &lt;&lt;&lt; },,*{$   }C0#Y%%*{$  HSAB$ &quot;}|=1SW.//@{$&quot;   &quot;@$&quot; '  ${*,} ${@/;mO4/qc~&amp;y} |  ${@/a\{oy_BGF/*:wJ}   ${@##~@pBeI}   &quot;r&quot;&quot;&quot;ev   ${*~}  ${*%K^vf&amp;^3&lt;}  ;  ${*#SBvLg=k\[}  ${*^}    )&quot;   ${!@}
 </code></pre>
 <p>复制到虚拟机。执行下返回</p>
@@ -441,362 +113,108 @@ dont just run it, dummy
 里面介绍了一个bash调试功能。sh -x<br>
 然后就能输出脚本的执行流程。<br>
 然后我用sh执行脚本的时候。直接报错。用bash -x也可以<br>
-<img src="https://guokeya.github.io/post-images/1592830048412.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1592830048412.png" alt="" loading="lazy"><br>
 看起来还是很乱。但至少。它输出了脚本每次执行的东西<br>
-<img src="https://guokeya.github.io/post-images/1592830096857.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1592830096857.png" alt="" loading="lazy"><br>
 执行了printf %s n<br>
 。。还是没思路。把所有内容复制到windows下<br>
 windows就很清楚了<br>
 flag字样<br>
-<img src="https://guokeya.github.io/post-images/1592830199514.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1592830199514.png" alt="" loading="lazy"></p>
 
-            </div>
-            <hr style="width: 80%;">
-            
-            <div class="sharebtnContainer">
-                <button type="button" class="sharebtn">转载分享</button>
-            </div>
-            <div class="shareContainer">
-                <div class="share" style="height:30px;background: white;">
-                    <a class="qq" href=""><i><img class="shareicon"
-                                src="https://guokeya.github.io/media/images/QQ.png" alt=""></i></a>
-                    <a class="wechat" href=""><i><img class="shareicon"
-                                src="https://guokeya.github.io/media/images/wechat.png" alt=""></i></a>
-                    <a class="weibo" href=""><i><img class="shareicon"
-                                src="https://guokeya.github.io/media/images/weibo.png" alt=""></i></a>
-                    <a class="qzone" href=""><i><img class="shareicon"
-                                src="https://guokeya.github.io/media/images/qzone.png" alt=""></i></a>
-                    <a class="douban" href=""><i><img class="shareicon"
-                                src="https://guokeya.github.io/media/images/douban.png" alt=""></i></a>
-                    <a class="facebook" href=""><i><img class="shareicon"
-                                src="https://guokeya.github.io/media/images/facebook.png" alt=""></i></a>
-                    <a class="twitter" href=""><i><img class="shareicon"
-                                src="https://guokeya.github.io/media/images/twitter.png" alt=""></i></a>
-                </div>
-            </div>
-            
-            
-            <div class="donateContainer">
-                <img src="https://guokeya.github.io/media/images/donate.png" alt="" class="donateImg">
-            </div>
-            <div class="donateContainer">
-                <img src="" alt="" class="donate">
-            </div>
-            
-            <div class="postfooter">
-                <ul class="post-copyright">
-                    <li><strong>文章作者：</strong></li>
-            <li><strong>原文链接：</strong>https://guokeya.github.io/post/IWVADGzub/</li>
-            <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用<i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA
-                许可协议。转载请注明出处！</li>
-            </ul>
-        </div>
-        <div id="otherpost">
-            
-            <div class="prev-post-pc">
-                <div id="ppcontainer" onclick="window.location.href= 'https://guokeya.github.io/post/3kK-0Vkzq/';return false">
-                    
-                    
-                    <img src="" style="width: 100%;" class="opimg">
-                    
-                    
-                    <h4 class="optitle">[Zer0pts2020]notepad(ssti+python反序列化)</h4>
-                </div>
-            </div>
-            <div class="prev-post">
-                上一篇 <a href="https://guokeya.github.io/post/3kK-0Vkzq/">[Zer0pts2020]notepad(ssti+python反序列化)</a>
-            </div>
-            
-            
-            <div class="next-post-pc">
-                <div id="npcontainer" onclick="window.location.href= 'https://guokeya.github.io/post/zE_m1kHQm/';return false">
-                    
-                    
-                    <img src="" style="width: 100%;" class="opimg">
-                    
-                        
-                    <h4 class="optitle">[RoarCTF 2019]PHPShe(注入+phar反序列化)</h4>
-                </div>
-            </div>
-            <div class="next-post">
-                下一篇 <a href="https://guokeya.github.io/post/zE_m1kHQm/">[RoarCTF 2019]PHPShe(注入+phar反序列化)</a>
-            </div>
-            
-        </div>
-    </div>
-    </div>
-    </div>
-
-</body>
-<script>
-    //文章阅读热度
-    var pl = $("#pl").html();
-    var rootaddr = $("#rootaddr").html();
-    pl = pl.replace(rootaddr, "");
-    $("#hotnum").attr('id', pl);
-</script>
-                <div id="comment" class="comment" style="background: white">
-                    <div class="commentcontainer">
-                        
-                        <p>请到客户端“主题--自定义配置--valine”中填入ID和KEY</p>
-                        
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2 col-lg-3">
-            </div>
-            <div id="bg">
-            </div>
-        </div>
+          
+          <p class="next-post">下一篇：
+            <a href="http://localhost:4000/post/zE_m1kHQm/">
+              <span class="post-title">
+                [RoarCTF 2019]PHPShe(注入+phar反序列化)&rarr;
+              </span>
+            </a>
+          </p>
         
-        
-        <div class="toc-container">
-            
-    </div>
-    </div>
-    </div>
-    <div class="tog">
-        <div class="toggleContainer">
-            <div class="toggle">
-                <i class="fas fa-angle-double-up"></i>
-            </div>
+        <div class="comment">
+          
         </div>
+      </div>
     </div>
-    <div id="bgchoice" style="display: none"></div>
-    
-    <div id="bgurl" style="display:none"></div>
-    
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span>过客</span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+        </div>
+      </div>
     </div>
-</body>
-<script>
-    var img = $("img");
-    for (var i = 0; i < img.length; i++) {
-        if (img.eq(i).attr("class") == undefined) {
-            img.eq(i).attr("class", "lazyload");
-            var imgsrc = img.eq(i).attr("src");
-            img.eq(i).attr("data-original", imgsrc);
-            img.eq(i).attr("src", "");
-            img.eq(i).hide();
-        }
-    }
-</script>
-<script>
-    hljs.initHighlightingOnLoad();
-</script>
-<script>
-    //寻找所有code标签，加复制按钮鸭！(行内代码除外)
-    var codes = document.getElementsByTagName('code');
-    if (codes.length) {
-        for (var i = 0; i < codes.length; i++) {
-            //高度/行高=文本行数
-            // var rowNum=Math.round(codes[i].height()/parseFloat(codes[i].css('line-height')));
-            // console.log("当前有"+rowNum+"行");
-            var code_id = "code_id_" + i;
-            codes[i].setAttribute("id", code_id);
-            var ci = "#" + code_id;
-            var codedot = $(ci);
-            var rowNum = Math.round(codedot.height() / parseFloat(codedot.css('line-height')));
-            if (rowNum <= 1) continue;
-            var btn = document.createElement("button");
-            btn.setAttribute("class", "copybt");
-            btn.setAttribute("data-clipboard-target", "#" + code_id);
-            btn.innerHTML = '复制代码';
-            codes[i].parentNode.insertBefore(btn, codes[i]);
-        }
-    };
-    var cop = new ClipboardJS('.copybt');
-    var codeCopyText = $("#codeCopyText").html();
-    cop.on('success', function (e) {
-        alert(codeCopyText);
-        e.clearSelection();
-    });
-    cop.on('error', function (e) {
-        alert("矮油，复制失败了...手动复制吧勇士！");
-        e.clearSelection();
-    });
-</script>
-
-<script>
-    $(function () {
-        $('.toggleContainer').click(function () {
-            $('html,body').animate({
-                scrollTop: '0px'
-            }, 800);
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
         });
-        $(window).scroll(function () {
-            var st = $(window).scrollTop();
-            if (st > 30) {
-                $(".toggleContainer").fadeIn(400);
-            } else {
-                $(".toggleContainer").fadeOut(100);
-            }
-        });
-    });
-</script>
-
-<script>
-    var bgchoice = $('#bgchoice').html();
-    var bg = $('#bg');
-    var bgurl = document.getElementById("bgurl").innerHTML;
-    if (bgchoice == 'default')
-        for (var i = 0; i < 3; i++)
-            bgurl = bgurl.replace("\\", "/");
-    bg.css("background", "url('" + bgurl + "')");
-</script>
-
-
-
-
-<!-- 动态更改上(下)一篇博客图片框长宽 -->
-<script>
-    npcontainer = document.querySelector('#npcontainer');
-    npstyle = window.getComputedStyle(npcontainer, null);
-    npwidth = npstyle.width;
-    npheight = 0.6 * Number(npwidth.replace("px", ""));
-    npheight = npheight.toString() + "px";
-    var op = $(".opimg");
-    op.css("height", npheight);
-</script>
-
-<script src="https://guokeya.github.io/media/share/dist/Share.js"></script>
-
-<script>
-    var avatarSrc = $(".menutopavatar").attr("src");
-    var dp = document.getElementsByClassName("navbar-brand")[1].innerHTML;
-</script>
-
-
-<script>
-    var title = document.getElementById("texttitle").getElementsByTagName("h2");
-    
-    var share = new Share('.share', {
-        title: title[0].innerHTML,
-        initialized: true,
-        //默认获取网站描述
-        description: dp,
-        //网站图片默认获取的是设置的用户头像
-        image: avatarSrc,
-        //激活的分享网站
-        sites: ["weibo", "qq", "wechat", "douban", "qzone", "facebook", "twitter", "google"],
-        //微信分享PC端会生成二维码分享,移动端如果可以唤起微信最好
-        wechatQrcodeTitle: "微信扫一扫：分享", // 微信二维码提示文字
-        wechatQrcodeHelper: '<p>微信里扫一下二维码</p><p>便可将本文分享至朋友圈。</p>',
-        //关闭的网站分享
-        disabled: ['google', 'linkedin'],
-        wechatQrcodePosition: 'bottom'
-    });
-
-    //点击分享按钮展现出分享icons
-    var sharebtnTag = false;
-    $(".sharebtn").click(function () {
-        if(!sharebtnTag)
-        {
-            $(".share").show();
-            sharebtnTag = true;
-        }
-        else
-        {
-            $(".share").hide();
-            sharebtnTag = false;
-        }
-    })
-
-    var donatebtnTag = false;
-    $(".donateImg").click(function () {
-        if(!donatebtnTag)
-        {
-            $(".donate").show();
-            donatebtnTag = true;
-        }
-        else{
-            $(".donate").hide();
-            donatebtnTag = false;
-        }
-    })
-
-    //加载后的事件同步（阅读量、移动端评论等
-    window.onload=function(){
-        getHotnum();
-        var sharepc = $(".share").eq(0).html();
-        $(".share").eq(1).html(sharepc);
-        document.getElementById("veditor").setAttribute("placeholder", jrsc);
-        aplayerbtnInit();
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
     }
-</script>
+  })(this));</script>
+  </body>
+</html>
 
-
-<script>
-    jQuery(document).ready(function ($) {
-        function lazyload() {
-            var oLazyload = $("img.lazyload"),
-                fLazyload = function (hLazyload) {
-                    var nLazyload = $(window).height() + $(document).scrollTop();
-                    oLazyload.each(function () {
-                        $(this).offset().top < nLazyload && ($(this).trigger("appear"), oLazyload =
-                            oLazyload.not(this));
-                    }), 0 == oLazyload.length && $(window).unbind("scroll", fLazyload);
-                };
-            oLazyload.each(function () {
-                $(this).one("appear", function () {
-                    $(this).attr("src", $(this).attr("data-original"));
-                    $(this).fadeIn(500);
-                });
-            }), $(window).bind("scroll", fLazyload), fLazyload();
-        }
-        lazyload();
-    });
-</script>
-
-<!-- <script src="https://guokeya.github.io/media/js/av-min.js"></script> -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@3.13.0/dist/av-min.js"></script> -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@4.6.1/dist/av-live-query-min.js"></script> -->
-
-<script>
-    function getHotnum() {
-        //文章阅读热度（重构，利用leancloud原生api）
-        var pl = $("#pl").html();
-        var rootaddr = $("#rootaddr").html();
-        pl = pl.replace(rootaddr, "");
-
-        var appid = '';
-        var appkey = '';
-        console.log(appid, appkey)
-        if(AV==undefined)
-            AV.init({
-                appId: appid,
-                appKey: appkey
-            });
-        const query = new AV.Query('Counter');
-        query.equalTo('url', pl);
-        var time = 'Loading...';
-        query.find().then(function (results) {
-            console.log(results)
-            if (results.length == 0) {
-                console.log("0")
-                var NewCounter = AV.Object.extend('Counter');
-                var nc = new NewCounter();
-                nc.save({
-                    time: 1,
-                    title: "RedPwnCTF的一题sh混淆杂项(uglybash)",
-                    url: pl,
-                    xid: pl,
-                }).then(function (object) {
-                    $(".hotnum").eq(0).html(1);
-                    $(".hotnum").eq(1).html(1);
-                });
-            } else {
-                id = results[0].id;
-                var todo = AV.Object.createWithoutData('Counter', id);
-                time = results[0].attributes.time + 1;
-                todo.set("time", time);
-                todo.save();
-                console.log(todo);
-                $(".hotnum").eq(0).html(time);
-                $(".hotnum").eq(1).html(time);
-            }
-
-        }, function (error) {
-            console.log(error)
-        });
-    }
-</script>

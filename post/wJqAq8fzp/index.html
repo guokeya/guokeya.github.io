@@ -1,456 +1,123 @@
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0">
-    <meta name="description" content="格式化字符串漏洞往往是由程序员错误使用格式化输出函数造成的。例如
-print(s)
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>Pwn(格式化字符串漏洞) | 过客</title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="Pwn(格式化字符串漏洞) | 过客 » Feed" href="http://localhost:4000/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
 
-正常执行：
-printf(&quot;%s%s&quot;,str1,str2)
-
-ebp，addr都是调用函数时的操作。然后传入参数，首先是格式化字符串..." />
-    <meta name="keywords" content="Pwn" />
-    <link rel="stylesheet" href="https://guokeya.github.io/media/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
-    
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/styles/vs2015.min.css">
-    
-    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/highlight.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/js/clipboard.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/css/live2d.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
-    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
-    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.13.1/css/all.min.css" rel="stylesheet">
-    <!-- 数学公式 -->
-    
-    <title>过客</title>
-    
-    <style>
-        .markdownIt-TOC {
-            padding-left: 2px;
-            width: 100%;
-        }
-
-        .markdownIt-TOC li {
-            padding-left: 2%;
-        }
-    </style>
-    
-</head>
-
-<body>
-    <div id="landlord">
-        <div class="message" style="opacity:0"></div>
-        <canvas id="live2d" width="240" height="250" class="live2d"></canvas>
-    </div>
-    <div id="codeCopyText" style="display: none">代码复制成功了哦</div>
-    <div id="domainname" style="display:none">https://guokeya.github.io</div>
-    <!-- 响应式布局，针对PC端内容显示 -->
-    <div id="content">
-        <div>
-            <div id="bar">
-                <head>
-  <!-- 引入Bootstrap核心样式文件 -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/css/bootstrap.min.css">
-</head>
-<style>
-  @media screen and (max-width:1200px) and (min-width: 768px) {
-    @media (min-width: 768px) {
-      .navbar-nav {
-        float: right;
-        margin: 0;
-      }
-    }
-  }
-  @media screen and (max-width:768px){
-    .mbapspan{
-      padding: 0;
-    }
-  }
-</style>
-
-<body>
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#barmenu"
-          aria-expanded="false" id="barbutton">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="https://guokeya.github.io">过客&nbsp;&nbsp;|</a>
-        <span class="navbar-brand mbapspan"><i id="mbaplayer" class="fa fa-play-circle-o" aria-hidden="true"
-            style="font-size: 28px;top: 12px;position: absolute;" onclick="aplayerPlay();"></i></span>
-      </div>
-
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="barmenu">
-        <ul class="nav navbar-nav">
+    <meta property="og:description" content="Pwn(格式化字符串漏洞)"/>
+    <meta property="og:url" content="http://localhost:4000/post/wJqAq8fzp/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="过客"/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="http://localhost:4000">过客</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
           
-          
-          <li>
-            <a href="/">
-              首页
-            </a>
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
           </li>
           
-          
-          
-          <li>
-            <a href="/archives">
-              归档
-            </a>
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
           </li>
           
-          
-          
-          <li>
-            <a href="/post/about">
-              关于
-            </a>
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
           </li>
           
-          
-          
-          <li>
-            <a href="/tags">
-              分类
-            </a>
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
           </li>
-          
-          
-          
-          
-          <li><a href="https://guokeya.github.io/friends">友链</a></li>
-
           
         </ul>
-      </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-  </nav>
-
-
-  <!-- 引入jQuery核心js文件 -->
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
-  <script>
-  var btstate = false;
-  var bt = $("#barbutton");
-  var bm = $("#barmenu");
-  bt.click(function(){
-    dropdown();
-  })
-  function dropdown(){
-    console.log(btstate);
-    //下拉
-    if(btstate==false){
-      bt.removeClass("collapsed");
-      bt.attr("aria-expanded","true");
-      bm.attr("aria-expanded","true")
-      bm.fadeIn(700);
-      btstate = true;
-    }
-    else{
-      bt.addClass("collapsed");
-      bt.attr("aria-expanded","false");
-      bm.removeClass("in");
-      bm.hide();
-      bm.attr("aria-expanded","false");
-      btstate = false;
-    }
-  }
-  </script> 
-</body>
-            </div>
-            <div class="row">
-                <div class="side"><body>
-    
-
-
-
-    
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <a class="navbar-brand" href="https://guokeya.github.io"
-                    style="font-size:21px">过客&nbsp;&nbsp;|&nbsp;&nbsp;</a>
-                <a class="navbar-brand" href=""
-                    style="font-size:15px;font-family:kaiti">TEST</a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse">
-                
-                <div class="search nav navbar-nav" style="margin-top:8px">
-                    <!-- <input type="text" class="search-input" placeholder="标题搜索(●'◡'●)" /> -->
-                    <input type="text" class="search-input" placeholder="标题搜索 ⚆_⚆ つ♡">
-                    <div class="search-results"></div>
-                </div>
-                
-                <div class="search nav navbar-nav searchtop">
-                <a title="text" onclick="document.getElementById('socialMenu').style.display='block'"><i><img class="social"
-                    src="https://guokeya.github.io/media/images/social.png" alt=""></i></a>
-            </div>
-            <ul class="nav navbar-nav" style="float: right;margin-right:5%">
-                
-                
-                <li>
-                    <a href="/" style="color:white">
-                        首页
-                    </a>
-                </li>
-                
-                
-                
-                <li>
-                    <a href="/archives" style="color:white">
-                        归档
-                    </a>
-                </li>
-                
-                
-                
-                <li>
-                    <a href="/post/about" style="color:white">
-                        关于
-                    </a>
-                </li>
-                
-                
-                
-                <li>
-                    <a href="/tags" style="color:white">
-                        分类
-                    </a>
-                </li>
-                
-                
-                
-                  
-                <li><a href="https://guokeya.github.io/friends" style="color:white">友链</a></li>
-                
-                  <li><img src="https://guokeya.github.io/images/avatar.png?v=1602162296852" alt=""
-                class="menutopavatar"></li>
-            </ul>
-        </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
-    <div id="socialMenu">
-        <div class="animate">
-            <div class="socialContainer">
-                
-                
-                
-                
-                
-                
-            </div>
-            <div id="qq" style="display:none"></div>
-        </div>
+      </div>
     </div>
-    <!-- 引入jQuery核心js文件 -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
-    <script>
-        var social = document.getElementById('socialMenu');
-        // 鼠标点击模型外区域关闭登录框
-        window.onclick = function (event) {
-            if (event.target == social) {
-                social.style.display = "none";
-            }
-        }
-    </script>
-    
-</body>
-<script>
-    //-------------------------------------------------搜索
-    // 获取搜索框、搜索按钮、清空搜索、结果输出对应的元素
-    var searchInput = document.querySelector('.search-input');
-    var searchResults = document.querySelector('.search-results');
-
-    // 申明保存文章的标题、链接、内容的数组变量
-    var searchValue = '',
-        arrItems = [],
-        arrLinks = [],
-        arrTitles = [],
-        arrResults = [],
-        indexItem = [],
-        itemLength = 0;
-    var tmpDiv = document.createElement('div');
-    tmpDiv.className = 'result-item';
-
-    // ajax 的兼容写法
-    var xhr = new XMLHttpRequest() || new ActiveXObject('Microsoft.XMLHTTP');
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            xml = xhr.responseXML;
-            arrItems = xml.getElementsByTagName('entry');
-            itemLength = arrItems.length;
-            // 遍历并保存所有文章对应的标题、链接、内容到对应的数组中
-            // 同时过滤掉 HTML 标签
-            for (i = 0; i < itemLength; i++) {
-                var link = arrItems[i].getElementsByTagName('link')[0];
-                arrLinks[i] = link.getAttribute("href");
-                arrTitles[i] = arrItems[i].getElementsByTagName('title')[0].
-                childNodes[0].nodeValue.replace(/<.*?>/g, '');
-            }
-        }
-    }
-
-    // 开始获取根目录下 feed.xml 文件内的数据
-    xhr.open('get', '/atom.xml', true);
-    xhr.send();
-
-
-
-    // 输入框内容变化后就开始匹配，可以不用点按钮
-    // 经测试，onkeydown, onchange 等方法效果不太理想，
-    // 存在输入延迟等问题，最后发现触发 input 事件最理想，
-    // 并且可以处理中文输入法拼写的变化
-    searchInput.oninput = function () {
-        setTimeout(searchConfirm, 0);
-    }
-    searchInput.onfocus = function () {
-        searchResults.style.display = 'block';
-    }
-
-    function searchConfirm() {
-        if (searchInput.value == '') {
-            searchResults.style.display = 'none';
-        } else if (searchInput.value.search(/^\s+$/) >= 0) {
-            // 检测输入值全是空白的情况
-            searchInit();
-            var itemDiv = tmpDiv.cloneNode(true);
-            itemDiv.innerText = '请输入有效内容...';
-            searchResults.appendChild(itemDiv);
-        } else {
-            // 合法输入值的情况
-            searchInit();
-            searchValue = searchInput.value;
-            // 在标题、内容中查找
-            searchMatching(arrTitles, searchValue);
-        }
-    }
-
-    // 每次搜索完成后的初始化
-    function searchInit() {
-        arrResults = [];
-        indexItem = [];
-        searchResults.innerHTML = '';
-        searchResults.style.display = 'block';
-    }
-
-    function searchMatching(arr1, input) {
-        // 忽略输入大小写
-        input = new RegExp(input, 'i');
-        // 在所有文章标题、内容中匹配查询值
-        for (i = 0; i < itemLength; i++) {
-            if (arr1[i].search(input) !== -1) {
-                var arr = arr1;
-                indexItem.push(i); // 保存匹配值的索引
-                var indexContent = arr[i].search(input);
-                // 此时 input 为 RegExp 格式 /input/i，转换为原 input 字符串长度
-                var l = input.toString().length - 3;
-                var step = 10;
-
-                // 将匹配到内容的地方进行黄色标记，并包括周围一定数量的文本
-                arrResults.push(arr[i].slice(indexContent - step, indexContent));
-            }
-        }
-
-        // 输出总共匹配到的数目
-        var totalDiv = tmpDiv.cloneNode(true);
-        totalDiv.innerHTML = '<b>总匹配：' + indexItem.length + ' 项<hr></b>';
-        searchResults.appendChild(totalDiv);
-
-        // 未匹配到内容的情况
-        if (indexItem.length == 0) {
-            var itemDiv = tmpDiv.cloneNode(true);
-            itemDiv.innerText = '未匹配到内容...';
-            searchResults.appendChild(itemDiv);
-        }
-
-        // 将所有匹配内容进行组合
-        for (i = 0; i < arrResults.length; i++) {
-            var itemDiv = tmpDiv.cloneNode(true);
-            itemDiv.innerHTML = '<b>[' + arrTitles[indexItem[i]] +
-                ']</b><p>' + arrResults[i] + "</p><hr />";
-            itemDiv.setAttribute('onclick', 'changeHref(arrLinks[indexItem[' + i + ']])');
-            searchResults.appendChild(itemDiv);
-        }
-    }
-
-    function changeHref(href) {
-        location.href = href;
-    }
-
-    function showqq() {
-        var qq = document.getElementById("qq").innerHTML;
-        if (qq != '')
-            window.location.href = "tencent://message/?uin=" + qq + "&Site=&Menu=yes";
-        else
-            alert("博主暂未设置QQ联系方式");
-    }
-</script>
-</div>
-                
-            <div class="col-md-2 col-lg-3"></div>
-            <div id="postmain" class="col-xs-12 col-sm-12 col-md-8  col-lg-6 posttop" >
-                <link rel="stylesheet" href="https://guokeya.github.io/media/css/font-awesome.css">
-
-<body>
-    <div class="allcontent" id="postdetail">
-        <div class="postshow" style="padding-bottom: 0;">
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="http://localhost:4000/tag/Pwn/" class="tag">Pwn</a>
             
-            <div class="postdetailimg" style="width:100%;overflow: hidden;">
-                
-                <img src="" class="postimage">
-                
-            </div>
-            <div class="postinfo-detail">
-                <div class="postdate"><i class="fa fa-calendar"></i>2020-01-04</div>
-            <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 5 min read</div>
-            <div class="posttag">
-                
-                <a href="https://guokeya.github.io/tag/Pwn/" class="postlink">
-                    <i class="fa fa-tag"></i> Pwn
-                </a>
-                
-            </div>
+        </span>
+            <h1>Pwn(格式化字符串漏洞)</h1>
+            <span class="meta">
+            	Posted on
+              2020-01-04，5 min read
+            </span>
+          </div>
         </div>
-        
-        <div id="articlecontent">
-            <div id="texttitle" style="text-align: center">
-                <h2>Pwn(格式化字符串漏洞)</h2>
-                <!-- id 将作为查询条件 -->
-                <div id="pl" style="display:none">https://guokeya.github.io/post/wJqAq8fzp/</div>
-                <div id="rootaddr" style="display:none">https://guokeya.github.io</div>
-                <span id="hotnum">
-                    <h4><i class="fa fa-eye" aria-hidden="true" style="color: #FF8C00;"></i>&nbsp;&nbsp;热度</i>: <i
-                            class="hotnum">loading...</i></h4>
-                </span>
-            </div>
-            <div class="text ">
-                <p>格式化字符串漏洞往往是由程序员错误使用格式化输出函数造成的。例如<br>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>格式化字符串漏洞往往是由程序员错误使用格式化输出函数造成的。例如<br>
 print(s)</p>
 <!-- more -->
 <p>正常执行：<br>
 printf(&quot;%s%s&quot;,str1,str2)<br>
-<img src="https://guokeya.github.io/post-images/1578023187391.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578023187391.png" alt="" loading="lazy"><br>
 ebp，addr都是调用函数时的操作。然后传入参数，首先是格式化字符串。然后是参数<br>
 当格式化指针看到%时，就会找下面对应的值<br>
 第一个%s,就会将A打印出来。<br>
 第二个%s,就会将B打印出来。<br>
 非正常执行:<br>
 printf(s)<br>
-<img src="https://guokeya.github.io/post-images/1578023798622.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578023798622.png" alt="" loading="lazy"><br>
 也就是说。前面格式化字符串没了。只剩下了参数<br>
 但是把参数当成格式化字符串识别了<br>
 第一个%x会将后面的地址输出。第二个%x会将后面地址接着输出</p>
 <p>第一题：攻防世界CGfsb<br>
 首先ida反编译一下<br>
-<img src="https://guokeya.github.io/post-images/1577952597716.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1577952597716.png" alt="" loading="lazy"><br>
 程序的整个运行流程是<br>
 read读取10个字节为buf<br>
 fgets读取100个字节为s<br>
@@ -458,14 +125,14 @@ fgets读取100个字节为s<br>
 比较pwnme==8<br>
 漏洞原理则是打印s的时候，语句为printf(&amp;s),因为printf不能指定有多少个参数<br>
 利用%10$n去修改pwnme的值<br>
-<img src="https://guokeya.github.io/post-images/1577952609516.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1577952609516.png" alt="" loading="lazy"><br>
 pwnme的地址为0804A068<br>
 输入aaaa%x,回显结果为aaaa|地址|地址|地址...<br>
 可以看到，我们输入的aaaa，会在偏移10的地方出现<br>
 偏移10处，就写入我们的pwnme地址<br>
 前面写入%10n 前面只要8个字符，来配合n前面只要8个字符，来配合n<br>
 输入aaaa来保证第十处的地址是连在一起的，而不是分开在两个内存单元中<br>
-<img src="https://guokeya.github.io/post-images/1577952618413.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1577952618413.png" alt="" loading="lazy"></p>
 <p>exp:</p>
 <pre><code>from pwn import *
 p = remote('111.198.29.45', 31559)
@@ -496,24 +163,24 @@ int main(void){
 </code></pre>
 <p>gcc -g -fno-stack-protector -z execstack -o vuln vulnc.c<br>
 gdb看下汇编代码,给a了116个字节大小,然后调用print函数输出<br>
-<img src="https://guokeya.github.io/post-images/1578015096150.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578015096150.png" alt="" loading="lazy"><br>
 动态调试下<br>
 发现。输入的AAAA会在第5个地方保存<br>
-<img src="https://guokeya.github.io/post-images/1578015453710.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578015453710.png" alt="" loading="lazy"><br>
 堆栈的分布如下<br>
-<img src="https://guokeya.github.io/post-images/1578015650095.png" alt="" loading="lazy"><br>
-当我们输入AAAA|%x|%x|%1<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mi mathvariant="normal">时</mi><mi mathvariant="normal">，</mi><mi mathvariant="normal">程</mi><mi mathvariant="normal">序</mi><mi mathvariant="normal">输</mi><mi mathvariant="normal">出</mi><mi mathvariant="normal">如</mi><mi mathvariant="normal">下</mi><mo>!</mo><mo>[</mo><mo>]</mo><mo>(</mo><mi>h</mi><mi>t</mi><mi>t</mi><mi>p</mi><mi>s</mi><mo>:</mo><mi mathvariant="normal">/</mi><mi mathvariant="normal">/</mi><mi>g</mi><mi>u</mi><mi>o</mi><mi>k</mi><mi>e</mi><mi>y</mi><mi>a</mi><mi mathvariant="normal">.</mi><mi>g</mi><mi>i</mi><mi>t</mi><mi>h</mi><mi>u</mi><mi>b</mi><mi mathvariant="normal">.</mi><mi>i</mi><mi>o</mi><mi mathvariant="normal">/</mi><mi>p</mi><mi>o</mi><mi>s</mi><mi>t</mi><mo>−</mo><mi>i</mi><mi>m</mi><mi>a</mi><mi>g</mi><mi>e</mi><mi>s</mi><mi mathvariant="normal">/</mi><mn>1578015895756.</mn><mi>p</mi><mi>n</mi><mi>g</mi><mo>)</mo><mi mathvariant="normal">在</mi><mi mathvariant="normal">堆</mi><mi mathvariant="normal">栈</mi><mi mathvariant="normal">内</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">分</mi><mi mathvariant="normal">布</mi><mi mathvariant="normal">：</mi><mo>!</mo><mo>[</mo><mo>]</mo><mo>(</mo><mi>h</mi><mi>t</mi><mi>t</mi><mi>p</mi><mi>s</mi><mo>:</mo><mi mathvariant="normal">/</mi><mi mathvariant="normal">/</mi><mi>g</mi><mi>u</mi><mi>o</mi><mi>k</mi><mi>e</mi><mi>y</mi><mi>a</mi><mi mathvariant="normal">.</mi><mi>g</mi><mi>i</mi><mi>t</mi><mi>h</mi><mi>u</mi><mi>b</mi><mi mathvariant="normal">.</mi><mi>i</mi><mi>o</mi><mi mathvariant="normal">/</mi><mi>p</mi><mi>o</mi><mi>s</mi><mi>t</mi><mo>−</mo><mi>i</mi><mi>m</mi><mi>a</mi><mi>g</mi><mi>e</mi><mi>s</mi><mi mathvariant="normal">/</mi><mn>1578031833993.</mn><mi>p</mi><mi>n</mi><mi>g</mi><mo>)</mo><mi mathvariant="normal">因</mi><mi mathvariant="normal">为</mi><mi>A</mi><mi>A</mi><mi>A</mi><mi>A</mi><mi mathvariant="normal">代</mi><mi mathvariant="normal">表</mi><mi mathvariant="normal">是</mi><mi mathvariant="normal">的</mi></mrow><annotation encoding="application/x-tex">x时，程序输出如下
-![](https://guokeya.github.io/post-images/1578015895756.png)
+<img src="http://localhost:4000/post-images/1578015650095.png" alt="" loading="lazy"><br>
+当我们输入AAAA|%x|%x|%1<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mi mathvariant="normal">时</mi><mi mathvariant="normal">，</mi><mi mathvariant="normal">程</mi><mi mathvariant="normal">序</mi><mi mathvariant="normal">输</mi><mi mathvariant="normal">出</mi><mi mathvariant="normal">如</mi><mi mathvariant="normal">下</mi><mo>!</mo><mo>[</mo><mo>]</mo><mo>(</mo><mi>h</mi><mi>t</mi><mi>t</mi><mi>p</mi><mo>:</mo><mi mathvariant="normal">/</mi><mi mathvariant="normal">/</mi><mi>l</mi><mi>o</mi><mi>c</mi><mi>a</mi><mi>l</mi><mi>h</mi><mi>o</mi><mi>s</mi><mi>t</mi><mo>:</mo><mn>4000</mn><mi mathvariant="normal">/</mi><mi>p</mi><mi>o</mi><mi>s</mi><mi>t</mi><mo>−</mo><mi>i</mi><mi>m</mi><mi>a</mi><mi>g</mi><mi>e</mi><mi>s</mi><mi mathvariant="normal">/</mi><mn>1578015895756.</mn><mi>p</mi><mi>n</mi><mi>g</mi><mo>)</mo><mi mathvariant="normal">在</mi><mi mathvariant="normal">堆</mi><mi mathvariant="normal">栈</mi><mi mathvariant="normal">内</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">分</mi><mi mathvariant="normal">布</mi><mi mathvariant="normal">：</mi><mo>!</mo><mo>[</mo><mo>]</mo><mo>(</mo><mi>h</mi><mi>t</mi><mi>t</mi><mi>p</mi><mo>:</mo><mi mathvariant="normal">/</mi><mi mathvariant="normal">/</mi><mi>l</mi><mi>o</mi><mi>c</mi><mi>a</mi><mi>l</mi><mi>h</mi><mi>o</mi><mi>s</mi><mi>t</mi><mo>:</mo><mn>4000</mn><mi mathvariant="normal">/</mi><mi>p</mi><mi>o</mi><mi>s</mi><mi>t</mi><mo>−</mo><mi>i</mi><mi>m</mi><mi>a</mi><mi>g</mi><mi>e</mi><mi>s</mi><mi mathvariant="normal">/</mi><mn>1578031833993.</mn><mi>p</mi><mi>n</mi><mi>g</mi><mo>)</mo><mi mathvariant="normal">因</mi><mi mathvariant="normal">为</mi><mi>A</mi><mi>A</mi><mi>A</mi><mi>A</mi><mi mathvariant="normal">代</mi><mi mathvariant="normal">表</mi><mi mathvariant="normal">是</mi><mi mathvariant="normal">的</mi></mrow><annotation encoding="application/x-tex">x时，程序输出如下
+![](http://localhost:4000/post-images/1578015895756.png)
 在堆栈内的分布：
-![](https://guokeya.github.io/post-images/1578031833993.png)
+![](http://localhost:4000/post-images/1578031833993.png)
 因为AAAA代表是的%0
 %x代表的是下一个地址的16进制
 %x代表的是下下个地址的16进制
-%1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">x</span><span class="mord cjk_fallback">时</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">程</span><span class="mord cjk_fallback">序</span><span class="mord cjk_fallback">输</span><span class="mord cjk_fallback">出</span><span class="mord cjk_fallback">如</span><span class="mord cjk_fallback">下</span><span class="mclose">!</span><span class="mopen">[</span><span class="mclose">]</span><span class="mopen">(</span><span class="mord mathdefault">h</span><span class="mord mathdefault">t</span><span class="mord mathdefault">t</span><span class="mord mathdefault">p</span><span class="mord mathdefault">s</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">/</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">u</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mord mathdefault">a</span><span class="mord">.</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">i</span><span class="mord mathdefault">t</span><span class="mord mathdefault">h</span><span class="mord mathdefault">u</span><span class="mord mathdefault">b</span><span class="mord">.</span><span class="mord mathdefault">i</span><span class="mord mathdefault">o</span><span class="mord">/</span><span class="mord mathdefault">p</span><span class="mord mathdefault">o</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span><span class="mord mathdefault">s</span><span class="mord">/</span><span class="mord">1</span><span class="mord">5</span><span class="mord">7</span><span class="mord">8</span><span class="mord">0</span><span class="mord">1</span><span class="mord">5</span><span class="mord">8</span><span class="mord">9</span><span class="mord">5</span><span class="mord">7</span><span class="mord">5</span><span class="mord">6</span><span class="mord">.</span><span class="mord mathdefault">p</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mclose">)</span><span class="mord cjk_fallback">在</span><span class="mord cjk_fallback">堆</span><span class="mord cjk_fallback">栈</span><span class="mord cjk_fallback">内</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">分</span><span class="mord cjk_fallback">布</span><span class="mord cjk_fallback">：</span><span class="mclose">!</span><span class="mopen">[</span><span class="mclose">]</span><span class="mopen">(</span><span class="mord mathdefault">h</span><span class="mord mathdefault">t</span><span class="mord mathdefault">t</span><span class="mord mathdefault">p</span><span class="mord mathdefault">s</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">/</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">u</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mord mathdefault">a</span><span class="mord">.</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">i</span><span class="mord mathdefault">t</span><span class="mord mathdefault">h</span><span class="mord mathdefault">u</span><span class="mord mathdefault">b</span><span class="mord">.</span><span class="mord mathdefault">i</span><span class="mord mathdefault">o</span><span class="mord">/</span><span class="mord mathdefault">p</span><span class="mord mathdefault">o</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span><span class="mord mathdefault">s</span><span class="mord">/</span><span class="mord">1</span><span class="mord">5</span><span class="mord">7</span><span class="mord">8</span><span class="mord">0</span><span class="mord">3</span><span class="mord">1</span><span class="mord">8</span><span class="mord">3</span><span class="mord">3</span><span class="mord">9</span><span class="mord">9</span><span class="mord">3</span><span class="mord">.</span><span class="mord mathdefault">p</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mclose">)</span><span class="mord cjk_fallback">因</span><span class="mord cjk_fallback">为</span><span class="mord mathdefault">A</span><span class="mord mathdefault">A</span><span class="mord mathdefault">A</span><span class="mord mathdefault">A</span><span class="mord cjk_fallback">代</span><span class="mord cjk_fallback">表</span><span class="mord cjk_fallback">是</span><span class="mord cjk_fallback">的</span></span></span></span>x，代表的是第二个参数的值=第一个%x的值以16进制打印<br>
+%1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">x</span><span class="mord cjk_fallback">时</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">程</span><span class="mord cjk_fallback">序</span><span class="mord cjk_fallback">输</span><span class="mord cjk_fallback">出</span><span class="mord cjk_fallback">如</span><span class="mord cjk_fallback">下</span><span class="mclose">!</span><span class="mopen">[</span><span class="mclose">]</span><span class="mopen">(</span><span class="mord mathdefault">h</span><span class="mord mathdefault">t</span><span class="mord mathdefault">t</span><span class="mord mathdefault">p</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">/</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault">c</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">h</span><span class="mord mathdefault">o</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">4</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">/</span><span class="mord mathdefault">p</span><span class="mord mathdefault">o</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span><span class="mord mathdefault">s</span><span class="mord">/</span><span class="mord">1</span><span class="mord">5</span><span class="mord">7</span><span class="mord">8</span><span class="mord">0</span><span class="mord">1</span><span class="mord">5</span><span class="mord">8</span><span class="mord">9</span><span class="mord">5</span><span class="mord">7</span><span class="mord">5</span><span class="mord">6</span><span class="mord">.</span><span class="mord mathdefault">p</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mclose">)</span><span class="mord cjk_fallback">在</span><span class="mord cjk_fallback">堆</span><span class="mord cjk_fallback">栈</span><span class="mord cjk_fallback">内</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">分</span><span class="mord cjk_fallback">布</span><span class="mord cjk_fallback">：</span><span class="mclose">!</span><span class="mopen">[</span><span class="mclose">]</span><span class="mopen">(</span><span class="mord mathdefault">h</span><span class="mord mathdefault">t</span><span class="mord mathdefault">t</span><span class="mord mathdefault">p</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">/</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault">c</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">h</span><span class="mord mathdefault">o</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">4</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">/</span><span class="mord mathdefault">p</span><span class="mord mathdefault">o</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span><span class="mord mathdefault">s</span><span class="mord">/</span><span class="mord">1</span><span class="mord">5</span><span class="mord">7</span><span class="mord">8</span><span class="mord">0</span><span class="mord">3</span><span class="mord">1</span><span class="mord">8</span><span class="mord">3</span><span class="mord">3</span><span class="mord">9</span><span class="mord">9</span><span class="mord">3</span><span class="mord">.</span><span class="mord mathdefault">p</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mclose">)</span><span class="mord cjk_fallback">因</span><span class="mord cjk_fallback">为</span><span class="mord mathdefault">A</span><span class="mord mathdefault">A</span><span class="mord mathdefault">A</span><span class="mord mathdefault">A</span><span class="mord cjk_fallback">代</span><span class="mord cjk_fallback">表</span><span class="mord cjk_fallback">是</span><span class="mord cjk_fallback">的</span></span></span></span>x，代表的是第二个参数的值=第一个%x的值以16进制打印<br>
 所以当我们输入AAAA|%x|%x|%1<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mi mathvariant="normal">时</mi><mi mathvariant="normal">。</mi></mrow><annotation encoding="application/x-tex">x时。%1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span><span class="mord cjk_fallback">时</span><span class="mord cjk_fallback">。</span></span></span></span>x会等于第二个参数的值<br>
 懂了原理。我们就可以把%1<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mi mathvariant="normal">换</mi><mi mathvariant="normal">成</mi></mrow><annotation encoding="application/x-tex">x换成%5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span><span class="mord cjk_fallback">换</span><span class="mord cjk_fallback">成</span></span></span></span>n<br>
 为什么是%5呢。因为%5我们可控。<br>
-<img src="https://guokeya.github.io/post-images/1578032187272.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578032187272.png" alt="" loading="lazy"><br>
 可以看到。我们输入的AAAA。会在%5<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">的</mi><mi mathvariant="normal">地</mi><mi mathvariant="normal">址</mi><mi mathvariant="normal">出</mi><mi mathvariant="normal">现</mi><mi mathvariant="normal">。</mi><mi mathvariant="normal">如</mi><mi mathvariant="normal">果</mi><mi mathvariant="normal">是</mi><mi mathvariant="normal">一</mi><mi mathvariant="normal">个</mi><mi mathvariant="normal">地</mi><mi mathvariant="normal">址</mi><mi mathvariant="normal">。</mi><mi mathvariant="normal">配</mi><mi mathvariant="normal">置</mi><mi>p</mi><mi>r</mi><mi>i</mi><mi>n</mi><mi>t</mi><mi>f</mi><mi mathvariant="normal">根</mi><mi mathvariant="normal">据</mi><mi mathvariant="normal">源</mi><mi mathvariant="normal">码</mi><mi mathvariant="normal">。</mi><mi mathvariant="normal">我</mi><mi mathvariant="normal">们</mi><mi mathvariant="normal">需</mi><mi mathvariant="normal">要</mi><mi mathvariant="normal">满</mi><mi mathvariant="normal">足</mi><mi>f</mi><mi>l</mi><mi>a</mi><mi>g</mi><mo>=</mo><mn>2000</mn><mi mathvariant="normal">那</mi><mi mathvariant="normal">么</mi><mi mathvariant="normal">思</mi><mi mathvariant="normal">路</mi><mi mathvariant="normal">就</mi><mi mathvariant="normal">是</mi><mi mathvariant="normal">第</mi><mi mathvariant="normal">一</mi><mi mathvariant="normal">个</mi><mi mathvariant="normal">参</mi><mi mathvariant="normal">数</mi><mi mathvariant="normal">。</mi><mi mathvariant="normal">是</mi><mi>f</mi><mi>l</mi><mi>a</mi><mi>g</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">地</mi><mi mathvariant="normal">址</mi><mi mathvariant="normal">第</mi><mi mathvariant="normal">二</mi><mi mathvariant="normal">个</mi><mi mathvariant="normal">参</mi><mi mathvariant="normal">数</mi><mi mathvariant="normal">。</mi><mi mathvariant="normal">满</mi><mi mathvariant="normal">足</mi><mi mathvariant="normal">长</mi><mi mathvariant="normal">度</mi><mn>2000</mn><mi mathvariant="normal">第</mi><mi mathvariant="normal">三</mi><mi mathvariant="normal">个</mi><mi mathvariant="normal">参</mi><mi mathvariant="normal">数</mi><mi mathvariant="normal">。</mi><mi mathvariant="normal">将</mi><mi mathvariant="normal">前</mi><mi mathvariant="normal">面</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">所</mi><mi mathvariant="normal">有</mi><mi mathvariant="normal">字</mi><mi mathvariant="normal">符</mi><mi mathvariant="normal">长</mi><mi mathvariant="normal">度</mi><mi mathvariant="normal">输</mi><mi mathvariant="normal">出</mi><mi mathvariant="normal">到</mi></mrow><annotation encoding="application/x-tex">的地址出现。如果是一个地址。配置printf%n参数写入即可造成任意地址读写
 根据源码。我们需要满足flag=2000
 那么思路就是
@@ -523,355 +190,101 @@ gdb看下汇编代码,给a了116个字节大小,然后调用print函数输出<br
 payload如下:<br>
 python -c &quot;print '\xa8\xd0\xff\xff%.1996x%5$n'&quot;&gt;11<br>
 cat 11|./vuln2<br>
-<img src="https://guokeya.github.io/post-images/1578032920911.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1578032920911.png" alt="" loading="lazy"></p>
 
-            </div>
-            <hr style="width: 80%;">
-            
-            <div class="sharebtnContainer">
-                <button type="button" class="sharebtn">转载分享</button>
-            </div>
-            <div class="shareContainer">
-                <div class="share" style="height:30px;background: white;">
-                    <a class="qq" href=""><i><img class="shareicon"
-                                src="https://guokeya.github.io/media/images/QQ.png" alt=""></i></a>
-                    <a class="wechat" href=""><i><img class="shareicon"
-                                src="https://guokeya.github.io/media/images/wechat.png" alt=""></i></a>
-                    <a class="weibo" href=""><i><img class="shareicon"
-                                src="https://guokeya.github.io/media/images/weibo.png" alt=""></i></a>
-                    <a class="qzone" href=""><i><img class="shareicon"
-                                src="https://guokeya.github.io/media/images/qzone.png" alt=""></i></a>
-                    <a class="douban" href=""><i><img class="shareicon"
-                                src="https://guokeya.github.io/media/images/douban.png" alt=""></i></a>
-                    <a class="facebook" href=""><i><img class="shareicon"
-                                src="https://guokeya.github.io/media/images/facebook.png" alt=""></i></a>
-                    <a class="twitter" href=""><i><img class="shareicon"
-                                src="https://guokeya.github.io/media/images/twitter.png" alt=""></i></a>
-                </div>
-            </div>
-            
-            
-            <div class="donateContainer">
-                <img src="https://guokeya.github.io/media/images/donate.png" alt="" class="donateImg">
-            </div>
-            <div class="donateContainer">
-                <img src="" alt="" class="donate">
-            </div>
-            
-            <div class="postfooter">
-                <ul class="post-copyright">
-                    <li><strong>文章作者：</strong></li>
-            <li><strong>原文链接：</strong>https://guokeya.github.io/post/wJqAq8fzp/</li>
-            <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用<i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA
-                许可协议。转载请注明出处！</li>
-            </ul>
-        </div>
-        <div id="otherpost">
-            
-            <div class="prev-post-pc">
-                <div id="ppcontainer" onclick="window.location.href= 'https://guokeya.github.io/post/UtMQ2MAtQ/';return false">
-                    
-                    
-                    <img src="" style="width: 100%;" class="opimg">
-                    
-                    
-                    <h4 class="optitle">浅析Unicode安全</h4>
-                </div>
-            </div>
-            <div class="prev-post">
-                上一篇 <a href="https://guokeya.github.io/post/UtMQ2MAtQ/">浅析Unicode安全</a>
-            </div>
-            
-            
-            <div class="next-post-pc">
-                <div id="npcontainer" onclick="window.location.href= 'https://guokeya.github.io/post/hwKOeu6uW/';return false">
-                    
-                    
-                    <img src="" style="width: 100%;" class="opimg">
-                    
-                        
-                    <h4 class="optitle">[极客大挑战 2019]RCE ME(无数字字母Webshell)</h4>
-                </div>
-            </div>
-            <div class="next-post">
-                下一篇 <a href="https://guokeya.github.io/post/hwKOeu6uW/">[极客大挑战 2019]RCE ME(无数字字母Webshell)</a>
-            </div>
-            
-        </div>
-    </div>
-    </div>
-    </div>
-
-</body>
-<script>
-    //文章阅读热度
-    var pl = $("#pl").html();
-    var rootaddr = $("#rootaddr").html();
-    pl = pl.replace(rootaddr, "");
-    $("#hotnum").attr('id', pl);
-</script>
-                <div id="comment" class="comment" style="background: white">
-                    <div class="commentcontainer">
-                        
-                        <p>请到客户端“主题--自定义配置--valine”中填入ID和KEY</p>
-                        
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2 col-lg-3">
-            </div>
-            <div id="bg">
-            </div>
-        </div>
+          
+          <p class="next-post">下一篇：
+            <a href="http://localhost:4000/post/hwKOeu6uW/">
+              <span class="post-title">
+                [极客大挑战 2019]RCE ME(无数字字母Webshell)&rarr;
+              </span>
+            </a>
+          </p>
         
-        
-        <div class="toc-container">
-            
-    </div>
-    </div>
-    </div>
-    <div class="tog">
-        <div class="toggleContainer">
-            <div class="toggle">
-                <i class="fas fa-angle-double-up"></i>
-            </div>
+        <div class="comment">
+          
         </div>
+      </div>
     </div>
-    <div id="bgchoice" style="display: none"></div>
-    
-    <div id="bgurl" style="display:none"></div>
-    
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span>过客</span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+        </div>
+      </div>
     </div>
-</body>
-<script>
-    var img = $("img");
-    for (var i = 0; i < img.length; i++) {
-        if (img.eq(i).attr("class") == undefined) {
-            img.eq(i).attr("class", "lazyload");
-            var imgsrc = img.eq(i).attr("src");
-            img.eq(i).attr("data-original", imgsrc);
-            img.eq(i).attr("src", "");
-            img.eq(i).hide();
-        }
-    }
-</script>
-<script>
-    hljs.initHighlightingOnLoad();
-</script>
-<script>
-    //寻找所有code标签，加复制按钮鸭！(行内代码除外)
-    var codes = document.getElementsByTagName('code');
-    if (codes.length) {
-        for (var i = 0; i < codes.length; i++) {
-            //高度/行高=文本行数
-            // var rowNum=Math.round(codes[i].height()/parseFloat(codes[i].css('line-height')));
-            // console.log("当前有"+rowNum+"行");
-            var code_id = "code_id_" + i;
-            codes[i].setAttribute("id", code_id);
-            var ci = "#" + code_id;
-            var codedot = $(ci);
-            var rowNum = Math.round(codedot.height() / parseFloat(codedot.css('line-height')));
-            if (rowNum <= 1) continue;
-            var btn = document.createElement("button");
-            btn.setAttribute("class", "copybt");
-            btn.setAttribute("data-clipboard-target", "#" + code_id);
-            btn.innerHTML = '复制代码';
-            codes[i].parentNode.insertBefore(btn, codes[i]);
-        }
-    };
-    var cop = new ClipboardJS('.copybt');
-    var codeCopyText = $("#codeCopyText").html();
-    cop.on('success', function (e) {
-        alert(codeCopyText);
-        e.clearSelection();
-    });
-    cop.on('error', function (e) {
-        alert("矮油，复制失败了...手动复制吧勇士！");
-        e.clearSelection();
-    });
-</script>
-
-<script>
-    $(function () {
-        $('.toggleContainer').click(function () {
-            $('html,body').animate({
-                scrollTop: '0px'
-            }, 800);
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
         });
-        $(window).scroll(function () {
-            var st = $(window).scrollTop();
-            if (st > 30) {
-                $(".toggleContainer").fadeIn(400);
-            } else {
-                $(".toggleContainer").fadeOut(100);
-            }
-        });
-    });
-</script>
-
-<script>
-    var bgchoice = $('#bgchoice').html();
-    var bg = $('#bg');
-    var bgurl = document.getElementById("bgurl").innerHTML;
-    if (bgchoice == 'default')
-        for (var i = 0; i < 3; i++)
-            bgurl = bgurl.replace("\\", "/");
-    bg.css("background", "url('" + bgurl + "')");
-</script>
-
-
-
-
-<!-- 动态更改上(下)一篇博客图片框长宽 -->
-<script>
-    npcontainer = document.querySelector('#npcontainer');
-    npstyle = window.getComputedStyle(npcontainer, null);
-    npwidth = npstyle.width;
-    npheight = 0.6 * Number(npwidth.replace("px", ""));
-    npheight = npheight.toString() + "px";
-    var op = $(".opimg");
-    op.css("height", npheight);
-</script>
-
-<script src="https://guokeya.github.io/media/share/dist/Share.js"></script>
-
-<script>
-    var avatarSrc = $(".menutopavatar").attr("src");
-    var dp = document.getElementsByClassName("navbar-brand")[1].innerHTML;
-</script>
-
-
-<script>
-    var title = document.getElementById("texttitle").getElementsByTagName("h2");
-    
-    var share = new Share('.share', {
-        title: title[0].innerHTML,
-        initialized: true,
-        //默认获取网站描述
-        description: dp,
-        //网站图片默认获取的是设置的用户头像
-        image: avatarSrc,
-        //激活的分享网站
-        sites: ["weibo", "qq", "wechat", "douban", "qzone", "facebook", "twitter", "google"],
-        //微信分享PC端会生成二维码分享,移动端如果可以唤起微信最好
-        wechatQrcodeTitle: "微信扫一扫：分享", // 微信二维码提示文字
-        wechatQrcodeHelper: '<p>微信里扫一下二维码</p><p>便可将本文分享至朋友圈。</p>',
-        //关闭的网站分享
-        disabled: ['google', 'linkedin'],
-        wechatQrcodePosition: 'bottom'
-    });
-
-    //点击分享按钮展现出分享icons
-    var sharebtnTag = false;
-    $(".sharebtn").click(function () {
-        if(!sharebtnTag)
-        {
-            $(".share").show();
-            sharebtnTag = true;
-        }
-        else
-        {
-            $(".share").hide();
-            sharebtnTag = false;
-        }
-    })
-
-    var donatebtnTag = false;
-    $(".donateImg").click(function () {
-        if(!donatebtnTag)
-        {
-            $(".donate").show();
-            donatebtnTag = true;
-        }
-        else{
-            $(".donate").hide();
-            donatebtnTag = false;
-        }
-    })
-
-    //加载后的事件同步（阅读量、移动端评论等
-    window.onload=function(){
-        getHotnum();
-        var sharepc = $(".share").eq(0).html();
-        $(".share").eq(1).html(sharepc);
-        document.getElementById("veditor").setAttribute("placeholder", jrsc);
-        aplayerbtnInit();
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
     }
-</script>
+  })(this));</script>
+  </body>
+</html>
 
-
-<script>
-    jQuery(document).ready(function ($) {
-        function lazyload() {
-            var oLazyload = $("img.lazyload"),
-                fLazyload = function (hLazyload) {
-                    var nLazyload = $(window).height() + $(document).scrollTop();
-                    oLazyload.each(function () {
-                        $(this).offset().top < nLazyload && ($(this).trigger("appear"), oLazyload =
-                            oLazyload.not(this));
-                    }), 0 == oLazyload.length && $(window).unbind("scroll", fLazyload);
-                };
-            oLazyload.each(function () {
-                $(this).one("appear", function () {
-                    $(this).attr("src", $(this).attr("data-original"));
-                    $(this).fadeIn(500);
-                });
-            }), $(window).bind("scroll", fLazyload), fLazyload();
-        }
-        lazyload();
-    });
-</script>
-
-<!-- <script src="https://guokeya.github.io/media/js/av-min.js"></script> -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@3.13.0/dist/av-min.js"></script> -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@4.6.1/dist/av-live-query-min.js"></script> -->
-
-<script>
-    function getHotnum() {
-        //文章阅读热度（重构，利用leancloud原生api）
-        var pl = $("#pl").html();
-        var rootaddr = $("#rootaddr").html();
-        pl = pl.replace(rootaddr, "");
-
-        var appid = '';
-        var appkey = '';
-        console.log(appid, appkey)
-        if(AV==undefined)
-            AV.init({
-                appId: appid,
-                appKey: appkey
-            });
-        const query = new AV.Query('Counter');
-        query.equalTo('url', pl);
-        var time = 'Loading...';
-        query.find().then(function (results) {
-            console.log(results)
-            if (results.length == 0) {
-                console.log("0")
-                var NewCounter = AV.Object.extend('Counter');
-                var nc = new NewCounter();
-                nc.save({
-                    time: 1,
-                    title: "Pwn(格式化字符串漏洞)",
-                    url: pl,
-                    xid: pl,
-                }).then(function (object) {
-                    $(".hotnum").eq(0).html(1);
-                    $(".hotnum").eq(1).html(1);
-                });
-            } else {
-                id = results[0].id;
-                var todo = AV.Object.createWithoutData('Counter', id);
-                time = results[0].attributes.time + 1;
-                todo.set("time", time);
-                todo.save();
-                console.log(todo);
-                $(".hotnum").eq(0).html(time);
-                $(".hotnum").eq(1).html(time);
-            }
-
-        }, function (error) {
-            console.log(error)
-        });
-    }
-</script>

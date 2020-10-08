@@ -1,453 +1,115 @@
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0">
-    <meta name="description" content="太菜了。只能纪录下自己做出来的题
-MISC
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>I春秋公益赛部分Writeup | 过客</title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="I春秋公益赛部分Writeup | 过客 » Feed" href="http://localhost:4000/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
 
-1。code_in_morse
-题目给了个数据包。拿到数据包首先就是看HTTP
-
-可以看到。上传了一个image。尝试看看image图片。一般图片都会藏点什么东西。
-摩斯密码。
-
-拿去解密
-
-这..." />
-    <meta name="keywords" content="CTF" />
-    <link rel="stylesheet" href="https://guokeya.github.io/media/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
-    
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/styles/vs2015.min.css">
-    
-    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/highlight.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/js/clipboard.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/css/live2d.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
-    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
-    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.13.1/css/all.min.css" rel="stylesheet">
-    <!-- 数学公式 -->
-    
-    <title>过客</title>
-    
-    <style>
-        .markdownIt-TOC {
-            padding-left: 2px;
-            width: 100%;
-        }
-
-        .markdownIt-TOC li {
-            padding-left: 2%;
-        }
-    </style>
-    
-</head>
-
-<body>
-    <div id="landlord">
-        <div class="message" style="opacity:0"></div>
-        <canvas id="live2d" width="240" height="250" class="live2d"></canvas>
-    </div>
-    <div id="codeCopyText" style="display: none">代码复制成功了哦</div>
-    <div id="domainname" style="display:none">https://guokeya.github.io</div>
-    <!-- 响应式布局，针对PC端内容显示 -->
-    <div id="content">
-        <div>
-            <div id="bar">
-                <head>
-  <!-- 引入Bootstrap核心样式文件 -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/css/bootstrap.min.css">
-</head>
-<style>
-  @media screen and (max-width:1200px) and (min-width: 768px) {
-    @media (min-width: 768px) {
-      .navbar-nav {
-        float: right;
-        margin: 0;
-      }
-    }
-  }
-  @media screen and (max-width:768px){
-    .mbapspan{
-      padding: 0;
-    }
-  }
-</style>
-
-<body>
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#barmenu"
-          aria-expanded="false" id="barbutton">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="https://guokeya.github.io">过客&nbsp;&nbsp;|</a>
-        <span class="navbar-brand mbapspan"><i id="mbaplayer" class="fa fa-play-circle-o" aria-hidden="true"
-            style="font-size: 28px;top: 12px;position: absolute;" onclick="aplayerPlay();"></i></span>
-      </div>
-
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="barmenu">
-        <ul class="nav navbar-nav">
+    <meta property="og:description" content="I春秋公益赛部分Writeup"/>
+    <meta property="og:url" content="http://localhost:4000/post/i-chun-qiu-gong-yi-sai-day2-de-liang-ti-web/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="过客"/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="http://localhost:4000">过客</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
           
-          
-          <li>
-            <a href="/">
-              首页
-            </a>
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
           </li>
           
-          
-          
-          <li>
-            <a href="/archives">
-              归档
-            </a>
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
           </li>
           
-          
-          
-          <li>
-            <a href="/post/about">
-              关于
-            </a>
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
           </li>
           
-          
-          
-          <li>
-            <a href="/tags">
-              分类
-            </a>
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
           </li>
-          
-          
-          
-          
-          <li><a href="https://guokeya.github.io/friends">友链</a></li>
-
           
         </ul>
-      </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-  </nav>
-
-
-  <!-- 引入jQuery核心js文件 -->
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
-  <script>
-  var btstate = false;
-  var bt = $("#barbutton");
-  var bm = $("#barmenu");
-  bt.click(function(){
-    dropdown();
-  })
-  function dropdown(){
-    console.log(btstate);
-    //下拉
-    if(btstate==false){
-      bt.removeClass("collapsed");
-      bt.attr("aria-expanded","true");
-      bm.attr("aria-expanded","true")
-      bm.fadeIn(700);
-      btstate = true;
-    }
-    else{
-      bt.addClass("collapsed");
-      bt.attr("aria-expanded","false");
-      bm.removeClass("in");
-      bm.hide();
-      bm.attr("aria-expanded","false");
-      btstate = false;
-    }
-  }
-  </script> 
-</body>
-            </div>
-            <div class="row">
-                <div class="side"><body>
-    
-
-
-
-    
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <a class="navbar-brand" href="https://guokeya.github.io"
-                    style="font-size:21px">过客&nbsp;&nbsp;|&nbsp;&nbsp;</a>
-                <a class="navbar-brand" href=""
-                    style="font-size:15px;font-family:kaiti">TEST</a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse">
-                
-                <div class="search nav navbar-nav" style="margin-top:8px">
-                    <!-- <input type="text" class="search-input" placeholder="标题搜索(●'◡'●)" /> -->
-                    <input type="text" class="search-input" placeholder="标题搜索 ⚆_⚆ つ♡">
-                    <div class="search-results"></div>
-                </div>
-                
-                <div class="search nav navbar-nav searchtop">
-                <a title="text" onclick="document.getElementById('socialMenu').style.display='block'"><i><img class="social"
-                    src="https://guokeya.github.io/media/images/social.png" alt=""></i></a>
-            </div>
-            <ul class="nav navbar-nav" style="float: right;margin-right:5%">
-                
-                
-                <li>
-                    <a href="/" style="color:white">
-                        首页
-                    </a>
-                </li>
-                
-                
-                
-                <li>
-                    <a href="/archives" style="color:white">
-                        归档
-                    </a>
-                </li>
-                
-                
-                
-                <li>
-                    <a href="/post/about" style="color:white">
-                        关于
-                    </a>
-                </li>
-                
-                
-                
-                <li>
-                    <a href="/tags" style="color:white">
-                        分类
-                    </a>
-                </li>
-                
-                
-                
-                  
-                <li><a href="https://guokeya.github.io/friends" style="color:white">友链</a></li>
-                
-                  <li><img src="https://guokeya.github.io/images/avatar.png?v=1602162296852" alt=""
-                class="menutopavatar"></li>
-            </ul>
-        </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
-    <div id="socialMenu">
-        <div class="animate">
-            <div class="socialContainer">
-                
-                
-                
-                
-                
-                
-            </div>
-            <div id="qq" style="display:none"></div>
-        </div>
+      </div>
     </div>
-    <!-- 引入jQuery核心js文件 -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
-    <script>
-        var social = document.getElementById('socialMenu');
-        // 鼠标点击模型外区域关闭登录框
-        window.onclick = function (event) {
-            if (event.target == social) {
-                social.style.display = "none";
-            }
-        }
-    </script>
-    
-</body>
-<script>
-    //-------------------------------------------------搜索
-    // 获取搜索框、搜索按钮、清空搜索、结果输出对应的元素
-    var searchInput = document.querySelector('.search-input');
-    var searchResults = document.querySelector('.search-results');
-
-    // 申明保存文章的标题、链接、内容的数组变量
-    var searchValue = '',
-        arrItems = [],
-        arrLinks = [],
-        arrTitles = [],
-        arrResults = [],
-        indexItem = [],
-        itemLength = 0;
-    var tmpDiv = document.createElement('div');
-    tmpDiv.className = 'result-item';
-
-    // ajax 的兼容写法
-    var xhr = new XMLHttpRequest() || new ActiveXObject('Microsoft.XMLHTTP');
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            xml = xhr.responseXML;
-            arrItems = xml.getElementsByTagName('entry');
-            itemLength = arrItems.length;
-            // 遍历并保存所有文章对应的标题、链接、内容到对应的数组中
-            // 同时过滤掉 HTML 标签
-            for (i = 0; i < itemLength; i++) {
-                var link = arrItems[i].getElementsByTagName('link')[0];
-                arrLinks[i] = link.getAttribute("href");
-                arrTitles[i] = arrItems[i].getElementsByTagName('title')[0].
-                childNodes[0].nodeValue.replace(/<.*?>/g, '');
-            }
-        }
-    }
-
-    // 开始获取根目录下 feed.xml 文件内的数据
-    xhr.open('get', '/atom.xml', true);
-    xhr.send();
-
-
-
-    // 输入框内容变化后就开始匹配，可以不用点按钮
-    // 经测试，onkeydown, onchange 等方法效果不太理想，
-    // 存在输入延迟等问题，最后发现触发 input 事件最理想，
-    // 并且可以处理中文输入法拼写的变化
-    searchInput.oninput = function () {
-        setTimeout(searchConfirm, 0);
-    }
-    searchInput.onfocus = function () {
-        searchResults.style.display = 'block';
-    }
-
-    function searchConfirm() {
-        if (searchInput.value == '') {
-            searchResults.style.display = 'none';
-        } else if (searchInput.value.search(/^\s+$/) >= 0) {
-            // 检测输入值全是空白的情况
-            searchInit();
-            var itemDiv = tmpDiv.cloneNode(true);
-            itemDiv.innerText = '请输入有效内容...';
-            searchResults.appendChild(itemDiv);
-        } else {
-            // 合法输入值的情况
-            searchInit();
-            searchValue = searchInput.value;
-            // 在标题、内容中查找
-            searchMatching(arrTitles, searchValue);
-        }
-    }
-
-    // 每次搜索完成后的初始化
-    function searchInit() {
-        arrResults = [];
-        indexItem = [];
-        searchResults.innerHTML = '';
-        searchResults.style.display = 'block';
-    }
-
-    function searchMatching(arr1, input) {
-        // 忽略输入大小写
-        input = new RegExp(input, 'i');
-        // 在所有文章标题、内容中匹配查询值
-        for (i = 0; i < itemLength; i++) {
-            if (arr1[i].search(input) !== -1) {
-                var arr = arr1;
-                indexItem.push(i); // 保存匹配值的索引
-                var indexContent = arr[i].search(input);
-                // 此时 input 为 RegExp 格式 /input/i，转换为原 input 字符串长度
-                var l = input.toString().length - 3;
-                var step = 10;
-
-                // 将匹配到内容的地方进行黄色标记，并包括周围一定数量的文本
-                arrResults.push(arr[i].slice(indexContent - step, indexContent));
-            }
-        }
-
-        // 输出总共匹配到的数目
-        var totalDiv = tmpDiv.cloneNode(true);
-        totalDiv.innerHTML = '<b>总匹配：' + indexItem.length + ' 项<hr></b>';
-        searchResults.appendChild(totalDiv);
-
-        // 未匹配到内容的情况
-        if (indexItem.length == 0) {
-            var itemDiv = tmpDiv.cloneNode(true);
-            itemDiv.innerText = '未匹配到内容...';
-            searchResults.appendChild(itemDiv);
-        }
-
-        // 将所有匹配内容进行组合
-        for (i = 0; i < arrResults.length; i++) {
-            var itemDiv = tmpDiv.cloneNode(true);
-            itemDiv.innerHTML = '<b>[' + arrTitles[indexItem[i]] +
-                ']</b><p>' + arrResults[i] + "</p><hr />";
-            itemDiv.setAttribute('onclick', 'changeHref(arrLinks[indexItem[' + i + ']])');
-            searchResults.appendChild(itemDiv);
-        }
-    }
-
-    function changeHref(href) {
-        location.href = href;
-    }
-
-    function showqq() {
-        var qq = document.getElementById("qq").innerHTML;
-        if (qq != '')
-            window.location.href = "tencent://message/?uin=" + qq + "&Site=&Menu=yes";
-        else
-            alert("博主暂未设置QQ联系方式");
-    }
-</script>
-</div>
-                
-            <div class="col-md-2 col-lg-3"></div>
-            <div id="postmain" class="col-xs-12 col-sm-12 col-md-8  col-lg-6 posttop" >
-                <link rel="stylesheet" href="https://guokeya.github.io/media/css/font-awesome.css">
-
-<body>
-    <div class="allcontent" id="postdetail">
-        <div class="postshow" style="padding-bottom: 0;">
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
             
-            <div class="postdetailimg" style="width:100%;overflow: hidden;">
-                
-                <img src="" class="postimage">
-                
-            </div>
-            <div class="postinfo-detail">
-                <div class="postdate"><i class="fa fa-calendar"></i>2020-02-23</div>
-            <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 16 min read</div>
-            <div class="posttag">
-                
-                <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
-                    <i class="fa fa-tag"></i> CTF
-                </a>
-                
-            </div>
+        </span>
+            <h1>I春秋公益赛部分Writeup</h1>
+            <span class="meta">
+            	Posted on
+              2020-02-23，16 min read
+            </span>
+          </div>
         </div>
-        
-        <div id="articlecontent">
-            <div id="texttitle" style="text-align: center">
-                <h2>I春秋公益赛部分Writeup</h2>
-                <!-- id 将作为查询条件 -->
-                <div id="pl" style="display:none">https://guokeya.github.io/post/i-chun-qiu-gong-yi-sai-day2-de-liang-ti-web/</div>
-                <div id="rootaddr" style="display:none">https://guokeya.github.io</div>
-                <span id="hotnum">
-                    <h4><i class="fa fa-eye" aria-hidden="true" style="color: #FF8C00;"></i>&nbsp;&nbsp;热度</i>: <i
-                            class="hotnum">loading...</i></h4>
-                </span>
-            </div>
-            <div class="text ">
-                <p>太菜了。只能纪录下自己做出来的题</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>太菜了。只能纪录下自己做出来的题</p>
 <center>MISC</center>
 <!-- more -->
 <p>1。code_in_morse<br>
 题目给了个数据包。拿到数据包首先就是看HTTP</p>
-<p><img src="https://guokeya.github.io/post-images/1582507063277.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1582507063277.png" alt="" loading="lazy"><br>
 可以看到。上传了一个image。尝试看看image图片。一般图片都会藏点什么东西。<br>
 摩斯密码。<br>
-<img src="https://guokeya.github.io/post-images/1582507137401.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582507137401.png" alt="" loading="lazy"><br>
 拿去解密<br>
-<img src="https://guokeya.github.io/post-images/1582507269755.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582507269755.png" alt="" loading="lazy"><br>
 这里有个坑。不同网站解出来的东西不一样。用CTFCrak需要将最后的NULLNULLNULL，替换===<br>
 ===结尾。尝试下base32解密</p>
 <pre><code>import base64
@@ -457,51 +119,51 @@ print (base64.b32decode(data))
 <p>得到一张PDF417的码<br>
 <code>https://demo.dynamsoft.com/DBR/BarcodeReaderDemo.aspx</code><br>
 得到一个base64加密的字符串<br>
-<img src="https://guokeya.github.io/post-images/1582508974936.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582508974936.png" alt="" loading="lazy"><br>
 解密后是个URL。是一张图。保存后查看详细信息。发现F5提示<br>
-<img src="https://guokeya.github.io/post-images/1582509061392.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582509061392.png" alt="" loading="lazy"><br>
 F5隐写得到flag<br>
-<img src="https://guokeya.github.io/post-images/1582509099377.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582509099377.png" alt="" loading="lazy"><br>
 2。套娃<br>
 第一关。发现ook。解码获得压缩密码。<br>
 同时在1.连环画中发现part1<br>
-<img src="https://guokeya.github.io/post-images/1582509312028.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582509312028.png" alt="" loading="lazy"><br>
 第二关。爆破得到压缩包密码3302<br>
 同时在2.连环画详细信息中发现part2<br>
-<img src="https://guokeya.github.io/post-images/1582509491997.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582509491997.png" alt="" loading="lazy"><br>
 第三关。通过txt得到虚张声势。猜测zip伪加密<br>
 同时通过stegsolve发现part3<br>
-<img src="https://guokeya.github.io/post-images/1582509621858.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582509621858.png" alt="" loading="lazy"><br>
 第四关。通过4.hint.png知道这是zip明文攻击<br>
 将4.jpg和5.zip打包。进行明文攻击。(又是坑，明文攻击刚开始不能退出。跑了半个小时。可以退出了。并且会生成一个解密的压缩包)<br>
-<img src="https://guokeya.github.io/post-images/1582509875778.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582509875778.png" alt="" loading="lazy"><br>
 修改图片长度。得到part4<br>
-<img src="https://guokeya.github.io/post-images/1582509960998.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582509960998.png" alt="" loading="lazy"><br>
 第五关。猪圈密码。得到解压密码fojiajielv<br>
 并且给了81张图。慢慢拼图吧<br>
-<img src="https://guokeya.github.io/post-images/1582510831489.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582510831489.png" alt="" loading="lazy"><br>
 第六关。与佛论禅解压得到密码amtf12345<br>
 图片末尾发现摩斯密码<br>
-<img src="https://guokeya.github.io/post-images/1582510976815.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582510976815.png" alt="" loading="lazy"><br>
 第七关。银河密码。yinhezm<br>
 时间隐写。将10-&gt;0，20-&gt;1得到part7:61562<br>
-<img src="https://guokeya.github.io/post-images/1582511218402.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582511218402.png" alt="" loading="lazy"><br>
 第八关：</p>
 <pre><code>8.原来，真经就在塔顶，走到顶，两位存储尊者向你索要人事一些&lt;既然出门匆忙没带经文 不如把一路上得到的战利品(共32位)交出来吧
 </code></pre>
 <p>总结前面的所有part。解压<br>
 最后是ntfs隐写。貌似用winrar解压数据不会丢失。这步全是在虚拟机里运行的。拖到本机数据就没了。<br>
-<img src="https://guokeya.github.io/post-images/1582511658818.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582511658818.png" alt="" loading="lazy"><br>
 3。funnygame<br>
 给了pygame文件。修改了雷的数量。玩了一下没啥结果。。<br>
 去图标库看看。扫雷.png特别显眼。其他都是bmp。<br>
-<img src="https://guokeya.github.io/post-images/1582511841458.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582511841458.png" alt="" loading="lazy"><br>
 拖到kali下binwalk分离<br>
 得到一个openssl加密的文件<br>
-<img src="https://guokeya.github.io/post-images/1582511909677.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582511909677.png" alt="" loading="lazy"><br>
 那么接下来就只有爆破or找密钥<br>
 结束后师傅们说。是pyc隐写。。。新姿势get<br>
-<img src="https://guokeya.github.io/post-images/1582512221581.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582512221581.png" alt="" loading="lazy"><br>
 得到密钥<br>
 <code>https://www.sojson.com/encrypt_aes.html</code><br>
 解压后得到16进制</p>
@@ -525,20 +187,20 @@ print data2
 <center>Web</center>
 简单的招聘系统
 <p>在登陆出发现admin' or 1=1%23可以登陆为admin。猜测这里有注入<br>
-<img src="https://guokeya.github.io/post-images/1582513974012.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582513974012.png" alt="" loading="lazy"><br>
 判断字段数。6的时候报错。说明字段数为5<br>
 登陆后。会在用户信息回显<br>
-<img src="https://guokeya.github.io/post-images/1582514046115.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582514046115.png" alt="" loading="lazy"><br>
 没过滤。送分题。还有一种解法，通过or 1=1登陆后。在admin查询页面。注入<br>
 easysqli_copy<br>
-<img src="https://guokeya.github.io/post-images/1582514119329.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582514119329.png" alt="" loading="lazy"><br>
 首先分析下代码<br>
 通过id传参。如果没有传参。就从数据库中取值作为默认<br>
 id传参需要过正则匹配。数据库编码为UTF-8。然后用预处理带入sql语句<br>
 <code>https://www.freebuf.com/articles/web/216336.html</code><br>
 UTF-8想起宽字节注入可以逃逸单引号。然后用%00注释<br>
 用堆叠注入hex编码绕过。随便注<br>
-<img src="https://guokeya.github.io/post-images/1582514494044.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582514494044.png" alt="" loading="lazy"><br>
 Blacklist<br>
 原题是强网杯的随便注<br>
 原本的思路是动过堆叠注入。更改表名或者利用prepare去读取数据<br>
@@ -563,18 +225,18 @@ handler 表名 read first<br>
 #读取第一条数据<br>
 handler 表名 close<br>
 #关闭句柄<br>
-<img src="https://guokeya.github.io/post-images/1582425638810.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1582425638810.png" alt="" loading="lazy"></p>
 <p>首先查看表名得到FlagHere<br>
-<img src="https://guokeya.github.io/post-images/1582425889129.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582425889129.png" alt="" loading="lazy"><br>
 得到列名flag<br>
-<img src="https://guokeya.github.io/post-images/1582425927117.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582425927117.png" alt="" loading="lazy"><br>
 得到flag<br>
-<img src="https://guokeya.github.io/post-images/1582425989391.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582425989391.png" alt="" loading="lazy"><br>
 ezupload<br>
 这题没什么好说的。直接上传一句话木马。执行/readflag得到flag<br>
 盲注<br>
 由于已知字段。并且在同表。那就不需要select<br>
-<img src="https://guokeya.github.io/post-images/1582515117678.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582515117678.png" alt="" loading="lazy"><br>
 regexp判断即可<br>
 Flaskapp<br>
 在解密处存在SSTI。将<code>{{1+1}}</code>base64编码后发送。返回<code>{{2}}</code><br>
@@ -593,8 +255,8 @@ Flaskapp<br>
 2：如果存在/proc/self/cgroup文件。那么/etc/machine-id会取/proc/self/cgroup的第一行<br>
 3：读取/etc/passwd得到用户名<br>
 4：debug报错得到app路径<br>
-<img src="https://guokeya.github.io/post-images/1582515443898.png" alt="" loading="lazy"><br>
-<img src="https://guokeya.github.io/post-images/1582516025637.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582515443898.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582516025637.png" alt="" loading="lazy"><br>
 ezsqli<br>
 这道题考的是高版本mysql的特性。比如新增了数据库。可以用于绕过information被过滤<br>
 最后字符串比较。拿flag<br>
@@ -627,34 +289,34 @@ for i in range(100):
 </code></pre>
 <p>这里字符串比较。不区分大小写。<br>
 如果区分大小写。可以用binary具体检测。这题过滤了in。就不行了。<br>
-<img src="https://guokeya.github.io/post-images/1582521792220.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582521792220.png" alt="" loading="lazy"><br>
 easy_thinking<br>
 www.zip源码泄露<br>
 根据源码可知。这是个thinkphp6搭建的web。<br>
-<img src="https://guokeya.github.io/post-images/1582635970537.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582635970537.png" alt="" loading="lazy"><br>
 哎。一直没怎么学thinkphp<br>
 先百度下thinkphp6有啥洞<br>
 <code>https://paper.seebug.org/1114/</code><br>
 搜了下发现就一个反序列化和session任意文件写入。<br>
-<img src="https://guokeya.github.io/post-images/1582636167495.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582636167495.png" alt="" loading="lazy"><br>
 利用条件。需要session可控。并且能访问<br>
 首先登陆下web<br>
-<img src="https://guokeya.github.io/post-images/1582636294645.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582636294645.png" alt="" loading="lazy"><br>
 随便搜索个123。返回主页。有历史搜索纪录。<br>
-<img src="https://guokeya.github.io/post-images/1582636341872.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582636341872.png" alt="" loading="lazy"><br>
 并且。这里session可以访问<br>
-<img src="https://guokeya.github.io/post-images/1582636425249.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582636425249.png" alt="" loading="lazy"><br>
 结合上面的洞。我们将session替换为总长32位的xxxxx.php<br>
 然后搜索内容会以序列化后的字符串存储。<br>
 登陆时修改session。搜索<code>&lt;?php eval($_POST[a])?&gt;</code>。<br>
 就会在session目录下存在一个sess_xxxxxx.php<br>
-<img src="https://guokeya.github.io/post-images/1582636620721.png" alt="" loading="lazy"><br>
-<img src="https://guokeya.github.io/post-images/1582636670686.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582636620721.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582636670686.png" alt="" loading="lazy"><br>
 这就是我们的shell<br>
-<img src="https://guokeya.github.io/post-images/1582636732345.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582636732345.png" alt="" loading="lazy"><br>
 phpinfo()发现禁用了很多函数。照常得bypass disable_function<br>
 但是。用的比较多的LD_PRELOADbypass不行了。这里禁用了send_mail<br>
-<img src="https://guokeya.github.io/post-images/1582636926794.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582636926794.png" alt="" loading="lazy"><br>
 有很多bypass方法。这里使用其他一个</p>
 <pre><code>&lt;?php
 
@@ -878,15 +540,15 @@ function pwn($cmd) {
 </code></pre>
 <p>支持PHP7.0-7.4<br>
 用蚁键上传后。直接访问就行<br>
-<img src="https://guokeya.github.io/post-images/1582637136613.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582637136613.png" alt="" loading="lazy"><br>
 babyphp<br>
 www.zip源码泄露<br>
 首先看idnex.php<br>
-<img src="https://guokeya.github.io/post-images/1582637303312.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582637303312.png" alt="" loading="lazy"><br>
 代码很简洁。文件包含action参数+.php<br>
 判断是否登陆。登陆就调转update.php<br>
 OK。继续看login.php<br>
-<img src="https://guokeya.github.io/post-images/1582637440869.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582637440869.png" alt="" loading="lazy"><br>
 过滤了很多函数。接着会调用lib.php中User类的login函数。</p>
 <pre><code>    public function login() {
         if(isset($_POST['username'])&amp;&amp;isset($_POST['password'])){
@@ -904,11 +566,11 @@ OK。继续看login.php<br>
 </code></pre>
 <p>可以看到。login函数。又会调用dbCtrl类中的login函数。并且带一个sql语句<br>
 继续追踪<br>
-<img src="https://guokeya.github.io/post-images/1582637581038.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582637581038.png" alt="" loading="lazy"><br>
 这里sql语句。将使用预处理。然后执行。返回id<br>
 使用了预处理。那么基本注入没了。除非数据库使用utf-8<br>
 接下来看update.php<br>
-<img src="https://guokeya.github.io/post-images/1582637723680.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582637723680.png" alt="" loading="lazy"><br>
 只要<code>session['login']=1</code>就会输出flag。并且update.php未登陆时只是echo 你还没有登陆。并没有exit退出。下面的语句会继续执行<br>
 调用user类的update函数。<br>
 将POST的age和nickname带入Info类。然后序列化。经过safe函数。替换。再反序列化</p>
@@ -921,13 +583,13 @@ OK。继续看login.php<br>
 那么这不就有了。逃逸+反序列化字符串可控+构造POP链执行sql语句<br>
 之前只做到了逃逸字符串。对于逃逸对象。实在是第一次遇见。也怪我想得太少。没想过能逃逸对象<br>
 逃逸字符串原理就不讲了。<br>
-<img src="https://guokeya.github.io/post-images/1582638132555.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582638132555.png" alt="" loading="lazy"><br>
 我们要做的就是逃逸对象给CtrlCase。然后执行反序列化。<br>
 下面构造POP链<br>
-<img src="https://guokeya.github.io/post-images/1582638210005.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582638210005.png" alt="" loading="lazy"><br>
 程序调用UpdateHelper类的时候。会在执行完触发__destruct函数。执行echo $this-&gt;sql<br>
 而反序列化可以更改sql的值。将sql赋值为其他类。就可以触发tostring魔法函数<br>
-<img src="https://guokeya.github.io/post-images/1582638347646.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1582638347646.png" alt="" loading="lazy"></p>
 <pre><code>User类调用UpdateHelper类
 UpdateHelper执行完触发__destruct。echo $this-&gt;sql
 将$this-&gt;sql赋值为User类。就会触发__toString魔法函数
@@ -938,7 +600,7 @@ $this-&gt;CtrlCase为dbCtrl类。那么就会执行dbCtrl类的login函数。将
 </code></pre>
 <p><code>这里call魔法函数。$name的值是想要调用函数名的值。带的参数是$argument</code><br>
 比如我调用xxx类的abc函数。而xxx类并没有这个函数。触发__call函数。那么name就是你想要调用函数的名字。argument才是真正的参数<br>
-<img src="https://guokeya.github.io/post-images/1582638805260.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1582638805260.png" alt="" loading="lazy"></p>
 <pre><code>接下来追踪下sql语句。通过User类的$this-&gt;age传递。那么将age设为sql语句即可
 由于执行完会返回两个结果。绑定id和password。那么我们就写
 select password,id from user where username='admin'
@@ -946,367 +608,113 @@ select password,id from user where username='admin'
 而id又会输出。我们拿到password解密登陆就行了
 </code></pre>
 <p>以下是我的payload<br>
-<img src="https://guokeya.github.io/post-images/1582639043125.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582639043125.png" alt="" loading="lazy"><br>
 先本地测试下。<br>
-<img src="https://guokeya.github.io/post-images/1582639256270.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582639256270.png" alt="" loading="lazy"><br>
 因为我们是覆盖最后一个Ctrlcase。而我们输入又在此前<br>
 所以。我们直接自己构造。&quot;闭合前面<br>
 <code>;s:8:&quot;CtrlCase&quot;;</code>表示CtrlCase开始后面跟我们构造的object对象<br>
 最后还得加上<code>}</code>表示整个序列化字符串结尾。<br>
 总共222个字符。根据替换。*替换hacker。一次可以多5个字符。union替换。一次多1个字符。<br>
 <code>*x44+unionx2=222</code><br>
-<img src="https://guokeya.github.io/post-images/1582640275345.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1582640275345.png" alt="" loading="lazy"><br>
 将这串md5解密。得到yingyingying<br>
 admin，yingyingying登陆拿flag<br>
-<img src="https://guokeya.github.io/post-images/1582640333234.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1582640333234.png" alt="" loading="lazy"></p>
 
-            </div>
-            <hr style="width: 80%;">
-            
-            <div class="sharebtnContainer">
-                <button type="button" class="sharebtn">转载分享</button>
-            </div>
-            <div class="shareContainer">
-                <div class="share" style="height:30px;background: white;">
-                    <a class="qq" href=""><i><img class="shareicon"
-                                src="https://guokeya.github.io/media/images/QQ.png" alt=""></i></a>
-                    <a class="wechat" href=""><i><img class="shareicon"
-                                src="https://guokeya.github.io/media/images/wechat.png" alt=""></i></a>
-                    <a class="weibo" href=""><i><img class="shareicon"
-                                src="https://guokeya.github.io/media/images/weibo.png" alt=""></i></a>
-                    <a class="qzone" href=""><i><img class="shareicon"
-                                src="https://guokeya.github.io/media/images/qzone.png" alt=""></i></a>
-                    <a class="douban" href=""><i><img class="shareicon"
-                                src="https://guokeya.github.io/media/images/douban.png" alt=""></i></a>
-                    <a class="facebook" href=""><i><img class="shareicon"
-                                src="https://guokeya.github.io/media/images/facebook.png" alt=""></i></a>
-                    <a class="twitter" href=""><i><img class="shareicon"
-                                src="https://guokeya.github.io/media/images/twitter.png" alt=""></i></a>
-                </div>
-            </div>
-            
-            
-            <div class="donateContainer">
-                <img src="https://guokeya.github.io/media/images/donate.png" alt="" class="donateImg">
-            </div>
-            <div class="donateContainer">
-                <img src="" alt="" class="donate">
-            </div>
-            
-            <div class="postfooter">
-                <ul class="post-copyright">
-                    <li><strong>文章作者：</strong></li>
-            <li><strong>原文链接：</strong>https://guokeya.github.io/post/i-chun-qiu-gong-yi-sai-day2-de-liang-ti-web/</li>
-            <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用<i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA
-                许可协议。转载请注明出处！</li>
-            </ul>
-        </div>
-        <div id="otherpost">
-            
-            <div class="prev-post-pc">
-                <div id="ppcontainer" onclick="window.location.href= 'https://guokeya.github.io/post/m9L1ZJk4j/';return false">
-                    
-                    
-                    <img src="" style="width: 100%;" class="opimg">
-                    
-                    
-                    <h4 class="optitle">安恒月赛SSTI的新姿势</h4>
-                </div>
-            </div>
-            <div class="prev-post">
-                上一篇 <a href="https://guokeya.github.io/post/m9L1ZJk4j/">安恒月赛SSTI的新姿势</a>
-            </div>
-            
-            
-            <div class="next-post-pc">
-                <div id="npcontainer" onclick="window.location.href= 'https://guokeya.github.io/post/ctfshow-hong-bao-ti-di-ba-dan/';return false">
-                    
-                    
-                    <img src="" style="width: 100%;" class="opimg">
-                    
-                        
-                    <h4 class="optitle">ctfshow红包题第八弹</h4>
-                </div>
-            </div>
-            <div class="next-post">
-                下一篇 <a href="https://guokeya.github.io/post/ctfshow-hong-bao-ti-di-ba-dan/">ctfshow红包题第八弹</a>
-            </div>
-            
-        </div>
-    </div>
-    </div>
-    </div>
-
-</body>
-<script>
-    //文章阅读热度
-    var pl = $("#pl").html();
-    var rootaddr = $("#rootaddr").html();
-    pl = pl.replace(rootaddr, "");
-    $("#hotnum").attr('id', pl);
-</script>
-                <div id="comment" class="comment" style="background: white">
-                    <div class="commentcontainer">
-                        
-                        <p>请到客户端“主题--自定义配置--valine”中填入ID和KEY</p>
-                        
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2 col-lg-3">
-            </div>
-            <div id="bg">
-            </div>
-        </div>
+          
+          <p class="next-post">下一篇：
+            <a href="http://localhost:4000/post/ctfshow-hong-bao-ti-di-ba-dan/">
+              <span class="post-title">
+                ctfshow红包题第八弹&rarr;
+              </span>
+            </a>
+          </p>
         
-        
-        <div class="toc-container">
-            
-    </div>
-    </div>
-    </div>
-    <div class="tog">
-        <div class="toggleContainer">
-            <div class="toggle">
-                <i class="fas fa-angle-double-up"></i>
-            </div>
+        <div class="comment">
+          
         </div>
+      </div>
     </div>
-    <div id="bgchoice" style="display: none"></div>
-    
-    <div id="bgurl" style="display:none"></div>
-    
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span>过客</span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+        </div>
+      </div>
     </div>
-</body>
-<script>
-    var img = $("img");
-    for (var i = 0; i < img.length; i++) {
-        if (img.eq(i).attr("class") == undefined) {
-            img.eq(i).attr("class", "lazyload");
-            var imgsrc = img.eq(i).attr("src");
-            img.eq(i).attr("data-original", imgsrc);
-            img.eq(i).attr("src", "");
-            img.eq(i).hide();
-        }
-    }
-</script>
-<script>
-    hljs.initHighlightingOnLoad();
-</script>
-<script>
-    //寻找所有code标签，加复制按钮鸭！(行内代码除外)
-    var codes = document.getElementsByTagName('code');
-    if (codes.length) {
-        for (var i = 0; i < codes.length; i++) {
-            //高度/行高=文本行数
-            // var rowNum=Math.round(codes[i].height()/parseFloat(codes[i].css('line-height')));
-            // console.log("当前有"+rowNum+"行");
-            var code_id = "code_id_" + i;
-            codes[i].setAttribute("id", code_id);
-            var ci = "#" + code_id;
-            var codedot = $(ci);
-            var rowNum = Math.round(codedot.height() / parseFloat(codedot.css('line-height')));
-            if (rowNum <= 1) continue;
-            var btn = document.createElement("button");
-            btn.setAttribute("class", "copybt");
-            btn.setAttribute("data-clipboard-target", "#" + code_id);
-            btn.innerHTML = '复制代码';
-            codes[i].parentNode.insertBefore(btn, codes[i]);
-        }
-    };
-    var cop = new ClipboardJS('.copybt');
-    var codeCopyText = $("#codeCopyText").html();
-    cop.on('success', function (e) {
-        alert(codeCopyText);
-        e.clearSelection();
-    });
-    cop.on('error', function (e) {
-        alert("矮油，复制失败了...手动复制吧勇士！");
-        e.clearSelection();
-    });
-</script>
-
-<script>
-    $(function () {
-        $('.toggleContainer').click(function () {
-            $('html,body').animate({
-                scrollTop: '0px'
-            }, 800);
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
         });
-        $(window).scroll(function () {
-            var st = $(window).scrollTop();
-            if (st > 30) {
-                $(".toggleContainer").fadeIn(400);
-            } else {
-                $(".toggleContainer").fadeOut(100);
-            }
-        });
-    });
-</script>
-
-<script>
-    var bgchoice = $('#bgchoice').html();
-    var bg = $('#bg');
-    var bgurl = document.getElementById("bgurl").innerHTML;
-    if (bgchoice == 'default')
-        for (var i = 0; i < 3; i++)
-            bgurl = bgurl.replace("\\", "/");
-    bg.css("background", "url('" + bgurl + "')");
-</script>
-
-
-
-
-<!-- 动态更改上(下)一篇博客图片框长宽 -->
-<script>
-    npcontainer = document.querySelector('#npcontainer');
-    npstyle = window.getComputedStyle(npcontainer, null);
-    npwidth = npstyle.width;
-    npheight = 0.6 * Number(npwidth.replace("px", ""));
-    npheight = npheight.toString() + "px";
-    var op = $(".opimg");
-    op.css("height", npheight);
-</script>
-
-<script src="https://guokeya.github.io/media/share/dist/Share.js"></script>
-
-<script>
-    var avatarSrc = $(".menutopavatar").attr("src");
-    var dp = document.getElementsByClassName("navbar-brand")[1].innerHTML;
-</script>
-
-
-<script>
-    var title = document.getElementById("texttitle").getElementsByTagName("h2");
-    
-    var share = new Share('.share', {
-        title: title[0].innerHTML,
-        initialized: true,
-        //默认获取网站描述
-        description: dp,
-        //网站图片默认获取的是设置的用户头像
-        image: avatarSrc,
-        //激活的分享网站
-        sites: ["weibo", "qq", "wechat", "douban", "qzone", "facebook", "twitter", "google"],
-        //微信分享PC端会生成二维码分享,移动端如果可以唤起微信最好
-        wechatQrcodeTitle: "微信扫一扫：分享", // 微信二维码提示文字
-        wechatQrcodeHelper: '<p>微信里扫一下二维码</p><p>便可将本文分享至朋友圈。</p>',
-        //关闭的网站分享
-        disabled: ['google', 'linkedin'],
-        wechatQrcodePosition: 'bottom'
-    });
-
-    //点击分享按钮展现出分享icons
-    var sharebtnTag = false;
-    $(".sharebtn").click(function () {
-        if(!sharebtnTag)
-        {
-            $(".share").show();
-            sharebtnTag = true;
-        }
-        else
-        {
-            $(".share").hide();
-            sharebtnTag = false;
-        }
-    })
-
-    var donatebtnTag = false;
-    $(".donateImg").click(function () {
-        if(!donatebtnTag)
-        {
-            $(".donate").show();
-            donatebtnTag = true;
-        }
-        else{
-            $(".donate").hide();
-            donatebtnTag = false;
-        }
-    })
-
-    //加载后的事件同步（阅读量、移动端评论等
-    window.onload=function(){
-        getHotnum();
-        var sharepc = $(".share").eq(0).html();
-        $(".share").eq(1).html(sharepc);
-        document.getElementById("veditor").setAttribute("placeholder", jrsc);
-        aplayerbtnInit();
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
     }
-</script>
+  })(this));</script>
+  </body>
+</html>
 
-
-<script>
-    jQuery(document).ready(function ($) {
-        function lazyload() {
-            var oLazyload = $("img.lazyload"),
-                fLazyload = function (hLazyload) {
-                    var nLazyload = $(window).height() + $(document).scrollTop();
-                    oLazyload.each(function () {
-                        $(this).offset().top < nLazyload && ($(this).trigger("appear"), oLazyload =
-                            oLazyload.not(this));
-                    }), 0 == oLazyload.length && $(window).unbind("scroll", fLazyload);
-                };
-            oLazyload.each(function () {
-                $(this).one("appear", function () {
-                    $(this).attr("src", $(this).attr("data-original"));
-                    $(this).fadeIn(500);
-                });
-            }), $(window).bind("scroll", fLazyload), fLazyload();
-        }
-        lazyload();
-    });
-</script>
-
-<!-- <script src="https://guokeya.github.io/media/js/av-min.js"></script> -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@3.13.0/dist/av-min.js"></script> -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@4.6.1/dist/av-live-query-min.js"></script> -->
-
-<script>
-    function getHotnum() {
-        //文章阅读热度（重构，利用leancloud原生api）
-        var pl = $("#pl").html();
-        var rootaddr = $("#rootaddr").html();
-        pl = pl.replace(rootaddr, "");
-
-        var appid = '';
-        var appkey = '';
-        console.log(appid, appkey)
-        if(AV==undefined)
-            AV.init({
-                appId: appid,
-                appKey: appkey
-            });
-        const query = new AV.Query('Counter');
-        query.equalTo('url', pl);
-        var time = 'Loading...';
-        query.find().then(function (results) {
-            console.log(results)
-            if (results.length == 0) {
-                console.log("0")
-                var NewCounter = AV.Object.extend('Counter');
-                var nc = new NewCounter();
-                nc.save({
-                    time: 1,
-                    title: "I春秋公益赛部分Writeup",
-                    url: pl,
-                    xid: pl,
-                }).then(function (object) {
-                    $(".hotnum").eq(0).html(1);
-                    $(".hotnum").eq(1).html(1);
-                });
-            } else {
-                id = results[0].id;
-                var todo = AV.Object.createWithoutData('Counter', id);
-                time = results[0].attributes.time + 1;
-                todo.set("time", time);
-                todo.save();
-                console.log(todo);
-                $(".hotnum").eq(0).html(time);
-                $(".hotnum").eq(1).html(time);
-            }
-
-        }, function (error) {
-            console.log(error)
-        });
-    }
-</script>
