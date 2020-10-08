@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>首届360杯网络安全职业技能大赛 流量分析题（一）writeup | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="首届360杯网络安全职业技能大赛 流量分析题（一）writeup | 过客 » Feed" href="http://localhost:4000/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="首届360杯网络安全职业技能大赛 流量分析题（一）writeup | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="首届360杯网络安全职业技能大赛 流量分析题（一）writeup"/>
-    <meta property="og:url" content="http://localhost:4000/post/_zGR5BbA_/"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/_zGR5BbA_/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="过客"/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="http://localhost:4000">过客</a>
+      <a class="navbar-brand" href="https://guokeya.github.io">过客</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,7 +80,7 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
             
         </span>
             <h1>首届360杯网络安全职业技能大赛 流量分析题（一）writeup</h1>
@@ -110,25 +110,25 @@ https://github.com/guokeya/tools/blob/master/flag.zip<br>
 https://github.com/guokeya/tools/blob/master/archpr.zip</p>
 <p><strong>writeup</strong><br>
 打开数据包，先看下，无非就是些DNS,TCP,HTTP<br>
-<img src="http://localhost:4000/post-images/1577950137993.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1577950137993.png" alt="" loading="lazy"><br>
 特别关注下HTTP<br>
-<img src="http://localhost:4000/post-images/1577950144012.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1577950144012.png" alt="" loading="lazy"><br>
 有两点发现，<br>
 1.一句话木马。有一个readme.7z，文件-&gt;导出对象-&gt;HTTP-&gt;Readme.7z<br>
 解压查看，没什么东西，先放着<br>
-<img src="http://localhost:4000/post-images/1577950154038.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1577950154038.png" alt="" loading="lazy"><br>
 2.基于时间的sql盲注<br>
 这里，说下是怎么一步步判断获取的值<br>
 首先，要看得懂sql语句<br>
 ' and ((select count(schema_name) from information_schema.schemata) &gt; 7)<br>
 获取数据库数量，如果&gt;7,就会返回1<br>
 ' and True,返回正确，页面就会正常显示，这里我们可以看他返回的数据包具体判断<br>
-<img src="http://localhost:4000/post-images/1577950161054.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1577950161054.png" alt="" loading="lazy"><br>
 分析得出，数据库为360ctf，表名为flag，字段为url和passwd<br>
 最后我们来分析下url和passwd的值<br>
-<img src="http://localhost:4000/post-images/1577950171837.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1577950171837.png" alt="" loading="lazy"><br>
 同理。分析值<br>
-<img src="http://localhost:4000/post-images/1577950177620.png" alt="" loading="lazy"></p>
+<img src="https://guokeya.github.io/post-images/1577950177620.png" alt="" loading="lazy"></p>
 <pre><code>ascii(substr((select url from 360ctf.flag limit 0,1),1,1))&gt;79 True
 ascii(substr((select url from 360ctf.flag limit 0,1),1,1))&gt;103 True
 ascii(substr((select url from 360ctf.flag limit 0,1),1,1))&gt;105 True
@@ -164,23 +164,23 @@ asscii(substr(select passwd from ctf.flag limit 0,1),3,1)=105
 asscii(substr(select passwd from ctf.flag limit 0,1),4,1)=115
 </code></pre>
 <p>写个python脚本，将这些值转化为字符串<br>
-<img src="http://localhost:4000/post-images/1577950200733.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1577950200733.png" alt="" loading="lazy"><br>
 得到一个短网址和一个密码<br>
 短网址是一个云盘分享，输入密码，拿到了flag.zip<br>
 尝试打开,发现需要密码<br>
-<img src="http://localhost:4000/post-images/1577950207977.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1577950207977.png" alt="" loading="lazy"><br>
 欸，里面也有个Readme.txt，和我们刚刚导出的是一个文件，这里就涉及到一个知识点<br>
 ZIP明文攻击：<br>
 所谓明文攻击就是已经通过其他手段知道zip加密文件中的某些内容，来破解密码<br>
 这里需要用到AZPR-4.0<br>
 首先，将我们获得的readme.txt压缩为readme.zip,然后将其和flag.zip一起进行破解<br>
-<img src="http://localhost:4000/post-images/1577950221661.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1577950221661.png" alt="" loading="lazy"><br>
 破解成功，拿到flag值<br>
-<img src="http://localhost:4000/post-images/1577950227778.png" alt="" loading="lazy"></p>
+<img src="https://guokeya.github.io/post-images/1577950227778.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
-            <a href="http://localhost:4000/post/TH30EDM3R/">
+            <a href="https://guokeya.github.io/post/TH30EDM3R/">
               <span class="post-title">
                 CVE-2017-11882漏洞复现和利用&rarr;
               </span>
@@ -224,7 +224,7 @@ ZIP明文攻击：<br>
             
               
               <li class="list-inline-item">
-              <a href="http://localhost:4000/atom.xml" target="_blank">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -239,10 +239,10 @@ ZIP明文攻击：<br>
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

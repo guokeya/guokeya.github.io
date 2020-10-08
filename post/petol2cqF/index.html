@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>[ByteCTF 2019]EZCMS（hash长度扩展攻击+phar反序列化） | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="[ByteCTF 2019]EZCMS（hash长度扩展攻击+phar反序列化） | 过客 » Feed" href="http://localhost:4000/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="[ByteCTF 2019]EZCMS（hash长度扩展攻击+phar反序列化） | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="[ByteCTF 2019]EZCMS（hash长度扩展攻击+phar反序列化）"/>
-    <meta property="og:url" content="http://localhost:4000/post/petol2cqF/"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/petol2cqF/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="过客"/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="http://localhost:4000">过客</a>
+      <a class="navbar-brand" href="https://guokeya.github.io">过客</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,9 +80,9 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
             
-            <a href="http://localhost:4000/tag/Web/" class="tag">Web安全</a>
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
             
         </span>
             <h1>[ByteCTF 2019]EZCMS（hash长度扩展攻击+phar反序列化）</h1>
@@ -102,10 +102,10 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <p>主页是个登陆界面，想到sql注入。输入单引号就登陆成功了,进一步判断。不是sql注入<br>
-<img src="http://localhost:4000/post-images/1578745848118.png" alt="" loading="lazy"></p>
+<img src="https://guokeya.github.io/post-images/1578745848118.png" alt="" loading="lazy"></p>
 <!-- more -->
 <p>进去是一个上传界面。提示我们不是管理员。<br>
-<img src="http://localhost:4000/post-images/1578745862027.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1578745862027.png" alt="" loading="lazy"><br>
 扫下目录发现www.zip<br>
 下载源码审计<br>
 <strong>view.php</strong></p>
@@ -357,32 +357,32 @@ if (isset($_POST['username']) &amp;&amp; isset($_POST['password'])){
 }
 </code></pre>
 <p>程序调用了admin类中的upload_file<br>
-<img src="http://localhost:4000/post-images/1578797845325.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1578797845325.png" alt="" loading="lazy"><br>
 看到了关键代码。调用了$this-&gt;checker,如果不为True，就输出不是admin<br>
 继续追踪代码profile类中的is_admin函数<br>
-<img src="http://localhost:4000/post-images/1578797880885.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1578797880885.png" alt="" loading="lazy"><br>
 可以看到。将我们之前登陆的用户名密码赋值给username和password<br>
 然后定义了一个密钥。<br>
 判断我们之前输出的用户名是不是admin。密码不能是admin<br>
 然后将密钥和用户名密码拼接。MD5加密。将加密结果和cookies['user']进行比较<br>
 这里我们有三个可控点。用户名+密码+cookies['user']<br>
 这里就想到了hash长度扩展攻击<br>
-<img src="http://localhost:4000/post-images/1578798637674.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1578798637674.png" alt="" loading="lazy"><br>
 这里登陆的时候。用户名就是admin。对应了inputdata<br>
 密码就输入url编码的那串。然后将md5赋值给user<br>
 上传还是提示不是admin。。。。<br>
 这里有个坑。就是在源码中。密钥是8个*。我就单纯的以为。密钥长度为8<br>
 在ctf题中。如果没给出密钥长度。那就不要信<br>
 这里依次将长度+1然后生成exp。登陆上传。当测试到第13个的时候就成功了<br>
-<img src="http://localhost:4000/post-images/1578798808879.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1578798808879.png" alt="" loading="lazy"><br>
 这里的附加数据随便填，他只要MD5相同。没说要==admin这类的<br>
-<img src="http://localhost:4000/post-images/1578798874443.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1578798874443.png" alt="" loading="lazy"><br>
 登陆后。上传文件。没报错了。再重新访问下upload界面。就有文件路径<br>
-<img src="http://localhost:4000/post-images/1578798931505.png" alt="" loading="lazy"><br>
-<img src="http://localhost:4000/post-images/1578798935582.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1578798931505.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1578798935582.png" alt="" loading="lazy"><br>
 下面继续审计代码<br>
 在之前的文件上传时。admin类有一个构造函数。会在调用函数前执行。这里file_put_contens了一个.htaccess然后内容是乱写的。这也意味着。我们上传的文件都会收到.htaccess的影响不能正常执行<br>
-<img src="http://localhost:4000/post-images/1578799170330.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1578799170330.png" alt="" loading="lazy"><br>
 再往下看。调用了Check类。传入了文件上传时的缓存名<br>
 获取了文件内容。通过foreach循环。将其遍历。如果存在system,eval,exec这类的就退出了。也就意味着。文件上传不成功<br>
 流程如下：<br>
@@ -393,7 +393,7 @@ $a='syste'.'m';
 $a($_GET[0]);
 ?&gt;
 </code></pre>
-<p><img src="http://localhost:4000/post-images/1578799445396.png" alt="" loading="lazy"><br>
+<p><img src="https://guokeya.github.io/post-images/1578799445396.png" alt="" loading="lazy"><br>
 文件上传成功获得路径。访问500错误。正常。因为有.htaccess的存在<br>
 upload.php也分析完了<br>
 1。生成.htaccess<br>
@@ -401,9 +401,9 @@ upload.php也分析完了<br>
 3。判断文件内是否有危险函数<br>
 下面继续看view.php<br>
 通过之前访问。我们大概可以知道view.php就是判断文件类型输出程序路径的<br>
-<img src="http://localhost:4000/post-images/1578799686483.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1578799686483.png" alt="" loading="lazy"><br>
 调用了File类中的view_detail函数<br>
-<img src="http://localhost:4000/post-images/1578799753667.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1578799753667.png" alt="" loading="lazy"><br>
 首先构造函数赋值filepath和filename<br>
 然后匹配filepath。有没有危险协议<br>
 接着mime_content_type获得filepath的类型<br>
@@ -414,7 +414,7 @@ upload.php也分析完了<br>
 看完上面的代码。我们可以发现。filepath过滤危险函数。那么肯定有点东西<br>
 这里就要想到phar反序列化<br>
 mime_content_type是存在phar反序列化的，以下函数都存在反序列化<br>
-<img src="http://localhost:4000/post-images/1578800188662.png" alt="" loading="lazy"></p>
+<img src="https://guokeya.github.io/post-images/1578800188662.png" alt="" loading="lazy"></p>
 <pre><code>exif
 exif_thumbnail
 exif_imagetype
@@ -447,18 +447,18 @@ phar知道绕过了。我们构造下POP链<br>
 由于.htaccess碍事。我们得想办法删掉他<br>
 之前说。File类。存在析构函数。会调用checker。由于phar反序列化存在。checker的值可控。我们就可以调用其他的类<br>
 在看下config.php<br>
-<img src="http://localhost:4000/post-images/1578800532797.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1578800532797.png" alt="" loading="lazy"><br>
 可以发现。这边存在call魔术方法。这个方法是程序调用不存在的函数会触发<br>
 在File类中。checker存在就会调用upload_file函数。<br>
 如果将checker赋值为Profile类。然后调用upload_file函数。由于函数不存在。那么就会触发call魔术方法<br>
 <code>$this-&gt;admin-&gt;open($this-&gt;username, $this-&gt;password);</code><br>
 执行<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mi>h</mi><mi>i</mi><mi>s</mi><mo>−</mo><mo>&gt;</mo><mi>a</mi><mi>d</mi><mi>m</mi><mi>i</mi><mi>n</mi><mo>−</mo><mo>&gt;</mo><mi>o</mi><mi>p</mi><mi>e</mi><mi>n</mi><mo>(</mo></mrow><annotation encoding="application/x-tex">this-&gt;admin-&gt;open(</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault">h</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord">−</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">a</span><span class="mord mathdefault">d</span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord">−</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">o</span><span class="mord mathdefault">p</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mopen">(</span></span></span></span>username,$password);<br>
 这时候我们就要查找下哪个PHP自带的类存在open方法。</p>
-<p><img src="http://localhost:4000/post-images/1578801269254.png" alt="" loading="lazy"><br>
+<p><img src="https://guokeya.github.io/post-images/1578801269254.png" alt="" loading="lazy"><br>
 查看下。哪个方法能够删除.htaccess<br>
 ZipArchive有open方法。存在两个参数<br>
 一个是文件名。一个是打开的类型。类似于读写覆盖什么的</p>
-<p><img src="http://localhost:4000/post-images/1578800894628.png" alt="" loading="lazy"><br>
+<p><img src="https://guokeya.github.io/post-images/1578800894628.png" alt="" loading="lazy"><br>
 <code>ZipArchive::OVERWRITE</code>这个选项。可以将已存在的文件覆盖<br>
 如果我们将.htaccess覆盖为NULL。就达到了删除.htaccess的目的<br>
 至此。POP链构造好了</p>
@@ -506,11 +506,11 @@ $phar-&gt;stopBuffering();
 http://57ecc255-739f-43b4-a20d-a38ff7f1f9c3.node3.buuoj.cn/sandbox/2c67ca1eaeadbdc1868d67003072b481/42995f342e8abd019311aaed89d550ae.php?0=cat%20/flag
 </code></pre>
 <p>注意。当我们通过view.php执行完phar反序列化后。不要访问upload.php，不然会重新生成.htaccess<br>
-<img src="http://localhost:4000/post-images/1578801845547.png" alt="" loading="lazy"></p>
+<img src="https://guokeya.github.io/post-images/1578801845547.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
-            <a href="http://localhost:4000/post/KZ-7hNWpu/">
+            <a href="https://guokeya.github.io/post/KZ-7hNWpu/">
               <span class="post-title">
                 Mysql无列名注入/PDO/变量注入&rarr;
               </span>
@@ -554,7 +554,7 @@ http://57ecc255-739f-43b4-a20d-a38ff7f1f9c3.node3.buuoj.cn/sandbox/2c67ca1eaeadb
             
               
               <li class="list-inline-item">
-              <a href="http://localhost:4000/atom.xml" target="_blank">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -569,10 +569,10 @@ http://57ecc255-739f-43b4-a20d-a38ff7f1f9c3.node3.buuoj.cn/sandbox/2c67ca1eaeadb
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

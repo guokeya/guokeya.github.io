@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>[FBCTF2019]Event(SSTI3) | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="[FBCTF2019]Event(SSTI3) | 过客 » Feed" href="http://localhost:4000/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="[FBCTF2019]Event(SSTI3) | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="[FBCTF2019]Event(SSTI3)"/>
-    <meta property="og:url" content="http://localhost:4000/post/fbctf2019eventssti3/"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/fbctf2019eventssti3/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="过客"/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="http://localhost:4000">过客</a>
+      <a class="navbar-brand" href="https://guokeya.github.io">过客</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,9 +80,9 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
             
-            <a href="http://localhost:4000/tag/Web/" class="tag">Web安全</a>
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
             
         </span>
             <h1>[FBCTF2019]Event(SSTI3)</h1>
@@ -103,24 +103,24 @@
         <div class="col-lg-8 col-md-10 mx-auto">
           <p>功能很简单。就一个登陆。一个查看flag。但是flag没有权限</p>
 <!-- more -->
-<p><img src="http://localhost:4000/post-images/1580025926487.png" alt="" loading="lazy"><br>
+<p><img src="https://guokeya.github.io/post-images/1580025926487.png" alt="" loading="lazy"><br>
 随便注册个用户看看。存在留言功能<br>
-<img src="http://localhost:4000/post-images/1580025991926.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1580025991926.png" alt="" loading="lazy"><br>
 发送留言处event_important参数存在SSTI。<br>
-<img src="http://localhost:4000/post-images/1580026303485.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1580026303485.png" alt="" loading="lazy"><br>
 别问我为什么用<code>__class__</code><br>
 一开始。用的是{{2*2}}<br>
 发现留言并没有成功。是不是{{}}导致程序出错了。<br>
 然后去掉{{}}不行。再去掉单引号。还是不行。最后去掉点。就可以了。。<br>
 不知道后端咋写的<br>
 既然有SSTI。就好办了。我们通过读取密钥。然后伪造cookie。成为admin就能拿到flag<br>
-<img src="http://localhost:4000/post-images/1580026389171.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1580026389171.png" alt="" loading="lazy"><br>
 拿到密钥<br>
-<img src="http://localhost:4000/post-images/1580026426223.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1580026426223.png" alt="" loading="lazy"><br>
 开始解密<br>
-<img src="http://localhost:4000/post-images/1580026458850.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1580026458850.png" alt="" loading="lazy"><br>
 这里解密了两个cookies。感觉user的值才是用来判断用户名的<br>
-<img src="http://localhost:4000/post-images/1580026496643.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1580026496643.png" alt="" loading="lazy"><br>
 但是问题来了。这个解密的字符串就一个test。和之前有点不太一样。所以。我们也无法获得admin身份的session<br>
 看了writeup。这里还有种办法。使用python搭一个flask。然后得到session<br>
 <code>https://xz.aliyun.com/t/5399#toc-1</code></p>
@@ -136,11 +136,11 @@ def index():
 index()
 </code></pre>
 <p>用python2不行。python3输出替换user<br>
-<img src="http://localhost:4000/post-images/1580026687349.png" alt="" loading="lazy"></p>
+<img src="https://guokeya.github.io/post-images/1580026687349.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
-            <a href="http://localhost:4000/post/php-de-session-fan-xu-lie-hua/">
+            <a href="https://guokeya.github.io/post/php-de-session-fan-xu-lie-hua/">
               <span class="post-title">
                 PHP的Session反序列化&rarr;
               </span>
@@ -184,7 +184,7 @@ index()
             
               
               <li class="list-inline-item">
-              <a href="http://localhost:4000/atom.xml" target="_blank">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -199,10 +199,10 @@ index()
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

