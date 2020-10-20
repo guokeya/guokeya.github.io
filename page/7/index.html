@@ -83,6 +83,71 @@
       <div class="col-lg-8 col-md-10 mx-auto">
        
         <div class="post-preview">
+          <a href="https://guokeya.github.io/post/PvC7m4Rig/">
+            <h2 class="post-title">
+              typecho反序列化复现
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p>之前在MRCTF还是WUST上有个typecho的反序列化来着。只做到了SSRF。现在来复现下</p>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-04-06</span>
+             <span>,</span>
+             <span class="post-stats">3 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/iG-_evz93/">
+            <h2 class="post-title">
+              [CISCN2019 总决赛 Day1 Web4]Laravel1(反序列化)
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p>u1s1。BUU一分题太顶了</p>
+<p>这题。看了好久WP的情况下才复现。。。<br>
+涉及类的知识有点多。命名空间。继承。接口。啥的</p>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-04-04</span>
+             <span>,</span>
+             <span class="post-stats">2 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/M776tFt3/">
+            <h2 class="post-title">
+              [PWNHUB 公开赛 2018]傻 fufu 的工作日(上传差异绕过)
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p>访问index.php.bak得到index.php的源码</p>
+<pre><code>&lt;?php /* PHP Encode by  http://Www.PHPJiaMi.Com/ */error_reporting(0);ini_set(&quot;display_errors&quot;, 0);if(!defined('jnggfmpt')){define('jnggfmpt',__FILE__);if(!function_exists(&quot;鯒仅熫&quot;)){functi.省略。。。。。。
+</code></pre>
+<p>可以看出这是个phpjiami的加密文件。得解密</p>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-04-01</span>
+             <span>,</span>
+             <span class="post-stats">6 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
           <a href="https://guokeya.github.io/post/1byvbzb_I/">
             <h2 class="post-title">
               [NCTF2019]phar matches everything(phar反序列化)
@@ -379,75 +444,6 @@ show呢。是读取这个gif文件。</p>
              <span class="time">2020-03-23</span>
              <span>,</span>
              <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/RqbtW7BSC/">
-            <h2 class="post-title">
-              BJDCTF 2nd Crypto题解
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-03-23</span>
-             <span>,</span>
-             <span class="post-stats">1 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/5v8N4S11B/">
-            <h2 class="post-title">
-              BJDCTF 2nd Web题解
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>[BJDCTF 2nd]fake google</strong><br>
-模板注入。不多说了。没过滤<br>
-<img src="https://guokeya.github.io/post-images/1584885032222.png" alt="" loading="lazy"></p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-03-22</span>
-             <span>,</span>
-             <span class="post-stats">15 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/eyYhRsEBx/">
-            <h2 class="post-title">
-              [GWCTF 2019]你的名字(SSTI)
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>。。感觉是SSTI<br>
-<img src="https://guokeya.github.io/post-images/1584597492085.png" alt="" loading="lazy"><br>
-输入<code>{1+1}</code>返回<code>{1+1}</code><br>
-输入<code>{{1+1}}</code>直接报错。<br>
-这就有点迷了。接触过的SSTI都是构造payload不同。也没遇到过报错这种情况<br>
-看writeup后。发现还能通过<code>{%%}</code>这种方式去注入<br>
-这是一种盲注。通过<code>{% if 1 %}1{% endif %}</code><br>
-可以看到。虽然没回显。但是payload确实正常执行<br>
-<img src="https://guokeya.github.io/post-images/1584598772521.png" alt="" loading="lazy"></p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-03-19</span>
-             <span>,</span>
-             <span class="post-stats">1 min read</span>
             </p>
         </div>
         <hr>

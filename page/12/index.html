@@ -83,6 +83,96 @@
       <div class="col-lg-8 col-md-10 mx-auto">
        
         <div class="post-preview">
+          <a href="https://guokeya.github.io/post/jactfguo-lu-yu-fa/">
+            <h2 class="post-title">
+              [jactf]过滤语法
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p>wireshark数据包。只有TCP数据。一大堆看不懂的东西。<br>
+<img src="https://guokeya.github.io/post-images/1580390599732.png" alt="" loading="lazy"></p>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-30</span>
+             <span>,</span>
+             <span class="post-stats">1 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/gxybaby-ncpan-duan-shu-da-xiao/">
+            <h2 class="post-title">
+              [GXY]Baby nc(判断数大小)
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <pre><code>from pwn import *
+context.log_level='debug'
+r=remote(&quot;183.129.189.60&quot;,10014)
+flag='34028236692093846346337460'
+for a in range(10):
+    for i in range(10):
+    	guess=str(flag)+str(i)+(27-1-len(flag))*'0'
+        r.sendline(guess)
+        result=r.recv(10)
+        if 'big' in result:
+            flag+=str(i-1)
+            break
+        if i==9 and 'small' in result:
+            flag+='9'
+            break
+    print(flag)
+</code></pre>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-27</span>
+             <span>,</span>
+             <span class="post-stats">1 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/lctf-bestphps-revengesoap-fan-xu-lie-hua/">
+            <h2 class="post-title">
+              LCTF bestphp’s revenge（SOAP反序列化）
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <h1 id="indexphp">index.php</h1>
+<pre><code> &lt;?php
+highlight_file(__FILE__);
+$b = 'implode';
+call_user_func($_GET['f'], $_POST);
+session_start();
+if (isset($_GET['name'])) {
+    $_SESSION['name'] = $_GET['name'];
+}
+var_dump($_SESSION);
+$a = array(reset($_SESSION), 'welcome_to_the_lctf2018');
+call_user_func($b, $a);
+?&gt;
+</code></pre>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-26</span>
+             <span>,</span>
+             <span class="post-stats">5 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
           <a href="https://guokeya.github.io/post/nctf2019sqliregexp-zhu/">
             <h2 class="post-title">
               [NCTF2019]SQLi(regexp注入)
@@ -332,70 +422,6 @@ bnhn s wwy vffg vffg rrhy fhnv
              <span class="time">2020-01-21</span>
              <span>,</span>
              <span class="post-stats">10 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/shua-xin-guo-de-zhao-pian-f5-yin-xie/">
-            <h2 class="post-title">
-              刷新过的照片（F5隐写）
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>不说了。魔性。满分<br>
-<img src="https://guokeya.github.io/post-images/1579588648712.png" alt="" loading="lazy"></p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-21</span>
-             <span>,</span>
-             <span class="post-stats">1 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/an-heng-bei-qi-yue-sai-ruo-kou-ling-lsb-yin-xie-mo-er-si-mi-ma/">
-            <h2 class="post-title">
-              [安恒杯七月赛]弱口令(LSB隐写+摩尔斯密码)
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>题目提示是弱口令。。然而爆破了好久都没出来<br>
-winrar打开。发现有备注。空白的。但是又好像有内容</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-21</span>
-             <span>,</span>
-             <span class="post-stats">1 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/buuctf-usbwei-ji-ni-ya-mi-ma-rar-xiu-fu-usb-liu-liang/">
-            <h2 class="post-title">
-              【BUUCTF】USB(维吉尼亚密码+rar修复+USB流量)
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>解压得到两个文件<code>233.rar</code>和ket.ftm<br>
-先从rar开始。直接解压。就一个flag.txt<br>
-但是查看16进制。欸还有个233.png</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-20</span>
-             <span>,</span>
-             <span class="post-stats">4 min read</span>
             </p>
         </div>
         <hr>

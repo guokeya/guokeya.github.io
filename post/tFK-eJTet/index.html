@@ -138,6 +138,8 @@ net config workstation
 查看当前登陆域
 dnsdump.exe -u 域名\与用户 -p 域密码 域控机器名
 用普通域用户获取域内所有DNS解析
+for /l %i in (1,1,255) do @ ping 10.233.33.%i -w 1 -n 1|find /i &quot;ttl=&quot;
+主机发现
 </code></pre>
 <h1 id="ipc">IPC</h1>
 <pre><code>net use \\IP\ipc$ &quot;密码&quot; /user:administrator
