@@ -121,6 +121,11 @@ code=mkdir('sub');chdir('sub');ini_set('open_basedir','..');chdir('..');chdir('.
 <pre><code>if%20(%20$b%20=%20opendir(&quot;glob:///var/www/*&quot;)%20)%20{while%20(%20($file%20=%20readdir($b))%20!==%20false%20)%20{echo%20&quot;filename:&quot;.$file.&quot;\n&quot;;}closedir($b);}
 </code></pre>
 <p>当global://查看的目录</p>
+<pre><code>$it = new DirectoryIterator(&quot;glob:///*&quot;);
+foreach($it as $f) {
+   echo $f-&gt;__toString().&quot;&lt;br /&gt;&quot;;
+ }
+</code></pre>
 
           
           <p class="next-post">下一篇：
