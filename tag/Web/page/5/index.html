@@ -84,6 +84,112 @@
       <div class="col-lg-8 col-md-10 mx-auto">
        
         <div class="post-preview">
+          <a href="https://guokeya.github.io/post/7C_iGmzXN/">
+            <h2 class="post-title">
+              [CSAWQual 2019]Web_Unagi(XXE绕过。报错带数据)
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-03-23</span>
+             <span>,</span>
+             <span class="post-stats">2 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/5v8N4S11B/">
+            <h2 class="post-title">
+              BJDCTF 2nd Web题解
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>[BJDCTF 2nd]fake google</strong><br>
+模板注入。不多说了。没过滤<br>
+<img src="https://guokeya.github.io/post-images/1584885032222.png" alt="" loading="lazy"></p>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-03-22</span>
+             <span>,</span>
+             <span class="post-stats">15 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/hz6_KR03h/">
+            <h2 class="post-title">
+              [GYCTF2020]Node Game(CRLF头部注入)
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p>题目给出了源码</p>
+<pre><code>/
+接受action参数。如果没有就默认为index
+file=dirname+/template/+action+.png
+然后用pug进行渲染。可以理解为执行这个文件
+
+/file_upload
+定义了只能由127.0.0.1访问。并且是remoteaddress不能伪造
+那么得找一个SSRF的点
+文件上传。
+filepath=/uploads/+mimetype+/
+而mimetype可控。那么我们可以跨目录
+dir_file=dirname+filepath+filename
+那么我们可以构造任意路径文件写入
+
+/core
+接受一个q参数。然后对其进行黑名单检测
+然后对q输入的值进行请求。。
+当时知道这个点可以SSRF。但是不会构造数据包。。
+</code></pre>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-03-18</span>
+             <span>,</span>
+             <span class="post-stats">3 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/lbccyP8UU/">
+            <h2 class="post-title">
+              [BSidesCF 2020]Bulls23
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p>给了一个流量包和网址。<br>
+分析流量包。<br>
+有三个URL</p>
+<pre><code>bash.org
+builts-23-04xxxxxxxxxxxxxxxx&amp;port=8888
+n-gate.com
+</code></pre>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-03-18</span>
+             <span>,</span>
+             <span class="post-stats">1 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
           <a href="https://guokeya.github.io/post/9q5WhONzV/">
             <h2 class="post-title">
               [BSidesCF 2019]Mixer(CBC整块替换)
@@ -314,92 +420,6 @@
              <span class="time">2020-03-11</span>
              <span>,</span>
              <span class="post-stats">1 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/HYkvm--vb/">
-            <h2 class="post-title">
-              [Zer0pts2020]Can you guess it?(fuzz)
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>题目给出了源码</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-03-10</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/sJTcwGish/">
-            <h2 class="post-title">
-              [安洵杯 2019]不是文件上传(代码审计)
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>主页就一个文件上传的点。右键源代码发现两个hint吧<br>
-<img src="https://guokeya.github.io/post-images/1583830520899.png" alt="" loading="lazy"><br>
-<img src="https://guokeya.github.io/post-images/1583830536747.png" alt="" loading="lazy"></p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-03-10</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/LaUpgZVXn/">
-            <h2 class="post-title">
-              [CISCN2019 华东北赛区]Web2(XSS绕过及CSP)
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>注册登陆就不说了。还有两个功能。一个是发表文章。还有一个是输入URL。管理员会访问<br>
-<img src="https://guokeya.github.io/post-images/1583757436436.png" alt="" loading="lazy"><br>
-在我们发布文章的地址。有CSP</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-03-09</span>
-             <span>,</span>
-             <span class="post-stats">3 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/VmI2NBAXh/">
-            <h2 class="post-title">
-              [强网杯 2019]Upload(thinkphp代码审计序列化)
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>就一个登陆。上传图片的功能。<br>
-扫下目录。有源码泄露。<br>
-是个TP5框架。找到主要的四个文件</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-03-05</span>
-             <span>,</span>
-             <span class="post-stats">3 min read</span>
             </p>
         </div>
         <hr>

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title>过客</title>
-    <updated>2020-11-02T06:49:26.322Z</updated>
+    <updated>2020-11-23T08:41:04.244Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,41 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 过客</rights>
+    <entry>
+        <title type="html"><![CDATA[NCTF(ezphp)]]></title>
+        <id>https://guokeya.github.io/post/9hyMr91LW/</id>
+        <link href="https://guokeya.github.io/post/9hyMr91LW/">
+        </link>
+        <updated>2020-11-23T08:21:40.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[NCTF(wordpress)]]></title>
+        <id>https://guokeya.github.io/post/mgubCrKPL/</id>
+        <link href="https://guokeya.github.io/post/mgubCrKPL/">
+        </link>
+        <updated>2020-11-22T14:31:26.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[祥云杯WEB]]></title>
+        <id>https://guokeya.github.io/post/dRe82rbnv/</id>
+        <link href="https://guokeya.github.io/post/dRe82rbnv/">
+        </link>
+        <updated>2020-11-21T11:51:19.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[KCTF的一题web]]></title>
+        <id>https://guokeya.github.io/post/WQsbCJWgt/</id>
+        <link href="https://guokeya.github.io/post/WQsbCJWgt/">
+        </link>
+        <updated>2020-11-18T05:22:05.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Guojiz国际网址导航系统 后台写shell]]></title>
+        <id>https://guokeya.github.io/post/iqTwW2ENF/</id>
+        <link href="https://guokeya.github.io/post/iqTwW2ENF/">
+        </link>
+        <updated>2020-11-12T13:46:47.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[湖湘杯初赛内存取证(隐藏用户)]]></title>
         <id>https://guokeya.github.io/post/ccoUCoY7_/</id>
@@ -44,40 +79,5 @@
         <link href="https://guokeya.github.io/post/ZcF1VXwaH/">
         </link>
         <updated>2020-10-14T02:57:25.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[西湖论剑初赛Web1/5]]></title>
-        <id>https://guokeya.github.io/post/qKqMPs-ml/</id>
-        <link href="https://guokeya.github.io/post/qKqMPs-ml/">
-        </link>
-        <updated>2020-10-08T09:13:50.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[CTFSHOW命令执行的一些特殊变量]]></title>
-        <id>https://guokeya.github.io/post/dGx1XF8ak/</id>
-        <link href="https://guokeya.github.io/post/dGx1XF8ak/">
-        </link>
-        <updated>2020-10-03T09:58:32.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[RCTF(disk vmdk)/安洵杯(easy misc 盲水印+base58)]]></title>
-        <id>https://guokeya.github.io/post/0xqllMHWc/</id>
-        <link href="https://guokeya.github.io/post/0xqllMHWc/">
-        </link>
-        <updated>2020-09-29T11:31:19.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[TPshop后台文件上传漏洞(20200104版本)]]></title>
-        <id>https://guokeya.github.io/post/YOOIZxLl9/</id>
-        <link href="https://guokeya.github.io/post/YOOIZxLl9/">
-        </link>
-        <updated>2020-09-28T14:17:46.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[CTFSHOW月饼杯 Web3(sql注入+命令注入)]]></title>
-        <id>https://guokeya.github.io/post/O56WhAqxd/</id>
-        <link href="https://guokeya.github.io/post/O56WhAqxd/">
-        </link>
-        <updated>2020-09-25T14:21:15.000Z</updated>
     </entry>
 </feed>

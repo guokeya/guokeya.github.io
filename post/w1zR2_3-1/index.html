@@ -142,6 +142,8 @@ cat f`echo $PATH|cut -c 32`ag.php               用cut取出$PATH中的第32个�
 $(printf &quot;\x6c\x73&quot;)
 ${PWD:12:1}${SHELL:7:1}
 从环境变量得到值。然后截取字符串执行
+过滤尖括号
+echo 1|tee result.txt
 </code></pre>
 <p>内联执行：<br>
 cat ls 将ls执行结果全部带入cat函数中当做参数。相当于cat *<br>
