@@ -83,6 +83,30 @@
       <div class="col-lg-8 col-md-10 mx-auto">
        
         <div class="post-preview">
+          <a href="https://guokeya.github.io/post/ctfshow-de-liang-ti-hong-bao-ti/">
+            <h2 class="post-title">
+              ctf.show的两题红包题
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p>第一题：MISC<br>
+下载地址：<code>https://www.lanzous.com/i98rs2j</code><br>
+解压出了86张图片。发现是一个GIF分帧出来的<br>
+尝试合成GIF。发现没东西<br>
+每张图片后面都存在一串Base64</p>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-02-12</span>
+             <span>,</span>
+             <span class="post-stats">2 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
           <a href="https://guokeya.github.io/post/ciscn2019-hua-bei-sai-qu-day1-web2ikunpython-fan-xu-lie-hua/">
             <h2 class="post-title">
               [CISCN2019 华北赛区 Day1 Web2]ikun(python反序列化)
@@ -509,60 +533,6 @@ unserialize($_GET[&quot;data&quot;]);
              <span class="time">2020-02-02</span>
              <span>,</span>
              <span class="post-stats">9 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/xnuca2019qualifiereasyphphtaccess-li-yong/">
-            <h2 class="post-title">
-              [XNUCA2019Qualifier]EasyPHP(.htaccess利用)
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <pre><code>&lt;?php
-    $files = scandir('./'); 
-    foreach($files as $file) {
-        if(is_file($file)){
-            if ($file !== &quot;index.php&quot;) {
-                unlink($file);
-            }
-        }
-    }
-    include_once(&quot;fl3g.php&quot;);
-    if(!isset($_GET['content']) || !isset($_GET['filename'])) {
-        highlight_file(__FILE__);
-        die();
-    }
-    $content = $_GET['content'];
-    if(stristr($content,'on') || stristr($content,'html') || stristr($content,'type') || stristr($content,'flag') || stristr($content,'upload') || stristr($content,'file')) {
-        echo &quot;Hacker&quot;;
-        die();
-    }
-    $filename = $_GET['filename'];
-    if(preg_match(&quot;/[^a-z\.]/&quot;, $filename) == 1) {
-        echo &quot;Hacker&quot;;
-        die();
-    }
-    $files = scandir('./'); 
-    foreach($files as $file) {
-        if(is_file($file)){
-            if ($file !== &quot;index.php&quot;) {
-                unlink($file);
-            }
-        }
-    }
-    file_put_contents($filename, $content . &quot;\nJust one chance&quot;);
-?&gt;
-</code></pre>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-02-01</span>
-             <span>,</span>
-             <span class="post-stats">6 min read</span>
             </p>
         </div>
         <hr>
