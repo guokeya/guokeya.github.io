@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
   <head>
       <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>过客</title>
+  <title>SIYUCMS后台模板注入分析 | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="SIYUCMS后台模板注入分析 | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,9 +25,15 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
+    <meta property="og:description" content="SIYUCMS后台模板注入分析"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/dp7iOjzdX/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="过客"/>
   </head>
   <body>
-     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
       <a class="navbar-brand" href="https://guokeya.github.io">过客</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,142 +71,103 @@
       </div>
     </div>
   </nav>
+  <!-- Page Header -->
   <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="site-heading">
-            <h1>过客</h1>
-            <span class="subheading">TEST</span>
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>SIYUCMS后台模板注入分析</h1>
+            <span class="meta">
+            	Posted on
+              2020-11-28，2 min read
+            </span>
           </div>
         </div>
       </div>
     </div>
   </header>
-      <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-       
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/Olw-A4WVi/">
-            <h2 class="post-title">
-              Mysql limit注入
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>实验环境</strong><br>
-http://lab1.xseclab.com/sqli5_5ba0bba6a6d1b30b956843f757889552/index.php?start=0&amp;num=1</p>
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/metasploit-sheng-cheng-mian-sha-mu-ma/">
-            <h2 class="post-title">
-              Metasploit生成免杀木马
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>环境准备</strong><br>
-1.安装软件如下<br>
-python2.7<br>
-pyinstaller<br>
-pywin32<br>
-32位系统，我这里用的是XP</p>
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>这个CMS是在DMCTF中出的题。后台能编辑模板。文件名啥的没过滤。能任意编辑文件。<br>
+但是这题我修改了源码。对传入值不能有&lt;?出现。而且文件名前面不可控。也就不能用伪协议写带php标签的文件。</p>
+<p>这里预期解是模板注入，后端过滤如下<br>
+<img src="https://guokeya.github.io/post-images/1606548096781.png" alt="" loading="lazy"><br>
+在这个模板中。他解析变量是</p>
+<pre><code>{$a}
+解析成
+&lt;?php echo htmlentities($a);&gt;
+</code></pre>
+<p>所以。这不就是一把梭吗。没任何过滤。直接执行代码就行<br>
+跟下解析标签的逻辑<br>
+在thinkphp/library/think/Template.php的parse方法中找到解析变量的方法<br>
+这个方法的参数<code>$content</code>就是我们xxx.html的模板内容<br>
+<img src="https://guokeya.github.io/post-images/1606548353770.png" alt="" loading="lazy"><br>
+跟进<br>
+<img src="https://guokeya.github.io/post-images/1606548693488.png" alt="" loading="lazy"><br>
+进入parseVarFunction方法中。<br>
+<img src="https://guokeya.github.io/post-images/1606548979299.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1606549237430.png" alt="" loading="lazy"><br>
+然后进入switch语句。匹配到default。注意这里只是把变量的值带进入。和拼接别无两样。<br>
+<img src="https://guokeya.github.io/post-images/1606549446111.png" alt="" loading="lazy"><br>
+最后执行了</p>
+<pre><code>$varStr                  = $name;
+return $varStr;
+</code></pre>
+<p>然后拼接语句。形成一个php代码<br>
+<img src="https://guokeya.github.io/post-images/1606550006856.png" alt="" loading="lazy"><br>
+最后。他对我们传入的模板代码。进行替换</p>
+<pre><code>把{$a}。替换成了解析后的&lt;?php echo htmlentities($a);?&gt;
+$content = str_replace($match[0], $str, $content);
+</code></pre>
+<p>整理下流程</p>
+<pre><code>输入{$a}
+正则解析模板，匹配出$a
+然后拼接变成&quot;$a|htmlentities&quot;
+进入switch语句。拼接变成&quot;htmlentities($a)&quot;
+然后解析完毕。和php标签进行拼接。成为&lt;?php echo htmlentities($a);?&gt;
+最后把传入的模板替换成解析后的代码
+</code></pre>
+<p>后面呢。就是把这些php代码再次解析。就形成了代码执行。<br>
+这里我做了黑名单。但是。。随便绕。<br>
+比如<code>$_GET[1]($_GET[2])</code><br>
+<img src="https://guokeya.github.io/post-images/1606550457361.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1606550481291.png" alt="" loading="lazy"><br>
+或者GLOBALS啥的。都可以</p>
+<p>所以这题没给出源码。。可以黑盒做。模板编辑处。可以看到下面有<code>{$axxxx}</code>的写法<br>
+<img src="https://guokeya.github.io/post-images/1606550585190.png" alt="" loading="lazy"><br>
+然后写个<code>{$a}</code>。就可以得到报错<br>
+<img src="https://guokeya.github.io/post-images/1606550621832.png" alt="" loading="lazy"><br>
+看到$a直接拼接在模板中。然后就想着动态执行。构造exp了</p>
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">8 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/redis-rce-lou-dong-fu-xian/">
-            <h2 class="post-title">
-              Redis RCE 漏洞复现
-            </h2>
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/omqnCRpCQ/">
+              <span class="post-title">
+                安洵杯Writeup&rarr;
+              </span>
             </a>
-            <h3 class="post-subtitle">
-              <p><strong>影响范围</strong><br>
-Redis 4.x-Redis 5.x 未授权利用</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">1 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
+          </p>
         
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/cve-2019-0193apache-solr-yuan-cheng-ming-ling-zhi-xing-lou-dong-fu-xian/">
-            <h2 class="post-title">
-              CVE-2019-0193:Apache Solr远程命令执行漏洞复现
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>影响范围</strong><br>
-Apache Solr &lt; 8.2.0</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
+        <div class="comment">
+          
         </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/li-yong-huan-jing-bian-liang-ld_preload-rao-guo-php-disable_function-zhi-xing-xi-tong-ming-ling/">
-            <h2 class="post-title">
-              利用环境变量LD_PRELOAD绕过php disable_function执行系统命令
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>利用条件</strong><br>
-php未禁用putenv，mail函数</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">4 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        
-        <a class="btn btn-primary float-left" href="https://guokeya.github.io/page/18/">&larr; 上一页</a>
-        
-        
       </div>
     </div>
-  </div>
-
-  
-    <!-- Footer -->
+  </article>
+ <!-- Footer -->
   <footer>
     <div class="container">
       <div class="row">
@@ -280,3 +247,4 @@ php未禁用putenv，mail函数</p>
   })(this));</script>
   </body>
 </html>
+
