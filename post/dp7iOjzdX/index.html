@@ -102,7 +102,8 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <p>这个CMS是在DMCTF中出的题。后台能编辑模板。文件名啥的没过滤。能任意编辑文件。<br>
-但是这题我修改了源码。对传入值不能有&lt;?出现。而且文件名前面不可控。也就不能用伪协议写带php标签的文件。</p>
+但是这题我修改了源码。对传入值不能有&lt;?出现。<br>
+赛后想了下。。。貌似还是可以通过htaccess的反斜杠配合base64编码的文件绕黑名单😂</p>
 <p>这里预期解是模板注入，后端过滤如下<br>
 <img src="https://guokeya.github.io/post-images/1606548096781.png" alt="" loading="lazy"><br>
 在这个模板中。他解析变量是</p>
