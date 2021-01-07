@@ -83,6 +83,69 @@
       <div class="col-lg-8 col-md-10 mx-auto">
        
         <div class="post-preview">
+          <a href="https://guokeya.github.io/post/PJEZYOdiL/">
+            <h2 class="post-title">
+              CVE-2019-11043漏洞复现(PHP-FPM远程代码执行)
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>漏洞介绍</strong><br>
+Nginx与php-fpm服务器上存在的一处高危漏洞，由于Nginx的fastcgi_split_path_info模块在处理带 %0a 的请求时，对换行符 \n 处置不当使得将PATH_INFO值置为空，从而导致可以通过FCGI_PUTENV与PHP_VALUE相结合，修改当前的php-fpm进程中的php配置。在特殊构造的配置生效的情况下可以触发任意代码执行。目前开源社区已有漏洞Poc公开。</p>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">2 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/sGZIuaKKU/">
+            <h2 class="post-title">
+              域渗透(PTH)
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>介绍</strong><br>
+域中每个用户的Ticket都是由krbtgt的密码Hash来计算生成的，因此只要我们拿到了krbtgt的密码Hash，就可以随意伪造Ticket，进而使用Ticket登陆域控制器，使用krbtgt用户hash生成的票据被称为Golden Ticket，此类攻击方法被称为票据传递攻击。</p>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">2 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
+          <a href="https://guokeya.github.io/post/4KUONk_8X/">
+            <h2 class="post-title">
+              域渗透(基础)
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p><strong>漏洞环境</strong><br>
+http://vulnstack.qiyuanxuetang.net/vuln/detail/2/</p>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-01-02</span>
+             <span>,</span>
+             <span class="post-stats">3 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
           <a href="https://guokeya.github.io/post/CMV0J6RNE/">
             <h2 class="post-title">
               域渗透(IPC入侵)
@@ -329,67 +392,6 @@ i春秋，web SQLI</p>
              <span class="time">2020-01-02</span>
              <span>,</span>
              <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/Vy_VN303p/">
-            <h2 class="post-title">
-              泛微OA WorkflowCenterTreeData接口注入漏洞(限oracle数据库)
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>漏洞描述</strong><br>
-泛微e-cology OA系统的WorkflowCenterTreeData接口在使用oracle数据库时,由于内置sql语句拼接不严,导致其存在sql注入漏洞</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">6 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/kp45piq14/">
-            <h2 class="post-title">
-              CTF PHP代码审计中intval，数字判断，整数溢出
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>代码分析</strong></p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/oUQYTq6U9/">
-            <h2 class="post-title">
-              CTF PHP代码审计中file_put_contents函数利用
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>源码分析</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">1 min read</span>
             </p>
         </div>
         <hr>
