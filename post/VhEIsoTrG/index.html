@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-       <meta http-equiv="content-type" content="text/html; charset=utf-8">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta content="yes" name="apple-mobile-web-app-capable" />
   <meta content="black" name="apple-mobile-web-app-status-bar-style" />
@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>标签列表 | 过客</title>
+  <title>lanproxy 目录遍历漏洞（CVE-2020-3019） | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="标签列表 | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="lanproxy 目录遍历漏洞（CVE-2020-3019） | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,6 +25,11 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
+    <meta property="og:description" content="lanproxy 目录遍历漏洞（CVE-2020-3019）"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/VhEIsoTrG/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="过客"/>
   </head>
   <body>
   	<!-- Navigation -->
@@ -66,81 +71,66 @@
       </div>
     </div>
   </nav>
-<!-- Page Header -->
+  <!-- Page Header -->
   <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-            <h1 class="tag-tl">Tags</h1>
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>lanproxy 目录遍历漏洞（CVE-2020-3019）</h1>
+            <span class="meta">
+            	Posted on
+              2021-01-08，1 min read
+            </span>
           </div>
         </div>
       </div>
     </div>
   </header>
-  <div class="container">
-    <div class="row">
-     
-      <div class="col-lg-8 col-md-10 mx-auto">
-       
-           <div class="post-preview tag-list">
-          <a href="https://guokeya.github.io/tag/Web/" class="tag">
-              Web安全
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>首先下源码<code>https://github.com/ffay/lanproxy/releases/tag/v0.1</code><br>
+然后到src/main/java/org/fengfei/lanproxy/server/metrics/ProxyServerContainer启动服务</p>
+<p>下个断点。冲<br>
+然而我对java还是不太熟。。没看懂入口。看危险函数确定的漏洞触发点<br>
+<img src="https://guokeya.github.io/post-images/1610118982311.png" alt="" loading="lazy"><br>
+这里程序获取了Uri。然后直接拼接了路径。接下来又new了一个File对象<br>
+判断是否是目录。如果是目录就再new File一次<br>
+如果文件不存在就返回file not found<br>
+否则继续执行。到下面99行。获取mime类型。105行获取文件内容长度<br>
+<img src="https://guokeya.github.io/post-images/1610119159359.png" alt="" loading="lazy"><br>
+接下来就直接设置了一些HTTP的返回头、文件长度、文件MIME类型啥的<br>
+重要的是128行。它用DefaultFileRegion获取了文件内容。然后write写入了缓冲区<br>
+<img src="https://guokeya.github.io/post-images/1610119264472.png" alt="" loading="lazy"><br>
+接着。134行。ctx.writeAndFlush(LastHttpContent.EMPTY_LAST_CONTENT);<br>
+这个writeAndFlush函数。相当于直接发送一个消息。清空缓冲区<br>
+所以。到这。就获取到了文件内容</p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/TS6XhRLiJ/">
+              <span class="post-title">
+                SpringBoot&rarr;
+              </span>
             </a>
-        </div>
+          </p>
         
-           <div class="post-preview tag-list">
-          <a href="https://guokeya.github.io/tag/CTF/" class="tag">
-              CTF
-            </a>
+        <div class="comment">
+          
         </div>
-        
-           <div class="post-preview tag-list">
-          <a href="https://guokeya.github.io/tag/EfzSPkBWE/" class="tag">
-              渗透测试
-            </a>
-        </div>
-        
-           <div class="post-preview tag-list">
-          <a href="https://guokeya.github.io/tag/z6LGuzLFL/" class="tag">
-              杂项
-            </a>
-        </div>
-        
-           <div class="post-preview tag-list">
-          <a href="https://guokeya.github.io/tag/漏洞复现/" class="tag">
-              漏洞复现
-            </a>
-        </div>
-        
-           <div class="post-preview tag-list">
-          <a href="https://guokeya.github.io/tag/取证分析/" class="tag">
-              取证分析
-            </a>
-        </div>
-        
-           <div class="post-preview tag-list">
-          <a href="https://guokeya.github.io/tag/Pwn/" class="tag">
-              Pwn
-            </a>
-        </div>
-        
-           <div class="post-preview tag-list">
-          <a href="https://guokeya.github.io/tag/系统安全/" class="tag">
-              系统安全
-            </a>
-        </div>
-        
-           <div class="post-preview tag-list">
-          <a href="https://guokeya.github.io/tag/木马免杀/" class="tag">
-              木马免杀
-            </a>
-        </div>
-        
       </div>
     </div>
-  </div>
+  </article>
  <!-- Footer -->
   <footer>
     <div class="container">
@@ -221,3 +211,4 @@
   })(this));</script>
   </body>
 </html>
+

@@ -83,6 +83,30 @@
       <div class="col-lg-8 col-md-10 mx-auto">
        
         <div class="post-preview">
+          <a href="https://guokeya.github.io/post/SfJkH4LGF/">
+            <h2 class="post-title">
+              [HarekazeCTF2019]Avatar Uploader 1(图片判断差异)
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p>这题进去登陆就一个上传。光看文字。得到以下信息</p>
+<pre><code>PNG图像。那么后缀名和mime得修改下
+并且小于256KB.这个没啥关系
+图像像素得小于256px*256px
+</code></pre>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-03-11</span>
+             <span>,</span>
+             <span class="post-stats">2 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
           <a href="https://guokeya.github.io/post/-jTl-F23v/">
             <h2 class="post-title">
               [BSidesCF 2020]Hurdles(HTTP请求中的各项值)
@@ -374,40 +398,6 @@ base64隐写。脚本一把梭</p>
              <span class="time">2020-02-29</span>
              <span>,</span>
              <span class="post-stats">4 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/mcUK57hAJ/">
-            <h2 class="post-title">
-              [SUCTF 2018]annonymous(php lambda)
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>题目给出了源码</p>
-<pre><code>&lt;?php
-
-$MY = create_function(&quot;&quot;,&quot;die(`cat flag.php`);&quot;);
-$hash = bin2hex(openssl_random_pseudo_bytes(32));
-eval(&quot;function SUCTF_$hash(){&quot;
-    .&quot;global \$MY;&quot;
-    .&quot;\$MY();&quot;
-    .&quot;}&quot;);
-if(isset($_GET['func_name'])){
-    $_GET[&quot;func_name&quot;]();
-    die();
-}
-show_source(__FILE__);
-</code></pre>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-02-28</span>
-             <span>,</span>
-             <span class="post-stats">1 min read</span>
             </p>
         </div>
         <hr>
