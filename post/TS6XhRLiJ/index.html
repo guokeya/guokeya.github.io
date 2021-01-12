@@ -84,7 +84,7 @@
             <h1>SpringBoot</h1>
             <span class="meta">
             	Posted on
-              2021-01-05，11 min read
+              2021-01-05，12 min read
             </span>
           </div>
         </div>
@@ -412,12 +412,45 @@ public class AdminWebConfig implements WebMvcConfigurer {
 }
 </code></pre>
 <p>addPathPatterns表示对所有路由都进行拦截。然后excludePathPatterns设置例外的路由。比如一些静态资源。登陆啥的不拦截</p>
+<p>单/多文件上传</p>
+<pre><code>    @PostMapping(&quot;/upload&quot;)
+    public String uploadPage(@RequestPart(&quot;file&quot;) MultipartFile file,
+                             @RequestPart(&quot;photos&quot;) MultipartFile[] photos) throws IOException {
+        if(!file.isEmpty()){
+            String originlFilename = file.getOriginalFilename();
+            file.transferTo(new File(&quot;F:\\&quot;+originlFilename));
+        }
+        if(photos.length &gt; 0){
+            for(MultipartFile photo:photos){
+                if(!photo.isEmpty()){
+                    String originlFilename = photo.getOriginalFilename();
+                    photo.transferTo(new File(&quot;F:\\&quot;+originlFilename));
+                }
+            }
+        }
+        return &quot;index&quot;;
+    }
+</code></pre>
+<p>前端</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+&lt;form action=&quot;http://127.0.0.1:8080/upload&quot; method=&quot;POST&quot; enctype=&quot;multipart/form-data&quot; &gt;
+&lt;input type=&quot;file&quot; name=&quot;file&quot; /&gt;
+&lt;input type=&quot;file&quot; name=&quot;photos&quot; multiple/&gt;
+&lt;input type=&quot;submit&quot; value=&quot;submit&quot; /&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h1 id="404500">404/500</h1>
+<p>在template下新建一个error目录。放404.html/5xx.htmll即可</p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/tu-xY1fEY/">
+            <a href="https://guokeya.github.io/post/yCbfaCON5/">
               <span class="post-title">
-                linux用shell读文件&rarr;
+                hxp2020web1&rarr;
               </span>
             </a>
           </p>
