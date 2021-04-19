@@ -84,6 +84,79 @@
       <div class="col-lg-8 col-md-10 mx-auto">
        
         <div class="post-preview">
+          <a href="https://guokeya.github.io/post/dYX5OTKjq/">
+            <h2 class="post-title">
+              MRCTF(Web+Misc+Crypto)
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <center>web</center>
+<p><strong>Ezpop</strong></p>
+<pre><code>&lt;?php
+//flag is in flag.php
+//And Crack It!
+class Modifier {
+    protected  $var;
+    public function append($value){
+        include($value);
+    }
+    public function __invoke(){
+        $this-&gt;append($this-&gt;var);
+    }
+}
+
+class Show{
+    public $source;
+    public $str;
+    public function __construct($file='index.php'){
+        $this-&gt;source = $file;
+        echo 'Welcome to '.$this-&gt;source.&quot;&lt;br&gt;&quot;;
+    }
+    public function __toString(){
+        return $this-&gt;str-&gt;source;
+    }
+
+    public function __wakeup(){
+        if(preg_match(&quot;/gopher|http|file|ftp|https|dict|\.\./i&quot;, $this-&gt;source)) {
+            echo &quot;hacker&quot;;
+            $this-&gt;source = &quot;index.php&quot;;
+        }
+    }
+}
+
+class Test{
+    public $p;
+    public function __construct(){
+        $this-&gt;p = array();
+    }
+
+    public function __get($key){
+        $function = $this-&gt;p;
+        return $function();
+    }
+}
+
+if(isset($_GET['pop'])){
+    @unserialize($_GET['pop']);
+}
+else{
+    $a=new Show;
+    highlight_file(__FILE__);
+}
+</code></pre>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-03-28</span>
+             <span>,</span>
+             <span class="post-stats">9 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
           <a href="https://guokeya.github.io/post/L5upFyj/">
             <h2 class="post-title">
               易霖博YCTF-共克时艰-停课不停赛(web)
@@ -400,28 +473,6 @@ n-gate.com
              <span class="time">2020-03-16</span>
              <span>,</span>
              <span class="post-stats">4 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/gW7Qnkxsi/">
-            <h2 class="post-title">
-              [网鼎杯2018]Unfinish(二次注入)
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>注入。需要邮箱。用户名。密码。<br>
-登陆。需要邮箱。密码<br>
-登陆后。会限制用户名</p>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-03-15</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
             </p>
         </div>
         <hr>
