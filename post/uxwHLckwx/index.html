@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>从虎符线下CTF深入phar利用 |  </title>
+  <title>从虎符线下CTF深入反序列化利用 |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="从虎符线下CTF深入phar利用 |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="从虎符线下CTF深入反序列化利用 |   » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,7 +25,7 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
-    <meta property="og:description" content="从虎符线下CTF深入phar利用"/>
+    <meta property="og:description" content="从虎符线下CTF深入反序列化利用"/>
     <meta property="og:url" content="https://guokeya.github.io/post/uxwHLckwx/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
@@ -85,7 +85,7 @@
             <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
             
         </span>
-            <h1>从虎符线下CTF深入phar利用</h1>
+            <h1>从虎符线下CTF深入反序列化利用</h1>
             <span class="meta">
             	Posted on
               2021-04-28，6 min read
@@ -226,10 +226,11 @@ path就是我们的文件名。跟进<br>
 <img src="https://guokeya.github.io/post-images/1619579106209.png" alt="" loading="lazy"><br>
 跟进发现两个和phar有关的函数<br>
 <img src="https://guokeya.github.io/post-images/1619579232216.png" alt="" loading="lazy"><br>
-第一个红框内。可以大致看懂。如果是.phar结尾。那么is_data为True。带入phar_open_parsed_phar函数(这个函数和我们的绕过没啥关系。只是分析源码时多看看)<br>
-这部分代码大致意思就是。如果是phar就不检测.phar/stub.php文件。如果不是phar结尾的文件名。那就必须存在.phar/stub.php这个文件。否则就error了。<br>
-<img src="https://guokeya.github.io/post-images/1619580223526.png" alt="" loading="lazy"><br>
-跟进phar_open_from_fp。这个才是绕过关键字检测的关键<br>
+第一个红框内。可以大致看懂。如果不是.phar结尾。那么is_data为True。带入phar_open_parsed_phar函数(这个函数和我们的绕过没啥关系。只是分析源码时多看看)<br>
+这部分代码大致意思就是。如果是phar就检测.phar/stub.php文件。判断phar文件格式是否正确</p>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1619935939148.png" alt="" loading="lazy"></figure>
+<p>跟进phar_open_from_fp。这个才是绕过关键字检测的关键<br>
+<img src="https://guokeya.github.io/post-images/1619936016517.png" alt="" loading="lazy"><br>
 一下就看到了</p>
 <pre><code>	const char token[] = &quot;__HALT_COMPILER();&quot;;
 	const char zip_magic[] = &quot;PK\x03\x04&quot;;
