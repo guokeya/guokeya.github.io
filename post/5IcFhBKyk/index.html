@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>关于 |  </title>
+  <title>津门杯GoOSS 题解 |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="关于 |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="津门杯GoOSS 题解 |   » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,8 +25,8 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
-    <meta property="og:description" content="关于"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/about/"/>
+    <meta property="og:description" content="津门杯GoOSS 题解"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/5IcFhBKyk/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -80,11 +80,15 @@
           <div class="post-heading">
           	<span class="tags">
           	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
         </span>
-            <h1>关于</h1>
+            <h1>津门杯GoOSS 题解</h1>
             <span class="meta">
             	Posted on
-              2019-01-25，1 min read
+              2021-05-09，2 min read
             </span>
           </div>
         </div>
@@ -97,11 +101,41 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <p>混迹于各大CTF的咸鱼<br>
-W&amp;M战队菜鸡Web手<br>
-联系方式：Mjg2NTY1Nzg2OA==</p>
+          <p>题目给了附件。goland直接本地跑</p>
+<p>看源码。<br>
+index.php。服务在80端口，并且file=/flag时就能读到flag。<br>
+再看go的vul路由时一个必须以<code>http://127.0.0.1:1234/</code>开头的ssrf<br>
+<img src="https://guokeya.github.io/post-images/1620546336368.png" alt="" loading="lazy"><br>
+但是 client.Get会遵循302跳转。并且Client.Get的net/http库。之前爆出过一个CRLF的洞<br>
+那么这题就是个SSRF。并且源码中存在302<br>
+首先测了下CRLF。发现漏洞存在<br>
+<img src="https://guokeya.github.io/post-images/1620546492039.png" alt="" loading="lazy"><br>
+但是从这。一直测了几个小时。。死活绕不过Port的限制</p>
+<p>最后无奈。换302思路做题<br>
+测了很久。</p>
+<pre><code>http://127.0.0.1:1234//a/../.
+
+HTTP/1.1 302 Found
+Content-Type: text/html; charset=utf-8
+Location: //a/.././
+Date: Sun, 09 May 2021 07:50:27 GMT
+Content-Length: 32
+
+&lt;a href=&quot;//a/.././&quot;&gt;Found&lt;/a&gt;.
+</code></pre>
+<p>这里Location可以控制为//<br>
+而//就是省略HTTP协议的写法。至此。我们可以直接控制Host到VPS。然后VPS搭个302。变成SSRF-&gt;302-&gt;302-&gt;80 getflag</p>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1620546768294.png" alt="" loading="lazy"></figure>
 
           
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/uxwHLckwx/">
+              <span class="post-title">
+                从虎符线下CTF深入反序列化利用&rarr;
+              </span>
+            </a>
+          </p>
+        
         <div class="comment">
           
         </div>
