@@ -88,7 +88,7 @@
             <h1>GKCTF2021 babycat</h1>
             <span class="meta">
             	Posted on
-              2021-06-28，4 min read
+              2021-06-28，5 min read
             </span>
           </div>
         </div>
@@ -136,7 +136,7 @@
 可以把这个理解为php中install过了。就直接location到其他页面。但是没die();<br>
 java的forward是执行完当前所有代码然后才会执行forward那个文件的代码<br>
 具体可以看<code>https://blog.csdn.net/qq_22075041/article/details/78736723</code></p>
-<p>所以。这里就可以上传任意文件。读/proc/self/environ。可以看到他是tomcat起的。而tomcat有个static文件夹。是可以访问的。所以这里上传无限制。跨目录上传jsp到static下。访问就行</p>
+<p>所以。这里就可以未授权上传任意文件。读/proc/self/environ。可以看到他是tomcat起的。而tomcat有个static文件夹。是可以访问的。所以这里上传无限制。跨目录上传jsp到static下。访问就行</p>
 <p>目录结构为</p>
 <pre><code>webapps
     static
@@ -146,7 +146,15 @@ java的forward是执行完当前所有代码然后才会执行forward那个文�
 <p>这里直接../../static/guoke.jsp完事<br>
 <img src="https://guokeya.github.io/post-images/1624846098185.png" alt="" loading="lazy"></p>
 <h1 id="babycat-revenge">babycat-revenge</h1>
-<p>修复了上一个题的非预期。继续审计代码。现在我们能读文件写文件。然后RCE。<br>
+<p>修复了上一个题的非预期。继续审计代码。由于非预期无了。所以upload接口需要admin权限。<br>
+可以看到<br>
+<img src="https://guokeya.github.io/post-images/1624861996581.png" alt="" loading="lazy"><br>
+匹配到<code>&quot;role&quot;:&quot;(.*?)&quot;</code>就把&quot;&quot;内替换为Guest。那么这里就要利用json的特性。<code>{&quot;a&quot;:&quot;1&quot;,&quot;a&quot;:&quot;2&quot;}</code>。后面的值会覆盖前面的值。并且支持<code>/**/</code>注释。所以这里第一个role让他匹配到。进入替换逻辑。然后第二个role用<code>/**/</code>不让匹配到。又能正常解析。覆盖前面的role<br>
+exp:<br>
+<code>{&quot;username&quot;:&quot;guoke&quot;,&quot;password&quot;:&quot;test&quot;,&quot;role&quot;:&quot;guest&quot;,&quot;role&quot;:/**/&quot;admin&quot;}</code><br>
+同理。还能\u绕过第二个role<br>
+还能直接admin。不加引号。绕过<br>
+现在我们能读文件写文件。然后RCE。<br>
 在baseDao.class中有个XMLDecoder。会读取db/db.xml<br>
 每次注册或登陆都会调用getConnection-&gt;getConfig-&gt;XMLDecoder<br>
 直接搜<code>printwriter xmldecoder 反序列化</code>就有<code>https://www.cnblogs.com/peterpan0707007/p/10565968.html</code></p>
