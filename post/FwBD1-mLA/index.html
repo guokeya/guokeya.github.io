@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>WMCTF webweb(反序列化POP链) |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="WMCTF webweb(反序列化POP链) |   » Feed" href="http://localhost:4000/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="WMCTF webweb(反序列化POP链) |   » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="WMCTF webweb(反序列化POP链)"/>
-    <meta property="og:url" content="http://localhost:4000/post/FwBD1-mLA/"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/FwBD1-mLA/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="http://localhost:4000"> </a>
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,9 +80,9 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
             
-            <a href="http://localhost:4000/tag/Web/" class="tag">Web安全</a>
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
             
         </span>
             <h1>WMCTF webweb(反序列化POP链)</h1>
@@ -103,22 +103,22 @@
         <div class="col-lg-8 col-md-10 mx-auto">
           <p>题目给出了源码。首先就从index.php开始看<br>
 使用了Kickstart框架。然后倒数第二行有个反序列化。。那么就是挖POP链了<br>
-<img src="http://localhost:4000/post-images/1596437271961.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1596437271961.png" alt="" loading="lazy"><br>
 全局搜<code>__wakeup</code>并没有。然后搜destruct。<br>
 其他两个destruct都是空的。所以。入口点必定是在lib/cli/ws.php的destruct中<br>
-<img src="http://localhost:4000/post-images/1596437467526.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1596437467526.png" alt="" loading="lazy"><br>
 在destruct写个die进去。测试下是否能调用类<br>
-<img src="http://localhost:4000/post-images/1596437857118.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1596437857118.png" alt="" loading="lazy"><br>
 发现并不能直接调用类。用phpstorm单步执行下<br>
 发现。。他这里如果传Agent类。就会去自动包含clib/Agent.php<br>
 然而。。并没有这个Agent.php<br>
-<img src="http://localhost:4000/post-images/1596438158283.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1596438158283.png" alt="" loading="lazy"><br>
 继续试着传ws.php中的WS类<br>
-<img src="http://localhost:4000/post-images/1596438261105.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1596438261105.png" alt="" loading="lazy"><br>
 正常包含ws.php。并且反序列化了WS类<br>
 那么destruct所在的Agent类。也是ws.php中的。我们又如何去反序列化它。<br>
 传个数组不就好了<br>
-<img src="http://localhost:4000/post-images/1596438453739.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1596438453739.png" alt="" loading="lazy"><br>
 成功包含ws.php。调用到了Agent类的destruct方法<br>
 如果这里我们WS类和Agent类位置换下。就不能成功调用了。<br>
 以我们的payload为例。</p>
@@ -137,14 +137,14 @@
 即可调用任意类的任意方法。然后参数是$this，PHP的函数如果没定义参数。。带上参数访问也是没问题的。
 </code></pre>
 <p>继续看。还是在ws.php中。WS类有个fetch方法<br>
-<img src="http://localhost:4000/post-images/1596438894641.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1596438894641.png" alt="" loading="lazy"><br>
 调用了</p>
 <pre><code>$this-&gt;server-&gt;read($this-&gt;socket)
 把server定义为其他类就可以触发call方法
 那么我们是否能找一个__call方法。动态调用函数
 </code></pre>
 <p>在lib/db/sql/mapper.php中发现了符合条件的__call方法<br>
-<img src="http://localhost:4000/post-images/1596439057907.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1596439057907.png" alt="" loading="lazy"><br>
 执行了</p>
 <pre><code>call_user_func_array($this-&gt;props[$func],$args)
 //call的第一个参数。是我们之前调用的函数名。第二个参数就是$this-&gt;sockeet
@@ -190,7 +190,7 @@ namespace {
 
           
           <p class="next-post">下一篇：
-            <a href="http://localhost:4000/post/mURMabFKM/">
+            <a href="https://guokeya.github.io/post/mURMabFKM/">
               <span class="post-title">
                 赛博杯招新赛 Web 0Day题解&rarr;
               </span>
@@ -234,7 +234,7 @@ namespace {
             
               
               <li class="list-inline-item">
-              <a href="http://localhost:4000/atom.xml" target="_blank">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -249,10 +249,10 @@ namespace {
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

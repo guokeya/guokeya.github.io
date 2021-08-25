@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>PHP的Session反序列化 |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="PHP的Session反序列化 |   » Feed" href="http://localhost:4000/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="PHP的Session反序列化 |   » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="PHP的Session反序列化"/>
-    <meta property="og:url" content="http://localhost:4000/post/php-de-session-fan-xu-lie-hua/"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/php-de-session-fan-xu-lie-hua/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="http://localhost:4000"> </a>
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,9 +80,9 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
             
-            <a href="http://localhost:4000/tag/Web/" class="tag">Web安全</a>
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
             
         </span>
             <h1>PHP的Session反序列化</h1>
@@ -146,7 +146,7 @@ $_SESSION['name']=$_GET['name'];
 #a:1:{s:4:&quot;name&quot;;s:4:&quot;test&quot;;}
 </code></pre>
 <p>php_serialize序列化引擎。和serialize函数差不多。<br>
-<img src="http://localhost:4000/post-images/1579952234388.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579952234388.png" alt="" loading="lazy"><br>
 <strong>Session序列化</strong><br>
 Session为什么会序列化呢。或者说。当什么情况下Session会进行序列化/反序列化<br>
 通过查看PHP手册。我们发现<br>
@@ -158,7 +158,7 @@ $_SESSION['name']='test';
 #serialize($_SESSION)-&gt;存入文件
 整个流程就是这样
 </code></pre>
-<p><img src="http://localhost:4000/post-images/1579952041432.png" alt="" loading="lazy"><br>
+<p><img src="https://guokeya.github.io/post-images/1579952041432.png" alt="" loading="lazy"><br>
 <strong>反序列化利用</strong><br>
 Session反序列化都是序列化引擎不一致导致存在安全问题<br>
 例如：<br>
@@ -188,7 +188,7 @@ var_dump($_SESSION);
 </code></pre>
 <p>index.php设置的session序列化引擎是php_serialize<br>
 存储时会以serialize的格式序列化/反序列化<br>
-<img src="http://localhost:4000/post-images/1579953634894.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579953634894.png" alt="" loading="lazy"><br>
 但是。vuln.php设置的Session序列化引擎是php<br>
 php序列化引擎的格式是以|为标识进行序列化/反序列化<br>
 这么说。并没有很明显的安全问题<br>
@@ -197,7 +197,7 @@ php_serialize引擎存入文件的内容为</p>
 <pre><code>a:1:{s:4:&quot;name&quot;;s:4:&quot;|123&quot;;}
 </code></pre>
 <p>访问vuln.php。以php的引擎。反序列化这串内容。会是什么效果呢<br>
-<img src="http://localhost:4000/post-images/1579954031622.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579954031622.png" alt="" loading="lazy"><br>
 对。就是不能正常解析。php引擎以|为分割。|前面是值|后面才是要反序列化的内容<br>
 这里反序列化了123&quot;;}<br>
 这明显是不能正常反序列化的<br>
@@ -212,23 +212,23 @@ php_serialize存入a:1:{s:4:&quot;name&quot;;s:35:&quot;|O:1:&quot;A&quot;:1:{s:
 </code></pre>
 <p>果真如此<br>
 <code>a:1:{s:4:&quot;name&quot;;s:35:&quot;</code>被当成了键。值是Object对象A。其中name的值为test<br>
-<img src="http://localhost:4000/post-images/1579954433454.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579954433454.png" alt="" loading="lazy"><br>
 接下来拿一题CTF来练练手<br>
 <code>http://web.jarvisoj.com:32784/</code><br>
-<img src="http://localhost:4000/post-images/1579954748290.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579954748290.png" alt="" loading="lazy"><br>
 看源码得到如下信息：</p>
 <pre><code>1。session的存储引擎是php
 2。OowoO类。如果可以控制$mdzz。即可执行任意命令。默认是执行phpinfo
 </code></pre>
 <p>我们再去phpinfo看看有什么特殊配置。<br>
 Session的处理器不同。一个是php。一个是php_serialize。<br>
-<img src="http://localhost:4000/post-images/1579954946883.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579954946883.png" alt="" loading="lazy"><br>
 但是。index.php也没有php_serialize的页面让我们控制session内容<br>
 这里又有个新知识了<br>
-<img src="http://localhost:4000/post-images/1579955439623.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579955439623.png" alt="" loading="lazy"><br>
 通过查看php手册。我们发现<br>
 当POST一<code>session.upload_progress.enabled</code>时。上传文件的进度将会存放在$_SESSION中。<br>
-<img src="http://localhost:4000/post-images/1579955524137.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579955524137.png" alt="" loading="lazy"><br>
 还是做个实验比较清楚。<br>
 sess.php</p>
 <pre><code>&lt;?php
@@ -250,7 +250,7 @@ var_dump($_SESSION);
 </code></pre>
 <p>直接空文件上传。将文件名改为你要反序列化的内容<br>
 看。$_SESSION就会包含我们上传的文件信息<br>
-<img src="http://localhost:4000/post-images/1579956577494.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579956577494.png" alt="" loading="lazy"><br>
 并且是先包含。在执行php内的代码<br>
 。那么针对这题。我们就有了意思<br>
 首先通过session.upload_progress。POST一个包含恶意OowoO类的序列化字符串<br>
@@ -289,15 +289,15 @@ dirname(__FILE__)
 </code></pre>
 <p>不知道为啥。这里用scandir('./')不行。会显示根目录。<br>
 用斜杠转义掉双引号。找到了flag<br>
-<img src="http://localhost:4000/post-images/1579957912481.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579957912481.png" alt="" loading="lazy"><br>
 得到目录名。接下来就读取flag了<br>
-<img src="http://localhost:4000/post-images/1579957965827.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579957965827.png" alt="" loading="lazy"><br>
 readfile/file_get_contents都行<br>
-<img src="http://localhost:4000/post-images/1579958029365.png" alt="" loading="lazy"></p>
+<img src="https://guokeya.github.io/post-images/1579958029365.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
-            <a href="http://localhost:4000/post/buuctfxiao-yi-de-u-pan/">
+            <a href="https://guokeya.github.io/post/buuctfxiao-yi-de-u-pan/">
               <span class="post-title">
                 [BUUCTF]小易的U盘&rarr;
               </span>
@@ -341,7 +341,7 @@ readfile/file_get_contents都行<br>
             
               
               <li class="list-inline-item">
-              <a href="http://localhost:4000/atom.xml" target="_blank">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -356,10 +356,10 @@ readfile/file_get_contents都行<br>
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

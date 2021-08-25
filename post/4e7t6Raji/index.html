@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>[RoarCTF 2019]Easy Calc(PHP字符串特性+HTTP走私) |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="[RoarCTF 2019]Easy Calc(PHP字符串特性+HTTP走私) |   » Feed" href="http://localhost:4000/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="[RoarCTF 2019]Easy Calc(PHP字符串特性+HTTP走私) |   » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="[RoarCTF 2019]Easy Calc(PHP字符串特性+HTTP走私)"/>
-    <meta property="og:url" content="http://localhost:4000/post/4e7t6Raji/"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/4e7t6Raji/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="http://localhost:4000"> </a>
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,9 +80,9 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
             
-            <a href="http://localhost:4000/tag/Web/" class="tag">Web安全</a>
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
             
         </span>
             <h1>[RoarCTF 2019]Easy Calc(PHP字符串特性+HTTP走私)</h1>
@@ -102,25 +102,25 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <p>通过查看JS。发现数据处理的PHP文件<br>
-<img src="http://localhost:4000/post-images/1579176734838.png" alt="" loading="lazy"></p>
+<img src="https://guokeya.github.io/post-images/1579176734838.png" alt="" loading="lazy"></p>
 <!-- more -->
 <p>题目说。上了WAF。而源码中。又只过滤了一些危险字符。<br>
 我们试试p字符串。<br>
-<img src="http://localhost:4000/post-images/1579176786070.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579176786070.png" alt="" loading="lazy"><br>
 返回403？一般都是PHP过滤的。这里403.应该就是题目说的WAF了<br>
 那么整个处理流程应该是。前端服务器WAF过滤。-&gt;后端PHP黑名单过滤<br>
 上一篇HTTP走私文章讲了。如果存在两个Content-Length头。那么服务器会报400错误。<br>
 如果给两个CL头。使其400错误。然后再转发给后端的服务器。那么就执行成功了<br>
-<img src="http://localhost:4000/post-images/1579176979131.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579176979131.png" alt="" loading="lazy"><br>
 首先。我们设置了两个CL头。前端服务器爆400错误。<br>
 然后又转发给了后端服务器。后端服务器再去判断。是否有危险字符。<br>
 这里我们又遇到个坑。就是。后端服务器还过滤了./这些<br>
 如图。a-z0-9都是可以输出的。当我测试./时。就不行了<br>
-<img src="http://localhost:4000/post-images/1579177386141.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579177386141.png" alt="" loading="lazy"><br>
 那就通过chr来构造字符。<br>
 后面我想。直接用chr构造个/，flagg直接明文拼接<br>
 然而又不行。不知道为什么。<br>
-<img src="http://localhost:4000/post-images/1579177518794.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579177518794.png" alt="" loading="lazy"><br>
 第二种解法：<br>
 利用PHP的字符串解析特性Bypass<br>
 PHP在处理请求时。会将所有参数转换为有效的变量名。在解析字符串时。会先删除空白符。再将某些特殊字符转换为下划线(包括空格)</p>
@@ -146,11 +146,11 @@ foo_bar{chr} -&gt; 3d (=)
 <p>空格&amp;+.|<em>[都会被转义为</em><br>
 那么我们在num参数前面加个空格。WAF匹配num参数。而我们传参的却是空格num<br>
 也就绕过了WAF。<br>
-<img src="http://localhost:4000/post-images/1579178573980.png" alt="" loading="lazy"></p>
+<img src="https://guokeya.github.io/post-images/1579178573980.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
-            <a href="http://localhost:4000/post/AQdKm74xy/">
+            <a href="https://guokeya.github.io/post/AQdKm74xy/">
               <span class="post-title">
                 HTTP请求走私&rarr;
               </span>
@@ -194,7 +194,7 @@ foo_bar{chr} -&gt; 3d (=)
             
               
               <li class="list-inline-item">
-              <a href="http://localhost:4000/atom.xml" target="_blank">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -209,10 +209,10 @@ foo_bar{chr} -&gt; 3d (=)
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

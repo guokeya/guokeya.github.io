@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>[RoarCTF 2019]PHPShe(注入+phar反序列化) |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="[RoarCTF 2019]PHPShe(注入+phar反序列化) |   » Feed" href="http://localhost:4000/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="[RoarCTF 2019]PHPShe(注入+phar反序列化) |   » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="[RoarCTF 2019]PHPShe(注入+phar反序列化)"/>
-    <meta property="og:url" content="http://localhost:4000/post/zE_m1kHQm/"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/zE_m1kHQm/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="http://localhost:4000"> </a>
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,9 +80,9 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
             
-            <a href="http://localhost:4000/tag/Web/" class="tag">Web安全</a>
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
             
         </span>
             <h1>[RoarCTF 2019]PHPShe(注入+phar反序列化)</h1>
@@ -103,34 +103,34 @@
         <div class="col-lg-8 col-md-10 mx-auto">
           <p>首先就是PHPShecms的sql注入。<br>
 在基础上。用无列名注入注出密码<br>
-<img src="http://localhost:4000/post-images/1592640584343.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1592640584343.png" alt="" loading="lazy"><br>
 然后登陆后台。。看WP。说是在源码中的类文件进行了修改<br>
-<img src="http://localhost:4000/post-images/1592640766242.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1592640766242.png" alt="" loading="lazy"><br>
 跟踪下extrac函数的第一个参数。发现这是个PCLZIP解压缩。savepath。应该是压缩文件解压缩的路径<br>
-<img src="http://localhost:4000/post-images/1592640852344.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1592640852344.png" alt="" loading="lazy"><br>
 这里我们可以将一句话木马压缩为zip上传。然后通过触发这个解压缩。到指定上传目录。<br>
 继续看触发点<br>
 在admin.php。首先包含了一个common.php。存在变量覆盖<br>
-<img src="http://localhost:4000/post-images/1592641765125.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1592641765125.png" alt="" loading="lazy"><br>
 然后对变量加上前缀。进行处理<br>
-<img src="http://localhost:4000/post-images/1592641519443.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1592641519443.png" alt="" loading="lazy"><br>
 第三个选项。在前缀和键值中会加一个下划线<br>
 继续看。可以包含任意目录的php文件<br>
-<img src="http://localhost:4000/post-images/1592641319282.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1592641319282.png" alt="" loading="lazy"><br>
 利用变量覆盖。包含admin目录下的moban.php<br>
 只有它引用了pclzip.class.php<br>
-<img src="http://localhost:4000/post-images/1592641928571.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1592641928571.png" alt="" loading="lazy"><br>
 swith。一个act参数。<br>
 进入del。<br>
-<img src="http://localhost:4000/post-images/1592642022392.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1592642022392.png" alt="" loading="lazy"><br>
 pe_dbhold函数。主要就是addslashes。htmlspecialchars。转义什么的。<br>
 进入pe_dirdel函数。带入参数tpl。if_exists。触发phar反序列化。<br>
-<img src="http://localhost:4000/post-images/1592642140721.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1592642140721.png" alt="" loading="lazy"><br>
 ok。构造phar。上传phar和zip。然后反序列化触发destrcut解压一句话到上传目录<br>
 这里。我们还漏了一个东西。就是del后的第一个函数<br>
-<img src="http://localhost:4000/post-images/1592642241712.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1592642241712.png" alt="" loading="lazy"><br>
 需要提交token和referer。找下token在哪生成<br>
-<img src="http://localhost:4000/post-images/1592643537788.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1592643537788.png" alt="" loading="lazy"><br>
 最后。触发phar反序列化<br>
 <code>http://1ccb4b36-6561-4c5b-8e5b-10103cd8f8e8.node3.buuoj.cn/admin.php?mod=moban&amp;act=del&amp;token=e7e44f204371fcf3072dcd5c4097764e&amp;tpl=phar:///var/www/html/data/attachment/brand/2.txt</code><br>
 pharexp</p>
@@ -163,11 +163,11 @@ $phar-&gt;addFromString(&quot;test.txt&quot;, &quot;test&quot;);
 $phar-&gt;stopBuffering();
 ?&gt;
 </code></pre>
-<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1592643642788.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1592643642788.png" alt="" loading="lazy"></figure>
 
           
           <p class="next-post">下一篇：
-            <a href="http://localhost:4000/post/mT80JFOVo/">
+            <a href="https://guokeya.github.io/post/mT80JFOVo/">
               <span class="post-title">
                 Connect-The-Dots 靶机渗透&rarr;
               </span>
@@ -211,7 +211,7 @@ $phar-&gt;stopBuffering();
             
               
               <li class="list-inline-item">
-              <a href="http://localhost:4000/atom.xml" target="_blank">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -226,10 +226,10 @@ $phar-&gt;stopBuffering();
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

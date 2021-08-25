@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>[CISCN2019 华北赛区 Day1 Web2]ikun(python反序列化) |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="[CISCN2019 华北赛区 Day1 Web2]ikun(python反序列化) |   » Feed" href="http://localhost:4000/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="[CISCN2019 华北赛区 Day1 Web2]ikun(python反序列化) |   » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="[CISCN2019 华北赛区 Day1 Web2]ikun(python反序列化)"/>
-    <meta property="og:url" content="http://localhost:4000/post/ciscn2019-hua-bei-sai-qu-day1-web2ikunpython-fan-xu-lie-hua/"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/ciscn2019-hua-bei-sai-qu-day1-web2ikunpython-fan-xu-lie-hua/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="http://localhost:4000"> </a>
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,9 +80,9 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
             
-            <a href="http://localhost:4000/tag/Web/" class="tag">Web安全</a>
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
             
         </span>
             <h1>[CISCN2019 华北赛区 Day1 Web2]ikun(python反序列化)</h1>
@@ -103,7 +103,7 @@
         <div class="col-lg-8 col-md-10 mx-auto">
           <p>进入主页。就说要买V6</p>
 <!-- more -->
-<p><img src="http://localhost:4000/post-images/1581478416744.png" alt="" loading="lazy"><br>
+<p><img src="https://guokeya.github.io/post-images/1581478416744.png" alt="" loading="lazy"><br>
 根据特征。V6图片地址为/static/img/lv/lv6.png<br>
 那么我们用脚本遍历page。然后判断返回内容中是否有V6的图片地址</p>
 <pre><code>import requests
@@ -114,24 +114,24 @@ for i in range(200):
         print (url)
 </code></pre>
 <p>得到结果。181页。购买<br>
-<img src="http://localhost:4000/post-images/1581478545299.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1581478545299.png" alt="" loading="lazy"><br>
 可以看到。这里有两个变量可控。一个是钱。一个是折扣。我们只有1000。<br>
 修改尝试修改钱/折扣来买V6<br>
 修改钱时。会提示操作失败<br>
-<img src="http://localhost:4000/post-images/1581478635541.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1581478635541.png" alt="" loading="lazy"><br>
 修改折扣为0.00000000001。302跳转b1g_m4mber<br>
-<img src="http://localhost:4000/post-images/1581478729405.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1581478729405.png" alt="" loading="lazy"><br>
 只允许admin访问。看下cookie。有jwt头<br>
-<img src="http://localhost:4000/post-images/1581478839818.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1581478839818.png" alt="" loading="lazy"><br>
 遇到jwt。一般就是ssti拿密钥。或者爆破<br>
 这里试下爆破。得到密钥1Kun<br>
-<img src="http://localhost:4000/post-images/1581478891702.png" alt="" loading="lazy">'<br>
+<img src="https://guokeya.github.io/post-images/1581478891702.png" alt="" loading="lazy">'<br>
 修改JWT为admin<br>
-<img src="http://localhost:4000/post-images/1581479192599.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1581479192599.png" alt="" loading="lazy"><br>
 得到web源码<br>
-<img src="http://localhost:4000/post-images/1581479241854.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1581479241854.png" alt="" loading="lazy"><br>
 在sshop/views/admin.py发现一个反序列化漏洞<br>
-<img src="http://localhost:4000/post-images/1581479326219.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1581479326219.png" alt="" loading="lazy"><br>
 python反序列化漏洞和PHP反序列化不一样。<br>
 php反序列化必须是存在一个类。序列化可以修改类中的值造成一定危害。如果类中没有什么危险函数。那么修改了类中的值危害也有限。<br>
 python反序列化通过<code>__reduce__</code>可以重构对象。比如</p>
@@ -148,14 +148,14 @@ cPickle.dumps()<br>
 #序列化<br>
 cPickle.loads()<br>
 #反序列化<br>
-<img src="http://localhost:4000/post-images/1581480064252.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1581480064252.png" alt="" loading="lazy"><br>
 参考文章：<code>https://www.jianshu.com/p/061d2c594d97</code><br>
 将上图中的URL编码的exp。通过POST become参数发送。拿到flag<br>
-<img src="http://localhost:4000/post-images/1581480150683.png" alt="" loading="lazy"></p>
+<img src="https://guokeya.github.io/post-images/1581480150683.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
-            <a href="http://localhost:4000/post/wang-ding-bei-2018commentgit-hui-fu/">
+            <a href="https://guokeya.github.io/post/wang-ding-bei-2018commentgit-hui-fu/">
               <span class="post-title">
                 [网鼎杯 2018]Comment（Git恢复+二次注入）&rarr;
               </span>
@@ -199,7 +199,7 @@ cPickle.loads()<br>
             
               
               <li class="list-inline-item">
-              <a href="http://localhost:4000/atom.xml" target="_blank">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -214,10 +214,10 @@ cPickle.loads()<br>
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

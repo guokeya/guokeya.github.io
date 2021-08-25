@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>SCTF UnsafeDefenseSystem(信息搜集+thinkphp反序列化+条件竞争) |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="SCTF UnsafeDefenseSystem(信息搜集+thinkphp反序列化+条件竞争) |   » Feed" href="http://localhost:4000/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="SCTF UnsafeDefenseSystem(信息搜集+thinkphp反序列化+条件竞争) |   » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="SCTF UnsafeDefenseSystem(信息搜集+thinkphp反序列化+条件竞争)"/>
-    <meta property="og:url" content="http://localhost:4000/post/oBuGgKG72/"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/oBuGgKG72/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="http://localhost:4000"> </a>
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,9 +80,9 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
             
-            <a href="http://localhost:4000/tag/Web/" class="tag">Web安全</a>
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
             
         </span>
             <h1>SCTF UnsafeDefenseSystem(信息搜集+thinkphp反序列化+条件竞争)</h1>
@@ -118,7 +118,7 @@ F12源代码得到一个路径public/nationalsb/login.php需要登陆。任意�
 <p>写个python生成下四位数字。然后用户名:密码     base64后。带入auth头爆破得到密码<br>
 登陆后。POST file可以任意文件读取。<br>
 读取index控制器<br>
-<img src="http://localhost:4000/post-images/1594015004848.png" alt="" loading="lazy"></p>
+<img src="https://guokeya.github.io/post-images/1594015004848.png" alt="" loading="lazy"></p>
 <p>得到Index控制器源码</p>
 <pre><code>&lt;?php
 namespace app\index\controller;
@@ -146,7 +146,7 @@ http://39.99.41.124/public/nationalsb/AAAPD9waHAgc3lzdGVtKCdjYXQgICAvZmxhZycpOz8
 <p>然后发现BP一直发包请求。发现报错。<br>
 查看本地文件。应该是靶机开了短标签。导致<??>被解析。报错。后面的代码无法执行<br>
 本地开短标签访问。确定就是这个原因报错。<br>
-<img src="http://localhost:4000/post-images/1594015022311.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1594015022311.png" alt="" loading="lazy"><br>
 开头是个死亡exit。文章中有各种姿势<br>
 <code>https://cyc1e183.github.io/2020/04/03/%E5%85%B3%E4%BA%8Efile_put_contents%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%B5%8B%E8%AF%95/</code><br>
 用以下的Payload。修改下绕过</p>
@@ -159,7 +159,7 @@ php://filter/convert.iconv.utf-8.utf-7|convert.base64-decode/resource=./national
 #这里phpbase64不能是==结尾。否则就会报错。。多加几个空格完事。用A补长度一个个本地调。调通了。上靶机
 </code></pre>
 <p>BP发包。浏览器访问。得到flag<br>
-<img src="http://localhost:4000/post-images/1594015183784.png" alt="" loading="lazy"></p>
+<img src="https://guokeya.github.io/post-images/1594015183784.png" alt="" loading="lazy"></p>
 <pre><code>&lt;?php
 namespace think\process\pipes;
 use think\model\Pivot;
@@ -265,7 +265,7 @@ echo base64_encode(serialize(new Windows()));
 
           
           <p class="next-post">下一篇：
-            <a href="http://localhost:4000/post/_8R99IXd6/">
+            <a href="https://guokeya.github.io/post/_8R99IXd6/">
               <span class="post-title">
                 Pwnhub easythink(TP5sql注入)&rarr;
               </span>
@@ -309,7 +309,7 @@ echo base64_encode(serialize(new Windows()));
             
               
               <li class="list-inline-item">
-              <a href="http://localhost:4000/atom.xml" target="_blank">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -324,10 +324,10 @@ echo base64_encode(serialize(new Windows()));
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

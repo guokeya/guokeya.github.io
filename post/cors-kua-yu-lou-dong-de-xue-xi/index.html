@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>CORS跨域漏洞的学习 |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="CORS跨域漏洞的学习 |   » Feed" href="http://localhost:4000/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="CORS跨域漏洞的学习 |   » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="CORS跨域漏洞的学习"/>
-    <meta property="og:url" content="http://localhost:4000/post/cors-kua-yu-lou-dong-de-xue-xi/"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/cors-kua-yu-lou-dong-de-xue-xi/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="http://localhost:4000"> </a>
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,7 +80,7 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="http://localhost:4000/tag/Web/" class="tag">Web安全</a>
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
             
         </span>
             <h1>CORS跨域漏洞的学习</h1>
@@ -104,7 +104,7 @@
 同源策略是浏览器的一个安全功能。不同源的客户端脚本(JS)在没有被授权的情况下。不能读取对方资源。<br>
 同源的定义是。协议/端口/主机</p>
 <!-- more -->
-<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1579692178739.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1579692178739.png" alt="" loading="lazy"></figure>
 <pre><code>假设www.test.com需要通过js去www.abc.com加载一张图片。在没有同源策略时。是没问题的。但是
 如果存在同源策略。test.com和abc.com不同域名。那么就会被禁止读取。那这让一些从网上加载资源的web就很难受。
 </code></pre>
@@ -177,7 +177,7 @@ phpinfo();
 ?&gt;
 </code></pre>
 <p>先访问login.php。然后访问secrect.php。假设cookie是敏感信息<br>
-<img src="http://localhost:4000/post-images/1579693584130.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579693584130.png" alt="" loading="lazy"><br>
 此时黑客给了个恶意链接。用户访问<br>
 www.evil.com/steal.html</p>
 <pre><code>&lt;!DOCTYPE&gt;
@@ -231,15 +231,15 @@ fclose($myfile);
 ?&gt;
 </code></pre>
 <p>由于用户访问了恶意链接。触发js脚本。js脚本请求了www.vuln的资源。浏览器自动为我们添加origin这个字段。用来说明我们是哪来的<br>
-<img src="http://localhost:4000/post-images/1579694158002.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579694158002.png" alt="" loading="lazy"><br>
 js脚本出现一个错误<br>
-<img src="http://localhost:4000/post-images/1579694926855.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579694926855.png" alt="" loading="lazy"><br>
 服务端缺少access-control-allow-origin头。所以浏览器就拦截了该请求<br>
 现在取消www.vuln.com/secrect.php的注释。允许www.evil.com访问<br>
-<img src="http://localhost:4000/post-images/1579694352498.png" alt="" loading="lazy"><br>
-<img src="http://localhost:4000/post-images/1579694407935.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579694352498.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579694407935.png" alt="" loading="lazy"><br>
 黑客收到了带有httponly的敏感信息<br>
-<img src="http://localhost:4000/post-images/1579694458736.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579694458736.png" alt="" loading="lazy"><br>
 <strong>XSS请求跨域</strong><br>
 假设我们我们主域名provider.com存在CORS。但是只允许requester.com的子域访问</p>
 <pre><code>if ($_SERVER['HTTP_HOST'] == '*.requester.com')
@@ -257,7 +257,7 @@ js脚本出现一个错误<br>
 
           
           <p class="next-post">下一篇：
-            <a href="http://localhost:4000/post/swpuctf2019easy-pythonflask-session-wei-zao-ruan-lian-jie-ming-ling-zhi-xing-bypass/">
+            <a href="https://guokeya.github.io/post/swpuctf2019easy-pythonflask-session-wei-zao-ruan-lian-jie-ming-ling-zhi-xing-bypass/">
               <span class="post-title">
                 [SWPUCTF2019]Easy Python(flask session伪造+软链接+命令执行bypass)&rarr;
               </span>
@@ -301,7 +301,7 @@ js脚本出现一个错误<br>
             
               
               <li class="list-inline-item">
-              <a href="http://localhost:4000/atom.xml" target="_blank">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -316,10 +316,10 @@ js脚本出现一个错误<br>
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">
