@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>ctf.show红包题第五弹 |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="ctf.show红包题第五弹 |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="ctf.show红包题第五弹 |   » Feed" href="http://localhost:4000/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="ctf.show红包题第五弹"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/ctfshow-hong-bao-ti-di-wu-dan/"/>
+    <meta property="og:url" content="http://localhost:4000/post/ctfshow-hong-bao-ti-di-wu-dan/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <a class="navbar-brand" href="http://localhost:4000"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,7 +80,7 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://guokeya.github.io/tag/z6LGuzLFL/" class="tag">杂项</a>
+            <a href="http://localhost:4000/tag/z6LGuzLFL/" class="tag">杂项</a>
             
         </span>
             <h1>ctf.show红包题第五弹</h1>
@@ -101,16 +101,16 @@
         <div class="col-lg-8 col-md-10 mx-auto">
           <p>下载地址：<code>https://www.lanzous.com/i9e23fi</code><br>
 binwalk。foremost得到了一个MP3以及两张图片<br>
-<img src="https://guokeya.github.io/post-images/1581858172393.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1581858172393.png" alt="" loading="lazy"></p>
 <!-- more -->
 <p>JPG。首先就右键看下有没有敏感信息。或提示。隐写<br>
 MP3。基本就看波形。看详细信息。MP3隐写<br>
 群主后来放出了Hint。和MP3无关。那么方向基本就是JPG隐写了<br>
 经过一番尝试。一个个试。。终于试出来了<br>
-<img src="https://guokeya.github.io/post-images/1581858458824.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1581858458824.png" alt="" loading="lazy"><br>
 base64解码后。是一个URL。下载得到red5.zip<br>
 得到一串类似16进制字符串的数据<br>
-<img src="https://guokeya.github.io/post-images/1581858538407.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1581858538407.png" alt="" loading="lazy"><br>
 写脚本解码下</p>
 <pre><code>f=open('flag.txt','r')
 data=f.read()
@@ -121,7 +121,7 @@ for i in range(0,len(data),2):
 print result
 </code></pre>
 <p>得到如下的东西<br>
-<img src="https://guokeya.github.io/post-images/1581858739374.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1581858739374.png" alt="" loading="lazy"><br>
 刷过PIL题的我。一眼就看出来。这是RGB的值。前面的是坐标。接下来就写个脚本。将坐标和值。用PIL库画图</p>
 <pre><code>from PIL import Image
 import re
@@ -150,14 +150,14 @@ for i in range(5328):
 pic.show()
 </code></pre>
 <p>得到了一个二维码。但貌似。上下颠倒了<br>
-<img src="https://guokeya.github.io/post-images/1581859123980.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1581859123980.png" alt="" loading="lazy"><br>
 用画图工具。截取上面的放下面。下面的放上面。<br>
 扫描二维码。得到flag<br>
-<img src="https://guokeya.github.io/post-images/1581859180856.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1581859180856.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/suctf-2018getshellwu-shu-zi-zi-mu-webshell/">
+            <a href="http://localhost:4000/post/suctf-2018getshellwu-shu-zi-zi-mu-webshell/">
               <span class="post-title">
                 [SUCTF 2018]GetShell(无数字字母webshell)&rarr;
               </span>
@@ -201,7 +201,7 @@ pic.show()
             
               
               <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -216,10 +216,10 @@ pic.show()
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

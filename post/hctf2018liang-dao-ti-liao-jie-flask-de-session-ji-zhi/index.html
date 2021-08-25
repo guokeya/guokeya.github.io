@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>[HCTF2018]两道题了解flask的session机制 |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="[HCTF2018]两道题了解flask的session机制 |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="[HCTF2018]两道题了解flask的session机制 |   » Feed" href="http://localhost:4000/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="[HCTF2018]两道题了解flask的session机制"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/hctf2018liang-dao-ti-liao-jie-flask-de-session-ji-zhi/"/>
+    <meta property="og:url" content="http://localhost:4000/post/hctf2018liang-dao-ti-liao-jie-flask-de-session-ji-zhi/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <a class="navbar-brand" href="http://localhost:4000"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,9 +80,9 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
             
-            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            <a href="http://localhost:4000/tag/Web/" class="tag">Web安全</a>
             
         </span>
             <h1>[HCTF2018]两道题了解flask的session机制</h1>
@@ -122,7 +122,7 @@ XC7SPg
 sV9_ueBW2e4kCoY0sxh14dxsQiY
 数据签名。重点在于这个。通过密钥进行签名。防止被篡改
 </code></pre>
-<p><img src="https://guokeya.github.io/post-images/1579500051747.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1579500051747.png" alt="" loading="lazy"><br>
 <code>https://jwt.io/</code>可以解析此格式<br>
 可以看到。这段密文的头部数据。是<code>{&quot;username&quot;: &quot;test&quot;}</code>(JSON格式的数据)，如果将其修改为admin是否能成为admin用户呢。显然是不行的。因为有数据签名的存在。<br>
 如果我们通过SSTI。或者其他方式。获得到了加密的密钥(SECRET_KEY)就能修改Session。实现一些功能<br>
@@ -175,16 +175,16 @@ if __name__=='__main__':
 接着又定义了两个功能。一个read。读取任意文件。一个是flag。读取flag。但Session['username']必须为admin才能读取flag<br>
 运行程序看下效果<br>
 访问/flag。由于程序一开始就将session中的username定义为了www-data，所以无权访问。<br>
-<img src="https://guokeya.github.io/post-images/1579499516008.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579499516008.png" alt="" loading="lazy"><br>
 那么我们的思路就是。获得密钥。伪造随机数。修改session。重新签名<br>
 何为伪随机数呢。看一个例子<br>
 我们定义种子为1。然后根据这个种子产生随机数。照理来说。随机数。应该是每次运行都不一样。但是要注意。这里生成的并不是真正意义上的随机数。而是一个伪随机数。每次宠幸运行。他的随机数都是固定的。如果我们能知道种子。就能知道他每次产生的随机数<br>
-<img src="https://guokeya.github.io/post-images/1579500345891.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579500345891.png" alt="" loading="lazy"><br>
 具体看下怎么做：<br>
 首先。得知道他的种子。<br>
 种子是通过<code>random.seed(uuid.getnode())</code>生成的。而uuid.getnode()又是将MAC地址转换为10进制。那么我们通过程序中的任意文件读取来获取网卡地址。不就能得到种子了<br>
 读取/proc/net/dev可以知道服务器上的网卡。接着/sys/class/net/eth0/address可以知道MAC地址<br>
-<img src="https://guokeya.github.io/post-images/1579500600241.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579500600241.png" alt="" loading="lazy"><br>
 得到了MAC地址。我们用python脚本获得随机数(密钥)</p>
 <pre><code>import random
 random.seed(int(52234918416))
@@ -193,7 +193,7 @@ print(SECRET_KEY)
 </code></pre>
 <p>初学时。这里试了好久。获得的密钥一直不能解密密文<br>
 后来发现。这是Python2的精度问题。同样的脚本。python3的输出精度更高。而密钥刚好就是精度高的那个数<br>
-<img src="https://guokeya.github.io/post-images/1579501290516.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579501290516.png" alt="" loading="lazy"><br>
 现在我们知道了他的密钥，用到github的一个脚本。来伪造密文<br>
 <code>https://github.com/noraj/flask-session-cookie-manager</code><br>
 这个脚本。分python2和python3.主要看服务端用的是那个版本。比如服务端是python2启动的。那你就得用python2去解密。python2和3加密不太一样<br>
@@ -219,24 +219,24 @@ for x in range(1000):
         #当密钥正确时。修改username。然后再去真确的密钥进行加密
         break
 </code></pre>
-<p><img src="https://guokeya.github.io/post-images/1579501916372.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1579501916372.png" alt="" loading="lazy"><br>
 复制生成的session。修改后访问/flag<br>
-<img src="https://guokeya.github.io/post-images/1579501973446.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579501973446.png" alt="" loading="lazy"><br>
 原理就是这样。<br>
 下面来两题HCTF的题</p>
 <ul>
 <li><strong>[HCTF 2018]Hideandseek</strong><br>
 主页就一个登陆。其他按钮都是没用的。源代码也没东西<br>
-<img src="https://guokeya.github.io/post-images/1579502081500.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579502081500.png" alt="" loading="lazy"><br>
 随便输个123123就登陆成功了。<br>
-<img src="https://guokeya.github.io/post-images/1579502109694.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579502109694.png" alt="" loading="lazy"><br>
 有个文件上传。但提示。只能上传zip文件。<br>
 这里上传个ZIP。内容是一串Base64<br>
 看看结果<br>
-<img src="https://guokeya.github.io/post-images/1579502234849.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579502234849.png" alt="" loading="lazy"><br>
 返回了zip压缩包内的文件。说明它会先解压。然后cat文件<br>
 那么这里有个知识点。软连接<br>
-<img src="https://guokeya.github.io/post-images/1579502298319.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579502298319.png" alt="" loading="lazy"><br>
 将1234链接到/etc/passwd。cat 1234就等于cat /etc/passwd<br>
 那么我们也可以通过软连接文件。然后压缩为zip。后端读文件时。就会读取我们链接的文件<br>
 尝试一下</li>
@@ -245,12 +245,12 @@ for x in range(1000):
 zip -ry out.zip link
 </code></pre>
 <p>还真读取到了。接下来就读取各种敏感文件<br>
-<img src="https://guokeya.github.io/post-images/1579502439891.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1579502439891.png" alt="" loading="lazy"></p>
 <pre><code>ln -s /proc/self/environ link
 #环境变量
 zip -ry out.zip link
 </code></pre>
-<p><img src="https://guokeya.github.io/post-images/1579502490207.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1579502490207.png" alt="" loading="lazy"><br>
 得到uwsgi的配置文件路径：<code>/app/it_is_hard_t0_guess_the_path_but_y0u_find_it_5f9s5b5s9.ini</code><br>
 再次读取。</p>
 <pre><code>[uwsgi]
@@ -347,11 +347,11 @@ if __name__ == '__main__':
 </code></pre>
 <p>在index中。找到一个模板<code>ender_template('index.html')</code>一般flask的模板文件夹都叫templates，那么index.html的真实路径就是<code>/app/hard_t0_guess_n9f5a95b5ku9fg/templates/index.html</code><br>
 读取得到if username=='admin'就输出flag<br>
-<img src="https://guokeya.github.io/post-images/1579503179275.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579503179275.png" alt="" loading="lazy"><br>
 又是通过session修改名字。然后成为admin<br>
 查看session的赋值<br>
-<img src="https://guokeya.github.io/post-images/1579503322672.png" alt="" loading="lazy"><br>
-<img src="https://guokeya.github.io/post-images/1579503326071.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579503322672.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579503326071.png" alt="" loading="lazy"><br>
 和一开始的实验一样。都是通过MAC地址。来生成伪随机数(密钥)<br>
 上传软连接。读取得到<br>
 <code>02:42:ae:00:6a:ad</code><br>
@@ -366,21 +366,21 @@ print(SECRET_KEY)
 </code></pre>
 <p>用python3运行。得到<code>47.601174077042465</code><br>
 然后用github上的那个脚本。解密<br>
-<img src="https://guokeya.github.io/post-images/1579504112839.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579504112839.png" alt="" loading="lazy"><br>
 修改对应的值。并用密钥重新签名<br>
-<img src="https://guokeya.github.io/post-images/1579504166130.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579504166130.png" alt="" loading="lazy"><br>
 替换session值后刷新。就得到了flag<br>
-<img src="https://guokeya.github.io/post-images/1579504200276.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579504200276.png" alt="" loading="lazy"><br>
 这题有个注意点。这是python3运行的。不能的python2去解密</p>
 <ul>
 <li><strong>[HCTF 2018]admin</strong><br>
 只有登陆。注册。退出<br>
-<img src="https://guokeya.github.io/post-images/1579504446612.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579504446612.png" alt="" loading="lazy"><br>
 随便注册登陆。看看源码。看看有没有敏感信息<br>
 在更改密码的地方。看到了github地址<br>
-<img src="https://guokeya.github.io/post-images/1579504806652.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579504806652.png" alt="" loading="lazy"><br>
 进去看看<br>
-<img src="https://guokeya.github.io/post-images/1579504835791.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579504835791.png" alt="" loading="lazy"><br>
 先看run.py</li>
 </ul>
 <pre><code>from app import app
@@ -388,22 +388,22 @@ if __name__ == '__main__':
     app.run('0.0.0.0', 9999,threaded=True,debug=True)
 </code></pre>
 <p>没东西。接着看app目录<br>
-<img src="https://guokeya.github.io/post-images/1579504919791.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579504919791.png" alt="" loading="lazy"><br>
 code.py/routes.py是一些路由。函数<br>
 config.py是一些全局配置。还有session的密钥<code>ckj123</code><br>
 在模板中。看到了如果username==admin。就输出flag<br>
-<img src="https://guokeya.github.io/post-images/1579505157070.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579505157070.png" alt="" loading="lazy"><br>
 那就简单了。我们伪造session<br>
 我们不知道。它是python几。都试一下。发现都能解密。<br>
-<img src="https://guokeya.github.io/post-images/1579505254627.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579505254627.png" alt="" loading="lazy"><br>
 先用python2修改username试下<br>
 修改后刷新。发现不行。再用python3试一下<br>
 成功拿到flag<br>
-<img src="https://guokeya.github.io/post-images/1579505424470.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579505424470.png" alt="" loading="lazy"><br>
 这题还有两种解法。一种是条件竞争。还有就是unicde编码问题<br>
 这里。我们看下unicode编码问题<br>
 审计代码。发现用户注册时。将数据用<code>strlower</code>函数处理了。根据字面意思。就是转换小写。不过python下不是lower函数吗。。继续查看<br>
-<img src="https://guokeya.github.io/post-images/1579505703327.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579505703327.png" alt="" loading="lazy"><br>
 发现下面定义了这个函数。</p>
 <pre><code>def strlower(username):
     username = nodeprep.prepare(username)
@@ -420,13 +420,13 @@ nodeprep又是通过twisted来的<br>
 login：调用一次<br>
 change：调用一次<br>
 如果我们构造一个ᴬdmin。然后调用unicode。就会成为Admin，然后登陆又调用一次。就会成为admin。最后change改变密码时。就改变了admin的密码。<br>
-<img src="https://guokeya.github.io/post-images/1579506695828.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579506695828.png" alt="" loading="lazy"><br>
 最后用admin用户登陆<br>
-<img src="https://guokeya.github.io/post-images/1579506667735.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1579506667735.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/swpu2019wei-da-de-zhen-tan-tiao-wu-xiao-ren-jia-mi-ebcdic-bian-ma/">
+            <a href="http://localhost:4000/post/swpu2019wei-da-de-zhen-tan-tiao-wu-xiao-ren-jia-mi-ebcdic-bian-ma/">
               <span class="post-title">
                 [SWPU2019]伟大的侦探（跳舞小人加密+ebcdic编码）&rarr;
               </span>
@@ -470,7 +470,7 @@ change：调用一次<br>
             
               
               <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -485,10 +485,10 @@ change：调用一次<br>
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

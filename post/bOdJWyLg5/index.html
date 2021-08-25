@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>Pwn(绕过ASLR) |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="Pwn(绕过ASLR) |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="Pwn(绕过ASLR) |   » Feed" href="http://localhost:4000/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="Pwn(绕过ASLR)"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/bOdJWyLg5/"/>
+    <meta property="og:url" content="http://localhost:4000/post/bOdJWyLg5/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <a class="navbar-brand" href="http://localhost:4000"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,7 +80,7 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://guokeya.github.io/tag/Pwn/" class="tag">Pwn</a>
+            <a href="http://localhost:4000/tag/Pwn/" class="tag">Pwn</a>
             
         </span>
             <h1>Pwn(绕过ASLR)</h1>
@@ -104,8 +104,8 @@ ASLR（地址随机化）是一种针对缓冲区溢出的安全保护技术，�
 但是，地址随机化不是对所有模块和内存区都进行随机化！</p>
 <!-- more -->
 <p><strong>分析程序</strong><br>
-<img src="https://guokeya.github.io/post-images/1578558025062.png" alt="" loading="lazy"><br>
-<img src="https://guokeya.github.io/post-images/1578558063767.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578558025062.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578558063767.png" alt="" loading="lazy"><br>
 首先main函数调用了vulnerable_function，读取了256个字节。放入128字节大小的栈内<br>
 write(1,&quot;hello world&quot;,13)，第一个参数是文件描述符，为1的时候。将会打印出hello world<br>
 很明显的栈溢出问题。但是由于这里开启了ASLR。栈内的地址都是会变化的<br>
@@ -117,13 +117,13 @@ write(1,&quot;hello world&quot;,13)，第一个参数是文件描述符，为1�
 <p>当程序第一次执行。遇到read时。它不知道read函数的地址。就会去plt表里面找函数地址。而plt表中存放的是got表的地址。<br>
 简单来说。就是plt表存got表地址。got表存函数地址。plt表就是个中间商<br>
 对应关系如下图<br>
-<img src="https://guokeya.github.io/post-images/1578567666307.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578567666307.png" alt="" loading="lazy"><br>
 当程序第二次遇到read函数的时候。由于第一次已经通过plt-&gt;got-&gt;查找到函数地址了。第二次以后就会直接去got表里面取函数地址。不用经过plt表<br>
 如图。这里程序还没运行时，plt表内read函数的地址是0x8048350<br>
-<img src="https://guokeya.github.io/post-images/1578567354224.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578567354224.png" alt="" loading="lazy"><br>
 接下来看看这个地址到底存放的是什么。<br>
 由于plt表实质上是个跳转指令。所以用pdisass查看<br>
-<img src="https://guokeya.github.io/post-images/1578568093321.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578568093321.png" alt="" loading="lazy"><br>
 从图中我们可以看到这个read@plt的函数地址对应着plt表中<code>jmp DWORD PTR ds:0x804a00c</code>这一行指令<br>
 也就是说。0x804a00c才是真正的read函数地址。但是当第二次执行的时候。地址就会变化<br>
 <strong>解题思路</strong><br>
@@ -142,7 +142,7 @@ write(1,&quot;hello world&quot;,13)，第一个参数是文件描述符，为1�
 </code></pre>
 <p><strong>开始构造:</strong><br>
 首先。我们测出覆盖eip需要多少个字节。得到132<br>
-<img src="https://guokeya.github.io/post-images/1578570101498.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578570101498.png" alt="" loading="lazy"><br>
 <strong>下面开始输出函数的真实地址</strong></p>
 <pre><code>write(1,read函数地址,读取四个字节)
 payload=&quot;A&quot;*132+p32(0x8048380)+p32(0x080484ab)+&quot;\x01\x00\x00\x00&quot;+p32(0x804a00c)+&quot;\x04\x00\x00\x00&quot;
@@ -150,7 +150,7 @@ payload=&quot;A&quot;*132+p32(0x8048380)+p32(0x080484ab)+&quot;\x01\x00\x00\x00&
 </code></pre>
 <p>write函数PLT地址。read函数GOT地址怎么找呢。<br>
 注意要在没有运行程序的时候。查找。<br>
-<img src="https://guokeya.github.io/post-images/1578572338083.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578572338083.png" alt="" loading="lazy"><br>
 注意这里的返回地址。是write函数执行完后的返回地址。我填的是vulnerable_function的地址。由于程序退出才算正常执行。地址才会变换。那么我们输出真实地址以后。返回到存在栈溢出的函数。再进行溢出。这时候我们已经知道了真实地址。直接覆盖eip就完事了<br>
 后面几个参数都是对应write函数的参数x<br>
 为什么write函数参数要填got表地址呢。因为got表地址中存的才是真正地址。ASLR只会改变栈。函数地址。并不会改变GOT表这个地址</p>
@@ -158,9 +158,9 @@ payload=&quot;A&quot;*132+p32(0x8048380)+p32(0x080484ab)+&quot;\x01\x00\x00\x00&
 PLT和GOT表地址不变。变得是GOT表中存的数据。当我们从GDB中调试。将函数GOT表地址通过write函数输出时。GOT表地址不变。在脚本中可行。GOT表对应的函数真正地址变化。我们通过write输出GOT表中的值。就得到了每次变化的地址
 </code></pre>
 <p>read函数执行前<br>
-<img src="https://guokeya.github.io/post-images/1578572253303.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578572253303.png" alt="" loading="lazy"><br>
 read函数执行后。地址变化了<br>
-<img src="https://guokeya.github.io/post-images/1578572272014.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578572272014.png" alt="" loading="lazy"><br>
 得到了地址。我们接收处理</p>
 <pre><code>a=p.recv()
 a=unpack(a)
@@ -168,10 +168,10 @@ a=unpack(a)
 <p><strong>算出偏移量。</strong><br>
 由于偏移量都不会变。那么我们在main下断点运行程序。从这一次的随机化地址开始算偏移<br>
 由于。我们之前write函数参数填的是read函数的GOT地址。输出的是read函数的真实地址。那么这里就要算read函数和system函数的偏移。别输出read函数。算的是write函数和system函数的偏移<br>
-<img src="https://guokeya.github.io/post-images/1578572605200.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578572605200.png" alt="" loading="lazy"><br>
 得到system函数=真实地址+0x99a10<br>
 然后计算/bin/sh偏移<br>
-<img src="https://guokeya.github.io/post-images/1578572729291.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578572729291.png" alt="" loading="lazy"><br>
 /bin/sh=真实地址+0x84cdb<br>
 <strong>最后溢出getshell</strong><br>
 为什么程序执行完一次还能继续输出呢。因为第一次输出。我们覆盖EIP。修改返回地址填的是有溢出漏洞的那个函数地址。程序执行完read(0,&amp;buf,0x100u)(这个函数已经被我们溢出为write函数了)输出了真实地址。就跳到返回地址去了<br>
@@ -197,11 +197,11 @@ p.sendline(&quot;A&quot;*132+p32(sysaddr)+&quot;BBBB&quot;+p32(binsh))
 #溢出+system函数地址+返回地址+字符串地址(参数)
 p.interactive()
 </code></pre>
-<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1578573222514.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1578573222514.png" alt="" loading="lazy"></figure>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/vj4GJHsC-/">
+            <a href="http://localhost:4000/post/vj4GJHsC-/">
               <span class="post-title">
                 [ISITDTU 2019]EasyPHP(无数字字母Webshell进阶)&rarr;
               </span>
@@ -245,7 +245,7 @@ p.interactive()
             
               
               <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -260,10 +260,10 @@ p.interactive()
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

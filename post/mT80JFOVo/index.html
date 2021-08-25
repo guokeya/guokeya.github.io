@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>Connect-The-Dots 靶机渗透 |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="Connect-The-Dots 靶机渗透 |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="Connect-The-Dots 靶机渗透 |   » Feed" href="http://localhost:4000/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="Connect-The-Dots 靶机渗透"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/mT80JFOVo/"/>
+    <meta property="og:url" content="http://localhost:4000/post/mT80JFOVo/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <a class="navbar-brand" href="http://localhost:4000"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,7 +80,7 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://guokeya.github.io/tag/EfzSPkBWE/" class="tag">渗透测试</a>
+            <a href="http://localhost:4000/tag/EfzSPkBWE/" class="tag">渗透测试</a>
             
         </span>
             <h1>Connect-The-Dots 靶机渗透</h1>
@@ -100,16 +100,16 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <p>nmap扫一波端口<br>
-<img src="https://guokeya.github.io/post-images/1592469309248.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1592469309248.png" alt="" loading="lazy"><br>
 可以看到。这里开了个21端口。<br>
 不能匿名登陆。先放着<br>
 还有个2049.这个是NFS的服务端口。测试存在未授权<br>
-<img src="https://guokeya.github.io/post-images/1592469800941.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1592469800941.png" alt="" loading="lazy"><br>
 这边文件是靶机上所属用户的UID的。。只能知道他存在用户。<br>
 本机有1000UID的用户。名字就是本机的用户<br>
 继续看80<br>
 dirb下发现了<br>
-<img src="https://guokeya.github.io/post-images/1592469909789.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1592469909789.png" alt="" loading="lazy"><br>
 backups。。是个视频<br>
 images图片<br>
 其他就是apache的默认文档<br>
@@ -119,15 +119,15 @@ images图片<br>
 &lt;!-- &lt;script type=&quot;text/javascript&quot; src=&quot;../../mysite/register.html&quot;&gt;&lt;/script&gt; --&gt;
 </code></pre>
 <p>这里得到新的目录。依旧存在目录遍历<br>
-<img src="https://guokeya.github.io/post-images/1592470026194.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1592470026194.png" alt="" loading="lazy"><br>
 在css文件中。找到jsfuck<br>
-<img src="https://guokeya.github.io/post-images/1592470062688.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1592470062688.png" alt="" loading="lazy"><br>
 得到了密码TryToGuessThisNorris@2k19<br>
 看到这密码。还以为用户名Norris。密码2k19。。<br>
 再去FTP爆破下。发现norris用户存在。<br>
 ssh 练上去<br>
 在家目录的ftp/files发现很多bak文件。想移到web目录的。偶然看见web目录有个.swp泄露<br>
-<img src="https://guokeya.github.io/post-images/1592470362747.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1592470362747.png" alt="" loading="lazy"><br>
 下下来。得到morris用户密码<br>
 最后就是提权了<br>
 <code>https://nxnjz.net/2018/08/an-interesting-privilege-escalation-vector-getcap</code><br>
@@ -140,11 +140,11 @@ ssh 练上去<br>
 这个靶机中。就给tar设置了cap_dac_override。tar就具有了RWX的权限。<br>
 那么我们就可以通过tar直接备份root<br>
 拿到flag<br>
-<img src="https://guokeya.github.io/post-images/1592470903925.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1592470903925.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/9REuNTopQ/">
+            <a href="http://localhost:4000/post/9REuNTopQ/">
               <span class="post-title">
                 natraj 靶机渗透&rarr;
               </span>
@@ -188,7 +188,7 @@ ssh 练上去<br>
             
               
               <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -203,10 +203,10 @@ ssh 练上去<br>
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

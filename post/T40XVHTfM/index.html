@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>[N1CTF 2018]eating_cms |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="[N1CTF 2018]eating_cms |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="[N1CTF 2018]eating_cms |   » Feed" href="http://localhost:4000/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="[N1CTF 2018]eating_cms"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/T40XVHTfM/"/>
+    <meta property="og:url" content="http://localhost:4000/post/T40XVHTfM/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <a class="navbar-brand" href="http://localhost:4000"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,9 +80,9 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
             
-            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            <a href="http://localhost:4000/tag/Web/" class="tag">Web安全</a>
             
         </span>
             <h1>[N1CTF 2018]eating_cms</h1>
@@ -102,19 +102,19 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <p>主页又是个登陆。第一时间想到是sql注入。<br>
-<img src="https://guokeya.github.io/post-images/1579094056692.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579094056692.png" alt="" loading="lazy"><br>
 抓包看看,然而单引号被过滤了。试了下斜杠。直接跳转到了hack.php</p>
 <!-- more -->
-<p><img src="https://guokeya.github.io/post-images/1579094199035.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1579094199035.png" alt="" loading="lazy"><br>
 先放着。然后既然有登陆。那就试着register.php。<br>
 果然有。<br>
-<img src="https://guokeya.github.io/post-images/1579094308287.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579094308287.png" alt="" loading="lazy"><br>
 注册个单引号用户。如果存在二次注入。就会报错。<br>
 登陆<br>
-<img src="https://guokeya.github.io/post-images/1579094357296.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579094357296.png" alt="" loading="lazy"><br>
 随便翻翻。看见URL那个参数。base64搞一手。先偷index.php源码<br>
 由于page=guest。我猜测真实文件就是guest.php，那么我们直接写index就好了<br>
-<img src="https://guokeya.github.io/post-images/1579094472030.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579094472030.png" alt="" loading="lazy"><br>
 index.php</p>
 <pre><code>&lt;?php
 require_once &quot;function.php&quot;;
@@ -345,16 +345,16 @@ include &quot;$page.php&quot;;
 <p>之前在function.php中。有一段过滤函数。ffffflag之类的。用的是parse_url和parse_str来判断URL中是否有危险字符。<br>
 而parse_url都是可以绕过了。在域名后面多加两个/即可绕过<br>
 尝试包含下<br>
-<img src="https://guokeya.github.io/post-images/1579094964889.png" alt="" loading="lazy"><br>
-<img src="https://guokeya.github.io/post-images/1579095003574.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579094964889.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579095003574.png" alt="" loading="lazy"><br>
 接着去访问html，有个文件上传。burp抓包看看<br>
-<img src="https://guokeya.github.io/post-images/1579095116078.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579095116078.png" alt="" loading="lazy"><br>
 ?????????????404。靶场出问题了？<br>
 这里。我试了下文件包含。发现文件存在。其实是html表单写错了<br>
 抓包修改下请求路径就好了<br>
-<img src="https://guokeya.github.io/post-images/1579095198816.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579095198816.png" alt="" loading="lazy"><br>
 上传文件直接返回文件内容。再会过去看下源码<br>
-<img src="https://guokeya.github.io/post-images/1579095224689.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1579095224689.png" alt="" loading="lazy"></p>
 <pre><code>&lt;?php
 $allowtype = array(&quot;gif&quot;,&quot;png&quot;,&quot;jpg&quot;);
 $size = 10000000;
@@ -388,12 +388,12 @@ if(!in_array($ext,$allowtype)){
 最后通过下面的img标签输出<br>
 。这。赤裸裸的命令执行。啥也没过滤。先在本地测试下<br>
 会将ls的执行结果以base64输出<br>
-<img src="https://guokeya.github.io/post-images/1579095424753.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579095424753.png" alt="" loading="lazy"><br>
 得到文件名<br>
-<img src="https://guokeya.github.io/post-images/1579095529046.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579095529046.png" alt="" loading="lazy"><br>
 去根目录查看<br>
 环境的目录就是在./var下。所以..就到了根目录。用/会报错。估计是转义了后面的&quot;。<br>
-<img src="https://guokeya.github.io/post-images/1579095624592.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579095624592.png" alt="" loading="lazy"><br>
 尝试了下直接cat ../flag_23333<br>
 报错了can not move<br>
 php文件上传时。将缓存文件移动到目标目录由于存在特殊字符。就会报错<br>
@@ -401,11 +401,11 @@ php文件上传时。将缓存文件移动到目标目录由于存在特殊字�
 <pre><code>123.php;`echo Y2F0IC9mbGFnXzIzMzMzMw==|base64 -d`
 </code></pre>
 <p>由于会先执行反引号内的命令。先将base64解密。成为cat /flag_23333,然后传入|bas64 -w 0输出<br>
-<img src="https://guokeya.github.io/post-images/1579095955048.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1579095955048.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/6RWy228-8/">
+            <a href="http://localhost:4000/post/6RWy228-8/">
               <span class="post-title">
                 [杂项]NTFS隐写&rarr;
               </span>
@@ -449,7 +449,7 @@ php文件上传时。将缓存文件移动到目标目录由于存在特殊字�
             
               
               <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -464,10 +464,10 @@ php文件上传时。将缓存文件移动到目标目录由于存在特殊字�
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

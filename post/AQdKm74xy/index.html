@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>HTTP请求走私 |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="HTTP请求走私 |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="HTTP请求走私 |   » Feed" href="http://localhost:4000/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="HTTP请求走私"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/AQdKm74xy/"/>
+    <meta property="og:url" content="http://localhost:4000/post/AQdKm74xy/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <a class="navbar-brand" href="http://localhost:4000"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -104,27 +104,27 @@
 在HTTP1.0的时候。客户端进行一次HTTP请求。就需要和服务器建立一个TCP连接。获取一个Web页面的内有。有HTML文档。JS。CSS等资源。如果每请求一次。就建立一个TCP连接。就会使HTTP服务器负载开销过大。于是在HTTP1.1的时候。增加了Keep-Alive和Pipeline这两个特性<br>
 <code>Keep-Alive</code><br>
 在HTTP请求中增加一个特殊的请求头<code>Connection: Keep-Alive</code>告诉服务器。接受完HTTP请求后。不断开TCP连接。后面对相同服务器的HTTP请求。重用这个TCP连接。这样就只需要一次TCP握手。这个特性在HTTP1.1中默认开启<br>
-<img src="https://guokeya.github.io/post-images/1579164586357.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579164586357.png" alt="" loading="lazy"><br>
 <code>Pipeline</code><br>
 有了Pipeline。客户端就不需要等待服务器响应。然后再发送请求。假设客户端一次性发了三个请求。服务器接收到请求之后。遵循先入先出。将第一个请求包响应给客户端。然后再响应第二个。一一对应<br>
 浏览器默认不启用Pipeline。但是服务器都支持pipeline<br>
-<img src="https://guokeya.github.io/post-images/1579164568762.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579164568762.png" alt="" loading="lazy"><br>
 <code>CDN</code><br>
 为了提升用户的浏览速度。提高使用体验。减轻服务器负担。网站都上了CDN加速服务器。通过在源站前面加一个具有缓存功能的反向代理服务器。用户在请求某些静态资源的时候。就直接从代理服务器获取。不用再去源站获取。<br>
 一般。反向代理服务器和后端的源站服务器之间。会重用一个TCP连接。不同的用户与代理服务器建立连接。请求资源。代理服务器再通过一个TCP连接去请求源站。减小了源站的负担<br>
-<img src="https://guokeya.github.io/post-images/1579164629802.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579164629802.png" alt="" loading="lazy"><br>
 当发送一个比较模糊的HTTP请求给代理服务器时。如果代理服务器和源站。处理方式不同。可能就存在漏洞<br>
 代理服务器认为这是一个HTTP请求。然后转发给源站。源站解析。只认为请求中的一部分是请求。剩下的一部分。就算是走私的请求。当这部分走私的请求对正常用户的请求造成了影响。就实现了HTTP请求走私攻击</p>
 <p><strong>HTTP请求的请求体有两种判定方式</strong><br>
 <code>Content-Length</code><br>
 HTTP消息长度。用来告诉服务器。请求长度有多少个字节。超出部分。就看服务器的处理方式了<br>
 这里Content-Length定义了消息长度为3个字节。服务器就会取3个字节长度<br>
-<img src="https://guokeya.github.io/post-images/1579165515061.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579165515061.png" alt="" loading="lazy"><br>
 <code>Transfer-Encoding</code><br>
 Transfer-Encoding是一个HTTP头部字段。对应分块编码<br>
 在请求头中加入Transfer-Encoding:chunked后。就代表这个请求采用了分块编码。通常用于数据过大。分几次传输。最后一个分块长度必须为0。对应的分块数据没有内容。就表示结束<br>
 它不靠Content-Length来告诉服务器请求体有多长。而是靠0这个字符来代表分块结束。之后换行<code>两次</code><br>
-<img src="https://guokeya.github.io/post-images/1579166029359.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579166029359.png" alt="" loading="lazy"><br>
 第一行的1，代表第一段有1个字节。<br>
 第三行的1，代表第二段有1个字节。<br>
 第五行的3，代表第三段有3个字节。<br>
@@ -134,7 +134,7 @@ Transfer-Encoding是一个HTTP头部字段。对应分块编码<br>
 这里开始就涉及到前后端不同的处理方式。CL=Content-Length   TE=Transfer-Encoding<br>
 在RFC2616标准中。没有对GET请求像POST请求那样。对请求体做出规定。在RFC7231的4.3.1中只定义了。假设代理服务器允许GET请求携带请求体。而后端不允许GET请求携带请求体。它会直接忽略掉GET请求中的CL头。不进行处理<br>
 如图。123就是请求体。一般只有POST才会带请求体。<br>
-<img src="https://guokeya.github.io/post-images/1579166534296.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579166534296.png" alt="" loading="lazy"><br>
 <code>1。CL不为0的GET请求</code><br>
 代理服务器允许GET请求携带请求体。<br>
 后端服务器不允许GET请求携带请求体<br>
@@ -169,7 +169,7 @@ Host: example.com
 <p>就返回12345GET request method not found，实现走私攻击<br>
 <code>3。CL-TE</code><br>
 接收了两个请求头。前端服务器只处理CL。后端遵守RFC2616规定。忽略CL。处理TE头<br>
-<img src="https://guokeya.github.io/post-images/1579168645932.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579168645932.png" alt="" loading="lazy"><br>
 可以看到。服务器忽略了CL头。根据TE头来梳理数据</p>
 <pre><code>POST / HTTP/1.1
 Host: example.com
@@ -187,7 +187,7 @@ GET /admin HTTP/1.1
 根据题目取名。我们可以知道。这是CL-TE<br>
 前端判断CL。后端判断TE<br>
 先访问下admin,返回了403<br>
-<img src="https://guokeya.github.io/post-images/1579172682610.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579172682610.png" alt="" loading="lazy"><br>
 接下来构造一个CL-TE的payload<br>
 CL要等于提交的请求体长度。而TE必须要在第二个请求前面<br>
 CL=</p>
@@ -200,14 +200,14 @@ X-test: Mi0
 
 </code></pre>
 <p>TE=0回车回车。当前后服务器解析时。最后的GET /admin就会被当成是新的请求。被执行。也就成功访问到了admin目录。<br>
-<img src="https://guokeya.github.io/post-images/1579172806319.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579172806319.png" alt="" loading="lazy"><br>
 但是这里。提示GET不能携带请求体。那么我们就用POST<br>
-<img src="https://guokeya.github.io/post-images/1579173112083.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579173112083.png" alt="" loading="lazy"><br>
 又提示。必须从本地访问，加个XFF，Client-ip，host都试一遍<br>
 CDN缓存问题。。mmp。试了好久。才成功<br>
-<img src="https://guokeya.github.io/post-images/1579173447031.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579173447031.png" alt="" loading="lazy"><br>
 构造连接即可<br>
-<img src="https://guokeya.github.io/post-images/1579173579920.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579173579920.png" alt="" loading="lazy"><br>
 <code>4。TE-CL</code><br>
 当存在两个请求头。前端服务器处理TE头。后端服务器处理CL头</p>
 <pre><code>POST / HTTP/1.1
@@ -227,7 +227,7 @@ GPOST / HTTP/1.1
 继续实验。这次前端用TE。后端用CL。参考上面的格式。构造Payload<br>
 前端根据TE来解析。所有请求都被算上了<br>
 后端根据CL来解析。22\r\n被解析。GET /admin就成了新的请求<br>
-<img src="https://guokeya.github.io/post-images/1579173913376.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579173913376.png" alt="" loading="lazy"><br>
 之后我就不行了。一直连接超时。Read timeout after 10000ms<br>
 <code>TE-TE</code><br>
 前后端都处理TE头。前端接收可处理的TE头。后端接收无法识别的TE头。就会不处理TE头。处理CL头</p>
@@ -249,7 +249,7 @@ GPOST / HTTP/1.1
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/T40XVHTfM/">
+            <a href="http://localhost:4000/post/T40XVHTfM/">
               <span class="post-title">
                 [N1CTF 2018]eating_cms&rarr;
               </span>
@@ -293,7 +293,7 @@ GPOST / HTTP/1.1
             
               
               <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -308,10 +308,10 @@ GPOST / HTTP/1.1
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

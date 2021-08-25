@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>Web hash长度扩展攻击 |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="Web hash长度扩展攻击 |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="Web hash长度扩展攻击 |   » Feed" href="http://localhost:4000/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="Web hash长度扩展攻击"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/PtXCVUYYQ/"/>
+    <meta property="og:url" content="http://localhost:4000/post/PtXCVUYYQ/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <a class="navbar-brand" href="http://localhost:4000"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,9 +80,9 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
             
-            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            <a href="http://localhost:4000/tag/Web/" class="tag">Web安全</a>
             
         </span>
             <h1>Web hash长度扩展攻击</h1>
@@ -118,7 +118,7 @@ PS:补位是必须进行的操作。长度刚好位448.也得补位。补64字�
 最后一个方框。是我们的消息长度。test长度为4字节。4*8=32位,16进制为0x20,小端显示<br>
 0x00000020=0x20000000<br>
 0x12345678=0x78563412<br>
-<img src="https://guokeya.github.io/post-images/1577961626429.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1577961626429.png" alt="" loading="lazy"><br>
 4.<br>
 计算消息摘要，当准备工作做好后。就开始加密运算。<br>
 这步就不说了。密码学tnl<br>
@@ -144,7 +144,7 @@ die(&quot;this is flag{fdajkfjdkjakfjk`}&quot;);
 auth和hsh都是我们可控的。但是secert不知道。只知道长度为6
 </code></pre>
 <p>进入web<br>
-<img src="https://guokeya.github.io/post-images/1577961689171.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1577961689171.png" alt="" loading="lazy"></p>
 <p>找到test对应的hash:5a2e54ee57e5b7273b9a8fed78c1ebd8<br>
 这时候，使用kali下的一个工具hashpump。</p>
 <pre><code>Input Signature: 5a2e54ee57e5b7273b9a8fed78c1ebd8
@@ -160,23 +160,23 @@ e2e5d57bd08006da01fcf36b1fa69ea2
 test\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00P\x00\x00\x00\x00\x00\x00\x00123
 #生成的hash字符
 </code></pre>
-<p><img src="https://guokeya.github.io/post-images/1577961709318.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1577961709318.png" alt="" loading="lazy"><br>
 hsh=e2e5d57bd08006da01fcf36b1fa69ea2<br>
 auth=test%80%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00P%00%00%00%00%00%00%00123<br>
 提交得到flag<br>
-<img src="https://guokeya.github.io/post-images/1577961726107.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1577961726107.png" alt="" loading="lazy"><br>
 <strong>WhaleCTF: 哈希入侵</strong><br>
 web主页。。条件都很清楚了。<br>
 密钥长度=4<br>
 role(用户名)=admin<br>
 hash=c7813629f22b6a7d28a08041db3e80a9<br>
 扩展字符串=joychou<br>
-<img src="https://guokeya.github.io/post-images/1577961742251.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1577961742251.png" alt="" loading="lazy"><br>
 要注意的是。生成的字符串。要将\x替换为%<br>
-<img src="https://guokeya.github.io/post-images/1577961759885.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1577961759885.png" alt="" loading="lazy"><br>
 <strong>jarvisoj:flag在管理员手里</strong><br>
 hsh和role。然后要成为管理员。估计就是admin<br>
-<img src="https://guokeya.github.io/post-images/1577961857050.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1577961857050.png" alt="" loading="lazy"><br>
 扫描了下。有index.php~</p>
 <pre><code>        &lt;?php 
             $auth = false;
@@ -230,11 +230,11 @@ for i in range(0,13):
 然后。需要将\x00URL编码成%00,然后再反转。这次是为了模拟程序输出<br>
 总结一句话。源程序加密的时候反转字符串。我们解密的时候也要反转字符串(放入hashpump的参数)<br>
 程序输出的时候反转字符串。我们输入的时候也要反转字符串(得到的参数反转)<br>
-<img src="https://guokeya.github.io/post-images/1577963494300.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1577963494300.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/xRMKFLalK/">
+            <a href="http://localhost:4000/post/xRMKFLalK/">
               <span class="post-title">
                 Mysql REGEXP正则注入&rarr;
               </span>
@@ -278,7 +278,7 @@ for i in range(0,13):
             
               
               <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -293,10 +293,10 @@ for i in range(0,13):
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

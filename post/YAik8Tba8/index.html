@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>USB流量解析 |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="USB流量解析 |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="USB流量解析 |   » Feed" href="http://localhost:4000/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="USB流量解析"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/YAik8Tba8/"/>
+    <meta property="og:url" content="http://localhost:4000/post/YAik8Tba8/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <a class="navbar-brand" href="http://localhost:4000"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,9 +80,9 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
             
-            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            <a href="http://localhost:4000/tag/Web/" class="tag">Web安全</a>
             
         </span>
             <h1>USB流量解析</h1>
@@ -109,7 +109,7 @@
 <p><strong>键盘流量解析</strong><br>
 USB协议的数据部分在Leftover Capture Data中。也就是窗口的最底下<br>
 右键将其应用为列。<br>
-<img src="https://guokeya.github.io/post-images/1579057633288.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579057633288.png" alt="" loading="lazy"><br>
 键盘数据包数据长度为8字节。</p>
 <pre><code>BYTE1 --
        |--bit0:   Left Control是否按下，按下为1 
@@ -124,15 +124,15 @@ BYTE2 -- 暂不清楚，有的地方说是保留位
 BYTE3--BYTE8 -- 这六个为普通按键
 </code></pre>
 <p>按键信息在第3字节<br>
-<img src="https://guokeya.github.io/post-images/1579057738788.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579057738788.png" alt="" loading="lazy"><br>
 按键与数字的对应关系如下:<br>
-<img src="https://guokeya.github.io/post-images/1579057820863.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579057820863.png" alt="" loading="lazy"><br>
 现在我们利用工具和脚本。将第三字节取出来。然后根据对应表转换为明文</p>
 <pre><code>tshark -r usb1.pcap -T fields -e usb.capdata &gt; usbdata.txt
 </code></pre>
 <p>通过tshark过滤工具。-r指定文件。-T指定输出格式为字段。-e指定字段<br>
 将usb.capdata字段的值都导出来了<br>
-<img src="https://guokeya.github.io/post-images/1579058055066.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1579058055066.png" alt="" loading="lazy"></p>
 <pre><code>mappings = { 0x04:&quot;A&quot;,  0x05:&quot;B&quot;,  0x06:&quot;C&quot;, 0x07:&quot;D&quot;, 0x08:&quot;E&quot;, 0x09:&quot;F&quot;, 0x0A:&quot;G&quot;,  0x0B:&quot;H&quot;, 0x0C:&quot;I&quot;,  0x0D:&quot;J&quot;, 0x0E:&quot;K&quot;, 0x0F:&quot;L&quot;, 0x10:&quot;M&quot;, 0x11:&quot;N&quot;,0x12:&quot;O&quot;,  0x13:&quot;P&quot;, 0x14:&quot;Q&quot;, 0x15:&quot;R&quot;, 0x16:&quot;S&quot;, 0x17:&quot;T&quot;, 0x18:&quot;U&quot;,0x19:&quot;V&quot;, 0x1A:&quot;W&quot;, 0x1B:&quot;X&quot;, 0x1C:&quot;Y&quot;, 0x1D:&quot;Z&quot;, 0x1E:&quot;1&quot;, 0x1F:&quot;2&quot;, 0x20:&quot;3&quot;, 0x21:&quot;4&quot;, 0x22:&quot;5&quot;,  0x23:&quot;6&quot;, 0x24:&quot;7&quot;, 0x25:&quot;8&quot;, 0x26:&quot;9&quot;, 0x27:&quot;0&quot;, 0x28:&quot;n&quot;, 0x2a:&quot;[DEL]&quot;,  0X2B:&quot;    &quot;, 0x2C:&quot; &quot;,  0x2D:&quot;-&quot;, 0x2E:&quot;=&quot;, 0x2F:&quot;[&quot;,  0x30:&quot;]&quot;,  0x31:&quot;\&quot;, 0x32:&quot;~&quot;, 0x33:&quot;;&quot;,  0x34:&quot;'&quot;, 0x36:&quot;,&quot;,  0x37:&quot;.&quot; }
 nums = []
 keys = open('usbdata.txt')
@@ -157,11 +157,11 @@ print output
 #输出明文
 </code></pre>
 <p>得到明文<br>
-<img src="https://guokeya.github.io/post-images/1579058455407.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579058455407.png" alt="" loading="lazy"><br>
 <strong>鼠标流量</strong><br>
 鼠标流量和键盘流量不一样。鼠标移动是连续的。而键盘是离散的<br>
 和之前一样。用tshark工具将data过滤出来<br>
-<img src="https://guokeya.github.io/post-images/1579058581102.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579058581102.png" alt="" loading="lazy"><br>
 鼠标流量还是4个字节。<br>
 第一个字节代表按键：0x00时。代表没有按鼠标/0x01。代表按左键/0x02时。代表按右键<br>
 第二个字节代表左右。最高位为符号为。值为正时。代表鼠标右移。值为负。代表鼠标左移<br>
@@ -194,14 +194,14 @@ for line in keys:
 keys.close()
 </code></pre>
 <p>将输出结果放入1.txt，用gnuplot绘图<br>
-<img src="https://guokeya.github.io/post-images/1579059009201.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579059009201.png" alt="" loading="lazy"><br>
 有点flag的样子。但好像字符是反着的。再保存。放到画图中。反转一下<br>
-<img src="https://guokeya.github.io/post-images/1579059043688.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579059043688.png" alt="" loading="lazy"><br>
 得到flag</p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/-T4SH774g/">
+            <a href="http://localhost:4000/post/-T4SH774g/">
               <span class="post-title">
                 [CISCN2019 华北赛区 Day1 Web1]Dropbox(phar)&rarr;
               </span>
@@ -245,7 +245,7 @@ keys.close()
             
               
               <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -260,10 +260,10 @@ keys.close()
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">
