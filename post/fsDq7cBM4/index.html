@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>纪录下搭建LNMP的过程 |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="纪录下搭建LNMP的过程 |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="纪录下搭建LNMP的过程"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/fsDq7cBM4/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/系统安全/" class="tag">系统安全</a>
+            
+        </span>
+            <h1>纪录下搭建LNMP的过程</h1>
+            <span class="meta">
+            	Posted on
+              2020-01-02，7 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p><strong>搭建准备</strong><br>
+Centos6.5<br>
+nginx 1.8.1</p>
+<!-- more -->
+<p><strong>开始搭建</strong><br>
+首先安装配置下本地镜像,配置为本地源<br>
+vim /etc/yum.repos.d/local.repo</p>
+<pre><code>[local]
+name=local
+baseurl=file:///media/CentOS_6.5_Final
+enabled=1
+gpgcheck=0
+</code></pre>
+<p>安装下所需的命令<br>
+yum install wget<br>
+#用来远程下载软件包<br>
+yum install gcc gcc-c++<br>
+#用来编译软件包</p>
+<p><strong>1.安装Nginx</strong><br>
+安装nginx的依赖包</p>
+<pre><code>yum install pcre pcre-devel -y              #nginx的Rewrite模块和HTTP核心模块会使用到PCRE正则表达式语法  
+yum install zlib zlib-devel -y              #nginx的各种模块中需要使用gzip压缩
+yum install openssl openssl-devel -y        #nginx的安全套接字密码库
+</code></pre>
+<p>装完依赖包，就开始装nginx了</p>
+<pre><code>wget http://nginx.org/download/nginx-1.8.1.tar.gz -O /usr/local/src
+</code></pre>
+<p>下载nginx安装包，到/usr/local/src目录</p>
+<pre><code>cd /usr/local/src &amp;&amp;tar -zxvf nginx-1.8.1.tar.gz
+cd nginx-1.8.1
+./configure --prefix=/usr/local/nginx  
+</code></pre>
+<p>configure是配置软件的，比如安装目录等，可以--help查看配置选项<br>
+--prefix安装目录</p>
+<pre><code>make&amp;&amp;make install
+make编译软件，&amp;&amp;表示命令连接符，make install 安装
+</code></pre>
+<p>OK，软件安装完了。就开始创建nginx运行的用户，更安全</p>
+<pre><code>groupadd nginx          #增加nginx组
+useradd -M -g nginx -s /sbin/nologin nginx      #-M不创建家目录 -g加入nginx组 -s自定义用户bash
+</code></pre>
+<pre><code>cd /usr/local/nginx/conf
+#切换到nginx配置文件目录
+vim nginx.conf      
+#配置nginx服务启动用户
+user nginx nginx
+#保存退出
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1577949450226.png" alt="" loading="lazy"></figure>
+<pre><code>/usr/local/nginx/sbin/nginx -t
+#检测配置文件是否有错误
+/usr/local/nginx/sbin/nginx
+#启动nginx
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1577949465356.png" alt="" loading="lazy"><br>
+具体-h查看帮助信息<br>
+<img src="https://guokeya.github.io/post-images/1577949474528.png" alt="" loading="lazy"><br>
+如果不能访问，可能是防火墙或者selinux的原因，关闭即可</p>
+<pre><code>setenforce 0
+service iptables stop
+</code></pre>
+<p><strong>2.安装Mysql数据库</strong><br>
+这里直接使用本地源安装了</p>
+<pre><code>yum install mysql-server mysql -y
+</code></pre>
+<p>#myqsl-server 是mysql的服务进程<br>
+#mysql 是mysql连接的客户端</p>
+<pre><code>chown mysql:mysql -R /var/lib/mysql
+</code></pre>
+<p>#将mysql的目录所属用户和组都给mysql</p>
+<pre><code>/etc/init.d/mysqld start
+</code></pre>
+<p>#启动mysql服务<br>
+<img src="https://guokeya.github.io/post-images/1577949522032.png" alt="" loading="lazy"><br>
+3.安装php<br>
+首先安装php的依赖包</p>
+<pre><code>yum install libxml2 libxml2-devel openssl openssl-devel bzip2 bzip2-devel libcurl libcurl-devel libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel gmp gmp-devel libmcrypt libmcrypt-devel readline readline-devel libxslt libxslt-devel -y
+wget http://mirrors.sohu.com/php/php-5.5.6.tar.gz
+</code></pre>
+<p>#下载php安装包</p>
+<pre><code>tar -zxvf php-5.5.6.tar.gz
+</code></pre>
+<p>#解压</p>
+<pre><code>cd php-5.5.6&amp;&amp;./configure --prefix=/usr/local/php --disable-fileinfo --enable-fpm --with-config-file-path=/etc --with-config-file-scan-dir=/etc/php.d --with-openssl --with-zlib --with-curl --enable-ftp --with-gd --with-xmlrpc --with-jpeg-dir --with-png-dir --with-freetype-dir --enable-gd-native-ttf --enable-mbstring --with-mcrypt=/usr/local/libmcrypt --enable-zip --enable-mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-mysql-sock=/var/lib/mysql/mysql.sock --without-pear --enable-bcmath
+</code></pre>
+<p>#开始配置php</p>
+<pre><code>我这边报错了:configure: error: mcrypt.h not found. Please reinstall libmcrypt.
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1577949604106.png" alt="" loading="lazy"><br>
+百度一手，解决办法如下：</p>
+<pre><code>wget https://sourceforge.net/projects/mcrypt/files/Libmcrypt/2.5.8/libmcrypt-2.5.8.tar.gz --no-check-certificate
+#下载libmcrypt扩展
+tar -zxvf libmcrypt-2.5.8.tar.gz&amp;&amp;cd libmcrypt-2.5.8
+#解压
+./configure --prefix=/usr/local
+#配置
+make&amp;&amp;make install
+#安装扩展
+</code></pre>
+<p>#重新开始编译安装php</p>
+<pre><code>cd /usr/local/src/php-5.5.18
+make &amp;&amp;make install
+#这里会有点慢
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1577949660803.png" alt="" loading="lazy"><br>
+OK了<br>
+接下来将PHP configure中的--with-config-file-path位置目录中的配置文件放到/etc/</p>
+<pre><code>cp /usr/local/src/php-5.5.6/php.ini-development /etc/php.ini
+</code></pre>
+<pre><code>#创建php-fpm运行组
+groupadd www-data
+#创建php-fpm运行用户
+useradd -M -g www-data -s /sbin/nologin www-data
+#切换到php目录
+cd /usr/local/php/etc
+#复制粘贴文件
+cp php-fpm.conf.default php-fpm.conf
+#编辑配置文件，将user，group修改
+vim php-fpm.conf
+编辑配置文件
+user www-data
+group www-data
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1577949682174.png" alt="" loading="lazy"><br>
+<strong>4.nginx支持php</strong><br>
+vim /usr/local/nginx/conf/nginx.conf，配置如下<br>
+<img src="https://guokeya.github.io/post-images/1577949694665.png" alt="" loading="lazy"></p>
+<pre><code>        location / {
+            root   html;
+            index  index.php index.html index.htm;
+        }
+        location ~ \.php$ {
+            root           html;
+            fastcgi_pass   127.0.0.1:9000;
+            fastcgi_index  index.php;
+            fastcgi_param  SCRIPT_FILENAME   $document_root$fastcgi_script_name;
+            include        fastcgi_params;
+        }
+</code></pre>
+<p>#重启nginx服务</p>
+<pre><code>/usr/local/nginx/sbin/nginx -s reload
+</code></pre>
+<p>#启动php-fpm</p>
+<pre><code>/usr/local/php/sbin/php-fpm
+</code></pre>
+<p><strong>5.将nginx和php注册为系统服务</strong><br>
+vim /usr/local/nginx/etc/php-fpm.conf<br>
+将里面pid=run/php-fpm.pid前面的;去掉<br>
+然后启动服务<br>
+vim /etc/init.d/php-fpm<br>
+#编辑文件，内容如下</p>
+<pre><code>#! /bin/sh
+# Comments to support chkconfig on CentOS
+# chkconfig: 2345 65 37
+#
+set -e
+  
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DESC=&quot;php-fpm daemon&quot;
+NAME=php-fpm
+DAEMON=/usr/local/php/sbin/$NAME
+  
+CONFIGFILE=/usr/local/php/etc/php-fpm.conf
+PIDFILE=/usr/local/php/var/run/$NAME.pid
+SCRIPTNAME=/etc/init.d/$NAME
+  
+# Gracefully exit if the package has been removed.
+test -x $DAEMON || exit 0
+  
+d_start() {
+  $DAEMON -y $CONFIGFILE || echo -n &quot; already running&quot;
+}
+  
+d_stop() {
+  kill -QUIT `cat $PIDFILE` || echo -n &quot; not running&quot;
+}
+  
+d_reload() {
+  kill -HUP `cat $PIDFILE` || echo -n &quot; can't reload&quot;
+}
+  
+case &quot;$1&quot; in
+  start)
+        echo -n &quot;Starting $DESC is success&quot;
+        d_start
+        echo &quot;.&quot;
+        ;;
+  stop)
+        echo -n &quot;Stopping $DESC is success&quot;
+        d_stop
+        echo &quot;.&quot;
+        ;;
+  reload)
+        echo -n &quot;Reloading $DESC configuration...&quot;
+        d_reload
+        echo &quot;reloaded.&quot;
+  ;;
+  restart)
+        echo -n &quot;Restarting $DESC is success&quot;
+        d_stop
+        sleep 1
+        d_start
+        echo &quot;.&quot;
+        ;;
+  *)
+         echo &quot;Usage: $SCRIPTNAME {start|stop|restart|force-reload}&quot; &gt;&amp;2
+         exit 3
+        ;;
+esac
+</code></pre>
+<p>chmod 755 /etc/init.d/php-fpm<br>
+#给读和执行权限<br>
+chkconfig php-fpm<br>
+#开机启动</p>
+<p>vim /etc/init.d/nginxd</p>
+<pre><code>#!/bin/bash  
+#  
+#chkconfig: - 85 15  
+#description: Nginx is a World Wide Web server.  
+#processname: nginx  
+
+nginx=/usr/local/nginx/sbin/nginx
+conf=/usr/local/nginx/conf/nginx.conf
+
+case $1 in  
+       start)  
+              echo -n &quot;Starting Nginx&quot;  
+              $nginx -c $conf  
+              echo &quot; done&quot;  
+       ;;  
+
+       stop)  
+              echo -n &quot;Stopping Nginx&quot;  
+              killall -9 nginx  
+              echo &quot; done&quot;  
+       ;;  
+
+       test)  
+              $nginx -t -c $conf  
+       ;;  
+
+        reload)  
+              echo -n &quot;Reloading Nginx&quot;  
+              ps auxww | grep nginx | grep master | awk '{print $2}' | xargs kill -HUP  
+              echo &quot; done&quot;  
+       ;;  
+
+        restart)  
+              $0 stop  
+              $0 start  
+       ;;  
+
+       show)  
+              ps -aux|grep nginx  
+       ;;  
+
+       *)  
+              echo -n &quot;Usage: $0 {start|restart|reload|stop|test|show}&quot;  
+       ;;  
+
+esac
+</code></pre>
+<pre><code>chmod +x /etc/init.d/nginxd
+chkconfig nginxd
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1577949763168.png" alt="" loading="lazy"><br>
+成功运行php</p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/NTtCrziEm/">
+              <span class="post-title">
+                CTF PHP代码审计中的一题任意URL跳转&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

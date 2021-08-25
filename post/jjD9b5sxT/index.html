@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>PHP mt_rand 随机数安全 |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="PHP mt_rand 随机数安全 |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="PHP mt_rand 随机数安全"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/jjD9b5sxT/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>PHP mt_rand 随机数安全</h1>
+            <span class="meta">
+            	Posted on
+              2020-01-02，3 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p><strong>函数介绍</strong></p>
+<!-- more -->
+<pre><code>mt_rand()，用于产生一个随机数，用Mersenne Twister算法的特性，有两个可选参数(min,max)
+mt_rand(5,15)随机产生5-15之间的随机数
+mt_rand()随机产生0-mt_getrandmax()之间的伪随机数
+</code></pre>
+<p>伪随机数:</p>
+<pre><code>伪随机数，并不是真正的随机，如果种子不变，那么这个伪随机数存在一定风险
+</code></pre>
+<p>mt_rand()安全问题:</p>
+<pre><code>mt_rand就是一个伪随机数生成函数，通过一个种子产生伪随机数，如果知道了种子，或者已经产生的随机数，都可能获得其他随机数的信息
+</code></pre>
+<pre><code>假设mt_rand()生成算法为，rand=seed+(i*10),seed是种子，这是我们不知道的，i是第几次调用，如果我们知道rand(结果)和i(第几次调用)那么就能反推出来seed(种子)的值，拿到种子，就能利用种子，自己调用mt_rand()生成结果
+</code></pre>
+<p>[GWCTF 2019]枯燥的抽奖<br>
+进入题目,随手翻翻有什么东西。robots.txt。源代码。源码泄露。都看看<br>
+<img src="https://guokeya.github.io/post-images/1577953151461.png" alt="" loading="lazy"><br>
+找到一个php文件。访问看看<br>
+<img src="https://guokeya.github.io/post-images/1577953157565.png" alt="" loading="lazy"><br>
+OK。程序源码<br>
+<img src="https://guokeya.github.io/post-images/1577953163613.png" alt="" loading="lazy"><br>
+这段代码就是根据rand函数随机生成一个seed(种子),然后去mt_rand生成随机数。然后把字符串前十个输出给我们<br>
+很明显。这题就是伪随机数。由于我们已经知道了前面10个字符。那么就可以通过php_mt_rand工具来破解<br>
+https://www.openwall.com/php_mt_seed/<br>
+我们先来通过那10个字符串转换为php_mt_seed可识别的格式</p>
+<pre><code>str1='abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+#源代码中的字符串
+str2='xaLyvX6QTh'
+#给你的10个字符串
+str3 = str1[::-1]
+length = len(str2)
+res=''
+for i in range(len(str2)):
+    for j in range(len(str1)):
+        if str2[i] == str1[j]:
+            res+=str(j)+' '+str(j)+' '+'0'+' '+str(len(str1)-1)+' '
+            break
+print (res)
+</code></pre>
+<p>得到结果</p>
+<pre><code>23 23 0 61 0 0 0 61 47 47 0 61 24 24 0 61 21 21 0 61 59 59 0 61 32 32 0 61 52 52 0 61 55 55 0 61 7 7 0 61
+</code></pre>
+<p>使用php_mt_seed来获取seed的值，这里我的seed值为751184378<br>
+<img src="https://guokeya.github.io/post-images/1577953184647.png" alt="" loading="lazy"><br>
+用seed的值重新播种。注意。这里用PHP7.1.0+版本。才能获取正确结果</p>
+<pre><code>&lt;?php
+mt_srand(751184378);
+$str1='abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+$len=20;
+$str2='';
+for($i=0;$i&lt;$len;$i++){
+	$str2.=substr($str1,mt_rand(0,strlen($str1)-1),1);
+}
+echo $str2;
+?&gt;
+</code></pre>
+<p>就是照着源代码打一遍。只不过mt_srand换成我们已知的<br>
+拿到flag<br>
+<img src="https://guokeya.github.io/post-images/1577953210943.png" alt="" loading="lazy"></p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/VmMTWCNZj/">
+              <span class="post-title">
+                pwnable.kr(collision)&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+
