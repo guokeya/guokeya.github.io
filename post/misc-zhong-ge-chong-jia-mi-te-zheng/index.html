@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>Misc中各种加密特征 |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="Misc中各种加密特征 |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="Misc中各种加密特征"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/misc-zhong-ge-chong-jia-mi-te-zheng/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+        </span>
+            <h1>Misc中各种加密特征</h1>
+            <span class="meta">
+            	Posted on
+              2020-01-23，4 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <h1 id="centerbase64center"><center>Base64</center></h1>
+<pre><code>由A-Za-z0-9+/==组成的64个字符。通常末尾有==的就是Base64
+Base64:SSBsb3ZlIHlvde+8gQ==
+</code></pre>
+<h1 id="centerbase32center"><center>Base32</center></h1>
+<pre><code>由A-Z和2-7组成的32个字符。通常末尾有===为Base32
+Base32:JEQGY33WMUQHS33V566IC===
+</code></pre>
+<h1 id="centerbase16center"><center>Base16</center></h1>
+<pre><code>由0-9和0A-F组成的16个字符。实质就是16进制的字符串。
+Base16:49206c6f766520796f75efbc81
+</code></pre>
+<p>以下是我的一个识别多次Base加密的脚本。用于加密了N次的Base字符串</p>
+<pre><code>import base64
+flag='56477457566B31464E56565756455A4F5A57744664315673556C5A4E52545656566C524F55464A47536B5A55616B4A47545555315656525961453953566B563456477453566B31564D545A5256454A54566B5A5664315273556C5A4E4D555A565657745754303146565868555633425354577331526C5A55516B3953526C593056466877536B3147536B566152557050556C5A46656C527563464E53617A5646566C5247546C5A464D545A5562464A475456553152565A55526B356C6132743356577853556B31464E5556684D33424F556B5A574E565272556C4A4E617A56465656687354314A575658645562464A575A5555784E6C5255526B3557526C563356477853536B31464E5656566131704F5A57744664315273556B356C525456475656524B556C5A47566A52555748424754555A4B56565655526B3957526C593256465A5355314A724E56565656455A4F566B55784E465272566C4A4E4D555A5656565247546D567252586855563342575455553156564A5963453553526B704856477853556B31564E56566152557050556C5A46656C5657556C5A6C565456465631524355315A475658645562464A475A57737856565672576B3957526B563556477453556D56564E555A5756454A50566B5A574E4652596345354E56544656566C524354315A47565870554D464A54556C553064314A55516B35575254457A56477853536B31564E5556575747684F5A57744664315673556C4A4E525456795531524F556C5A47536B5A5561314A535456553156566C36566B3953566C563456477453566D56464D545A5356454A54556B5A7751315273556B5A6C617A46785657746154314A475658685562464A4F5A555531526C5A55516B3953526C563456466877566B3147536B566152557050556B56574E6C5256556C5A6C565456565656524B54314A47526A565561315A575456553152565655566B356C6130563356577853613146724E56565456454A505957784B52315273556C4A4E565456565646686B54314A575658685561314A54556C55314E6C6C36516C4E57526B563456477853566D56724D55565661317050556B5A4665465273556D704F52545647566C524F556C5A4763455255574842435456557863565A55516B3957525659325646565355314A724E584A535645704F5A57315351315272566C4A4E52545646566C687354314A475658645662464A575455553156564A5963453553526C593156477453556B3147536B565A656B3550556C5A5664315273556C5A4E56544532556C524355315A475258645562464A575454413552565672566B394E5256563356465A53546D51774E56565456454A50556B5A566546525963454A4E526B7056566C524354314A4864445A5556564A54556D733064314A55526B35686245563556477457566B31464E5556575747684F5A5774466431567463465A4E525456475656524F55464A47536B645562464A53545555315656525961453953566C563356477453566B31564E545A61656B4A54556B645351315272566C4A6C617A4646566C687354315A4752586855566C4A4F5A444131526C5A55516B3953526E424556466877546B31564D56565756454A50566B56726431527463464E53617A56795531524354315A464D54525561315A5754565531525664596345356C6245563356577853556B31564E56565356453553566B5A4B526C5272556C4A4E565456565758705354314A57566A5A5556564A53545655784E6C4A55516C4E53526E424456477853526D56724D55565661317050556B5A5665465273556B356B4D445647566C524754314A47566A565561314A5754555A4B52567046536B39535256593256465A5355314A564E56565656454A54566B5A4665413D3D'
+#密文
+base32='abcdefghijkmnlopqrstuvwxyz0189+/'
+base16='GHIJKMNLOPQRSTUVWXYZabcdefghijkmnlopqrstvuwxyz+/'
+def check(flag):                #识别base类型
+    for i in base16:
+        if i in flag:
+            for b in base32:
+                if b in flag:
+                    return 64
+                    exit(0)
+                return 32
+                break
+        return 16
+        exit(0)
+for i in range(20):                 #20取决于加密了多少次。可以设大点
+    num=check(flag)
+    if num==16:
+        print('16：'+flag)
+        try:
+            flag=base64.b16decode(flag)
+        except:
+            flag=base64.b64decode(flag)
+        flag=flag.decode()
+    elif num==32:
+        print('32：'+flag)
+        try:
+            flag=base64.b32decode(flag)
+        except:
+            flag=base64.b64decode(flag)
+        flag=flag.decode()
+    else:
+        print('64：'+flag)
+        flag=base64.b64decode(flag)
+        flag=flag.decode()
+print(flag)
+</code></pre>
+<h1 id="center培根密码center"><center>培根密码</center></h1>
+<p>通常由ab组成<br>
+解密网址:<code>https://tool.bugku.com/peigen/</code><br>
+<img src="https://guokeya.github.io/post-images/1579752257770.png" alt="" loading="lazy"></p>
+<h1 id="centeruuencodecenter"><center>UUencode</center></h1>
+<p>UUencode编码将二进制文件转换为文本文件。通常用于e-mail传输<br>
+对于长消息来说。每行开头都是M。这算一个特征<br>
+但是对于短消息。特征就是字符串把。有'($&lt;&gt;)这类字符<br>
+<img src="https://guokeya.github.io/post-images/1579752563355.png" alt="" loading="lazy"><br>
+解密网址：<code>https://www.qqxiuzi.cn/bianma/uuencode.php</code></p>
+<h1 id="centerrot13center"><center>Rot13</center></h1>
+<p>Rot13主要是将当前字母替换为13位后的字母。超过就从26个字母开头继续。然后依次替代<br>
+特征：只会将字母替换。flag的标签并没有替换<br>
+<img src="https://guokeya.github.io/post-images/1579752859842.png" alt="" loading="lazy"></p>
+<h1 id="centerrot5center"><center>Rot5</center></h1>
+<p>只对标点进行加密<br>
+<img src="https://guokeya.github.io/post-images/1579753140722.png" alt="" loading="lazy"></p>
+<h1 id="centerrot18center"><center>Rot18</center></h1>
+<p>对数字。字母进行加密<br>
+<img src="https://guokeya.github.io/post-images/1579753123023.png" alt="" loading="lazy"></p>
+<h1 id="centerrot47center"><center>Rot47</center></h1>
+<p>对数字。字母。标点进行加密<br>
+<img src="https://guokeya.github.io/post-images/1579753079678.png" alt="" loading="lazy"><br>
+解密网址:<code>https://www.qqxiuzi.cn/bianma/ROT5-13-18-47.php</code></p>
+<h1 id="centermd5center"><center>MD5</center></h1>
+<p>特征：32位小写字母+数字<br>
+当然还有16位的MD5。和16进制差不多。<br>
+解密网址：<code>https://www.somd5.com/</code></p>
+<h1 id="centersha1-center"><center>SHA1 </center></h1>
+<p>特征：40位小写字母+数字<br>
+解密网址：<code>https://www.somd5.com/</code></p>
+<h1 id="center栅栏密码center"><center>栅栏密码</center></h1>
+<p>特征：字符串中。包含了flag{}等标志。只是每一位都换了位置<br>
+<img src="https://guokeya.github.io/post-images/1579753409186.png" alt="" loading="lazy"><br>
+解密网址：<code>https://www.qqxiuzi.cn/bianma/zhalanmima.php</code></p>
+<h1 id="center凯撒密码center"><center>凯撒密码</center></h1>
+<p>特征：和ROT13差不多。只会将字母加密。不过ROT13移13位。而凯撒密码可以自定义移位<br>
+<img src="https://guokeya.github.io/post-images/1579753481448.png" alt="" loading="lazy"><br>
+解密网址：<code>https://www.qqxiuzi.cn/bianma/kaisamima.php</code></p>
+<h1 id="center维吉尼亚密码center"><center>维吉尼亚密码</center></h1>
+<p>在凯撒密码的基础上扩展的。维吉尼亚密码需要一个密钥。根据密钥来决定哪一行的密表进行替换<br>
+<img src="https://guokeya.github.io/post-images/1579753657189.png" alt="" loading="lazy"><br>
+解密网址：<code>https://www.qqxiuzi.cn/bianma/weijiniyamima.php</code></p>
+<h1 id="center猪圈密码center"><center>猪圈密码</center></h1>
+<p>特征：如下的几种图形。对应的字符<br>
+<img src="https://guokeya.github.io/post-images/1579753778478.png" alt="" loading="lazy"><br>
+解密网址：<code>http://www.nicetool.net/app/pigpen_chiper_decrypt.html</code></p>
+<h1 id="centerrabbit加密center"><center>rabbit加密</center></h1>
+<p>特征：U2Fsd开头。乍一眼看像是Base64<br>
+<img src="https://guokeya.github.io/post-images/1579753895136.png" alt="" loading="lazy"><br>
+解密网址：<code>https://www.sojson.com/encrypt_rabbit.html</code></p>
+<h1 id="centerook编码center"><center>OOK编码</center></h1>
+<p>特征：OOK?.<br>
+<img src="https://guokeya.github.io/post-images/1579754192426.png" alt="" loading="lazy"><br>
+解密网址：<code>https://www.splitbrain.org/services/ook</code></p>
+<h1 id="centerjsfuckcenter"><center>JSFUCK</center></h1>
+<p>特征：<a href="!"></a>组成。可以直接控制台运行<br>
+<img src="https://guokeya.github.io/post-images/1579754278854.png" alt="" loading="lazy"><br>
+解密网址：<code>http://www.jsfuck.com/</code></p>
+<h1 id="center当铺密码center"><center>当铺密码</center></h1>
+<p>特征：王夫 井工 夫口 由中人 井中 夫夫 由中大<br>
+<img src="https://guokeya.github.io/post-images/1579754646111.png" alt="" loading="lazy"><br>
+解密网址：<code>http://www.zjslove.com/3.decode/dangpu/index.html</code></p>
+<h1 id="center键盘密码qwe密码center"><center>键盘密码(qwe密码)</center></h1>
+<p>一开始的键盘并不是QWERTYU这样排列。是ABCDEFG这样排列的。<br>
+特征：flag对应的是ysqu<br>
+<img src="https://guokeya.github.io/post-images/1579756430339.png" alt="" loading="lazy"><br>
+解密网址：<code>http://www.zjslove.com/3.decode/qwe/index.html</code></p>
+<h1 id="center摩斯密码center"><center>摩斯密码</center></h1>
+<p>特征：.-组成<br>
+<img src="https://guokeya.github.io/post-images/1579756582671.png" alt="" loading="lazy"><br>
+解密网址：<code>https://www.jb51.net/tools/morse.htm</code></p>
+<h1 id="center摩斯电码center"><center>摩斯电码</center></h1>
+<p>特征： .-/组成<br>
+<img src="https://guokeya.github.io/post-images/1579756666236.png" alt="" loading="lazy"><br>
+解密网址：<code>https://tool.lu/morse/</code></p>
+<h1 id="center敲击码center"><center>敲击码</center></h1>
+<p><img src="https://guokeya.github.io/post-images/1579757545036.png" alt="" loading="lazy"><br>
+特征：由。空格组成。或者由数字组成。但数字不超过5<br>
+<img src="https://guokeya.github.io/post-images/1579757518489.png" alt="" loading="lazy"><br>
+解密网址：<code>http://ctf.ssleye.com/tapcode.html</code></p>
+<h1 id="centeraescenter"><center>AES</center></h1>
+<p>特征：和Base64差不多。但是需要密钥和IV向量<br>
+<img src="https://guokeya.github.io/post-images/1579757658852.png" alt="" loading="lazy"><br>
+解密网址：<code>http://tools.bugscaner.com/cryptoaes/</code></p>
+<h1 id="center银河密码center"><center>银河密码</center></h1>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1580102188732.jpg" alt="" loading="lazy"></figure>
+<h1 id="center圣堂武士密码center"><center>圣堂武士密码</center></h1>
+<p>这里由猪圈密码变异的<br>
+<img src="https://guokeya.github.io/post-images/1581248026422.png" alt="" loading="lazy"></p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/cors-kua-yu-lou-dong-de-xue-xi/">
+              <span class="post-title">
+                CORS跨域漏洞的学习&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br >浙ICP备2021000950号-1</a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

