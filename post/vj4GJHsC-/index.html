@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>[ISITDTU 2019]EasyPHP(无数字字母Webshell进阶) |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="[ISITDTU 2019]EasyPHP(无数字字母Webshell进阶) |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="[ISITDTU 2019]EasyPHP(无数字字母Webshell进阶) |   » Feed" href="http://localhost:4000/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="[ISITDTU 2019]EasyPHP(无数字字母Webshell进阶)"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/vj4GJHsC-/"/>
+    <meta property="og:url" content="http://localhost:4000/post/vj4GJHsC-/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <a class="navbar-brand" href="http://localhost:4000"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,9 +80,9 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
             
-            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            <a href="http://localhost:4000/tag/Web/" class="tag">Web安全</a>
             
         </span>
             <h1>[ISITDTU 2019]EasyPHP(无数字字母Webshell进阶)</h1>
@@ -104,7 +104,7 @@
           <p>过滤了大部分的函数以及[\x00-\x20][0-9]&quot;$&amp;.,|[{_defgops以及\x7f<br>
 并且。输出的字符串中。最多13种不同的字符。比如。%ff%73就算两个字符</p>
 <!-- more -->
-<p><img src="https://guokeya.github.io/post-images/1578310762539.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1578310762539.png" alt="" loading="lazy"><br>
 对于bypass。一般就是<br>
 1.函数构造字符<br>
 2.异或取反无数字webshell</p>
@@ -113,9 +113,9 @@ OK。这里刚好也没过滤^。大致思路出来了。通过^构造print_r(sc
 由于这边过滤了[]{}。只能通过getallheaders。但是后面构造起来会发现。太长太麻烦了。不如直接scandir来的方便
 </code></pre>
 <p>开始构造个phpinfo，其实~P=P^0xFF<br>
-<img src="https://guokeya.github.io/post-images/1578311378725.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578311378725.png" alt="" loading="lazy"><br>
 当我们照这个思路构造print_r(scandir('./'))的时候，不同字符串超过了13。<br>
-<img src="https://guokeya.github.io/post-images/1578311682636.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578311682636.png" alt="" loading="lazy"><br>
 下一步就是缩减字符串<br>
 这个给一个思路<br>
 在构造函数中。必须用到();^，也就是4个字符。最多留给我们9个字符构造函数<br>
@@ -153,13 +153,13 @@ print(len(temp), temp)
 urlencode(~print_r)
 </code></pre>
 <p>执行python脚本|grep 0x8f得到异或的字符<br>
-<img src="https://guokeya.github.io/post-images/1578312988324.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1578312988324.png" alt="" loading="lazy"></p>
 <pre><code>a=0x9b,b=0x8f,c=0x8f,d=0x9b
 %9b^%8f^%8f^%ff            
 print_r的第一个字符就出来了
 继续执行                         
 </code></pre>
-<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1578313044441.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1578313044441.png" alt="" loading="lazy"></figure>
 <pre><code>%9b%9c^%8f%8f^%8f%9e^%ff%ff
 print_r的前两个字符就出来了
 如此循环,最后就能得到print_r的值。由于scandir的字符。在脚本中也算进去了。
@@ -170,7 +170,7 @@ print_r的前两个字符就出来了
 <p>找到了flag。并且在数组末尾。那么构造readfile(end(scandir('.'))就好了<br>
 计算所有需要用到的字符串readfilensc.<br>
 放入上面用过的数组中。同理。删一次看数组长度有没有变化。变化就恢复。删其他的。数组中需要字符^%ff的值<br>
-<img src="https://guokeya.github.io/post-images/1578313592544.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1578313592544.png" alt="" loading="lazy"></p>
 <pre><code>result2 = [0x8d,0x9a,0x9e,0x9b,0x99,0x96,0x93,0x9a,0x8c,0x9c,0x91,0xd1]  # Original chars,11 total
 result = [0x8d,0x9a,0x9e,0x9b,0x99,0x96,0xd1]  # to be deleted
 temp = []
@@ -201,7 +201,7 @@ print(len(temp), temp)
 show_source(end(scandir(.)))<br>
 xxx(xxx(xxx(.)))<br>
 复制粘贴就行。不用考虑格式报错<br>
-<img src="https://guokeya.github.io/post-images/1578313913278.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578313913278.png" alt="" loading="lazy"><br>
 <strong>更多骚操作</strong><br>
 bool转数字配合chr.拼接</p>
 <pre><code>var_dump(!a)
@@ -223,7 +223,7 @@ https://tiaonmmn.github.io/2019/07/18/ISITDTU-Easy-PHP/</p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/njWohancx/">
+            <a href="http://localhost:4000/post/njWohancx/">
               <span class="post-title">
                 FBCTF 2019 RCEService(pcre_match回溯)&rarr;
               </span>
@@ -232,6 +232,26 @@ https://tiaonmmn.github.io/2019/07/18/ISITDTU-Easy-PHP/</p>
         
         <div class="comment">
           
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
         </div>
       </div>
     </div>
@@ -267,7 +287,7 @@ https://tiaonmmn.github.io/2019/07/18/ISITDTU-Easy-PHP/</p>
             
               
               <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -275,17 +295,17 @@ https://tiaonmmn.github.io/2019/07/18/ISITDTU-Easy-PHP/</p>
               </a>
               </li>
           </ul>
-          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br >浙ICP备2021000950号-1</a></p>
         </div>
       </div>
     </div>
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

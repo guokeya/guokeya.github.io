@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>[CISCN2019 华北赛区 Day1 Web1]Dropbox(phar) |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="[CISCN2019 华北赛区 Day1 Web1]Dropbox(phar) |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="[CISCN2019 华北赛区 Day1 Web1]Dropbox(phar) |   » Feed" href="http://localhost:4000/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="[CISCN2019 华北赛区 Day1 Web1]Dropbox(phar)"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/-T4SH774g/"/>
+    <meta property="og:url" content="http://localhost:4000/post/-T4SH774g/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <a class="navbar-brand" href="http://localhost:4000"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,9 +80,9 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
             
-            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            <a href="http://localhost:4000/tag/Web/" class="tag">Web安全</a>
             
         </span>
             <h1>[CISCN2019 华北赛区 Day1 Web1]Dropbox(phar)</h1>
@@ -103,16 +103,16 @@
         <div class="col-lg-8 col-md-10 mx-auto">
           <p>主页还是一个登陆框。sql注入无果。<br>
 扫下敏感文件。源码泄露。返回包hint。都没有<br>
-<img src="https://guokeya.github.io/post-images/1578977532324.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1578977532324.png" alt="" loading="lazy"></p>
 <!-- more -->
 <p>注册。登陆。有一个文件上传，提示只能上传jpg等<br>
-<img src="https://guokeya.github.io/post-images/1578977647003.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578977647003.png" alt="" loading="lazy"><br>
 有两个功能。一个下载。一个上传<br>
-<img src="https://guokeya.github.io/post-images/1578977698831.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578977698831.png" alt="" loading="lazy"><br>
 看到了一个参数。感觉有任意文件读取<br>
 尝试../到上级目录。已知有login.php/register.php/download.php/upload.php/delete.php<br>
 读取一下,一个../不行。那就两个../<br>
-<img src="https://guokeya.github.io/post-images/1578977786906.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578977786906.png" alt="" loading="lazy"><br>
 成功读取到了upload的源码。源码中还包含了class.php<br>
 全部读取出来<br>
 <strong>class.php</strong></p>
@@ -487,20 +487,20 @@ if (strlen($filename) &lt; 40 &amp;&amp; $file-&gt;open($filename) &amp;&amp; st
 ?&gt;
 </code></pre>
 <p>开始分析。。首先从register.php入手<br>
-<img src="https://guokeya.github.io/post-images/1578978009206.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1578978009206.png" alt="" loading="lazy"></p>
 <pre><code>初始化了User类
 用户名大于2小于20，密码要大于1为。这部分可以忽略不计
 然后调用了User类中的add_user，将用户名密码传入
 </code></pre>
-<p><img src="https://guokeya.github.io/post-images/1578978104030.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1578978104030.png" alt="" loading="lazy"><br>
 这部分代码又调用了user_exist($username)<br>
-<img src="https://guokeya.github.io/post-images/1578978142302.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578978142302.png" alt="" loading="lazy"><br>
 也就是判断用户名是否存在。由于使用预处理进行sql查询。不存在sql注入<br>
 如果存在。return false<br>
 不存在。就将密码+自定义的字符串。sha1加密后。放入数据库<br>
 至此。创建完了新用户<br>
 。接下来去login看看<br>
-<img src="https://guokeya.github.io/post-images/1578978302885.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578978302885.png" alt="" loading="lazy"><br>
 判断就不多说了。调用了User类中的verify_user函数<br>
 查询对应用户的密码。查询到了就赋值session。然后创建沙盒<br>
 跳转到index.php<br>
@@ -513,7 +513,7 @@ $a-&gt;Size();
 ?&gt;
 </code></pre>
 <p>就几行代码。初始化了FileList类。调用Name和Size函数<br>
-<img src="https://guokeya.github.io/post-images/1578978609551.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578978609551.png" alt="" loading="lazy"><br>
 但是好像并没有这两个函数。这就会触发这个类中的_call魔法函数。<br>
 先记着。一般出现魔法函数。就是序列化那方面的东西。构造POP链<br>
 upload界面没涉及到类。就是普通的判断后缀名。文件类型。文件上传<br>
@@ -533,7 +533,7 @@ if (strlen($filename) &lt; 40 &amp;&amp; $file-&gt;open($filename) &amp;&amp; st
 <p>调用了File类中的open和close<br>
 可以看到。close存在文件读取函数<br>
 open判断文件存在和是否是目录,这几个函数都是会触发phar反序列化的。那么这题应该就是phar反序列化。读取根目录下的flag。因为web目录。访问flag等等404<br>
-<img src="https://guokeya.github.io/post-images/1578978918974.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578978918974.png" alt="" loading="lazy"><br>
 delete.php</p>
 <pre><code>$file = new File();
 $filename = (string) $_POST['filename'];
@@ -543,16 +543,16 @@ if (strlen($filename) &lt; 40 &amp;&amp; $file-&gt;open($filename)) {
 <p>同样调用了File类的open，和delete都可触发phar反序列化<br>
 思路有点懂了。由于download限制了open_basedir，所以我们通过delete.php触发反序列化。通过POP链最后。file_get_contents去获取flag内容<br>
 去class.php看看。构造pop链<br>
-<img src="https://guokeya.github.io/post-images/1578979634321.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578979634321.png" alt="" loading="lazy"><br>
 在User类和File类中。都存在close函数<br>
 而User类中是通过<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mi>h</mi><mi>i</mi><mi>s</mi><mo>−</mo><mo>&gt;</mo><mi>d</mi><mi>b</mi><mo>−</mo><mo>&gt;</mo><mi>c</mi><mi>l</mi><mi>o</mi><mi>s</mi><mi>e</mi><mo>(</mo><mo>)</mo><mi mathvariant="normal">调</mi><mi mathvariant="normal">用</mi><mi mathvariant="normal">如</mi><mi mathvariant="normal">果</mi><mi mathvariant="normal">通</mi><mi mathvariant="normal">过</mi><mi mathvariant="normal">反</mi><mi mathvariant="normal">序</mi><mi mathvariant="normal">列</mi><mi mathvariant="normal">化</mi><mi mathvariant="normal">。</mi><mi mathvariant="normal">将</mi><mi>d</mi><mi>b</mi><mi mathvariant="normal">变</mi><mi mathvariant="normal">成</mi><mi>n</mi><mi>e</mi><mi>w</mi><mi>F</mi><mi>i</mi><mi>l</mi><mi>e</mi><mo>(</mo><mo>)</mo><mi mathvariant="normal">，</mi><mi>f</mi><mi>i</mi><mi>l</mi><mi>e</mi><mi>n</mi><mi>a</mi><mi>m</mi><mi>e</mi><mi mathvariant="normal">变</mi><mi mathvariant="normal">成</mi><mi mathvariant="normal">/</mi><mi>f</mi><mi>l</mi><mi>a</mi><mi>g</mi><mi mathvariant="normal">，</mi><mi mathvariant="normal">就</mi><mi mathvariant="normal">成</mi><mi mathvariant="normal">了</mi></mrow><annotation encoding="application/x-tex">this-&gt;db-&gt;close()调用
 如果通过反序列化。将db变成new File()，filename变成/flag，就成了</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault">h</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord">−</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">b</span><span class="mord">−</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mopen">(</span><span class="mclose">)</span><span class="mord cjk_fallback">调</span><span class="mord cjk_fallback">用</span><span class="mord cjk_fallback">如</span><span class="mord cjk_fallback">果</span><span class="mord cjk_fallback">通</span><span class="mord cjk_fallback">过</span><span class="mord cjk_fallback">反</span><span class="mord cjk_fallback">序</span><span class="mord cjk_fallback">列</span><span class="mord cjk_fallback">化</span><span class="mord cjk_fallback">。</span><span class="mord cjk_fallback">将</span><span class="mord mathdefault">d</span><span class="mord mathdefault">b</span><span class="mord cjk_fallback">变</span><span class="mord cjk_fallback">成</span><span class="mord mathdefault">n</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mopen">(</span><span class="mclose">)</span><span class="mord cjk_fallback">，</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord mathdefault">a</span><span class="mord mathdefault">m</span><span class="mord mathdefault">e</span><span class="mord cjk_fallback">变</span><span class="mord cjk_fallback">成</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">就</span><span class="mord cjk_fallback">成</span><span class="mord cjk_fallback">了</span></span></span></span>this-&gt;File类&gt;close()<br>
 也就调用了file_get_contets函数读取了flag文件。<br>
 但是。这边由于反序列化return 了文件内容。将文件内容当作值。放入unlink函数删除。但是。文件不存在。所以就file not exists<br>
-<img src="https://guokeya.github.io/post-images/1578980219261.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578980219261.png" alt="" loading="lazy"><br>
 继续寻找一个能输出的点<br>
 继续看FileList类<br>
-<img src="https://guokeya.github.io/post-images/1578980776584.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1578980776584.png" alt="" loading="lazy"><br>
 就一个构造函数。一个call魔法函数。一个析构函数<br>
 call函数将函数名放入<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mi>u</mi><mi>n</mi><mi>c</mi><mi>s</mi><mi mathvariant="normal">。</mi><mi mathvariant="normal">然</mi><mi mathvariant="normal">后</mi><mi mathvariant="normal">从</mi></mrow><annotation encoding="application/x-tex">funcs。然后从</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span><span class="mord mathdefault">c</span><span class="mord mathdefault">s</span><span class="mord cjk_fallback">。</span><span class="mord cjk_fallback">然</span><span class="mord cjk_fallback">后</span><span class="mord cjk_fallback">从</span></span></span></span>files数组中循环取出<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mi>i</mi><mi>l</mi><mi>e</mi><mi mathvariant="normal">，</mi><mi mathvariant="normal">将</mi><mi mathvariant="normal">其</mi><mi mathvariant="normal">调</mi><mi mathvariant="normal">用</mi><mi mathvariant="normal">为</mi></mrow><annotation encoding="application/x-tex">file，将其调用为</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">将</span><span class="mord cjk_fallback">其</span><span class="mord cjk_fallback">调</span><span class="mord cjk_fallback">用</span><span class="mord cjk_fallback">为</span></span></span></span>file-&gt;$func<br>
 就调用了其他类。<br>
@@ -603,11 +603,11 @@ $phar-&gt;addFromString(&quot;test.txt&quot;, &quot;test&quot;);
 $phar-&gt;stopBuffering();
 </code></pre>
 <p>可以看见。前面还是file not exists。而后面增加了输出<br>
-<img src="https://guokeya.github.io/post-images/1578981467060.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1578981467060.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/y_oaQJpsF/">
+            <a href="http://localhost:4000/post/y_oaQJpsF/">
               <span class="post-title">
                 [安洵杯 2019]easy_serialize_php（反序列化截断）&rarr;
               </span>
@@ -616,6 +616,26 @@ $phar-&gt;stopBuffering();
         
         <div class="comment">
           
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
         </div>
       </div>
     </div>
@@ -651,7 +671,7 @@ $phar-&gt;stopBuffering();
             
               
               <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -659,17 +679,17 @@ $phar-&gt;stopBuffering();
               </a>
               </li>
           </ul>
-          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br >浙ICP备2021000950号-1</a></p>
         </div>
       </div>
     </div>
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

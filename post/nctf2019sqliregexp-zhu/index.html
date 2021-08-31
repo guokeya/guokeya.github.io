@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>[NCTF2019]SQLi(regexp注入) |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="[NCTF2019]SQLi(regexp注入) |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="[NCTF2019]SQLi(regexp注入) |   » Feed" href="http://localhost:4000/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="[NCTF2019]SQLi(regexp注入)"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/nctf2019sqliregexp-zhu/"/>
+    <meta property="og:url" content="http://localhost:4000/post/nctf2019sqliregexp-zhu/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <a class="navbar-brand" href="http://localhost:4000"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,9 +80,9 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
             
-            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            <a href="http://localhost:4000/tag/Web/" class="tag">Web安全</a>
             
         </span>
             <h1>[NCTF2019]SQLi(regexp注入)</h1>
@@ -103,7 +103,7 @@
         <div class="col-lg-8 col-md-10 mx-auto">
           <p>主页就一个登录框 。把sql语句显示出来了。</p>
 <!-- more -->
-<p><img src="https://guokeya.github.io/post-images/1580039005761.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1580039005761.png" alt="" loading="lazy"><br>
 再进行一波信息搜集。看看robots.txt<br>
 有个hint.txt</p>
 <pre><code>$black_list = &quot;/limit|by|substr|mid|,|admin|benchmark|like|or|char|union|substring|select|greatest|%00|\'|=| |in|&lt;|&gt;|-|\.|\(\)|#|and|if|database|users|where|table|concat|insert|join|having|sleep/i&quot;;
@@ -113,7 +113,7 @@ Then you will get the flag;
 <p>拿到flag的条件是post的密码要等于admin密码。并没有对用户名做限制<br>
 过滤了很多字符串。这里select字段被过滤了。但是没关系。mysql同一张表中的字段不需要select即可查询。这里只能用盲注。盲注还分时间盲注等。这里regexp即可绕过过滤<br>
 在Mysql种%00也是注释符。但是前面必须得加；<br>
-<img src="https://guokeya.github.io/post-images/1580039319282.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580039319282.png" alt="" loading="lazy"><br>
 此时执行的sql语句为</p>
 <pre><code>select * from users where username='\' and passwd='||1;%00'
 #where username='xxxx'||1
@@ -123,7 +123,7 @@ Then you will get the flag;
 <p>我们可以通过regexp来一位位判断密码<br>
 由于数据库中密码数据比较多。所以存在很多的密码<br>
 得一个个试。有那么多条数据。<br>
-<img src="https://guokeya.github.io/post-images/1580039623390.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580039623390.png" alt="" loading="lazy"><br>
 最后y(79)开头的那条数据。比较特殊。开头三位是you<br>
 写个脚本爆破下这条数据</p>
 <pre><code>import requests
@@ -147,14 +147,14 @@ for i in range(50):
         time.sleep(0.5)
         #防止429
 </code></pre>
-<p><img src="https://guokeya.github.io/post-images/1580039817830.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1580039817830.png" alt="" loading="lazy"><br>
 用户名随意。密码填跑出来的密码。<br>
 因为flag条件为POST密码==admin密码即可。<br>
-<img src="https://guokeya.github.io/post-images/1580039860567.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1580039860567.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/fbctf2019eventssti3/">
+            <a href="http://localhost:4000/post/fbctf2019eventssti3/">
               <span class="post-title">
                 [FBCTF2019]Event(SSTI3)&rarr;
               </span>
@@ -163,6 +163,26 @@ for i in range(50):
         
         <div class="comment">
           
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
         </div>
       </div>
     </div>
@@ -198,7 +218,7 @@ for i in range(50):
             
               
               <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -206,17 +226,17 @@ for i in range(50):
               </a>
               </li>
           </ul>
-          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br >浙ICP备2021000950号-1</a></p>
         </div>
       </div>
     </div>
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

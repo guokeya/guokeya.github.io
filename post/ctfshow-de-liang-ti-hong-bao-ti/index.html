@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>ctf.show的两题红包题 |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="ctf.show的两题红包题 |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="ctf.show的两题红包题 |   » Feed" href="http://localhost:4000/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="ctf.show的两题红包题"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/ctfshow-de-liang-ti-hong-bao-ti/"/>
+    <meta property="og:url" content="http://localhost:4000/post/ctfshow-de-liang-ti-hong-bao-ti/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <a class="navbar-brand" href="http://localhost:4000"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,7 +80,7 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
             
         </span>
             <h1>ctf.show的两题红包题</h1>
@@ -115,13 +115,13 @@ for i in range(1,87):
     print data2
 </code></pre>
 <p>将data2解码。发现是个PNG。写入png得到二维码。<br>
-<img src="https://guokeya.github.io/post-images/1581500371368.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1581500371368.png" alt="" loading="lazy"><br>
 扫一下就拿到了flag</p>
 <p>第二题：Web<br>
 主页空空如也。源代码发现hint<br>
-<img src="https://guokeya.github.io/post-images/1581500428727.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1581500428727.png" alt="" loading="lazy"><br>
 代码量比较少。一题Bypass正则RCE<br>
-<img src="https://guokeya.github.io/post-images/1581500465487.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1581500465487.png" alt="" loading="lazy"><br>
 首先分析下第一个正则</p>
 <pre><code>A-Za-oq-z0-9
 这里有个小问题。一般都是A-Za-z0-9
@@ -139,13 +139,13 @@ P神在这块已经讲的非常清楚了：<code>https://www.leavesongs.com/PENE
 <pre><code>/tmp/phpf85jb8可以表达为/???/p?p??????
 </code></pre>
 <p>. /???/p?p??????即可执行我们上传的缓存文件<br>
-<img src="https://guokeya.github.io/post-images/1581501046913.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1581501046913.png" alt="" loading="lazy"><br>
 还有一种思路。就是执行/bin/cp /flag.txt .<br>
 前提是得知道flag路径。假设。人家给你来个var目录。岂不是人傻了</p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/ciscn2019-hua-bei-sai-qu-day1-web2ikunpython-fan-xu-lie-hua/">
+            <a href="http://localhost:4000/post/ciscn2019-hua-bei-sai-qu-day1-web2ikunpython-fan-xu-lie-hua/">
               <span class="post-title">
                 [CISCN2019 华北赛区 Day1 Web2]ikun(python反序列化)&rarr;
               </span>
@@ -154,6 +154,26 @@ P神在这块已经讲的非常清楚了：<code>https://www.leavesongs.com/PENE
         
         <div class="comment">
           
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
         </div>
       </div>
     </div>
@@ -189,7 +209,7 @@ P神在这块已经讲的非常清楚了：<code>https://www.leavesongs.com/PENE
             
               
               <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -197,17 +217,17 @@ P神在这块已经讲的非常清楚了：<code>https://www.leavesongs.com/PENE
               </a>
               </li>
           </ul>
-          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br >浙ICP备2021000950号-1</a></p>
         </div>
       </div>
     </div>
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

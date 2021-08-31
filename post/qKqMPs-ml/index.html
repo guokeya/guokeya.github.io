@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>西湖论剑初赛Web1/5 |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="西湖论剑初赛Web1/5 |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="西湖论剑初赛Web1/5 |   » Feed" href="http://localhost:4000/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="西湖论剑初赛Web1/5"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/qKqMPs-ml/"/>
+    <meta property="og:url" content="http://localhost:4000/post/qKqMPs-ml/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <a class="navbar-brand" href="http://localhost:4000"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,7 +80,7 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
             
         </span>
             <h1>西湖论剑初赛Web1/5</h1>
@@ -100,14 +100,14 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <p>进入题目是个上传页面<br>
-<img src="https://guokeya.github.io/post-images/1602148521751.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1602148521751.png" alt="" loading="lazy"><br>
 使用换行符绕过。成功上传php<br>
-<img src="https://guokeya.github.io/post-images/1602148599097.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1602148599097.png" alt="" loading="lazy"><br>
 然后发现。不能直接POST传参。会被宝塔拦截<br>
 之前赵总在WMCTF的那题说过。宝塔不会拦截静态文件(没动态传参)<br>
 然后就一直文件上传。访问。<br>
 可以bypass open_basedir<br>
-<img src="https://guokeya.github.io/post-images/1602149141409.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1602149141409.png" alt="" loading="lazy"><br>
 可以看到根目录有/readflag。那么还是嘚想办法执行命令<br>
 这里GS大师傅发现。用URL编码3次。宝塔就不会拦截。可以动态执行命令<br>
 直接传个<code>eval(urldecode(urldecode(urldecode($_POST[1]))));</code>即可<br>
@@ -163,7 +163,7 @@ function handle(r)
 end
 </code></pre>
 <p>访问拿到Flag<br>
-<img src="https://guokeya.github.io/post-images/1602149485630.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1602149485630.png" alt="" loading="lazy"></p>
 <h1 id="解法2">解法2</h1>
 <p>利用tmp下的php-fpm socket加载扩展。执行命令<br>
 上传1.so。这是一个恶意扩展。相当于Redis的那个so。可以调用恶意函数<br>
@@ -300,11 +300,11 @@ var_dump(fread($sock, 4096));
 <pre><code>&lt;?php antsystem(&quot;/readflag&quot;); ?&gt;
 </code></pre>
 <p>直接访问即可。<br>
-<img src="https://guokeya.github.io/post-images/1602150403855.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1602150403855.png" alt="" loading="lazy"><br>
 exp中最好用绝对路径。不然。。这个沙盒。。目录名有点乱</p>
 <h1 id="web5">Web5</h1>
 <p>题目给出了源码<br>
-<img src="https://guokeya.github.io/post-images/1602150845461.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1602150845461.png" alt="" loading="lazy"><br>
 这里首先试了下filename为php。safe faild   然后.htaccess可以写入<br>
 又看到代码中会写入\nxxxxx。有点<code>[XNUCA2019Qualifier]EasyPHP]</code>的意思了。<br>
 写htaccess。然后用<code>#&lt;?php evalxxx?&gt;\</code>去注释掉无用字符。然后自动包含<br>
@@ -315,13 +315,13 @@ exp中最好用绝对路径。不然。。这个沙盒。。目录名有点乱</
 <p>发现还是faild。然后随便打。。发现无论打什么。。content都会safe faild。<br>
 会不会。是直接检测是否存在content这个键。。<br>
 把这个键也unicode编码下。发现可以了<br>
-<img src="https://guokeya.github.io/post-images/1602151357978.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1602151357978.png" alt="" loading="lazy"><br>
 访问index.php就会自动包含.htaccess其中的eval。<br>
-<img src="https://guokeya.github.io/post-images/1602151410721.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1602151410721.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/dGx1XF8ak/">
+            <a href="http://localhost:4000/post/dGx1XF8ak/">
               <span class="post-title">
                 CTFSHOW命令执行的一些特殊变量&rarr;
               </span>
@@ -330,6 +330,26 @@ exp中最好用绝对路径。不然。。这个沙盒。。目录名有点乱</
         
         <div class="comment">
           
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
         </div>
       </div>
     </div>
@@ -365,7 +385,7 @@ exp中最好用绝对路径。不然。。这个沙盒。。目录名有点乱</
             
               
               <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -373,17 +393,17 @@ exp中最好用绝对路径。不然。。这个沙盒。。目录名有点乱</
               </a>
               </li>
           </ul>
-          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br >浙ICP备2021000950号-1</a></p>
         </div>
       </div>
     </div>
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

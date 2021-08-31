@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>XCTF Misc和Web部分题解 |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="XCTF Misc和Web部分题解 |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="XCTF Misc和Web部分题解 |   » Feed" href="http://localhost:4000/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="XCTF Misc和Web部分题解"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/DwtTs5lSH/"/>
+    <meta property="og:url" content="http://localhost:4000/post/DwtTs5lSH/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <a class="navbar-brand" href="http://localhost:4000"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,7 +80,7 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
             
         </span>
             <h1>XCTF Misc和Web部分题解</h1>
@@ -103,30 +103,30 @@
 <!-- more -->
 <p><strong>ez_mem&amp;usb</strong><br>
 首先看HTTP流。发现一个zip<br>
-<img src="https://guokeya.github.io/post-images/1583629984790.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583629984790.png" alt="" loading="lazy"><br>
 导出后。解压得到data.vmem。拖入kali进行内存取证<br>
-<img src="https://guokeya.github.io/post-images/1583630729918.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583630729918.png" alt="" loading="lazy"><br>
 查看进程。发现cmd<br>
-<img src="https://guokeya.github.io/post-images/1583631113366.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583631113366.png" alt="" loading="lazy"><br>
 发现一个密码。先放着<br>
-<img src="https://guokeya.github.io/post-images/1583631140397.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583631140397.png" alt="" loading="lazy"><br>
 filescan。找到flag.img<br>
-<img src="https://guokeya.github.io/post-images/1583631269497.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583631269497.png" alt="" loading="lazy"><br>
 导出。挂载<br>
-<img src="https://guokeya.github.io/post-images/1583631337253.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583631337253.png" alt="" loading="lazy"><br>
 禁止套娃！得到usbdata.zip<br>
-<img src="https://guokeya.github.io/post-images/1583631457679.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583631457679.png" alt="" loading="lazy"><br>
 用之前的密码得到usbdata.txt<br>
 usb转换一下就行了<br>
-<img src="https://guokeya.github.io/post-images/1583631531913.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1583631531913.png" alt="" loading="lazy"></p>
 <p><strong>隐藏的信息</strong><br>
 zip伪加密。。解压得到隐藏的信息.wav<br>
 通过audacity发现。视频头和尾有电话拨号的声音<br>
 DTMF(双音多频)<br>
 github上有工具。<code>https://github.com/hfeeki/dtmf</code><br>
-<img src="https://guokeya.github.io/post-images/1583631740959.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583631740959.png" alt="" loading="lazy"><br>
 到这里。都没用到另一张图片。<br>
-<img src="https://guokeya.github.io/post-images/1583631821334.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583631821334.png" alt="" loading="lazy"><br>
 图片中得到提示。base64提交那串数字</p>
 <p><strong>简单的MISC</strong><br>
 photo.jpg分离出一个zip。<br>
@@ -149,18 +149,18 @@ $content = $r-&gt;fetch_array(MYSQL_ASSOC);
 </code></pre>
 <p>直接将值放入date函数。缓缓打出一个?<br>
 反正会将date函数中有特殊意义的字符串。直接解析。比如<br>
-<img src="https://guokeya.github.io/post-images/1583654930365.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583654930365.png" alt="" loading="lazy"><br>
 解决办法就是在用反斜杠包裹。比如or--&gt;\o\r<br>
 然后就可以通过回显注入。得到密码<br>
 字段数：3<br>
-<img src="https://guokeya.github.io/post-images/1583655357840.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583655357840.png" alt="" loading="lazy"><br>
 得到表名，admin/content<br>
-<img src="https://guokeya.github.io/post-images/1583655429589.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583655429589.png" alt="" loading="lazy"><br>
 得到列名：id,username,passwd,url<br>
-<img src="https://guokeya.github.io/post-images/1583655516204.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583655516204.png" alt="" loading="lazy"><br>
 得到用户名密码：admin/20200202goodluck<br>
 以及一个url：/eGlhb2xldW5n<br>
-<img src="https://guokeya.github.io/post-images/1583655772402.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583655772402.png" alt="" loading="lazy"><br>
 附上我写的菜鸡脚本</p>
 <pre><code>import requests
 url='http://121.37.181.246:6333/?time='
@@ -174,7 +174,7 @@ print (sql)
 <p>进入url。用admin和密码登陆<br>
 右键源代码发现hint:/eGlhb2xldW5n/eGlhb2xldW5nLnBocA==.php<br>
 有一个文件读取。提示本地访问<br>
-<img src="https://guokeya.github.io/post-images/1583655830981.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583655830981.png" alt="" loading="lazy"><br>
 试了Client-ip   XFF   Host头。都无果<br>
 最后是url中用file://localhost绕过<br>
 直接去读取/eGlhb2xldW5n/eGlhb2xldW5nLnBocA==.php文件<br>
@@ -225,7 +225,7 @@ unserialize((base64_decode($_GET['code'])));
 </code></pre>
 <p>ok。是一个反序列化<br>
 我们可控一个<code>$gf</code><br>
-然后<code>$gf</code>会经过正则匹配。不能出现<img src="https://guokeya.github.io/post-images/1583656096659.png" alt="" loading="lazy"><br>
+然后<code>$gf</code>会经过正则匹配。不能出现<img src="http://localhost:4000/post-images/1583656096659.png" alt="" loading="lazy"><br>
 那么可以通过取反绕过。<br>
 继续看。<code>$gf</code>会被赋值给<code>$content</code><br>
 然后经过aiisc_to_chr。转换为字符。<br>
@@ -242,17 +242,17 @@ $a-&gt;gf=&quot;~'&quot;.~'70766571'.&quot;'&quot;;
 #70766571表示的是FLAG。因为chr是两位分割。所以不能用小写。后面会处理为小写
 echo base64_encode(serialize($a));
 </code></pre>
-<p><img src="https://guokeya.github.io/post-images/1583657144805.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1583657144805.png" alt="" loading="lazy"><br>
 大致意思呢。就是将70766571取反的结果外面套一层~<br>
-<img src="https://guokeya.github.io/post-images/1583657223302.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583657223302.png" alt="" loading="lazy"><br>
 执行结果是这样<br>
-<img src="https://guokeya.github.io/post-images/1583657272000.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1583657272000.png" alt="" loading="lazy"></p>
 <p><strong>hackme</strong><br>
 www.zip源码泄露。<br>
 在core/index.php中发现一段注释。需要变成管理员用户。结合check_session函数。条件是<code>$_SESSION['admin']=1</code><br>
-<img src="https://guokeya.github.io/post-images/1583663311786.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583663311786.png" alt="" loading="lazy"><br>
 搜下哪边有session赋值的操作<br>
-<img src="https://guokeya.github.io/post-images/1583663379585.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583663379585.png" alt="" loading="lazy"><br>
 这一幕。仿佛就是session反序列化。。<br>
 我们先理清楚大概流程</p>
 <pre><code>login.php-&gt;包含init.php-&gt;php_serialize-&gt;session赋值。表示已登陆
@@ -274,21 +274,21 @@ echo serialize($a);
 </code></pre>
 <p>运行得到<code>O:4:&quot;info&quot;:2:{s:5:&quot;admin&quot;;i:1;s:4:&quot;sign&quot;;i:123;}</code><br>
 登陆后。更新签名为<code>|O:4:&quot;info&quot;:2:{s:5:&quot;admin&quot;;i:1;s:4:&quot;sign&quot;;i:123;}</code><br>
-<img src="https://guokeya.github.io/post-images/1583665509236.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583665509236.png" alt="" loading="lazy"><br>
 访问profile.php。触发反序列化。<br>
-<img src="https://guokeya.github.io/post-images/1583665574063.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583665574063.png" alt="" loading="lazy"><br>
 然后就是Byte CTF的题目+eval四长度写shell<br>
 <code>https://blog.csdn.net/a3320315/article/details/102989485/</code><br>
 <code>https://lorexxar.cn/2017/11/10/hitcon2017-writeup/#babyfirst-revenge-v2</code><br>
 参考以上两篇文章即可。一模一样。</p>
 <p><strong>sqlcheckin</strong><br>
 给出了源码。<br>
-<img src="https://guokeya.github.io/post-images/1583666237376.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583666237376.png" alt="" loading="lazy"><br>
 这里返回的用户名得是admin。并且过滤了一些字符。<br>
-<img src="https://guokeya.github.io/post-images/1583666218044.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583666218044.png" alt="" loading="lazy"><br>
 用'-'绕过。mysql和php一样。存在弱类型特性。字符串与0比较是相等的</p>
 <p><strong>fmkq</strong><br>
-<img src="https://guokeya.github.io/post-images/1583666638219.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1583666638219.png" alt="" loading="lazy"></p>
 <pre><code>首先就是变量覆盖。
 $head不能是数字字母
 $url不能带有协议。log这类的
@@ -299,20 +299,20 @@ sprintf($begin.'%d',$output)
 那么我们得想办法绕过这个
 </code></pre>
 <p>可以利用变量覆盖。将<code>$begin</code>设为%1$s将第一个参数的值以string类型输出。那么这里第一个参数就是我们的output<br>
-<img src="https://guokeya.github.io/post-images/1583667090644.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583667090644.png" alt="" loading="lazy"><br>
 url进行SSRF。得到8080端口有个应用<br>
-<img src="https://guokeya.github.io/post-images/1583667445368.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583667445368.png" alt="" loading="lazy"><br>
 环境没了。暂时先咕咕咕。</p>
 <p><strong>webct</strong><br>
 就一个上传图片+数据库连接<br>
 www.zip源码泄露。分析下<br>
 在config.php发现危险函数<br>
-<img src="https://guokeya.github.io/post-images/1583673712572.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583673712572.png" alt="" loading="lazy"><br>
 而mysql只要设置load_file选项为1.就能触发phar反序列化。<br>
 思路就有了。构造一个phar.jpg。然后上传。通过mysql触发反序列化执行命令<br>
 首先。我们构造下pop链。<br>
 反序列化。没有可以调用listdir()函数的。那么只能通过调用一个不存在的方法。触发call魔法函数<br>
-<img src="https://guokeya.github.io/post-images/1583673951794.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583673951794.png" alt="" loading="lazy"><br>
 在Fileupload类中。我们发现__destruct方法中。存在file可控。并且会调用xs方法<br>
 以下是payload：</p>
 <pre><code>&lt;?php
@@ -339,22 +339,22 @@ $phar-&gt;stopBuffering();
 <p>生成后。修改为gif.jpg。上传<br>
 uploads下存在目录遍历。找到上传图片的相对路径<br>
 在VPS上开启一个Rogue_mysql_server。文件名用phar://图片路径<br>
-<img src="https://guokeya.github.io/post-images/1583674681327.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583674681327.png" alt="" loading="lazy"><br>
 接下来就通过数据库连接功能触发反序列化<br>
 需要配置MYSQLI_OPT_LOCAL_INFILE为True<br>
-<img src="https://guokeya.github.io/post-images/1583674878672.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583674878672.png" alt="" loading="lazy"><br>
 源码中。已经配置了1(True)。那么只要输入MYSQLI_OPT_LOCAL_INFILE就行了<br>
-<img src="https://guokeya.github.io/post-images/1583674941451.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583674941451.png" alt="" loading="lazy"><br>
 这有个坑。查看手册。发现mysql_options函数。第一个参数不是字符串？？？？？要求是数字类型<br>
-<img src="https://guokeya.github.io/post-images/1583675155627.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1583675155627.png" alt="" loading="lazy"><br>
 也就是说每个配置项。有对应的数字ID？<br>
 burp爆破下。ID为8时。成功触发反序列化。<br>
 至于为什么直接执行/readflag呢。之前我已经看过目录了。。这里直接拿flag<br>
-<img src="https://guokeya.github.io/post-images/1583675294967.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1583675294967.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/VmI2NBAXh/">
+            <a href="http://localhost:4000/post/VmI2NBAXh/">
               <span class="post-title">
                 [强网杯 2019]Upload(thinkphp代码审计序列化)&rarr;
               </span>
@@ -363,6 +363,26 @@ burp爆破下。ID为8时。成功触发反序列化。<br>
         
         <div class="comment">
           
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
         </div>
       </div>
     </div>
@@ -398,7 +418,7 @@ burp爆破下。ID为8时。成功触发反序列化。<br>
             
               
               <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -406,17 +426,17 @@ burp爆破下。ID为8时。成功触发反序列化。<br>
               </a>
               </li>
           </ul>
-          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br >浙ICP备2021000950号-1</a></p>
         </div>
       </div>
     </div>
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

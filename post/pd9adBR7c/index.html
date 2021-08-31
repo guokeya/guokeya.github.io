@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>[DDCTF 2019]homebrew event loop |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="[DDCTF 2019]homebrew event loop |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="[DDCTF 2019]homebrew event loop |   » Feed" href="http://localhost:4000/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="[DDCTF 2019]homebrew event loop"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/pd9adBR7c/"/>
+    <meta property="og:url" content="http://localhost:4000/post/pd9adBR7c/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <a class="navbar-brand" href="http://localhost:4000"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,9 +80,9 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
             
-            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            <a href="http://localhost:4000/tag/Web/" class="tag">Web安全</a>
             
         </span>
             <h1>[DDCTF 2019]homebrew event loop</h1>
@@ -248,18 +248,18 @@ def get_flag_handler(args):
 </code></pre>
 <p>execute_event_loop是起到路由功能。对URL中参数进行分割等。然后执行对应的函数<br>
 我们可以复制下来。本地跑下<br>
-<img src="https://guokeya.github.io/post-images/1584421017668.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1584421017668.png" alt="" loading="lazy"><br>
 接着我们看下得到flag的地方。<br>
-<img src="https://guokeya.github.io/post-images/1584421073491.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1584421073491.png" alt="" loading="lazy"><br>
 如果session[num_items]&gt;=5。就会调用了trigger_event。接着看看这个函数是干啥的<br>
 将要执行的函数和参数。放入request的队列中。然后依次执行<br>
-<img src="https://guokeya.github.io/post-images/1584421381212.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1584421381212.png" alt="" loading="lazy"><br>
 也就是说。我们要满足session[num_items]=5。继续看num_items在哪可以加<br>
-<img src="https://guokeya.github.io/post-images/1584421627465.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1584421627465.png" alt="" loading="lazy"><br>
 以buy_handler(1)这样购买。然后num_item就会+1<br>
 会把func:consume_point;num_items传入队列执行<br>
 执行的是consume_point_function(num_items)<br>
-<img src="https://guokeya.github.io/post-images/1584421792842.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1584421792842.png" alt="" loading="lazy"><br>
 作用是判断session中的points是否小于我们想要购买的数量。如果小于。那么就再减掉<br>
 就是。我们购买5个flag。但是。只有3个金币。它会先购买5个。然后判断钱是不是够。不够就再减去<br>
 OK。现在大致思路就搞懂了。execute_event_loop函数。接受输入。决定执行什么函数。<br>
@@ -269,10 +269,10 @@ OK。现在大致思路就搞懂了。execute_event_loop函数。接受输入。
 得在buy_flag(5)后。get_flag<br>
 仔细看看execute_event_loop函数处理路由的过程：<br>
 action(函数名)是第一个冒号后面的值。然后截取出来的字符串。再截取分号前面的值<br>
-<img src="https://guokeya.github.io/post-images/1584423199385.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1584423199385.png" alt="" loading="lazy"><br>
 参数呢。也是通过分割得到的。<br>
 取函数名+分号后面的值。用#来分割。作为参数<br>
-<img src="https://guokeya.github.io/post-images/1584423317572.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1584423317572.png" alt="" loading="lazy"><br>
 重复写。就能构造一个参数。<br>
 然后带入eval执行。。由于他是用#来注释。那么#用于注释python的代码eval('func:456#123')<br>
 井号会注释掉123<br>
@@ -282,12 +282,12 @@ action(函数名)是第一个冒号后面的值。然后截取出来的字符串
 buy:5<br>
 get_flag<br>
 buy:5触发的consume_point_function函数。<br>
-<img src="https://guokeya.github.io/post-images/1584424534870.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1584424534870.png" alt="" loading="lazy"><br>
 得到session。用flask_session_manager解密即可</p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/lClpsRDJm/">
+            <a href="http://localhost:4000/post/lClpsRDJm/">
               <span class="post-title">
                 Wallbreaker_Easy(Bypass disable_function)&rarr;
               </span>
@@ -296,6 +296,26 @@ buy:5触发的consume_point_function函数。<br>
         
         <div class="comment">
           
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
         </div>
       </div>
     </div>
@@ -331,7 +351,7 @@ buy:5触发的consume_point_function函数。<br>
             
               
               <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -339,17 +359,17 @@ buy:5触发的consume_point_function函数。<br>
               </a>
               </li>
           </ul>
-          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br >浙ICP备2021000950号-1</a></p>
         </div>
       </div>
     </div>
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">

