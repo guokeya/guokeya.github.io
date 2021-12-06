@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>RACTF(Web) |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="RACTF(Web) |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="RACTF(Web)"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/sMTQt2i7B/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>RACTF(Web)</h1>
+            <span class="meta">
+            	Posted on
+              2020-06-07，5 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>Web有两个系列的题。考点都比较简单。<br>
+主要就是考思路吧。</p>
+<!-- more -->
+<h1 id="web签到题">Web签到题</h1>
+<pre><code>app.post('/getflag', (req, res) =&gt; {
+    console.log(&quot;[-] Getflag post&quot;)
+    if (!req.body) {return res.send(&quot;400&quot;)}
+    let one = req.body.one
+    let two = req.body.two
+    console.log(req.body)
+    if (!one || !two) {
+        return res.send(&quot;400&quot;)
+    }
+    if ((one.length !== two.length) || (one === two)) {
+        return res.send(&quot;Strings are either too different or not different enough&quot;)
+    }
+    one = customhash.hash(secret_key + one)
+    two = customhash.hash(secret_key + two)
+    if (one == two) {
+        console.log(&quot;[*] Flag get!&quot;)
+        return res.send(flag)
+    } else {
+        return res.send(`${one} did not match ${two}!`)
+    }
+})
+</code></pre>
+<p>很明显的nodejs弱类型<br>
+<code>{&quot;one&quot;:[1],&quot;two&quot;:[1]}</code></p>
+<p>第一个系列：<br>
+首先就是个登陆入口。<br>
+<img src="https://guokeya.github.io/post-images/1591544892408.png" alt="" loading="lazy"><br>
+存在robots.txt。里面有个admin-stash。访问得到Flag<br>
+登陆入口。没啥东西。尝试sql注入。打了个单引号。500了。是个python。<br>
+然后各种测试。后端其实是sqlite<br>
+用<code>' or 1--</code>得到<code>Attempting to login as more than one user!??</code><br>
+提示多个用户登陆。。应该就是or 1返回了所有用户.用limit语句成功登陆<br>
+<code>' or 1 limit 0,1--</code><br>
+登陆后。发现有三个链接。<br>
+<img src="https://guokeya.github.io/post-images/1591545098976.png" alt="" loading="lazy"><br>
+URL是<code>/watch/TCYI.mp4</code><br>
+访问/watch/a就500了。<br>
+python web中。有很多类似<code>/&lt;path:file&gt;</code>的任意文件读取<br>
+尝试访问/watch/app.py。<br>
+得到Flag<br>
+<img src="https://guokeya.github.io/post-images/1591545202068.png" alt="" loading="lazy"><br>
+在界面的右下角有个Admin<br>
+访问就跳转。估计不是Admin身份。<br>
+用limit语句遍历登陆。发现没有Admin用户。<br>
+抓包看看。发现有个JWT头。解密后就是当前用户和privialge。权限<br>
+<img src="https://guokeya.github.io/post-images/1591545348764.png" alt="" loading="lazy"><br>
+找了下密钥。公钥。都没找到。对于jwt一般就HS256或者none。或者找到爆破密钥<br>
+这里是none</p>
+<pre><code>const jwt=require('jsonwebtoken');
+const user='admin';
+const privilege=2;
+console.log(jwt.sign({user,privilege}, null, {algorithm: 'none'}));
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1591545410069.png" alt="" loading="lazy"></figure>
+<h1 id="第二个系列">第二个系列</h1>
+<p>依旧是登陆<br>
+<img src="https://guokeya.github.io/post-images/1591545479755.png" alt="" loading="lazy"><br>
+欸。依旧是存在robots.txt。没啥用。几个文件都不存在<br>
+<img src="https://guokeya.github.io/post-images/1591545524792.png" alt="" loading="lazy"><br>
+读取backup.txt。密码就是flag<br>
+读取main.py。得到第二个flag<br>
+然后。依旧是sqlite注入<br>
+<code>' or 1 limit 1,1--</code>得到admin的flag<br>
+limit遍历。还有一个用户的flag<br>
+然后就没思路了。。。<br>
+尝试跑了下库。没东西。<br>
+Ha1师傅的字典🐂🍺。扫出了sitemap.xml<br>
+得到sitemap.xml.bak<br>
+<img src="https://guokeya.github.io/post-images/1591545681701.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1591545689896.png" alt="" loading="lazy"><br>
+最后一个挑战。burp抓包看到__adminPortal<br>
+带上登陆后的session访问得到<br>
+<img src="https://guokeya.github.io/post-images/1591630627156.png" alt="" loading="lazy"><br>
+F12发现unicode字符。实质上是普通字符+一堆unicode字符。unicode把普通字符覆盖了。写个脚本匹配出里面的普通字符得到Flag<br>
+<img src="https://guokeya.github.io/post-images/1591630669717.png" alt="" loading="lazy"></p>
+<pre><code>import requests
+import string
+c = {
+'session':'854b2123-1894-40c6-bcc1-032d3a7da846'
+}
+s=string.printable
+result=requests.get(url='http://88.198.219.20:45041/__adminPortal',cookies=c).text
+data=result.split('&lt;h3 style=&quot;display:none&quot;&gt;')
+for i in data[1]:
+    if i in s:
+        print(i,end='')
+    else:
+        pass
+</code></pre>
+<p>取证题就会一个流量分析。。<br>
+WIFI数据包。拿rockyou爆破出密码<br>
+然后解密数据包导出PDF得到Flag</p>
+<p>杂项python。</p>
+<pre><code>import math
+
+x = 0.0
+z = 0.0
+flag_x = 10000000000000.0
+flag_z = 10000000000000.0
+print(&quot;Your player is at 0,0&quot;)
+print(&quot;The flag is at 10000000000000, 10000000000000&quot;)
+print(&quot;Enter your next position in the form x,y&quot;)
+print(&quot;You can move a maximum of 10 metres at a time&quot;)
+for _ in range(100):
+    print(f&quot;Current position: {x}, {z}&quot;)
+    try:
+        move = input(&quot;Enter next position(maximum distance of 10): &quot;).split(&quot;,&quot;)
+        new_x = float(move[0])
+        new_z = float(move[1])
+    except Exception:
+        continue
+    diff_x = new_x - x
+    diff_z = new_z - z
+    dist = math.sqrt(diff_x ** 2 + diff_z ** 2)
+    if dist &gt; 10:
+        print(&quot;You moved too far&quot;)
+    else:
+        x = new_x
+        z = new_z
+    if x == 10000000000000 and z == 10000000000000:
+        print(&quot;ractf{#####################}&quot;)
+        break
+</code></pre>
+<p>问题就出在这个float函数上<br>
+float函数支持nan,inf这些<br>
+如果传入字符。float后与x相减。依旧是nan<br>
+然后<code>math.sqrt(nan**2-diff_z**2)</code>依旧是nan<br>
+而字符串又始终比数字大。<br>
+<img src="https://guokeya.github.io/post-images/1591679014119.png" alt="" loading="lazy"></p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/NIupiXpsi/">
+              <span class="post-title">
+                利用|和&amp;来进行无数字webshell&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br >浙ICP备2021000950号-1</a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

