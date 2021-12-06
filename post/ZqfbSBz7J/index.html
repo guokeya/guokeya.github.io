@@ -80,6 +80,8 @@
           <div class="post-heading">
           	<span class="tags">
           	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
         </span>
             <h1>湖湘杯线下Writeup</h1>
             <span class="meta">
@@ -195,6 +197,15 @@ _ci_load方法中的(&quot;_ci_vars&quot;=&gt;可控)<br>
 包含pearcmd.php即可RCE<br>
 payload:<br>
 /admin/topic/verify/?_ci_path=/usr/local/lib/php/pearcmd.php</p>
+<h1 id="黑盒题">黑盒题</h1>
+<p>有个request.js。很多接口<br>
+注册用户上去。然后改密码处。用户名base64改成admin<br>
+然后再去request.js的admin改密码接口。改root的密码<br>
+改完密码。有个列log的接口。读../../../../../var/www/html/phpinfo.php<br>
+是个一句话后门。md5对应密码是1q2w3e<br>
+弹shel用sed提权读flag。</p>
+<h1 id="nodejs">nodejs</h1>
+<p>原型链污染。然后pug渲染模板注入即可</p>
 
           
           <p class="next-post">下一篇：
