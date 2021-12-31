@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guokeya.github.io</id>
     <title> </title>
-    <updated>2021-12-28T08:26:01.235Z</updated>
+    <updated>2021-12-31T13:59:31.389Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guokeya.github.io"/>
     <link rel="self" href="https://guokeya.github.io/atom.xml"/>
@@ -10,6 +10,13 @@
     <logo>https://guokeya.github.io/images/avatar.png</logo>
     <icon>https://guokeya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021,  </rights>
+    <entry>
+        <title type="html"><![CDATA[2021西湖论剑 朴实无华的web Writeup]]></title>
+        <id>https://guokeya.github.io/post/WscncUrcS/</id>
+        <link href="https://guokeya.github.io/post/WscncUrcS/">
+        </link>
+        <updated>2021-12-31T13:55:25.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[SCTF web]]></title>
         <id>https://guokeya.github.io/post/D5baJK4QD/</id>
@@ -72,12 +79,5 @@
         <link href="https://guokeya.github.io/post/4ESkrhY6R/">
         </link>
         <updated>2021-09-28T08:58:09.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[陇剑杯WP]]></title>
-        <id>https://guokeya.github.io/post/0LQXJC3RD/</id>
-        <link href="https://guokeya.github.io/post/0LQXJC3RD/">
-        </link>
-        <updated>2021-09-14T12:43:43.000Z</updated>
     </entry>
 </feed>

