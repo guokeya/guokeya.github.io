@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>RedPwnCTF的一题sh混淆杂项(uglybash) |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="RedPwnCTF的一题sh混淆杂项(uglybash) |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="RedPwnCTF的一题sh混淆杂项(uglybash)"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/IWVADGzub/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+        </span>
+            <h1>RedPwnCTF的一题sh混淆杂项(uglybash)</h1>
+            <span class="meta">
+            	Posted on
+              2020-06-22，8 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>题目给了个sh</p>
+<pre><code> ${*%c-dFqjfo}  e$'\u0076'al &quot;$(   ${*%%Q+n\{}   &quot;${@~}&quot; $'\160'r&quot;&quot;$'\151'$@nt&quot;f&quot; %s   ' }~~@{$  &quot;)   }La?cc87J##@{$   ;   }  ;  }8CC3vD/qX$t/*{$   }~~*{$   &quot;}] &quot;}^@{$&quot;  y4R2SV$   &quot;}cIqe[\(\%@{$&quot; &quot;}xk:W=Y2##@{$&quot; [JzbY6E{$&quot;   s%   ft'&quot;'&quot;'n'&quot;'&quot;''&quot;'&quot;'i'&quot;'&quot;'r\p  { ; }*!{$ ]  )e#22+)2}8Kr6&gt;#*{$#82*01#3}^*{$((   [$ &quot;};(\S-[\/@{$&quot;   &quot;},@{$&quot;   ]  )71}|$1+d/$_dj/*{$#8+)2#16*1&quot;}xp.{\$Z~[\%@{$&quot;#}~*{$7&quot;1&quot;-((  [$ &quot;@$&quot;  &quot;}oMAHn%%@{$&quot;   ))  )0&quot;1&quot;01&quot;}^@{$&quot;#4}]\oh&gt;-%%@{$+)&quot;a&quot;1#21&quot;-&quot;+l#&quot;1&quot;&quot;5&quot;-})\+{\$rMTE%%@{$((   (($ }Omm&quot;\V#*{$   }8z&lt;TPr/*{$   ]   ))11&quot;#&quot;2+)&quot;2&quot;&quot;#&quot;&quot;7&quot;&quot;5&quot;-&quot;}qJ)\)\!\{\#/Ije&gt;VU//@{$&quot;-2}_axM-*/*{$#&quot;7&quot;&quot;3&quot;(-(-( [$ }f9~U//*{$  }#Jgkvc#@{$   ))  )1#}7e[\Trh{\//@{$4+)0#62*0#}*{$&quot;9&quot;(( (($ }S(\{\0)\##@{$   ] )21&quot;}jAVg1-%%@{$&quot;&quot;#&quot;5+)&quot;1&quot;1#}*{$4}*{$-*&quot;0&quot;1#&quot;}~~@{$&quot;&quot;3&quot;-((   [$   }^^*{$   ]   )11#}*!{$&quot;3&quot;+)1*$#93*2#&quot;6&quot;5&quot;@$&quot;((   [$  }0c;x]\^Y//*{$  })\mei/b6B1atD)\//*{$  ]  )1&quot;1&quot;0001#2&quot;}fhF`\x/s77vTa[\/@{$&quot;+)0*$#}R&quot;\&gt;(\/RTS8//*{$&quot;6&quot;+l&quot;#&quot;03-((  [$ }^^@{$ ))   ))31&quot;#&quot;5+)11#7--00&quot;}&amp;*]\7//@{$&quot;1#2}`\g]\&lt;Roj/}\~(\&lt;Qq/*{$(-(-(  (($  }~@{$  ))   )&quot;1&quot;&quot;#&quot;5}mR&amp;&lt;7r/}\dC!\s*k/*{$3+)i#65-6&quot;1&quot;#}NojyN70T##*{$92}@!{$((  (($  },,*{$ ]  )i}Ym5{\y##@{$#}!\a.8/*{$&quot;0&quot;2},,*{$+)01#4+&quot;b&quot;#94}*{$-((  [$   }@{$   }~*{$ )) )52#8+)0#62*0#05(( (($  })\C62X/*{$  }mibf/*{$ )) )&quot;4&quot;2&quot;#&quot;6}~f`\^/@{$1}3NKi^FgW/*{$+)2}=&quot;\ulQ;/*{$&quot;#&quot;7}@!{$3-+k#35-((   (($  }*{$ }*{$  ] )i#16+)01#3*11#2}?L7X&gt;/~^MeZH/@{$-((   [$  *$  }@{$   ))  )222#3+)11},,@{$#&quot;2&quot;*1&quot;1&quot;#4-((   (($   &quot;}@{$&quot; }*!{$ ]   )d#53}e~+uz61###@{$+)0}~~*{$01#2--2&quot;1&quot;&quot;#&quot;3((   [$ }~~*{$   ))   )j&quot;}^^@{$&quot;#&quot;},@{$&quot;0}~*{$3+)11#4-}ml;.##@{$+&quot;1&quot;#8}&quot;\r&quot;\&gt;cohJ/*{$4(( (($   }*!{$   )) )&quot;a&quot;1&quot;#&quot;&quot;1&quot;5+)03#7-e}^^*{$#12-((  (($ &quot;}~@{$&quot;  ))  ))22&quot;1&quot;#3+)2#&quot;}Y9cefj9%%@{$&quot;41-*$-&quot;y&quot;#84(-(-(   (($   }^^@{$   ))   )011}~~@{$1},,*{$#2+)&quot;1&quot;#52*11#3-}^^*{$(( (($  }*{$ ]   ))0#&quot;1&quot;1+)0#04*0&quot;#&quot;2&quot;},,@{$&quot;1}*!{$(-(-( [$   }~~@{$ ))   )43#2&quot;}gC@u/@{$&quot;1+)&quot;1&quot;1}pQCP//*{$#2-}^@{$*01#*$8(( (($ }dlz&quot;\T%%*{$  },h]\rj`\}\/RPQto&quot;\/*{$   )) ))1#2}Vf}\]\Nu##@{$1+)11&quot;#&quot;2--0})\HIZ/*{$#05(-(-(  (($   },,*{$ }~~@{$ ))  )&quot;a&quot;#&quot;6&quot;3&quot;}TIP]\@V##@{$&quot;+)2}`\.\%Qxt/?:4,/@{$#02-*01#3-}{\Di6HUx@%@{$((  (($ &quot;}~@{$&quot; }34v@##*{$   ]  ))11#&quot;5&quot;+)h&quot;}BdoI#@{$&quot;1#1}t*f+fWlA//*{$2+2}~~*{$&quot;1&quot;#},,*{$5-(-(-(   [$   };y$!\M8##@{$  ))   )1#&quot;7&quot;&quot;1&quot;+)0*$&quot;#&quot;&quot;1&quot;3*0#5}*{$1&quot;}Rw6a//@{$&quot;(( (($   }Q-Vf9d%%*{$  ))   )1},,*{$#15+)0}+lDQf%@{$#&quot;2&quot;*0#74((  (($   }_%$KT9f/iTW~$_/*{$  @$  ]   )&quot;m&quot;#3},@{$&quot;3&quot;+)1&quot;1&quot;#2-*0#&quot;5&quot;1(( [$  &quot;},@{$&quot;   }TX`\`\%%@{$ ] )&quot;1&quot;1#5&quot;}FE=UU=W./&amp;&lt;&quot;\8l7/@{$&quot;+)0#3*01#3-((   [$ }*{$   }aO;R&quot;\w/9jJF1//*{$   ]   )&quot;2&quot;1#&quot;}9uT]\j1f;##@{$&quot;&quot;6&quot;+)j#&quot;7&quot;4-&quot;}^^@{$&quot;-b#14-((   [$   }^^*{$ }~~*{$ )) ))1&quot;#&quot;34+)&quot;0&quot;1#}exP&quot;\/TG!\)\T!\?//@{$6+1}*!{$#0}&lt;7V&amp;/*{$6-(-(-(   (($ }Mi@S&lt;]\Q#*{$ }^^*{$   ]   )2}}\2jz]\G49/#dn&gt;8/*{$2#&quot;}&lt;FTeK&amp;n,//@{$&quot;3&quot;},,@{$&quot;+)1#3-+00}I3cO.O;Z%%@{$&quot;1&quot;#&quot;2&quot;-},*{$(( [$ }B;h_1VnC%%*{$   &quot;}@{$&quot;  ]  )01}*{$#3+)1#*$8&quot;3&quot;--02#4((  [$  }.\np,/?{\~b03//*{$  &quot;},@{$&quot; ))  ))02#4+)&quot;n&quot;#}SPKP8tw##@{$45--1&quot;#&quot;03(-(-(  (($  &quot;}@{$&quot;   ]   ))n&quot;#&quot;14+)s#44+2}@{$2#}~*{$8}7Qq~iq%%*{$(-(-(   [$   *$   ]   )21&quot;#&quot;4+)n&quot;}~@{$&quot;#}\\@&lt;f$4/*{$45--&quot;1&quot;2&quot;#&quot;3-(( [$  }@{$ }*{$ ))   )41#&quot;3&quot;1+)0&quot;#&quot;15*11#&quot;6&quot;(( (($   },,@{$ ]   )d#}t_=_//*{$8}ha5]\78/*{$&quot;1&quot;+)01#3&quot;-&quot;*1&quot;}G2T~wh2##@{$&quot;&quot;#&quot;64-(( [$  }^^@{$   }.T9P_8Gv//*{$ ]   )2&quot;#&quot;73&quot;}$oE?##@{$&quot;+)1},,*{$&quot;1&quot;#}K.o%o$t/uR@fekB#/@{$2-&quot;0&quot;&quot;1&quot;#}@bCU%*{$4((  [$  &quot;}3nB?u8fG//@{$&quot; ))  )&quot;3&quot;&quot;2&quot;&quot;#&quot;11&quot;@$&quot;+)0&quot;}~@{$&quot;1#4-+a#5&quot;4&quot;-((  (($ }~y?mRx/BM&quot;\H]\//*{$  &quot;}4^4rR/@{$&quot; ]   )&quot;G&quot;#74}~@{$+)2#52}@!{$&quot;-&quot;*a#7&quot;1&quot;((  [$  }@!{$ }~~*{$   ]  ))1#84+)31#5+h#03(-(-(  [$   }&amp;+?82EU%%*{$   }@!{$   ]   )l&quot;#&quot;&quot;3&quot;2+)1}~*{$#21*0&quot;}4[\P!\/|Ec{\e/@{$&quot;1}*{$&quot;#&quot;5-((  [$ }:p-c^h+/:r#lsa//*{$ }*{$ ))  )00}@!{$1#}BFcS!\%@{$2+)1#&quot;0&quot;6*1#}~~*{$71-(( (($  }~~*{$ }&quot;\&amp;`\QS*%*{$   ]   )z&quot;#&quot;44+)11&quot;#&quot;&quot;5&quot;-*2#4&quot;2&quot;((   [$   &quot;}^^@{$&quot; }RU*x9!\22/ySk%Ir/@{$ ))  )e&quot;#&quot;0&quot;5&quot;+)2#7&quot;2&quot;*&quot;1&quot;1#2&quot;-&quot;(( (($  }*{$ }LNt)\,//@{$ ))   ))0#}}\TMHUEV//*{$0}{\^WK!\##*{$6+)11#6-}ahZD^2~/:C,Io\C/*{$-&quot;1&quot;#65-&quot;}H@zpzY8%@{$&quot;(-(-(   (($  &quot;}QrL2J\~%%@{$&quot;  &quot;}n(\7?)\)\J%%@{$&quot;  ]   )0&quot;1&quot;&quot;#&quot;11+)0#&quot;8&quot;2-11}*{$&quot;#&quot;4((  [$   }(\L-.D:/.41yxK]\//*{$  ]   ))21&quot;#&quot;7+)2#24--&quot;f&quot;&quot;#&quot;32(-(-(  [$ },*{$ }@!{$ ] )22#81}^*{$+)1&quot;1&quot;#4}~*{$&quot;-&quot;*001#}*{$2(( [$ }^^@{$   },,@{$   ] )j},,*{$#&quot;}u7=$6]\/o43H//@{$&quot;2&quot;5&quot;+)1&quot;1&quot;&quot;1&quot;&quot;#&quot;2-101#2-((  [$  }$Wil##@{$  }l=:G&gt;(\-#@{$  ] ))0#75}~~@{$+)1&quot;#&quot;&quot;9&quot;+1&quot;}JZ2I7=&amp;/@{$&quot;&quot;1&quot;#}~~*{$3(-(-(  [$  ni  y4R2SV  rof &amp;&amp;   },,@{$  )  }^*{$  g  }^^*{$ y   }g$U-b9%@{$   j   }*!{$   n }~@{$  *$  u   &quot;}(\whfI/@{$&quot;  &quot;}@{$&quot;  z  }RH|&lt;=z##@{$   }~~@{$  '&quot;'&quot;'ax\'&quot;'&quot;'$   }^^@{$  a }~*{$ }dS^Db6G}\%*{$   h   }@{$   }^*{$ r  &quot;}m&amp;Jk:b?/WBG02h}\_/@{$&quot;  \ }T|qd//*{$  }OM`\6.o%@{$   {\  }H%ynnO(\u//*{$   }g8Gv|R~/*{$  _\  }-:zfUz%%*{$ }\   })\#?1{\OK/@{$ *$  i  }__b5W:RE//@{$  s   }%&lt;Oy{\I//*{$ }&quot;\-iPfz]\g/ug|0w8/*{$   l }L#vh$/{\wLz8/@{$ }60-tI0&lt;%%*{$ 3  &quot;}^@{$&quot; o }euc*##@{$   c  }~~*{$  }~~*{$  d }_h)\)\{\/i$V2/@{$   e   *$   }(\&amp;`\C?*3%%@{$   ,\ &quot;}@{$&quot; }~@{$  t   &quot;},@{$&quot;   }^^*{$ #\  }*^RXtV##*{$   m  &quot;}@{$&quot;   f &quot;},@{$&quot;   (=JzbY6E     ($&quot;  &lt;&lt;&lt; },,*{$   }C0#Y%%*{$  HSAB$ &quot;}|=1SW.//@{$&quot;   &quot;@$&quot; '  ${*,} ${@/;mO4/qc~&amp;y} |  ${@/a\{oy_BGF/*:wJ}   ${@##~@pBeI}   &quot;r&quot;&quot;&quot;ev   ${*~}  ${*%K^vf&amp;^3&lt;}  ;  ${*#SBvLg=k\[}  ${*^}    )&quot;   ${!@}
+</code></pre>
+<p>复制到虚拟机。执行下返回</p>
+<pre><code>root@kali:~# ./cmd.sh 
+dont just run it, dummy
+</code></pre>
+<p>flag应该就在注释里。<br>
+开始找sh反混淆的东西<br>
+找到了这篇文章<br>
+<code>https://www.sohu.com/a/273269706_783648</code><br>
+里面介绍了一个bash调试功能。sh -x<br>
+然后就能输出脚本的执行流程。<br>
+然后我用sh执行脚本的时候。直接报错。用bash -x也可以<br>
+<img src="https://guokeya.github.io/post-images/1592830048412.png" alt="" loading="lazy"><br>
+看起来还是很乱。但至少。它输出了脚本每次执行的东西<br>
+<img src="https://guokeya.github.io/post-images/1592830096857.png" alt="" loading="lazy"><br>
+执行了printf %s n<br>
+。。还是没思路。把所有内容复制到windows下<br>
+windows就很清楚了<br>
+flag字样<br>
+<img src="https://guokeya.github.io/post-images/1592830199514.png" alt="" loading="lazy"></p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/zE_m1kHQm/">
+              <span class="post-title">
+                [RoarCTF 2019]PHPShe(注入+phar反序列化)&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br ><!--test--></a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

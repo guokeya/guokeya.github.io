@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>WHUCTF HappyGame |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="WHUCTF HappyGame |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="WHUCTF HappyGame"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/ldU_lz95g/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+        </span>
+            <h1>WHUCTF HappyGame</h1>
+            <span class="meta">
+            	Posted on
+              2020-05-26，6 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>F12有源码</p>
+<pre><code>const express = require('express');
+const path = require('path');
+const opn = require('opn');
+const crypto = require('crypto');
+const session = require(&quot;express-session&quot;);
+const bodyParser = require('body-parser');
+const stringRandom = require('string-random');
+const app = express();
+const FUNCFLAG = '_$$ND_FUNC$$_';
+const serialize_banner = '{&quot;banner&quot;:&quot;Congratulations! 你是目前最高分！&quot;}';
+app.use(bodyParser());
+app.use(bodyParser.json());
+
+const logs={};
+var highestScore = 400;
+
+
+const serialize = function(obj) {
+  var outputObj = {};
+  var key;
+  if (typeof obj === 'string') {
+    return JSON.stringify(obj);
+  }
+  for(key in obj) {
+    if(obj.hasOwnProperty(key)) {
+      if(typeof obj[key] === 'function') {
+        var funcStr = obj[key].toString();
+        outputObj[key] = FUNCFLAG + funcStr;
+      } else {
+        outputObj[key] = obj[key];
+      }
+    }
+  }
+  return JSON.stringify(outputObj);
+};
+
+const validCode = function (func_code){
+  let validInput = /process|child_process|main|require|exec|this|eval|while|for|function|hex|char|base64|&quot;|'|\[|\+|\*/ig;
+  return !validInput.test(func_code);
+};
+
+const validInput = function (input){
+  // filter bad input
+  let validInput = /process|child_process|main|require|exec|this|function/ig;
+  ins = serialize(input);
+  return !validInput.test(ins);
+};
+
+
+// not safe
+const unserialize = function(obj) {
+  obj = JSON.parse(obj);
+  if (typeof obj === 'string') {
+    return obj;
+  }
+  var key;
+  for(key in obj) {
+    if(typeof obj[key] === 'string') {
+      if(obj[key].indexOf(FUNCFLAG) === 0) {
+        var func_code=obj[key].substring(FUNCFLAG.length);
+        if (validCode(func_code)){
+          var d = '(' + func_code + ')';
+          obj[key] = eval(d);
+        }
+      }
+    }
+  }
+  return obj;
+};
+
+const merge = function(target, source) {
+  try{
+    for (let key in source) {
+      if (typeof source[key] == 'object' ) {
+        merge(target[key], source[key]);
+      } else {
+        target[key] = source[key];
+      }
+    }
+  }
+  catch (e) {
+    console.log(e);
+  }
+};
+
+
+const genSanbox = function (req){
+  var content = stringRandom(32);
+  var result = crypto.createHash('md5').update(content).digest(&quot;hex&quot;);
+  req.session.sanbox = result;
+  logs[result] = new Record();
+  return result;
+};
+
+const getSanbox = function (req){
+  return req.session.sanbox;
+};
+
+app.use(session({
+  secret: 'hahahahahaha@@@@@@',
+  name : 'sessionId',
+  resave: false,
+  saveUninitialized: false
+}));
+
+app.use(function(req, res, next){
+  if(!getSanbox(req)){
+    genSanbox(req);
+  }
+  if(validInput(req.body)) {
+    next();
+  } else{
+    res.status(403).send('Hacker!!!');
+  }
+});
+
+const clearEnvir = function (){
+  for(key in Object()){delete {}.__proto__[key]};
+};
+
+
+function Record(){
+  this.lastScore=0;
+  this.maxScore=0;
+  this.lastTime=null;
+}
+
+async function record (req, res, next){
+  new Promise(function (resolve, reject) {
+    var sanbox = getSanbox(req);
+    var record = new Record();
+    var score = req.body.score;
+    var oldRecord = logs[sanbox];
+
+    console.log(score);
+    clearEnvir();
+    if (score.length&lt;5){
+      merge(record, {
+        lastScore: score,
+        maxScore: parseInt(logs[sanbox].maxScore)&gt;parseInt(score)?logs[sanbox].maxScore:score,
+        lastTime: new Date().toString()
+      });
+      logs[sanbox] = record;
+      oldRecord.maxScore = record.maxScore;
+      highestScore = highestScore &gt; parseInt(score)? highestScore: parseInt(score);
+      if((score - highestScore)&lt;0){
+        var banner = &quot;再接再厉，马上就要赶上最高分了！&quot;;
+      }else{
+        // var serialize_banner = req.params.data;
+        var banner = unserialize(serialize_banner).banner;
+      }
+    }else{
+      banner=&quot;我都打不了这么高， 你小子肯定作弊了&quot;;
+    }
+
+    clearEnvir();
+    res.json({
+      banner: banner,
+      record: oldRecord
+    });
+  }).catch(function(err){
+    next(err)
+  })
+}
+
+app.post('/record', record);
+app.get('/token', function(req, res){
+  token = getSanbox(req);
+  res.end(token);
+});
+
+</code></pre>
+<p>代码很长。大致就是。<br>
+有一个unserialize操作。里面有eval执行函数。<br>
+但是会经过两个check。</p>
+<pre><code>const validCode = function (func_code){
+  let validInput = /process|child_process|main|require|exec|this|eval|while|for|function|hex|char|base64|&quot;|'|\[|\+|\*/ig;
+  return !validInput.test(func_code);
+};
+
+const validInput = function (input){
+  // filter bad input
+  let validInput = /process|child_process|main|require|exec|this|function/ig;
+  ins = serialize(input);
+  return !validInput.test(ins);
+};
+</code></pre>
+<p>并且存在merge。<br>
+大致方向就是一个原型参数污染+反序列化RCE</p>
+<p>首先。我们看可控点</p>
+<pre><code>async function record (req, res, next){
+  new Promise(function (resolve, reject) {
+    var sanbox = getSanbox(req);
+    var record = new Record();
+    var score = req.body.score;
+    #这里。接受了我们传递的score
+    var oldRecord = logs[sanbox];
+
+    console.log(score);
+    clearEnvir();
+    #这里score的length必须小于5
+    if (score.length&lt;5){
+      merge(record, {
+        lastScore: score,
+        maxScore: parseInt(logs[sanbox].maxScore)&gt;parseInt(score)?logs[sanbox].maxScore:score,
+        lastTime: new Date().toString()
+      });
+    #进行了merge操作。可进行原型链污染
+      logs[sanbox] = record;
+      oldRecord.maxScore = record.maxScore;
+      highestScore = highestScore &gt; parseInt(score)? highestScore: parseInt(score);
+      if((score - highestScore)&lt;0){
+        var banner = &quot;再接再厉，马上就要赶上最高分了！&quot;;
+      }else{
+       //进入unserialize。下一步利用反序列化RCE
+        var banner = unserialize(serialize_banner).banner;
+      }
+    }else{
+      banner=&quot;我都打不了这么高， 你小子肯定作弊了&quot;;
+    }
+
+    clearEnvir();
+    res.json({
+      banner: banner,
+      record: oldRecord
+    });
+  }).catch(function(err){
+    next(err)
+  })
+}
+</code></pre>
+<p>首先。进行参数污染<br>
+这边</p>
+<pre><code>function Record(){
+  this.lastScore=0;
+  this.maxScore=0;
+  this.lastTime=null;
+}
+</code></pre>
+<p>lastScore已经被设置为了0。一个__proto__。得到number<br>
+第二个__proto__得到function<br>
+<img src="https://guokeya.github.io/post-images/1590509091158.png" alt="" loading="lazy"><br>
+然后就可以执行任意代码了<br>
+但是我们还得绕过<br>
+<code>https://xz.aliyun.com/t/7184#toc-8</code><br>
+这是反序列RCE的payload。但是。我们发现。这里的function被过滤了。<br>
+那么我们可以通过``.constructor.constructor得到object对象。然后执行<br>
+由于。字符都被过滤。我们可以通过16进制绕<br>
+自行忽略背景~~~~<br>
+<img src="https://guokeya.github.io/post-images/1590510026643.png" alt="" loading="lazy"><br>
+将我们的代码16进制一下。然后执行<br>
+现在就可以任意代码执行了。用文件读取flag。然后和字符串比较。如果比较正确。就继续。不正确就直接报错。作为一个盲注使用</p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/a45x0caHd/">
+              <span class="post-title">
+                [GKCTF2020]EZ三剑客-EzNode(settime溢出+沙盒逃逸)&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br ><!--test--></a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

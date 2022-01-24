@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>汇编语言笔记(三) |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="汇编语言笔记(三) |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="汇编语言笔记(三)"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/ZQqkVti1I/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/Pwn/" class="tag">Pwn</a>
+            
+        </span>
+            <h1>汇编语言笔记(三)</h1>
+            <span class="meta">
+            	Posted on
+              2020-01-02，4 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p><strong>汇编语言源程序</strong><br>
+汇编语言源程序中，包含两种指令，汇编指令和伪指令，汇编指令有对应的机器码的指令，可以被编译成机器指令，比如mov ax,123H</p>
+<!-- more -->
+<p>伪指令指的是没有对应的机器指令，不被CPU执行，由编译器来执行</p>
+<pre><code>assume cs:codesg        #伪指令含义为”假设“，通过它来将段寄存器和莫一个具体的段联系
+codesg segmeng          #定义了一个段，名称位codesg，表示段开始
+    mov ax,0123H
+    mov bx,0456H
+    add ax,bx
+    add ax,ax
+    mov ax,4c00H
+    int 2H
+codesg ends             #表示codesg段到此结束，ends和segmeng是成对出现的，表示段，而end表示汇编程序的结束
+end                     #汇编程序的结束标记
+</code></pre>
+<p>程序返回</p>
+<pre><code>mov ax,4c00H
+int 21H
+这两条指令就能使程序返回（原理未知，学的还太浅了）
+</code></pre>
+<p>编辑源程序<br>
+edit---&gt;保存为c:\1.asm-----&gt;masm（c:\1.asm）----&gt;link（1）<br>
+DOS执行1.exe时，是正在运行的command，将1.exe载入内存，程序结束后，返回到command<br>
+debug 1.exe<br>
+<img src="https://guokeya.github.io/post-images/1577952474984.png" alt="" loading="lazy"></p>
+<p>CX是程序长度，15个字节<br>
+程序加载后，ds放的是内存段地址，偏移地址为0<br>
+内存区前256个字节中存放的PSP，DOS用来和程序进行通信，从256字节向后的空间存放的是程序<br>
+从DS中可以得到PSP的段地址<br>
+程序的物理地址是SA*16+0+256=(SA+16)*16+0<br>
+init 21要用p来执行，不能用T<br>
+[BX]和LOOP指令<br>
+[BX]<br>
+mov ax,2000H<br>
+mov ds,ax<br>
+mov bx,0000H<br>
+mov ax,[0]<br>
+简单来说。BX就是偏移地址，在汇编源程序中，不能使用[0]这种来表示偏移，会被解释为0</p>
+<p>描述性的符号()<br>
+(ax) ax中的内容<br>
+(20000H) 内存20000H单元的内容<br>
+((ds)16+(bx)) 表示段地址16+偏移地址bx<br>
+(ax)=0010H mov ax,0010H<br>
+(21000H)=0010H mov 2000:1000 0010</p>
+<p>mov bx,1<br>
+#bx=1<br>
+inc bx<br>
+#将bx中的内容+1 bx=2<br>
+mov ax,2000H<br>
+#ax=2000H<br>
+mov ds,ax<br>
+#ds=段地址=2000<br>
+mov bx,1000H<br>
+#dx=偏移地址=1000H<br>
+mov ax,[bx]<br>
+#[bx]表示ds:dx=2000:1000地址的数据</p>
+<p>LOOP指令<br>
+表示循环<br>
+2*2</p>
+<pre><code>assume cs:code
+code segment
+    mov ax,2
+    add ax,ax
+    mov ax,4c00H
+    int 21h
+code ends
+end
+</code></pre>
+<p>2*12</p>
+<pre><code>assume cs:code
+code segment
+    mov ax,2
+    mov cx,11
+  s:add ax,ax
+    mov ax,4c00H
+    int 21h
+code ends
+end
+</code></pre>
+<p>ex中存放着循环次数,不为0则转到s所标识的地址<br>
+首先判断cx=cx-1<br>
+如果为零则执行下一条指令<br>
+计算123*236</p>
+<pre><code>assume cs:code
+code segment
+    mov ax,2
+    mov cx,236
+  s:add ax,123
+    mov ax,4c00H
+    int 21h
+code ends
+end
+</code></pre>
+<p>Debug跟踪loop指令<br>
+ffff:0006单元中的数乘以3，结果存储在dx中<br>
+(1)运算后的结果是否会超出dx所存储的范围<br>
+ffff:0006中是一个字节型数据，内存单元，最大为ff，256，乘3，不会大于65535，可以在最大为ffff，65535的寄存器dx中放下<br>
+(2)循环累加，放哪个寄存器进行累加<br>
+ffff:06赋值给AX，用dx累加<br>
+dx=0<br>
+(dx)=(dx)+(ax)<br>
+(3)ffff:6是一个字节单元，ff，ax是一个16位寄存器，ffff，长度不一样怎么赋值<br>
+8位数据01H和16位数据0001H数据长度不一样。但是值相同<br>
+假设ffff:0006单元数据为AAH，ax中的值要和ffff:0006单元相同，就将ah设为0，al设为ffff6H</p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/GVT3pUy7j/">
+              <span class="post-title">
+                SSRF打内网Redis&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br ><!--test--></a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

