@@ -83,6 +83,60 @@
       <div class="col-lg-8 col-md-10 mx-auto">
        
         <div class="post-preview">
+          <a href="https://guokeya.github.io/post/xnuca2019qualifiereasyphphtaccess-li-yong/">
+            <h2 class="post-title">
+              [XNUCA2019Qualifier]EasyPHP(.htaccess利用)
+            </h2>
+            </a>
+            <h3 class="post-subtitle">
+              <pre><code>&lt;?php
+    $files = scandir('./'); 
+    foreach($files as $file) {
+        if(is_file($file)){
+            if ($file !== &quot;index.php&quot;) {
+                unlink($file);
+            }
+        }
+    }
+    include_once(&quot;fl3g.php&quot;);
+    if(!isset($_GET['content']) || !isset($_GET['filename'])) {
+        highlight_file(__FILE__);
+        die();
+    }
+    $content = $_GET['content'];
+    if(stristr($content,'on') || stristr($content,'html') || stristr($content,'type') || stristr($content,'flag') || stristr($content,'upload') || stristr($content,'file')) {
+        echo &quot;Hacker&quot;;
+        die();
+    }
+    $filename = $_GET['filename'];
+    if(preg_match(&quot;/[^a-z\.]/&quot;, $filename) == 1) {
+        echo &quot;Hacker&quot;;
+        die();
+    }
+    $files = scandir('./'); 
+    foreach($files as $file) {
+        if(is_file($file)){
+            if ($file !== &quot;index.php&quot;) {
+                unlink($file);
+            }
+        }
+    }
+    file_put_contents($filename, $content . &quot;\nJust one chance&quot;);
+?&gt;
+</code></pre>
+
+            </h3>
+          <p class="post-meta">
+             <span class="time">2020-02-01</span>
+             <span>,</span>
+             <span class="post-stats">6 min read</span>
+            </p>
+        </div>
+        <hr>
+        <div class="clearfix">
+        </div>
+        
+        <div class="post-preview">
           <a href="https://guokeya.github.io/post/jactfsawed/">
             <h2 class="post-title">
               [jactf]sawed
@@ -400,31 +454,6 @@ call_user_func($b, $a);
              <span class="time">2020-01-24</span>
              <span>,</span>
              <span class="post-stats">4 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/ji-lu-yi-ti-fei-chang-nao-dong-de-misc/">
-            <h2 class="post-title">
-              纪录一题非常。。脑洞的MISC
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <pre><code>0086 1562 2535 5174
-bnhn s wwy vffg vffg rrhy fhnv
-
-请将你得到的这句话转为md5提交，md5统一为32位小写。
-提交格式：flag{md5}
-</code></pre>
-
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-23</span>
-             <span>,</span>
-             <span class="post-stats">1 min read</span>
             </p>
         </div>
         <hr>
