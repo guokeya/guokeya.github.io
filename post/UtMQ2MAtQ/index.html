@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>浅析Unicode安全 |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="浅析Unicode安全 |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="浅析Unicode安全"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/UtMQ2MAtQ/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+            <a href="https://guokeya.github.io/tag/Web/" class="tag">Web安全</a>
+            
+        </span>
+            <h1>浅析Unicode安全</h1>
+            <span class="meta">
+            	Posted on
+              2020-01-04，5 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>源于Black hat 2019的一个议题。刷题的时候也出现了这类知识点<br>
+<code>https://i.blackhat.com/USA-19/Thursday/us-19-Birch-HostSplit-Exploitable-Antipatterns-In-Unicode-Normalization.pdf</code><br>
+然而。全英文。心累</p>
+<!-- more -->
+<p><strong>大概</strong><br>
+给出了𓀬.net这样的网址。但是会解析成http://xn--fq7d.net/<br>
+为什么呢。这就需要从编码解码开始将<br>
+1:IDN<br>
+国际化域名IDNS。就是非英文表示的域名。比如菜.cn这种<br>
+2:Punycode<br>
+是一种表示Unicdoe码和Ascii码的字符集。例如<br>
+münchen会编码成mnchen-3ya<br>
+在IDNS推出以后。为了保证兼容以前的DNS。所以对非英语的字符进行punycode转码。转码后的punycode由26个字母+10个数字和-组成<br>
+IDN编码过程</p>
+<pre><code>Unicode ➔ ASCII – A Two Step Process
+1:Normalization（标准化）
+将字符转换为“标准格式”。
+我感觉更像格式化。把各种各样各地的字符转换成一个标准形式。
+2: Punycoding
+将Unicode转换为ASCII
+在经过Normalization这个部分时。有些字符直接变成ASCII码。如果再Punycoding。那么没啥区别。还是ASCII码
+</code></pre>
+<p>这个a/c特殊字符。经过标准化后。就变成了a/c<br>
+<img src="https://guokeya.github.io/post-images/1578146026511.png" alt="" loading="lazy"><br>
+借助altman大佬的fuzz脚本。可以把类似的字符都输出出来。</p>
+<pre><code>for i in range(128,65537):
+	tmp=chr(i)
+	try:
+		res = tmp.encode('idna').decode('utf-8')
+		if(&quot;-&quot;) in res:
+			continue
+		print(&quot;U:{} A:{} ascii:{} &quot;.format(tmp,res,i))
+	except:
+		pass
+</code></pre>
+<p>可以利用grep输出unicode转换为ASCII后为3的字符<br>
+<img src="https://guokeya.github.io/post-images/1578146188481.png" alt="" loading="lazy"><br>
+<strong>具体利用以两题CTF为例</strong><br>
+<strong>BUUCTF(ASIS 2019]Unicorn shop)</strong><br>
+名字叫独角兽商店。商品有个独角兽。<br>
+<img src="https://guokeya.github.io/post-images/1578146336349.png" alt="" loading="lazy"><br>
+购买ID为1，2，3都会报错Wrong commodity!商品不对<br>
+ID为4是购买独角兽。经过测试。只能输入一个字符。<br>
+并且输入0-9任意字符。都会输出You don't have enough money!<br>
+这里就需要Unicode知识了<br>
+输入一个字符代表数字。并且字符的意义要大于1337。只要找到满足这个条件的字符。经过后台编码后。就会转换为大于1337的数字。后台进行判断就可以成功购买了<br>
+<code>https://www.compart.com/en/unicode/</code><br>
+输入条件Ten Thousand(一万。只要大于1337就行了)<br>
+<img src="https://guokeya.github.io/post-images/1578146633458.png" alt="" loading="lazy"><br>
+随便点几个。看numeric value，这个字符代表的就是数字1W<br>
+<img src="https://guokeya.github.io/post-images/1578146731763.png" alt="" loading="lazy"><br>
+复制粘贴，成功拿到flag<br>
+<img src="https://guokeya.github.io/post-images/1578146818233.png" alt="" loading="lazy"><br>
+<strong>2019suctf(Pythonginx)</strong><br>
+题目源码：右键源代码有</p>
+<pre><code>from flask import Flask, Blueprint, request, Response, escape ,render_template
+from urllib.parse import urlsplit, urlunsplit, unquote
+from urllib import parse
+import urllib.request
+
+app = Flask(__name__)
+
+# Index
+@app.route('/', methods=['GET'])
+def app_index():
+    return render_template('index.html')
+
+@app.route('/getUrl', methods=['GET', 'POST'])
+def getUrl():
+    url = request.args.get(&quot;url&quot;)
+    host = parse.urlparse(url).hostname
+    if host == 'suctf.cc':
+        return &quot;我扌 your problem? 111&quot;
+    parts = list(urlsplit(url))
+    host = parts[1]
+    if host == 'suctf.cc':
+        return &quot;我扌 your problem? 222 &quot; + host
+    newhost = []
+    for h in host.split('.'):
+        newhost.append(h.encode('idna').decode('utf-8'))
+    parts[1] = '.'.join(newhost)
+    #去掉 url 中的空格
+    finalUrl = urlunsplit(parts).split(' ')[0]
+    host = parse.urlparse(finalUrl).hostname
+    if host == 'suctf.cc':
+        return urllib.request.urlopen(finalUrl).read()
+    else:
+        return &quot;我扌 your problem? 333&quot;
+
+if __name__ == &quot;__main__&quot;:
+    app.run(host='0.0.0.0', port=80)
+</code></pre>
+<p>大致意思就是。接收我们传入的值<br>
+然后通过urlparse解析。hostname不能等于suctf.cc<br>
+然后将其分割。取第二个值。不能等于suctf.cc<br>
+最后将值utf-8解码。等于suctf.cc，就会读取我们传入的值<br>
+每次处理的结果如下。<br>
+<img src="https://guokeya.github.io/post-images/1578147531827.png" alt="" loading="lazy"><br>
+测试源码</p>
+<pre><code>import urllib
+from urllib import parse
+from urllib.parse import urlsplit,urlunsplit
+url='file://suctf.cc/../../../../../../etc/passwd'
+host=parse.urlparse(url).hostname
+print(&quot;first host :&quot;,host)
+parts=list(urlsplit(url))
+print (parts)
+host=parts[1]
+print(&quot;Second host :&quot;,host)
+newhost=[]
+for h in host.split('.'):
+    newhost.append(h.encode('idna').decode('utf-8'))
+parts[1]='.'.join(newhost)
+finaurl=urlunsplit(parts).split(' ')[0]
+host=parse.urlparse(finaurl).hostname
+print(&quot;end host :&quot;,host)
+</code></pre>
+<p>Unicode知识。。。如果我们将其中的一个字符替换为怪异字符。前两次判断suctf.c③绕过。第三次ASCII转码后变成3。满足条件。执行我们的file://suctf.cc/../../../../etc/passwd，即可读取文件<br>
+利用文章开头的FUZZ脚本。我们找到ASCII后为c的特殊字符<br>
+<img src="https://guokeya.github.io/post-images/1578148878500.PNG" alt="" loading="lazy"><br>
+构造payload:file://suctf.cＣ/../../../../etc/passwd<br>
+<img src="https://guokeya.github.io/post-images/1578148934514.PNG" alt="" loading="lazy"><br>
+读取nginx文件，发现flag地址<br>
+<img src="https://guokeya.github.io/post-images/1578149035409.PNG" alt="" loading="lazy"><br>
+读取，拿到flag<br>
+<img src="https://guokeya.github.io/post-images/1578149080906.PNG" alt="" loading="lazy"><br>
+还有一种非预期解法：<br>
+parse是解析URL的。PHP上parse能通过/来干扰解码结果，python中也可以<br>
+当url为file:////suctf.cc/../../../../../etc/passwd<br>
+前两个解析结果为NULL，最后解析为suctf。同样绕过了判断<br>
+<img src="https://guokeya.github.io/post-images/1578149234523.PNG" alt="" loading="lazy"><br>
+以下是每步的解析结果<br>
+<img src="https://guokeya.github.io/post-images/1578149519508.PNG" alt="" loading="lazy"></p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/wJqAq8fzp/">
+              <span class="post-title">
+                Pwn(格式化字符串漏洞)&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br ><!--test--></a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+
